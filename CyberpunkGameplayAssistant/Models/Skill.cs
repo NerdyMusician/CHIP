@@ -1,9 +1,4 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CyberpunkGameplayAssistant.Models
 {
@@ -14,9 +9,10 @@ namespace CyberpunkGameplayAssistant.Models
         {
 
         }
-        public Skill(string name)
+        public Skill(string name, string variant = "")
         {
             Name = name;
+            Variant = variant;
         }
 
         // Databound Properties
@@ -27,12 +23,30 @@ namespace CyberpunkGameplayAssistant.Models
             get => _Name;
             set => SetAndNotify(ref _Name, value);
         }
+        private string _Variant;
+        [XmlSaveMode(XSME.Single)]
+        public string Variant
+        {
+            get => _Variant;
+            set => SetAndNotify(ref _Variant, value);
+        }
         private int _Value;
         [XmlSaveMode(XSME.Single)]
         public int Value
         {
             get => _Value;
             set => SetAndNotify(ref _Value, value);
+        }
+
+        // Properties
+        public string DisplayName
+        {
+            get 
+            { 
+                return Name + 
+                    (!Variant.IsNullOrEmpty() ? $" ({Variant})" : "") + 
+                    ((ReferenceData.SkillLinks.GetCost(Name) > 1) ? $" (x{ReferenceData.SkillLinks.GetCost(Name)})" : ""); 
+            }
         }
 
     }

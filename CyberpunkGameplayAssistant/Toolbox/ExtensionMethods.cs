@@ -1,4 +1,5 @@
 ﻿using CyberpunkGameplayAssistant.Models;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -23,6 +24,14 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static int GetValue(this ObservableCollection<Skill> skills, string skillName)
         {
             return skills.FirstOrDefault(s => s.Name == skillName).Value;
+        }
+        public static bool IsNullOrEmpty(this string text)
+        {
+            return (text == null || text == string.Empty) ? true : false;
+        }
+        public static int GetCost(this List<SkillLinkReference> skills, string skillName)
+        {
+            return skills.FirstOrDefault(s => s.SkillName == skillName).CostPerLevel;
         }
     }
 }

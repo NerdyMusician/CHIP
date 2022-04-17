@@ -33,7 +33,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string CulturalRegionEastAsian = "East Asian";
         public const string CulturalRegionOceaniaPacificIslander = "Oceania/Pacific Islander";
 
-        // Languages
+        // Languages - pg45
         public const string LanguageArabic = "Arabic";
         public const string LanguageBengali = "Bengali";
         public const string LanguageBerber = "Berber";
@@ -51,19 +51,25 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string LanguageGerman = "German";
         public const string LanguageGuarani = "Guarani";
         public const string LanguageHausa = "Hausa";
+        public const string LanguageHawaiian = "Hawaiian";
         public const string LanguageHebrew = "Hebrew";
         public const string LanguageHindi = "Hindi";
         public const string LanguageIndonesian = "Indonesian";
         public const string LanguageItalian = "Italian";
         public const string LanguageJapanese = "Japanese";
         public const string LanguageKhmer = "Khmer";
+        public const string LanguageKorean = "Korean";
         public const string LanguageLingala = "Lingala";
         public const string LanguageMalayan = "Malayan";
+        public const string LanguageMandarinChinese = "Mandarin Chinese";
+        public const string LanguageMaori = "Maori";
         public const string LanguageMayan = "Mayan";
+        public const string LanguageMongolian = "Mongolian";
         public const string LanguageNavajo = "Navajo";
         public const string LanguageNepali = "Nepali";
         public const string LanguageNorwegian = "Norwegian";
         public const string LanguageOromo = "Oromo";
+        public const string LanguagePamaNyungan = "Pama-Nyungan";
         public const string LanguagePolish = "Polish";
         public const string LanguagePortuguese = "Portuguese";
         public const string LanguageQuechua = "Quechua";
@@ -71,7 +77,9 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string LanguageRussian = "Russian";
         public const string LanguageSinhalese = "Sinhalese";
         public const string LanguageSpanish = "Spanish";
+        public const string LanguageStreetslang = "Streetslang";
         public const string LanguageSwahili = "Swahili";
+        public const string LanguageTahitian = "Tahitian";
         public const string LanguageTamil = "Tamil";
         public const string LanguageTurkish = "Turkish";
         public const string LanguageTwi = "Twi";
@@ -79,6 +87,9 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string LanguageUrdu = "Urdu";
         public const string LanguageVietnamese = "Vietnamese";
         public const string LanguageYoruba = "Yoruba";
+
+        // Local Expert Locations
+        public const string LocalExpertYourHome = "Your Home";
 
         // Stats
         // Mental Group
@@ -195,10 +206,24 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string SkillSeaVehicleTech = "Sea Vehicle Tech";
         public const string SkillWeaponstech = "Weaponstech";
 
-        // Required Skills
-        public static readonly List<string> RequiredSkills = new()
+        // Complete Package Calculated Skills
+        public const int CompletePackageSkillPoints = 86;
+        public const int CompletePackageSkillLevelLimit = 6;
+        public static readonly List<Skill> CompletePackageRequiredSkills = new()
         {
-
+            new(SkillAthletics),
+            new(SkillBrawling),
+            new(SkillConcentration),
+            new(SkillConversation),
+            new(SkillEducation),
+            new(SkillEvasion),
+            new(SkillFirstAid),
+            new(SkillHumanPerception),
+            new(SkillLanguage, LanguageStreetslang),
+            new(SkillLocalExpert, LocalExpertYourHome),
+            new(SkillPerception),
+            new(SkillPersuasion),
+            new(SkillStealth)
         };
 
         // Stat Reference Table
@@ -296,6 +321,9 @@ namespace CyberpunkGameplayAssistant.Toolbox
             new(SkillCategoryTechnique, SkillWeaponstech, StatTechnique),
 
         };
+
+        // Weapon Categories - pg91
+
 
     }
 }
