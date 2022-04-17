@@ -206,7 +206,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string SkillSeaVehicleTech = "Sea Vehicle Tech";
         public const string SkillWeaponstech = "Weaponstech";
 
-        // Complete Package Calculated Skills
+        // Complete Package Calculated Skills - pg90
         public const int CompletePackageSkillPoints = 86;
         public const int CompletePackageSkillLevelLimit = 6;
         public static readonly List<Skill> CompletePackageRequiredSkills = new()
@@ -322,7 +322,71 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         };
 
-        // Weapon Categories - pg91
+        // Weapon Categories - pg340
+        public static readonly string WeaponTypeLightMelee = "Light Melee Weapon";
+        public static readonly string WeaponTypeMediumMelee = "Medium Melee Weapon";
+        public static readonly string WeaponTypeHeavyMelee = "Heavy Melee Weapon";
+        public static readonly string WeaponTypeVeryHeavyMelee = "Very Heavy Melee Weapon";
+        public static readonly string WeaponTypeMediumPistol = "Medium Pistol";
+        public static readonly string WeaponTypeHeavyPistol = "Heavy Pistol";
+        public static readonly string WeaponTypeVeryHeavyPistol = "Very Heavy Pistol";
+        public static readonly string WeaponTypeSmg = "SMG";
+        public static readonly string WeaponTypeHeavySmg = "Heavy SMG";
+        public static readonly string WeaponTypeShotgun = "Shotgun";
+        public static readonly string WeaponTypeAssaultRifle = "Assault Rifle";
+        public static readonly string WeaponTypeSniperRifle = "Sniper Rifle";
+        public static readonly string WeaponTypeBowsAndCrossbows = "Bows & Crossbows";
+        public static readonly string WeaponTypeGrenadeLauncher = "Grenade Launcher";
+        public static readonly string WeaponTypeRocketLauncher = "Rocket Launcher";
+
+        // Ammunition Types
+        public static readonly string AmmoTypeMediumPistol = "Medium Pistol";
+        public static readonly string AmmoTypeHeavyPistol = "Heavy Pistol";
+        public static readonly string AmmoTypeVeryHeavyPistol = "Very Heavy Pistol";
+        public static readonly string AmmoTypeSlug = "Slug";
+        public static readonly string AmmoTypeRifle = "Rifle";
+        public static readonly string AmmoTypeArrow = "Arrow";
+        public static readonly string AmmoTypeGrenade = "Grenade";
+        public static readonly string AmmoTypeRocket = "Rocket";
+
+        // Weapon Cost Tier
+        public static readonly string WeaponCostTierLow = "Low";
+        public static readonly string WeaponCostTierMedium = "Medium";
+        public static readonly string WeaponCostTierHigh = "High";
+
+        // Weapon Costs
+        public static readonly int WeaponCostStandardQualityLow = 50;
+        public static readonly int WeaponCostStandardQualityMedium = 100;
+        public static readonly int WeaponCostStandardQualityHigh = 500;
+        public static readonly int WeaponCostPoorQualityLow = 20;
+        public static readonly int WeaponCostPoorQualityMedium = 50;
+        public static readonly int WeaponCostPoorQualityHigh = 100;
+        public static readonly int WeaponCostExcellentQualityLow = 100;
+        public static readonly int WeaponCostExcellentQualityMedium = 500;
+        public static readonly int WeaponCostExcellentQualityHigh = 1000;
+
+        public static readonly List<RangedWeaponClip> ClipChart = new()
+        {
+            new(WeaponTypeMediumPistol, 12, 18, 36),
+            new(WeaponTypeHeavyPistol, 8, 14, 28),
+            new(WeaponTypeVeryHeavyPistol, 8, 14, 28),
+            new(WeaponTypeSmg, 30, 40, 50),
+            new(WeaponTypeHeavySmg, 40, 50, 60),
+            new(WeaponTypeShotgun, 4, 8, 16),
+            new(WeaponTypeAssaultRifle, 25, 35, 45),
+            new(WeaponTypeSniperRifle, 4, 8, 12),
+            new(WeaponTypeGrenadeLauncher, 2, 4, 6),
+            new(WeaponTypeRocketLauncher, 1, 2, 3)
+        };
+
+        public static readonly List<Weapon> WeaponRepository = new()
+        {
+            new(WeaponTypeMediumPistol, SkillHandgun, 2, 1, AmmoTypeMediumPistol, 2, true, WeaponCostTierLow),
+            new(WeaponTypeHeavyPistol, SkillHandgun, 3, 1, AmmoTypeHeavyPistol, 2, true, WeaponCostTierMedium),
+            new(WeaponTypeVeryHeavyPistol, SkillHandgun, 4, 1, AmmoTypeVeryHeavyPistol, 1, false, WeaponCostTierMedium),
+            new(WeaponTypeSmg, SkillHandgun, 2, 1, AmmoTypeMediumPistol, 1, true, WeaponCostTierMedium),
+            new(WeaponTypeHeavySmg, SkillHandgun, 3, 1, AmmoTypeHeavyPistol, 1, false, WeaponCostTierMedium), // TODO
+        };
 
 
     }
