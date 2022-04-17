@@ -21,6 +21,65 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string StatCategoryFortune = "Fortune";
         public const string StatCategoryPhysical = "Physical";
 
+        // Cultural Regions
+        public const string CulturalRegionNorthAmerican = "North American";
+        public const string CulturalRegionSouthCentralAmerican = "South/Central American";
+        public const string CulturalRegionWesternEuropean = "Western European";
+        public const string CulturalRegionEasternEuropean = "Eastern European";
+        public const string CulturalRegionMiddleEasterNorthAfrican = "Middle Eastern/North African";
+        public const string CulturalRegionSubSaharanAfrican = "Sub-Saharan African";
+        public const string CulturalRegionSouthAsian = "South Asian";
+        public const string CulturalRegionSouthEastAsian = "South East Asian";
+        public const string CulturalRegionEastAsian = "East Asian";
+        public const string CulturalRegionOceaniaPacificIslander = "Oceania/Pacific Islander";
+
+        // Languages
+        public const string LanguageArabic = "Arabic";
+        public const string LanguageBengali = "Bengali";
+        public const string LanguageBerber = "Berber";
+        public const string LanguageBurmese = "Burmese";
+        public const string LanguageCantoneseChinese = "Cantonese Chinese";
+        public const string LanguageChinese = "Chinese";
+        public const string LanguageCree = "Cree";
+        public const string LanguageCreole = "Creole";
+        public const string LanguageDari = "Dari";
+        public const string LanguageEnglish = "English";
+        public const string LanguageFarsi = "Farsi";
+        public const string LanguageFilipino = "Filipino";
+        public const string LanguageFinnish = "Finnish";
+        public const string LanguageFrench = "French";
+        public const string LanguageGerman = "German";
+        public const string LanguageGuarani = "Guarani";
+        public const string LanguageHausa = "Hausa";
+        public const string LanguageHebrew = "Hebrew";
+        public const string LanguageHindi = "Hindi";
+        public const string LanguageIndonesian = "Indonesian";
+        public const string LanguageItalian = "Italian";
+        public const string LanguageJapanese = "Japanese";
+        public const string LanguageKhmer = "Khmer";
+        public const string LanguageLingala = "Lingala";
+        public const string LanguageMalayan = "Malayan";
+        public const string LanguageMayan = "Mayan";
+        public const string LanguageNavajo = "Navajo";
+        public const string LanguageNepali = "Nepali";
+        public const string LanguageNorwegian = "Norwegian";
+        public const string LanguageOromo = "Oromo";
+        public const string LanguagePolish = "Polish";
+        public const string LanguagePortuguese = "Portuguese";
+        public const string LanguageQuechua = "Quechua";
+        public const string LanguageRomanian = "Romanian";
+        public const string LanguageRussian = "Russian";
+        public const string LanguageSinhalese = "Sinhalese";
+        public const string LanguageSpanish = "Spanish";
+        public const string LanguageSwahili = "Swahili";
+        public const string LanguageTamil = "Tamil";
+        public const string LanguageTurkish = "Turkish";
+        public const string LanguageTwi = "Twi";
+        public const string LanguageUkranian = "Ukranian";
+        public const string LanguageUrdu = "Urdu";
+        public const string LanguageVietnamese = "Vietnamese";
+        public const string LanguageYoruba = "Yoruba";
+
         // Stats
         // Mental Group
         public const string StatIntelligence = "Intelligence";
@@ -135,6 +194,12 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string SkillPickPocket = "Pick Pocket";
         public const string SkillSeaVehicleTech = "Sea Vehicle Tech";
         public const string SkillWeaponstech = "Weaponstech";
+
+        // Required Skills
+        public static readonly List<string> RequiredSkills = new()
+        {
+
+        };
 
         // Stat Reference Table
         public static readonly List<StatLinkReference> StatLinks = new()

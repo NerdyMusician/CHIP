@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
 namespace CyberpunkGameplayAssistant.Models
 {
     public class PlayerCharacter : BaseModel
@@ -190,3 +192,5 @@ namespace CyberpunkGameplayAssistant.Models
 
     }
 }
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
