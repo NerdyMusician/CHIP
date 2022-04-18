@@ -322,6 +322,21 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         };
 
+        // Corporation Names
+        public const string CorpoArasaka = "Arasaka";
+        public const string CorpoChadranArms = "Chadran Arms";
+        public const string CorpoDaiLung = "Dai Lung";
+        public const string CorpoEagletech = "Eagletech";
+        public const string CorpoFederatedArms = "Federated Arms";
+        public const string CorpoGunMart = "GunMart";
+        public const string CorpoMilitech = "Militech";
+        public const string CorpoMustangArms = "Mustang Arms";
+        public const string CorpoNomad = "Nomad";
+        public const string CorpoNova = "Nova";
+        public const string CorpoSternmeyer = "Sternmeyer";
+        public const string CorpoTowaManufacturing = "Towa Manufacturing";
+        public const string CorpoTsunamiArms = "Tsunami Arms";
+
         // Weapon Categories - pg340
         public static readonly string WeaponTypeLightMelee = "Light Melee Weapon";
         public static readonly string WeaponTypeMediumMelee = "Medium Melee Weapon";
@@ -340,6 +355,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static readonly string WeaponTypeRocketLauncher = "Rocket Launcher";
 
         // Ammunition Types
+        public static readonly string AmmoTypeNone = "None";
         public static readonly string AmmoTypeMediumPistol = "Medium Pistol";
         public static readonly string AmmoTypeHeavyPistol = "Heavy Pistol";
         public static readonly string AmmoTypeVeryHeavyPistol = "Very Heavy Pistol";
@@ -348,6 +364,11 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static readonly string AmmoTypeArrow = "Arrow";
         public static readonly string AmmoTypeGrenade = "Grenade";
         public static readonly string AmmoTypeRocket = "Rocket";
+
+        // Weapon Quality Tier
+        public static readonly string WeaponQualityPoor = "Poor";
+        public static readonly string WeaponQualityStandard = "Standard";
+        public static readonly string WeaponQualityExcellent = "Excellent";
 
         // Weapon Cost Tier
         public static readonly string WeaponCostTierLow = "Low";
@@ -381,11 +402,56 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         public static readonly List<Weapon> WeaponRepository = new()
         {
+            new(WeaponTypeLightMelee, SkillMeleeWeapon, 1, 1, AmmoTypeNone, 2, true, WeaponCostTierLow),
+            new(WeaponTypeMediumMelee, SkillMeleeWeapon, 2, 1, AmmoTypeNone, 2, true, WeaponCostTierLow),
+            new(WeaponTypeHeavyMelee, SkillMeleeWeapon, 3, 2, AmmoTypeNone, 2, true, WeaponCostTierMedium),
+            new(WeaponTypeVeryHeavyMelee, SkillMeleeWeapon, 4, 2, AmmoTypeNone, 1, true, WeaponCostTierHigh),
             new(WeaponTypeMediumPistol, SkillHandgun, 2, 1, AmmoTypeMediumPistol, 2, true, WeaponCostTierLow),
             new(WeaponTypeHeavyPistol, SkillHandgun, 3, 1, AmmoTypeHeavyPistol, 2, true, WeaponCostTierMedium),
             new(WeaponTypeVeryHeavyPistol, SkillHandgun, 4, 1, AmmoTypeVeryHeavyPistol, 1, false, WeaponCostTierMedium),
             new(WeaponTypeSmg, SkillHandgun, 2, 1, AmmoTypeMediumPistol, 1, true, WeaponCostTierMedium),
-            new(WeaponTypeHeavySmg, SkillHandgun, 3, 1, AmmoTypeHeavyPistol, 1, false, WeaponCostTierMedium), // TODO
+            new(WeaponTypeHeavySmg, SkillHandgun, 3, 1, AmmoTypeHeavyPistol, 1, false, WeaponCostTierMedium),
+            new(WeaponTypeShotgun, SkillShoulderArms, 5, 2, AmmoTypeSlug, 1, false, WeaponCostTierHigh),
+            new(WeaponTypeAssaultRifle, SkillShoulderArms, 5, 2, AmmoTypeRifle, 1, false, WeaponCostTierHigh),
+            new(WeaponTypeSniperRifle, SkillShoulderArms, 5, 2, AmmoTypeRifle, 1, false, WeaponCostTierHigh),
+            new(WeaponTypeBowsAndCrossbows, SkillArchery, 4, 2, AmmoTypeArrow, 1, false, WeaponCostTierMedium),
+            new(WeaponTypeGrenadeLauncher, SkillHeavyWeapons, 6, 2, AmmoTypeGrenade, 1, false, WeaponCostTierHigh),
+            new(WeaponTypeRocketLauncher, SkillHeavyWeapons, 8, 2, AmmoTypeRocket, 1, false, WeaponCostTierHigh)
+        };
+
+        public static readonly List<MarketWeapon> WeaponMarket = new()
+        {
+            // Melee Weapons
+            new("Combat Knife", WeaponTypeLightMelee, WeaponQualityStandard),
+            new("Tomahawk", WeaponTypeLightMelee, WeaponQualityStandard),
+            new("Baseball Bat", WeaponTypeMediumMelee, WeaponQualityStandard),
+            new("Crowbar", WeaponTypeMediumMelee, WeaponQualityStandard),
+            new("Machete", WeaponTypeMediumMelee, WeaponQualityStandard),
+            new("Lead Pipe", WeaponTypeHeavyMelee, WeaponQualityStandard),
+            new("Sword", WeaponTypeHeavyMelee, WeaponQualityStandard),
+            new("Spiked Bat", WeaponTypeHeavyMelee, WeaponQualityStandard),
+            new("Chainsaw", WeaponTypeVeryHeavyMelee, WeaponQualityStandard),
+            new("Sledgehammer", WeaponTypeVeryHeavyMelee, WeaponQualityStandard),
+            new("Helicopter Blade", WeaponTypeVeryHeavyMelee, WeaponQualityStandard),
+            new("Naginata", WeaponTypeVeryHeavyMelee, WeaponQualityStandard),
+
+            // Poor Quality Weapons
+            new($"{CorpoDaiLung} Streetmaster", WeaponTypeMediumPistol, WeaponQualityPoor),
+            new($"{CorpoDaiLung} Magnum", WeaponTypeHeavyPistol, WeaponQualityPoor),
+            new($"{CorpoFederatedArms} Super Chief", WeaponTypeVeryHeavyPistol, WeaponQualityPoor),
+            new($"{CorpoGunMart} Sherwood", WeaponTypeBowsAndCrossbows, WeaponQualityPoor),
+            new($"{CorpoGunMart} Hunter", WeaponTypeBowsAndCrossbows, WeaponQualityPoor),
+            new($"{CorpoFederatedArms} Tech-Assault III", WeaponTypeSmg, WeaponQualityPoor),
+            new($"{CorpoChadranArms} City Reaper", WeaponTypeHeavySmg, WeaponQualityPoor),
+            new($"{CorpoGunMart} Home Defender", WeaponTypeShotgun, WeaponQualityPoor),
+            new($"{CorpoChadranArms} Jungle Reaper", WeaponTypeAssaultRifle, WeaponQualityPoor),
+            new($"{CorpoGunMart} Snipe-Star", WeaponTypeSniperRifle, WeaponQualityPoor),
+            new($"{CorpoTowaManufacturing} Type-G", WeaponTypeGrenadeLauncher, WeaponQualityPoor),
+            new($"{CorpoTowaManufacturing} Type-R", WeaponTypeRocketLauncher, WeaponQualityPoor),
+
+            // Standard Quality Weapons
+            new($"{CorpoFederatedArms} X-9mm", WeaponTypeMediumPistol, WeaponQualityStandard), // TODO
+
         };
 
 
