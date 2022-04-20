@@ -10,7 +10,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static Random RNG = new();
 
         // File Locations
-        public const string LogFile = "log.txt";
+        public const string File_Log = "log.txt";
+        public static readonly string File_CampaignData = $"{Environment.CurrentDirectory}/Data/Campaigns.xml";
 
         // Message Types
         public const string MessageTypeCombat = "Combat";

@@ -13,7 +13,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static void WriteToLogFile(string message, bool notifyUser = false)
         {
             if (notifyUser) { NotifyUser(message); }
-            File.AppendAllText(ReferenceData.LogFile, $"{DateTime.Now}: {message}\n");
+            File.AppendAllText(ReferenceData.File_Log, $"{DateTime.Now}: {message}\n");
         }
         public static int[] RollDice(int numberOfDice, int sidesOnDice)
         {

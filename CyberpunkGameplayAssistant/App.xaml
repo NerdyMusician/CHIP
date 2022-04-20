@@ -4,6 +4,24 @@
              xmlns:local="clr-namespace:CyberpunkGameplayAssistant"
              StartupUri="Windows/MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Colors.xaml" />
+                <ResourceDictionary Source="Styles/Borders.xaml" />
+                <ResourceDictionary Source="Styles/ComboBox.xaml" />
+                <ResourceDictionary Source="Styles/Images.xaml" />
+                <ResourceDictionary Source="Styles/Buttons.xaml" />
+                <ResourceDictionary Source="Styles/Checkboxes.xaml" />
+                <ResourceDictionary Source="Styles/ListViews.xaml" />
+                <ResourceDictionary Source="Styles/Rectangles.xaml" />
+                <ResourceDictionary Source="Styles/ScrollBar.xaml" />
+                <ResourceDictionary Source="Styles/TabItems.xaml" />
+                <ResourceDictionary Source="Styles/Textblocks.xaml" />
+                <ResourceDictionary Source="Styles/Textboxes.xaml" />
+                <ResourceDictionary Source="Styles/TreeViewItem.xaml" />
+                <ResourceDictionary Source="Styles/ContextMenu.xaml" />
+                <ResourceDictionary Source="Styles/MenuItem.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

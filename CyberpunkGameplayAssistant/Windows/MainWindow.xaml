@@ -1,12 +1,158 @@
-﻿<Window x:Class="CyberpunkGameplayAssistant.MainWindow"
+﻿<Window x:Class="CyberpunkGameplayAssistant.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CyberpunkGameplayAssistant"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        xmlns:cc="clr-namespace:CyberpunkGameplayAssistant.CustomControls"
+        xmlns:tool="clr-namespace:CyberpunkGameplayAssistant.Toolbox"
+        LocationChanged="Window_LocationChanged"
+	    Deactivated="Window_Deactivated"
+	    Loaded="Window_Loaded" Closing="Window_Closing"
+        SizeChanged="Window_SizeChanged"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="{StaticResource PrimaryBackground}"
+        BorderBrush="{StaticResource ButtonBorder}" BorderThickness="2"
+        mc:Ignorable="d" Height="720" Width="1280">
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource PartialBorderTextBox}" />
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource PrimaryFontColor}" />
+        </Style>
+        <Style TargetType="{x:Type cc:FieldLabel}" x:Key="BaseFieldLabel">
+            <Setter Property="Foreground" Value="{StaticResource PrimaryFontColor}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Width" Value="120" />
+            <Setter Property="Margin" Value="4" />
+        </Style>
+        <Style TargetType="{x:Type cc:FieldLabel}" BasedOn="{StaticResource BaseFieldLabel}" />
+        <Style TargetType="{x:Type cc:ColumnHeader}">
+            <Setter Property="Margin" Value="4" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="{x:Type cc:SubsectionHeader}">
+            <Setter Property="Margin" Value="0" />
+        </Style>
+        <Style TargetType="{x:Type TextBlock}" x:Key="Tooltip">
+            <Setter Property="Width" Value="420" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Foreground" Value="{StaticResource TooltipFontColor}" />
+        </Style>
+        <Style TargetType="{x:Type TextBlock}" x:Key="MidChar">
+            <Setter Property="Width" Value="16" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="{StaticResource PrimaryFontColor}" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="FontSize" Value="15" />
+        </Style>
+        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource SectionHeader}" />
+        <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource BaseCheckBox}" />
+        <Style TargetType="{x:Type StackPanel}">
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
+        <Style TargetType="{x:Type Border}">
+            <Setter Property="BorderBrush" Value="{StaticResource ButtonBorder}" />
+            <Setter Property="BorderThickness" Value="2 0 0 2" />
+        </Style>
+        <Style TargetType="{x:Type cc:GammaComboBox}" BasedOn="{StaticResource CustomComboBox}">
+            <Setter Property="Width" Value="200" />
+            <Setter Property="IsTextSearchEnabled" Value="True" />
+            <Setter Property="IsTextSearchCaseSensitive" Value="False" />
+            <Setter Property="IsEditable" Value="True" />
+            <Setter Property="Foreground" Value="{StaticResource PrimaryFontColor}" />
+        </Style>
+        <Style TargetType="{x:Type Separator}">
+            <Setter Property="Width" Value="4" />
+            <Setter Property="Visibility" Value="Hidden" />
+        </Style>
+        <Style TargetType="{x:Type cc:ImageButton}" BasedOn="{StaticResource ImageButton}" />
+        <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource HorizontalDivider}" />
+        <Style TargetType="{x:Type Border}" x:Key="ListBorder">
+            <Setter Property="BorderBrush" Value="{StaticResource ButtonBorder}" />
+            <Setter Property="BorderThickness" Value="0 2" />
+        </Style>
+        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource BlueTab}">
+            <Setter Property="Width" Value="128" />
+        </Style>
+        <Style TargetType="{x:Type ScrollBar}">
+            <Setter Property="Template" Value="{StaticResource VerticalScrollBar}" />
+        </Style>
+        <Style TargetType="TreeViewItem" BasedOn="{StaticResource DMTreeViewItem}" />
+        <Style TargetType="TabControl">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="{StaticResource ButtonBorder}" />
+        </Style>
+        <Style TargetType="ContextMenu" BasedOn="{StaticResource ThemedContextMenu}" />
+        <Style TargetType="MenuItem" BasedOn="{StaticResource ThemedMenuItem}" />
+        <Style TargetType="StackPanel" x:Key="SPNL_FieldRow">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="Margin" Value="0 4 0 0" />
+        </Style>
+        <Style TargetType="StackPanel" x:Key="SPNL_SectionWrapper">
+            <Setter Property="Margin" Value="4 2" />
+        </Style>
+    </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="F1" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="F1" />
+        <KeyBinding Key="F2" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="F2" />
+        <KeyBinding Key="F3" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="F3" />
+        <KeyBinding Key="F4" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="F4" />
+        <KeyBinding Modifiers="Alt" Key="C" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="AltC" />
+        <KeyBinding Modifiers="Alt" Key="F" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="AltF" />
+        <KeyBinding Modifiers="Alt" Key="N" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="AltN" />
+        <KeyBinding Modifiers="Alt" Key="R" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="AltR" />
+        <KeyBinding Modifiers="Alt" Key="A" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="AltA" />
+        <KeyBinding Modifiers="Alt" Key="S" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="AltS" />
+        <KeyBinding Modifiers="Alt" Key="Q" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="AltQ" />
+        <KeyBinding Modifiers="Alt" Key="Left" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="AltLeft" />
+        <KeyBinding Modifiers="Alt" Key="Right" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="AltRight" />
+        <KeyBinding Modifiers="Ctrl" Key="N" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="CtrlN" />
+        <KeyBinding Modifiers="Ctrl" Key="O" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="CtrlO" />
+        <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="CtrlS" />
+    </Window.InputBindings>
+    <StackPanel>
+        <DockPanel x:Name="TitleBar" Width="1280" MouseDown="Window_MouseDown" Background="Transparent" HorizontalAlignment="Stretch" Margin="0 4">
+            <StackPanel Orientation="Horizontal" Margin="8">
+                <Separator />
+                <Image Style="{StaticResource Icon_Chip}" />
+                <Separator />
+                <TextBlock Text="{Binding ApplicationVersion, FallbackValue=CHIP}" Foreground="{StaticResource PrimaryFontColor}" VerticalAlignment="Center" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="16 0">
+                <cc:MiniButton ImageResource="{StaticResource Icon_Minimize}" Click="Minimize_Click" />
+                <Separator />
+                <cc:MiniButton ImageResource="{StaticResource Icon_Window}" Click="ToggleMaximize_Click" />
+                <Separator />
+                <cc:MiniButton ImageResource="{StaticResource Icon_X}" Click="CloseButton_Click" />
+            </StackPanel>
+        </DockPanel>
+        <TabControl BorderThickness="0 2 0 0">
+            <TabItem Header="Campaigns">
+                <StackPanel Style="{StaticResource SPNL_SectionWrapper}" Orientation="Horizontal">
+                    <StackPanel>
+                        <DockPanel>
+                            <Label Content="Campaigns" />
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CampaignView.AddCampaign}" />
+                                <cc:IconButton ImageResource="{StaticResource Icon_Save}" Command="{Binding CampaignView.SaveCampaigns}" />
+                                <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CampaignView.SortCampaigns}" />
+                                <cc:IconButton ImageResource="{StaticResource Icon_Import}" Command="{Binding CampaignView.ImportCampaigns}" />
+                            </StackPanel>
+                        </DockPanel>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Player Characters">
 
-    </Grid>
+            </TabItem>
+            <TabItem Header="Settings">
+
+            </TabItem>
+        </TabControl>
+    </StackPanel>
 </Window>
