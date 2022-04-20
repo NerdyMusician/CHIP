@@ -1,5 +1,6 @@
 ﻿using CyberpunkGameplayAssistant.Models;
 using CyberpunkGameplayAssistant.Toolbox;
+using CyberpunkGameplayAssistant.Windows;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -73,12 +74,12 @@ namespace CyberpunkGameplayAssistant.ViewModels
                 // Prevents zero character save crash
                 XDocument blankDoc = new();
                 blankDoc.Add(new XElement("GameCampaignSet"));
-                blankDoc.Save(Configuration.CampaignDataFilePath);
+                blankDoc.Save(ReferenceData.File_CampaignData);
                 return;
             }
             XDocument itemDocument = new();
             itemDocument.Add(XmlMethods.ListToXml(Campaigns.ToList()));
-            itemDocument.Save(Configuration.CampaignDataFilePath);
+            itemDocument.Save(ReferenceData.File_CampaignData);
             HelperMethods.WriteToLogFile("Campaigns Saved", notifyUser);
             return;
         }
@@ -103,8 +104,8 @@ namespace CyberpunkGameplayAssistant.ViewModels
 
             if (openWindow.ShowDialog() == true)
             {
-                DataImport.ImportData_Campaigns(openWindow.FileName, out string message);
-                HelperMethods.NotifyUser(message);
+                //DataImport.ImportData_Campaigns(openWindow.FileName, out string message); // TODO
+                //HelperMethods.NotifyUser(message);
             }
         }
         #endregion
