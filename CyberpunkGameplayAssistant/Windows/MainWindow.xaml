@@ -96,6 +96,24 @@
         <Style TargetType="StackPanel" x:Key="SPNL_SectionWrapper">
             <Setter Property="Margin" Value="4 2" />
         </Style>
+        <Style TargetType="ListView" x:Key="PrimaryTabList">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Width" Value="216" />
+            <Setter Property="Height" Value="608" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Visible" />
+        </Style>
+        <Style TargetType="StackPanel" x:Key="SPNL_ListButtonPanel">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+        </Style>
+        <Style TargetType="Border" x:Key="BRDR_PopupBorder">
+            <Setter Property="BorderBrush" Value="{StaticResource ButtonBorder}" />
+            <Setter Property="Background" Value="{StaticResource PrimaryBackground}" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="CornerRadius" Value="2" />
+        </Style>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="F1" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="F1" />
@@ -137,17 +155,216 @@
                     <StackPanel>
                         <DockPanel>
                             <Label Content="Campaigns" />
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <StackPanel Style="{StaticResource SPNL_ListButtonPanel}">
                                 <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CampaignView.AddCampaign}" />
                                 <cc:IconButton ImageResource="{StaticResource Icon_Save}" Command="{Binding CampaignView.SaveCampaigns}" />
                                 <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CampaignView.SortCampaigns}" />
                                 <cc:IconButton ImageResource="{StaticResource Icon_Import}" Command="{Binding CampaignView.ImportCampaigns}" />
                             </StackPanel>
                         </DockPanel>
+                        <Border Style="{StaticResource ListBorder}">
+                            <ListView Style="{StaticResource PrimaryTabList}" ItemsSource="{Binding CampaignView.Campaigns, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding CampaignView.ActiveCampaign, UpdateSourceTrigger=PropertyChanged}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Style="{StaticResource Icon_Rpg_Book}" />
+                                            <Separator Width="4" Visibility="Hidden" />
+                                            <TextBlock Text="{Binding Name}" Foreground="{StaticResource PrimaryFontColor}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel Margin="16 0 0 0">
+                        <TextBlock Margin="0 4">
+                            <Run Text="Last Save:" />
+                            <Run Text="{Binding CampaignView.LastSave}" />
+                        </TextBlock>
+                        <TabControl BorderThickness="0 2 0 0" Width="1032" Visibility="{Binding CampaignView.ActiveCampaign, Converter={tool:CollapsedIfNull}, UpdateSourceTrigger=PropertyChanged}">
+                            <TabItem Header="Information">
+                                <StackPanel Margin="4">
+                                    <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                        <cc:FieldLabel Text="Name" />
+                                        <TextBox Text="{Binding CampaignView.ActiveCampaign.Name}" />
+                                        <Separator />
+                                        <cc:MiniButton ImageResource="{StaticResource Icon_X}" Command="{Binding CampaignView.ActiveCampaign.RemoveCampaign}" />
+                                    </StackPanel>
+                                    <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                        <cc:FieldLabel Text="Start Date / Time" />
+                                        <TextBlock Text="{Binding CampaignView.StartDate}" Width="160" />
+                                        <Separator />
+                                        <StackPanel>
+                                            <cc:MiniToggleButton ImageResource="{StaticResource Icon_Time}" IsChecked="{Binding CampaignView.ShowStartTimeControls, UpdateSourceTrigger=PropertyChanged}" />
+                                            <Popup IsOpen="{Binding CampaignView.ShowStartTimeControls, UpdateSourceTrigger=PropertyChanged}">
+                                                <Border Style="{StaticResource BRDR_PopupBorder}">
+                                                    <StackPanel Margin="2">
+                                                        <StackPanel.Resources>
+                                                            <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
+                                                                <Setter Property="Width" Value="32" />
+                                                            </Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Margin" Value="4" />
+                                                                <Setter Property="Width" Value="48" />
+                                                                <Setter Property="TextAlignment" Value="Center" />
+                                                                <Setter Property="FontWeight" Value="Bold" />
+                                                            </Style>
+                                                        </StackPanel.Resources>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusThirty}" Command="{Binding CampaignView.ActiveCampaign.ChangeStartTime}" CommandParameter="Minutes,-30" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusFifteen}" Command="{Binding CampaignView.ActiveCampaign.ChangeStartTime}" CommandParameter="Minutes,-15" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" Command="{Binding CampaignView.ActiveCampaign.ChangeStartTime}" CommandParameter="Minutes,-5" />
+                                                            <TextBlock Text="MIN" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" Command="{Binding CampaignView.ActiveCampaign.ChangeStartTime}" CommandParameter="Minutes,5" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusFifteen}" Command="{Binding CampaignView.ActiveCampaign.ChangeStartTime}" CommandParameter="Minutes,15" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusThirty}" Command="{Binding CampaignView.ActiveCampaign.ChangeStartTime}" CommandParameter="Minutes,30" />
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusEight}" Command="{Binding CampaignView.ActiveCampaign.ChangeStartTime}" CommandParameter="Hours,-8" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusFour}" Command="{Binding CampaignView.ActiveCampaign.ChangeStartTime}" CommandParameter="Hours,-4" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding CampaignView.ActiveCampaign.ChangeStartTime}" CommandParameter="Hours,-1" />
+                                                            <TextBlock Text="HOUR" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding CampaignView.ActiveCampaign.ChangeStartTime}" CommandParameter="Hours,1" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusFour}" Command="{Binding CampaignView.ActiveCampaign.ChangeStartTime}" CommandParameter="Hours,4" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusEight}" Command="{Binding CampaignView.ActiveCampaign.ChangeStartTime}" CommandParameter="Hours,8" />
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusThirteen}" Command="{Binding CampaignView.ActiveCampaign.ChangeStartTime}" CommandParameter="Days,-13" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusSix}" Command="{Binding CampaignView.ActiveCampaign.ChangeStartTime}" CommandParameter="Days,-6" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding CampaignView.ActiveCampaign.ChangeStartTime}" CommandParameter="Days,-1" />
+                                                            <TextBlock Text="DAY" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding CampaignView.ActiveCampaign.ChangeStartTime}" CommandParameter="Days,1" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusSix}" Command="{Binding CampaignView.ActiveCampaign.ChangeStartTime}" CommandParameter="Days,6" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusThirteen}" Command="{Binding CampaignView.ActiveCampaign.ChangeStartTime}" CommandParameter="Days,13" />
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Popup>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                        <cc:FieldLabel Text="Current Date / Time" />
+                                        <TextBlock Text="{Binding CampaignView.CurrentDate}" Width="160" />
+                                        <Separator />
+                                        <StackPanel>
+                                            <cc:MiniToggleButton ImageResource="{StaticResource Icon_Time}" IsChecked="{Binding CampaignView.ShowCurrentTimeControls, UpdateSourceTrigger=PropertyChanged}" />
+                                            <Popup IsOpen="{Binding CampaignView.ShowCurrentTimeControls, UpdateSourceTrigger=PropertyChanged}">
+                                                <Border Style="{StaticResource BRDR_PopupBorder}">
+                                                    <StackPanel Margin="2">
+                                                        <StackPanel.Resources>
+                                                            <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
+                                                                <Setter Property="Width" Value="32" />
+                                                            </Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Margin" Value="4" />
+                                                                <Setter Property="Width" Value="48" />
+                                                                <Setter Property="TextAlignment" Value="Center" />
+                                                                <Setter Property="FontWeight" Value="Bold" />
+                                                            </Style>
+                                                        </StackPanel.Resources>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusThirty}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Minutes,-30" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusFifteen}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Minutes,-15" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Minutes,-5" />
+                                                            <TextBlock Text="MIN" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Minutes,5" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusFifteen}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Minutes,15" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusThirty}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Minutes,30" />
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusEight}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Hours,-8" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusFour}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Hours,-4" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Hours,-1" />
+                                                            <TextBlock Text="HOUR" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Hours,1" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusFour}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Hours,4" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusEight}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Hours,8" />
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusThirteen}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Days,-13" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusSix}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Days,-6" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Days,-1" />
+                                                            <TextBlock Text="DAY" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Days,1" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusSix}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Days,6" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusThirteen}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Days,13" />
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Popup>
+                                        </StackPanel>
+                                        <Separator />
+                                        <TextBlock Text="{Binding CampaignView.CampaignDayCount}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem>
+                            <TabItem Header="Firefight">
+                                <StackPanel Orientation="Horizontal" Margin="4">
+                                    <StackPanel>
+                                        <TextBlock Text="Tools" />
+                                        <Rectangle />
+                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Combatants" />
+                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPeople}" Text="Add Encounter" />
+                                        <Separator Height="8" />
+                                        <cc:ImageButton ImageResource="{StaticResource Icon_Runner}" Text="Roll Initiatives" />
+                                        <cc:ImageButton ImageResource="{StaticResource Icon_Sort}" Text="Sort Combatants" />
+                                        <StackPanel>
+                                            <cc:ImageToggleButton ImageResource="{StaticResource Icon_Skull}" Text="Clear..." IsChecked="{Binding CampaignView.ShowClearKillControls}" Margin="2" />
+                                            <Popup IsOpen="{Binding CampaignView.ShowClearKillControls}">
+                                                <Border Style="{StaticResource BRDR_PopupBorder}">
+                                                    <StackPanel Margin="2">
+                                                        <cc:ImageButton ImageResource="{StaticResource Icon_Eraser}" Text="Remove All" />
+                                                        <cc:ImageButton ImageResource="{StaticResource Icon_Eraser}" Text="Remove Dead" />
+                                                        <cc:ImageButton ImageResource="{StaticResource Icon_Skull}" Text="Kill Enemies" />
+                                                    </StackPanel>
+                                                </Border>
+                                            </Popup>
+                                        </StackPanel>
+                                        <cc:ImageButton ImageResource="{StaticResource Icon_Pack}" Text="Loot Fallen" />
+                                        <Separator Height="8" />
+                                        <StackPanel>
+                                            <StackPanel.Resources>
+                                                <Style TargetType="{x:Type cc:ImageButton}" BasedOn="{StaticResource ImageButton}">
+                                                    <Setter Property="Width" Value="66" />
+                                                </Style>
+                                            </StackPanel.Resources>
+                                            <StackPanel Orientation="Horizontal">
+                                                <cc:ImageButton Text="1d4" ImageResource="{StaticResource Icon_Dice}" Command="{Binding CampaignView.ActiveCampaign.RollDice}" CommandParameter="4" />
+                                                <cc:ImageButton Text="1d6" ImageResource="{StaticResource Icon_Dice}" Command="{Binding CampaignView.ActiveCampaign.RollDice}" CommandParameter="6" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <cc:ImageButton Text="1d8" ImageResource="{StaticResource Icon_Dice}" Command="{Binding CampaignView.ActiveCampaign.RollDice}" CommandParameter="8" />
+                                                <cc:ImageButton Text="1d10" ImageResource="{StaticResource Icon_Dice}" Command="{Binding CampaignView.ActiveCampaign.RollDice}" CommandParameter="10" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <cc:ImageButton Text="1d12" ImageResource="{StaticResource Icon_Dice}" Command="{Binding CampaignView.ActiveCampaign.RollDice}" CommandParameter="12" />
+                                                <cc:ImageButton Text="1d20" ImageResource="{StaticResource Icon_Dice}" Command="{Binding CampaignView.ActiveCampaign.RollDice}" CommandParameter="20" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <cc:ImageButton Text="1d100" ImageResource="{StaticResource Icon_Dice}" Command="{Binding CampaignView.ActiveCampaign.RollDice}" CommandParameter="100" />
+                                                <cc:ImageButton Text="Coin" ImageResource="{StaticResource Icon_CopperCoin}" Command="{Binding CampaignView.ActiveCampaign.FlipCoin}" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem>
+                            <TabItem Header="Netrun">
+                                
+                            </TabItem>
+                            <TabItem Header="Players">
+
+                            </TabItem>
+                            <TabItem Header="NPCs">
+
+                            </TabItem>
+                            <TabItem Header="Encounters">
+
+                            </TabItem>
+                        </TabControl>
                     </StackPanel>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Player Characters">
+            <TabItem Header="Player Characters" Visibility="Collapsed">
 
             </TabItem>
             <TabItem Header="Settings">

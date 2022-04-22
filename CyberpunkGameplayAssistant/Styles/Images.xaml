@@ -8,6 +8,13 @@
         <Setter Property="ToolTipService.InitialShowDelay" Value="100" />
         <Setter Property="ToolTipService.ShowDuration" Value="30000" />
     </Style>
+    <Style TargetType="Image" x:Key="Icon_WideBase">
+        <Setter Property="Height" Value="16" />
+        <Setter Property="Width" Value="24" />
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
+        <Setter Property="ToolTipService.InitialShowDelay" Value="100" />
+        <Setter Property="ToolTipService.ShowDuration" Value="30000" />
+    </Style>
     
     <!-- Title Bar Icons -->
     <Style TargetType="Image" x:Key="Icon_Chip" BasedOn="{StaticResource Icon_Base}">
@@ -47,6 +54,9 @@
     </Style>
     <Style TargetType="Image" x:Key="Icon_Clock" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/clock.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_Time" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/time.png" />
     </Style>
     <Style TargetType="Image" x:Key="Icon_Sort" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/dm_sort.png" />
@@ -368,9 +378,66 @@
     <Style TargetType="Image" x:Key="Icon_Scott" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/scott.png" />
     </Style>
-    
-    
+
+
     <!-- Unsorted -->
+    <Style TargetType="Image" x:Key="Icon_Runner" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/runner.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_AddPerson" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/addperson.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_AddPeople" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/addpeople.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_PlusOne" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/plus_one.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_PlusFour" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/plus_four.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_PlusFive" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/plus_five.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_PlusSix" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/plus_six.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_PlusEight" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/plus_eight.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_PlusThirteen" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/plus_thirteen.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_PlusFifteen" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/plus_thirteen.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_PlusThirty" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/plus_thirty.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_MinusOne" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/minus_one.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_MinusFour" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/minus_four.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_MinusFive" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/minus_five.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_MinusSix" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/minus_six.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_MinusEight" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/minus_eight.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_MinusThirteen" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/minus_thirteen.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_MinusFifteen" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/minus_thirteen.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_MinusThirty" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/minus_thirty.png" />
+    </Style>
     <Style TargetType="Image" x:Key="Icon_Directions" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/directions.png" />
     </Style>
