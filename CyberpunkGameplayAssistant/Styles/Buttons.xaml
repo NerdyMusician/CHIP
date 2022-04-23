@@ -108,7 +108,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="cc:ImageToggleButton">
                     <Border CornerRadius="1" Background="{TemplateBinding Background}" BorderThickness="0 0 1 1" Padding="2" BorderBrush="{StaticResource ButtonBorder}">
-                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 0 0 0" />
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

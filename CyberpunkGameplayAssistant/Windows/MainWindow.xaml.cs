@@ -2,6 +2,7 @@
 using CyberpunkGameplayAssistant.ViewModels;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Windows
@@ -72,5 +73,11 @@ namespace CyberpunkGameplayAssistant.Windows
         {
             TitleBar.Width = this.ActualWidth;
         }
+
+        private void CopyTextblockText(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText((sender as MenuItem).CommandParameter.ToString());
+        }
+
     }
 }

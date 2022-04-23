@@ -381,6 +381,12 @@
 
 
     <!-- Unsorted -->
+    <Style TargetType="Image" x:Key="Icon_Pistol" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/pistol.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_BlueBox" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/bluebox.png" />
+    </Style>
     <Style TargetType="Image" x:Key="Icon_Runner" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/runner.png" />
     </Style>
@@ -392,6 +398,9 @@
     </Style>
     <Style TargetType="Image" x:Key="Icon_PlusOne" BasedOn="{StaticResource Icon_WideBase}">
         <Setter Property="Source" Value="../Resources/Icons/plus_one.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_PlusTwo" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/plus_two.png" />
     </Style>
     <Style TargetType="Image" x:Key="Icon_PlusFour" BasedOn="{StaticResource Icon_WideBase}">
         <Setter Property="Source" Value="../Resources/Icons/plus_four.png" />
@@ -405,6 +414,9 @@
     <Style TargetType="Image" x:Key="Icon_PlusEight" BasedOn="{StaticResource Icon_WideBase}">
         <Setter Property="Source" Value="../Resources/Icons/plus_eight.png" />
     </Style>
+    <Style TargetType="Image" x:Key="Icon_PlusTen" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/plus_ten.png" />
+    </Style>
     <Style TargetType="Image" x:Key="Icon_PlusThirteen" BasedOn="{StaticResource Icon_WideBase}">
         <Setter Property="Source" Value="../Resources/Icons/plus_thirteen.png" />
     </Style>
@@ -417,6 +429,9 @@
     <Style TargetType="Image" x:Key="Icon_MinusOne" BasedOn="{StaticResource Icon_WideBase}">
         <Setter Property="Source" Value="../Resources/Icons/minus_one.png" />
     </Style>
+    <Style TargetType="Image" x:Key="Icon_MinusTwo" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/minus_two.png" />
+    </Style>
     <Style TargetType="Image" x:Key="Icon_MinusFour" BasedOn="{StaticResource Icon_WideBase}">
         <Setter Property="Source" Value="../Resources/Icons/minus_four.png" />
     </Style>
@@ -428,6 +443,9 @@
     </Style>
     <Style TargetType="Image" x:Key="Icon_MinusEight" BasedOn="{StaticResource Icon_WideBase}">
         <Setter Property="Source" Value="../Resources/Icons/minus_eight.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_MinusTen" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/minus_ten.png" />
     </Style>
     <Style TargetType="Image" x:Key="Icon_MinusThirteen" BasedOn="{StaticResource Icon_WideBase}">
         <Setter Property="Source" Value="../Resources/Icons/minus_thirteen.png" />
@@ -463,7 +481,7 @@
         <Setter Property="Source" Value="../Resources/Icons/sleep.png" />
     </Style>
     <Style TargetType="Image" x:Key="Icon_Shield" BasedOn="{StaticResource Icon_Base}">
-        <Setter Property="Source" Value="../Resources/Icons/dm_shield.png" />
+        <Setter Property="Source" Value="../Resources/Icons/shield.png" />
     </Style>
     <Style TargetType="Image" x:Key="Icon_Step" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/dm_step.png" />

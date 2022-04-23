@@ -301,6 +301,7 @@
                             <TabItem Header="Firefight">
                                 <StackPanel Orientation="Horizontal" Margin="4">
                                     <StackPanel>
+                                        <Separator Height="0" />
                                         <TextBlock Text="Tools" />
                                         <Rectangle />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Combatants" />
@@ -320,7 +321,7 @@
                                                 </Border>
                                             </Popup>
                                         </StackPanel>
-                                        <cc:ImageButton ImageResource="{StaticResource Icon_Pack}" Text="Loot Fallen" />
+                                        <cc:ImageButton ImageResource="{StaticResource Icon_BlueBox}" Text="Loot Fallen" />
                                         <Separator Height="8" />
                                         <StackPanel>
                                             <StackPanel.Resources>
@@ -342,9 +343,179 @@
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
                                                 <cc:ImageButton Text="1d100" ImageResource="{StaticResource Icon_Dice}" Command="{Binding CampaignView.ActiveCampaign.RollDice}" CommandParameter="100" />
-                                                <cc:ImageButton Text="Coin" ImageResource="{StaticResource Icon_CopperCoin}" Command="{Binding CampaignView.ActiveCampaign.FlipCoin}" />
+                                                <cc:ImageButton Text="Coin" ImageResource="{StaticResource Icon_SilverCoin}" Command="{Binding CampaignView.ActiveCampaign.FlipCoin}" />
                                             </StackPanel>
                                         </StackPanel>
+                                        <Separator Height="8" />
+                                        <StackPanel Orientation="Horizontal" Height="32">
+                                            <StackPanel VerticalAlignment="Bottom">
+                                                <TextBlock Text="DAY" FontSize="14" FontFamily="Century Gothic" FontWeight="Normal" Width="auto" Margin="0" />
+                                                <TextBlock Text="{Binding CampaignView.ActiveCampaign.AdventureDayCount, FallbackValue=234}" FontSize="16" FontWeight="Normal" FontFamily="Century Gothic" Width="auto" Margin="0 -4 0 0" HorizontalAlignment="Center" />
+                                            </StackPanel>
+                                            <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" TextAlignment="Right" FontWeight="Normal" FontFamily="Century Gothic" Width="106" Height="34" Margin="0"><Run Text="{Binding CampaignView.ActiveCampaign.TimeDigits, FallbackValue=12:00, UpdateSourceTrigger=PropertyChanged}" FontSize="32" /><Run Text="{Binding CampaignView.ActiveCampaign.TimeIndicator, FallbackValue=PM, UpdateSourceTrigger=PropertyChanged}" FontSize="14" /></TextBlock>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding CampaignView.ActiveCampaign.CalendarProgress_Processed, FallbackValue='Wednesday, 21st of September, 2048'}"  FontSize="14" FontFamily="Century Gothic" FontWeight="ExtraLight" TextWrapping="Wrap" Width="140" />
+                                        <StackPanel>
+                                            <cc:ImageToggleButton ImageResource="{StaticResource Icon_Time}" Text="Change Time" IsChecked="{Binding CampaignView.ShowCurrentTimeControls, UpdateSourceTrigger=PropertyChanged}" />
+                                            <Popup IsOpen="{Binding CampaignView.ShowCurrentTimeControls, UpdateSourceTrigger=PropertyChanged}">
+                                                <Border Style="{StaticResource BRDR_PopupBorder}">
+                                                    <StackPanel Margin="2">
+                                                        <StackPanel.Resources>
+                                                            <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
+                                                                <Setter Property="Width" Value="32" />
+                                                            </Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Margin" Value="4" />
+                                                                <Setter Property="Width" Value="48" />
+                                                                <Setter Property="TextAlignment" Value="Center" />
+                                                                <Setter Property="FontWeight" Value="Bold" />
+                                                            </Style>
+                                                        </StackPanel.Resources>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusThirty}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Minutes,-30" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusFifteen}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Minutes,-15" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Minutes,-5" />
+                                                            <TextBlock Text="MIN" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Minutes,5" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusFifteen}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Minutes,15" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusThirty}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Minutes,30" />
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusEight}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Hours,-8" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusFour}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Hours,-4" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Hours,-1" />
+                                                            <TextBlock Text="HOUR" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Hours,1" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusFour}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Hours,4" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusEight}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Hours,8" />
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusThirteen}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Days,-13" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusSix}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Days,-6" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Days,-1" />
+                                                            <TextBlock Text="DAY" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Days,1" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusSix}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Days,6" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusThirteen}" Command="{Binding CampaignView.ActiveCampaign.ChangeCurrentTime}" CommandParameter="Days,13" />
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Popup>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <Separator Width="8" />
+                                    <StackPanel>
+                                        <DockPanel>
+                                            <TextBlock Text="Action History" VerticalAlignment="Bottom" />
+                                            <cc:IconButton ImageResource="{StaticResource Icon_Eraser}" Command="{Binding CampaignView.ActiveCampaign.ClearMessages}" CommandParameter="All" HorizontalAlignment="Right" Margin="0 0 0 -2">
+                                                <cc:IconButton.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem Header="Clear After 10" Command="{Binding CampaignView.ActiveCampaign.ClearMessages}" CommandParameter="After10" />
+                                                        <MenuItem Header="Clear After 50" Command="{Binding CampaignView.ActiveCampaign.ClearMessages}" CommandParameter="After50" />
+                                                    </ContextMenu>
+                                                </cc:IconButton.ContextMenu>
+                                            </cc:IconButton>
+                                        </DockPanel>
+                                        <Border Style="{StaticResource ListBorder}">
+                                            <ScrollViewer Width="240" Height="556">
+                                                <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.Messages, UpdateSourceTrigger=PropertyChanged}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Orientation="Horizontal" Margin="0 0 0 4">
+                                                                <Image Style="{Binding MessageType, Converter={tool:ImageBasedOnMessageType}}" VerticalAlignment="Top" Margin="2 2 4 0" />
+                                                                <TextBlock Text="{Binding MessageContent}" FontWeight="Normal" Foreground="{StaticResource PrimaryFontColor}" TextWrapping="Wrap" Width="180">
+                                                                    <TextBlock.ContextMenu>
+                                                                        <ContextMenu>
+                                                                            <MenuItem Header="Copy Text" Click="CopyTextblockText" CommandParameter="{Binding MessageContent}" />
+                                                                            <MenuItem Header="Delete Event" Command="{Binding RemoveMessage}" CommandParameter="Campaign" />
+                                                                        </ContextMenu>
+                                                                    </TextBlock.ContextMenu>
+                                                                </TextBlock>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </ScrollViewer>
+                                        </Border>
+                                    </StackPanel>
+                                    <Separator Width="8" />
+                                    <StackPanel>
+                                        <Separator Height="0" />
+                                        <TextBlock Text="Combatants" />
+                                        <Rectangle />
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Style="{StaticResource Icon_MatchRound}" />
+                                            <Separator />
+                                            <TextBlock Text="Round: " VerticalAlignment="Center" />
+                                            <TextBox Text="{Binding CampaignView.ActiveCampaign.EncounterRound}" Width="32" />
+                                            <Separator Width="16" />
+                                            <cc:IconButton ImageResource="{StaticResource Icon_User_Previous}" Command="{Binding CampaignView.ActiveCampaign.ChangeActiveCreature}" CommandParameter="Previous" />
+                                            <cc:IconButton ImageResource="{StaticResource Icon_User_Next}" Command="{Binding CampaignView.ActiveCampaign.ChangeActiveCreature}" CommandParameter="Next" />
+                                            <cc:IconButton ImageResource="{StaticResource Icon_Refresh}" Command="{Binding CampaignView.ActiveCampaign.ChangeActiveCreature}" CommandParameter="Reset" />
+                                        </StackPanel>
+                                        <Border Style="{StaticResource BRDR_PopupBorder}">
+                                            <StackPanel Margin="2">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="{Binding ImagePath}" Width="64" Height="64" Margin="6 6 4 6" />
+                                                    <StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding DisplayName, FallbackValue='Security Operative A'}" Width="140" FontSize="14" Margin="3" />
+                                                            <Image Style="{StaticResource Icon_Info}" Margin="4 0 8 0" />
+                                                        </StackPanel>
+                                                        <StackPanel>
+                                                            <cc:ImageToggleButton ImageResource="{StaticResource Icon_Pistol}" Text="Weapons" Margin="2" />
+                                                        </StackPanel>
+                                                        <StackPanel>
+                                                            <cc:ImageToggleButton ImageResource="{StaticResource Icon_Hand}" Text="Stats &amp; Skills" />
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <Separator />
+                                                    <StackPanel>
+                                                        <StackPanel.Resources>
+                                                            <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
+                                                                <Setter Property="Width" Value="auto" />
+                                                            </Style>
+                                                            <Style TargetType="TextBlock" x:Key="MidNum">
+                                                                <Setter Property="Width" Value="37" />
+                                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                                <Setter Property="TextAlignment" Value="Center" />
+                                                                <Setter Property="FontSize" Value="20" />
+                                                                <Setter Property="FontFamily" Value="Century Gothic" />
+                                                            </Style>
+                                                        </StackPanel.Resources>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Style="{StaticResource Icon_Heart}" />
+                                                            <Separator />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" />
+                                                            <TextBlock Text="{Binding CurrentHitPoints, FallbackValue=20}" Style="{StaticResource MidNum}" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" />
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Style="{StaticResource Icon_Construct}" />
+                                                            <Separator />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusTwo}" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" />
+                                                            <TextBlock Text="{Binding HeadStoppingPower, FallbackValue=20}" Style="{StaticResource MidNum}" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusTwo}" />
+                                                            <Separator Width="40" />
+                                                            <TextBlock Text="{Binding WoundState, FallbackValue=Seriously Wounded}" VerticalAlignment="Center" />
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Style="{StaticResource Icon_Shield}" />
+                                                            <Separator />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusTwo}" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" />
+                                                            <TextBlock Text="{Binding BodyStoppingPower, FallbackValue=20}" Style="{StaticResource MidNum}" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" />
+                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusTwo}" />
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Border>
                                     </StackPanel>
                                 </StackPanel>
                             </TabItem>

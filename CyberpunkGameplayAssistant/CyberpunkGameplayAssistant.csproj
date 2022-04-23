@@ -25,6 +25,7 @@
     <None Remove="Resources\Icons\art.png" />
     <None Remove="Resources\Icons\bag.png" />
     <None Remove="Resources\Icons\beast.png" />
+    <None Remove="Resources\Icons\bluebox.png" />
     <None Remove="Resources\Icons\book.png" />
     <None Remove="Resources\Icons\booze.png" />
     <None Remove="Resources\Icons\bow.png" />
@@ -156,9 +157,11 @@
     <None Remove="Resources\Icons\minus_four.png" />
     <None Remove="Resources\Icons\minus_one.png" />
     <None Remove="Resources\Icons\minus_six.png" />
+    <None Remove="Resources\Icons\minus_ten.png" />
     <None Remove="Resources\Icons\minus_thirteen.png" />
     <None Remove="Resources\Icons\minus_thirty.png" />
     <None Remove="Resources\Icons\minus_three.png" />
+    <None Remove="Resources\Icons\minus_two.png" />
     <None Remove="Resources\Icons\monster.png" />
     <None Remove="Resources\Icons\mountain.png" />
     <None Remove="Resources\Icons\musicnote.png" />
@@ -179,6 +182,7 @@
     <None Remove="Resources\Icons\pause.png" />
     <None Remove="Resources\Icons\person.png" />
     <None Remove="Resources\Icons\person_add.png" />
+    <None Remove="Resources\Icons\pistol.png" />
     <None Remove="Resources\Icons\play.png" />
     <None Remove="Resources\Icons\plus_eight.png" />
     <None Remove="Resources\Icons\plus_fifteen.png" />
@@ -187,9 +191,11 @@
     <None Remove="Resources\Icons\plus_green.png" />
     <None Remove="Resources\Icons\plus_one.png" />
     <None Remove="Resources\Icons\plus_six.png" />
+    <None Remove="Resources\Icons\plus_ten.png" />
     <None Remove="Resources\Icons\plus_thirteen.png" />
     <None Remove="Resources\Icons\plus_thirty.png" />
     <None Remove="Resources\Icons\plus_three.png" />
+    <None Remove="Resources\Icons\plus_two.png" />
     <None Remove="Resources\Icons\poison.png" />
     <None Remove="Resources\Icons\poison_b.png" />
     <None Remove="Resources\Icons\potion.png" />
@@ -308,6 +314,7 @@
     <Resource Include="Resources\Icons\art.png" />
     <Resource Include="Resources\Icons\bag.png" />
     <Resource Include="Resources\Icons\beast.png" />
+    <Resource Include="Resources\Icons\bluebox.png" />
     <Resource Include="Resources\Icons\book.png" />
     <Resource Include="Resources\Icons\booze.png" />
     <Resource Include="Resources\Icons\bow.png" />
@@ -439,9 +446,11 @@
     <Resource Include="Resources\Icons\minus_four.png" />
     <Resource Include="Resources\Icons\minus_one.png" />
     <Resource Include="Resources\Icons\minus_six.png" />
+    <Resource Include="Resources\Icons\minus_ten.png" />
     <Resource Include="Resources\Icons\minus_thirteen.png" />
     <Resource Include="Resources\Icons\minus_thirty.png" />
     <Resource Include="Resources\Icons\minus_three.png" />
+    <Resource Include="Resources\Icons\minus_two.png" />
     <Resource Include="Resources\Icons\monster.png" />
     <Resource Include="Resources\Icons\mountain.png" />
     <Resource Include="Resources\Icons\musicnote.png" />
@@ -462,6 +471,7 @@
     <Resource Include="Resources\Icons\pause.png" />
     <Resource Include="Resources\Icons\person.png" />
     <Resource Include="Resources\Icons\person_add.png" />
+    <Resource Include="Resources\Icons\pistol.png" />
     <Resource Include="Resources\Icons\play.png" />
     <Resource Include="Resources\Icons\plus_eight.png" />
     <Resource Include="Resources\Icons\plus_fifteen.png" />
@@ -470,9 +480,11 @@
     <Resource Include="Resources\Icons\plus_green.png" />
     <Resource Include="Resources\Icons\plus_one.png" />
     <Resource Include="Resources\Icons\plus_six.png" />
+    <Resource Include="Resources\Icons\plus_ten.png" />
     <Resource Include="Resources\Icons\plus_thirteen.png" />
     <Resource Include="Resources\Icons\plus_thirty.png" />
     <Resource Include="Resources\Icons\plus_three.png" />
+    <Resource Include="Resources\Icons\plus_two.png" />
     <Resource Include="Resources\Icons\poison.png" />
     <Resource Include="Resources\Icons\poison_b.png" />
     <Resource Include="Resources\Icons\potion.png" />

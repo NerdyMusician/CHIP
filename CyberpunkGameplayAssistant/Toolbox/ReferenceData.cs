@@ -1,12 +1,14 @@
 ﻿using CyberpunkGameplayAssistant.Models;
 using System;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace CyberpunkGameplayAssistant.Toolbox
 {
     public static class ReferenceData
     {
         // Utility
+        public static FrameworkElement Framework = new();
         public static Random RNG = new();
 
         // File Locations
