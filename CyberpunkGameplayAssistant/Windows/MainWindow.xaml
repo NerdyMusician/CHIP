@@ -440,6 +440,178 @@
                                     </StackPanel>
                                     <Separator Width="8" />
                                     <StackPanel>
+                                        <StackPanel.Resources>
+                                            <DataTemplate x:Key="EmptyCard">
+                                                <Border Style="{StaticResource BRDR_PopupBorder}" Width="586" Height="84" Margin="0 2 2 2">
+                                                    <TextBlock Text="Active Combatant will display here" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                                </Border>
+                                            </DataTemplate>
+                                            <DataTemplate x:Key="StandardCombatantCard">
+                                                <Border Style="{StaticResource BRDR_PopupBorder}" Width="586" Height="84" Margin="0 2 2 2">
+                                                    <StackPanel Margin="2">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="{Binding ImagePath}" Width="64" Height="64" Margin="6 6 4 6" />
+                                                            <StackPanel>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <TextBlock Text="{Binding DisplayName, FallbackValue='Security Operative A'}" Width="140" FontSize="14" Margin="3" />
+                                                                    <Image Style="{StaticResource Icon_Info}" Margin="4 0 8 0" />
+                                                                </StackPanel>
+                                                                <StackPanel>
+                                                                    <cc:ImageToggleButton ImageResource="{StaticResource Icon_Pistol}" Text="Weapons" Margin="2" IsChecked="{Binding WeaponMenuOpen}" />
+                                                                    <Popup IsOpen="{Binding WeaponMenuOpen}">
+                                                                        <Border Style="{StaticResource BRDR_PopupBorder}">
+                                                                            <StackPanel Margin="2">
+                                                                                <ItemsControl ItemsSource="{Binding Weapons}">
+                                                                                    <ItemsControl.ItemTemplate>
+                                                                                        <DataTemplate>
+                                                                                            <StackPanel Orientation="Horizontal">
+                                                                                                <cc:ImageButton ImageResource="{StaticResource Icon_Reticle}" Text="{Binding Name, FallbackValue=Very Heavy Pistol}" />
+                                                                                                <cc:MiniButton ImageResource="{StaticResource Icon_Reload}" />
+                                                                                                <Image Style="{StaticResource Icon_BulletStack}" Margin="4 0" />
+                                                                                                <TextBlock VerticalAlignment="Center" Width="72" FontFamily="Century Gothic" FontSize="15" FontWeight="Normal">
+                                                                                            <Run Text="x" />
+                                                                                            <Run Text="{Binding CurrentAmmoQuantity, FallbackValue=24}" />
+                                                                                            <Run Text="/" />
+                                                                                            <Run Text="{Binding MaxAmmoQuantity, FallbackValue=40}" />
+                                                                                                </TextBlock>
+                                                                                            </StackPanel>
+                                                                                        </DataTemplate>
+                                                                                    </ItemsControl.ItemTemplate>
+                                                                                </ItemsControl>
+                                                                            </StackPanel>
+                                                                        </Border>
+                                                                    </Popup>
+                                                                </StackPanel>
+                                                                <StackPanel>
+                                                                    <cc:ImageToggleButton ImageResource="{StaticResource Icon_Hand}" Text="Stats &amp; Skills" IsChecked="{Binding StatSkillMenuOpen}" />
+                                                                    <Popup IsOpen="{Binding StatSkillMenuOpen}">
+                                                                        <Border Style="{StaticResource BRDR_PopupBorder}">
+                                                                            <ScrollViewer Height="420">
+                                                                                <StackPanel Margin="4">
+                                                                                    <TextBlock Text="Stats" />
+                                                                                    <ItemsControl ItemsSource="{Binding Stats}">
+                                                                                        <ItemsControl.ItemsPanel>
+                                                                                            <ItemsPanelTemplate>
+                                                                                                <WrapPanel></WrapPanel>
+                                                                                            </ItemsPanelTemplate>
+                                                                                        </ItemsControl.ItemsPanel>
+                                                                                        <ItemsControl.ItemTemplate>
+                                                                                            <DataTemplate>
+                                                                                                <cc:ImageButton ImageResource="{Binding StatName, Converter={tool:ImageBasedOnStat}}" Text="{Binding StatAbbr}" />
+                                                                                            </DataTemplate>
+                                                                                        </ItemsControl.ItemTemplate>
+                                                                                    </ItemsControl>
+                                                                                    <Rectangle />
+                                                                                    <Separator />
+                                                                                    <StackPanel Orientation="Horizontal">
+                                                                                        <StackPanel.Resources>
+                                                                                            <DataTemplate x:Key="SkillButton">
+                                                                                                <cc:ImageButton ImageResource="{Binding SkillName, Converter={tool:ImageBasedOnSkill}}" Text="{Binding SkillDisplayName}" Width="180" />
+                                                                                            </DataTemplate>
+                                                                                        </StackPanel.Resources>
+                                                                                        <StackPanel>
+                                                                                            <TextBlock Text="Awareness Skills" />
+                                                                                            <Rectangle />
+                                                                                            <ItemsControl ItemsSource="{Binding AwarenessSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                            <Separator />
+                                                                                            <TextBlock Text="Body Skills" />
+                                                                                            <Rectangle />
+                                                                                            <ItemsControl ItemsSource="{Binding BodySkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                            <Separator />
+                                                                                            <TextBlock Text="Control Skills" />
+                                                                                            <Rectangle />
+                                                                                            <ItemsControl ItemsSource="{Binding ControlSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                            <Separator />
+                                                                                            <TextBlock Text="Performance Skills" />
+                                                                                            <Rectangle />
+                                                                                            <ItemsControl ItemsSource="{Binding PerformanceSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                        </StackPanel>
+                                                                                        <Separator />
+                                                                                        <StackPanel>
+                                                                                            <TextBlock Text="Education Skills" />
+                                                                                            <Rectangle />
+                                                                                            <ItemsControl ItemsSource="{Binding EducationSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                            <Separator />
+                                                                                            <TextBlock Text="Fighting Skills" />
+                                                                                            <Rectangle />
+                                                                                            <ItemsControl ItemsSource="{Binding FightingSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                            <Separator />
+                                                                                            <TextBlock Text="Ranged Weapon Skills" />
+                                                                                            <Rectangle />
+                                                                                            <ItemsControl ItemsSource="{Binding RangedWeaponSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                        </StackPanel>
+                                                                                        <Separator />
+                                                                                        <StackPanel>
+                                                                                            <TextBlock Text="Social Skills" />
+                                                                                            <Rectangle />
+                                                                                            <ItemsControl ItemsSource="{Binding SocialSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                            <Separator />
+                                                                                            <TextBlock Text="Technique Skills" />
+                                                                                            <Rectangle />
+                                                                                            <ItemsControl ItemsSource="{Binding TechniqueSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                        </StackPanel>
+                                                                                    </StackPanel>
+                                                                                </StackPanel>
+                                                                            </ScrollViewer>
+                                                                        </Border>
+                                                                    </Popup>
+                                                                </StackPanel>
+                                                            </StackPanel>
+                                                            <Separator />
+                                                            <StackPanel>
+                                                                <StackPanel.Resources>
+                                                                    <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
+                                                                        <Setter Property="Width" Value="auto" />
+                                                                    </Style>
+                                                                    <Style TargetType="TextBlock" x:Key="MidNum">
+                                                                        <Setter Property="Width" Value="37" />
+                                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                                        <Setter Property="FontSize" Value="20" />
+                                                                        <Setter Property="FontFamily" Value="Century Gothic" />
+                                                                    </Style>
+                                                                </StackPanel.Resources>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Image Style="{StaticResource Icon_Heart}" />
+                                                                    <Separator />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" />
+                                                                    <TextBlock Text="{Binding CurrentHitPoints, FallbackValue=20}" Style="{StaticResource MidNum}" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" />
+                                                                    <Separator />
+                                                                    <TextBlock Text="{Binding WoundState, FallbackValue=Seriously Wounded}" VerticalAlignment="Center" Width="128" />
+                                                                </StackPanel>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Image Style="{StaticResource Icon_Construct}" />
+                                                                    <Separator />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusTwo}" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" />
+                                                                    <TextBlock Text="{Binding HeadStoppingPower, FallbackValue=10}" Style="{StaticResource MidNum}" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusTwo}" />
+                                                                    <Separator />
+                                                                    <TextBlock Text="{Binding ArmorType, FallbackValue=Light Armorjack}" VerticalAlignment="Center" Width="128" />
+                                                                </StackPanel>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Image Style="{StaticResource Icon_Shield}" />
+                                                                    <Separator />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusTwo}" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" />
+                                                                    <TextBlock Text="{Binding BodyStoppingPower, FallbackValue=10}" Style="{StaticResource MidNum}" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusTwo}" />
+                                                                </StackPanel>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                            <tool:CombatTrackerTemplateSelector x:Key="ActiveCombatantTemplateSelector" 
+                                                                                DefaultDataTemplate="{StaticResource EmptyCard}" />
+                                            <tool:CombatTrackerTemplateSelector x:Key="ListCombatantTemplateSelector"
+                                                                                DefaultDataTemplate="{StaticResource StandardCombatantCard}" />
+                                        </StackPanel.Resources>
                                         <Separator Height="0" />
                                         <TextBlock Text="Combatants" />
                                         <Rectangle />
@@ -453,69 +625,25 @@
                                             <cc:IconButton ImageResource="{StaticResource Icon_User_Next}" Command="{Binding CampaignView.ActiveCampaign.ChangeActiveCreature}" CommandParameter="Next" />
                                             <cc:IconButton ImageResource="{StaticResource Icon_Refresh}" Command="{Binding CampaignView.ActiveCampaign.ChangeActiveCreature}" CommandParameter="Reset" />
                                         </StackPanel>
-                                        <Border Style="{StaticResource BRDR_PopupBorder}">
-                                            <StackPanel Margin="2">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="{Binding ImagePath}" Width="64" Height="64" Margin="6 6 4 6" />
-                                                    <StackPanel>
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <TextBlock Text="{Binding DisplayName, FallbackValue='Security Operative A'}" Width="140" FontSize="14" Margin="3" />
-                                                            <Image Style="{StaticResource Icon_Info}" Margin="4 0 8 0" />
-                                                        </StackPanel>
-                                                        <StackPanel>
-                                                            <cc:ImageToggleButton ImageResource="{StaticResource Icon_Pistol}" Text="Weapons" Margin="2" />
-                                                        </StackPanel>
-                                                        <StackPanel>
-                                                            <cc:ImageToggleButton ImageResource="{StaticResource Icon_Hand}" Text="Stats &amp; Skills" />
-                                                        </StackPanel>
-                                                    </StackPanel>
-                                                    <Separator />
-                                                    <StackPanel>
-                                                        <StackPanel.Resources>
-                                                            <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
-                                                                <Setter Property="Width" Value="auto" />
-                                                            </Style>
-                                                            <Style TargetType="TextBlock" x:Key="MidNum">
-                                                                <Setter Property="Width" Value="37" />
-                                                                <Setter Property="VerticalAlignment" Value="Center" />
-                                                                <Setter Property="TextAlignment" Value="Center" />
-                                                                <Setter Property="FontSize" Value="20" />
-                                                                <Setter Property="FontFamily" Value="Century Gothic" />
-                                                            </Style>
-                                                        </StackPanel.Resources>
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <Image Style="{StaticResource Icon_Heart}" />
-                                                            <Separator />
-                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" />
-                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" />
-                                                            <TextBlock Text="{Binding CurrentHitPoints, FallbackValue=20}" Style="{StaticResource MidNum}" />
-                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" />
-                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" />
-                                                        </StackPanel>
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <Image Style="{StaticResource Icon_Construct}" />
-                                                            <Separator />
-                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusTwo}" />
-                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" />
-                                                            <TextBlock Text="{Binding HeadStoppingPower, FallbackValue=20}" Style="{StaticResource MidNum}" />
-                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" />
-                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusTwo}" />
-                                                            <Separator Width="40" />
-                                                            <TextBlock Text="{Binding WoundState, FallbackValue=Seriously Wounded}" VerticalAlignment="Center" />
-                                                        </StackPanel>
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <Image Style="{StaticResource Icon_Shield}" />
-                                                            <Separator />
-                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusTwo}" />
-                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" />
-                                                            <TextBlock Text="{Binding BodyStoppingPower, FallbackValue=20}" Style="{StaticResource MidNum}" />
-                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" />
-                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusTwo}" />
-                                                        </StackPanel>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                            </StackPanel>
-                                        </Border>
+                                        <Separator />
+                                        <ContentControl Content="{Binding CampaignView.ActiveCampaign.ActiveCombatant}" ContentTemplateSelector="{StaticResource ActiveCombatantTemplateSelector}" />
+                                        <TabControl BorderThickness="0 2 0 0">
+                                            <TabItem Header="By Initiative">
+                                                <ScrollViewer Height="412">
+                                                    <ItemsControl ItemsSource="{Binding CampaignView.CombatantsByInitiative}" ItemTemplateSelector="{StaticResource ListCombatantTemplateSelector}" />
+                                                </ScrollViewer>
+                                            </TabItem>
+                                            <TabItem Header="By Name">
+
+                                            </TabItem>
+                                            <TabItem Header="NPCs">
+
+                                            </TabItem>
+                                            <TabItem Header="Players">
+
+                                            </TabItem>
+                                        </TabControl>
+                                        
                                     </StackPanel>
                                 </StackPanel>
                             </TabItem>

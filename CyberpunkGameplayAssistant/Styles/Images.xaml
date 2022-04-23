@@ -381,6 +381,15 @@
 
 
     <!-- Unsorted -->
+    <Style TargetType="Image" x:Key="Icon_Reload" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/reload.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_BulletStack" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/bulletstack.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_Reticle" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/reticle.png" />
+    </Style>
     <Style TargetType="Image" x:Key="Icon_Pistol" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/pistol.png" />
     </Style>

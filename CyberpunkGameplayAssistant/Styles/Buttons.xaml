@@ -63,6 +63,7 @@
     </Style>
     <Style TargetType="cc:MiniButton" x:Key="MiniButton" BasedOn="{StaticResource BaseMiniButton}">
         <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Margin" Value="2" />
         <Setter Property="ContentTemplate">
             <Setter.Value>
                 <DataTemplate>

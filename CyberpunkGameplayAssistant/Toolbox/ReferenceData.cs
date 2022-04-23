@@ -15,6 +15,39 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string File_Log = "log.txt";
         public static readonly string File_CampaignData = $"{Environment.CurrentDirectory}/Data/Campaigns.xml";
 
+        // Image Locations
+        private const string ImageBase = "/Resources/Combatants/";
+        public const string Assassin = $"{ImageBase}Assassin.png";
+        public const string Bodyguard = $"{ImageBase}Bodyguard.png";
+        public const string Boosterganger = $"{ImageBase}Boosterganger.png";
+        public const string CanineDrone = $"{ImageBase}Canine Drone.png";
+        public const string Cyberpsycho = $"{ImageBase}Cyberpsycho.png";
+        public const string Edgerunner = $"{ImageBase}Edgerunner.png";
+        public const string ExecNetrunner = $"{ImageBase}Exec Netrunner.png";
+        public const string Exec = $"{ImageBase}Exec.png";
+        public const string Fixer = $"{ImageBase}Fixer.png";
+        public const string MaxTacRiot = $"{ImageBase}MaxTac Riot.png";
+        public const string MaxTac = $"{ImageBase}MaxTac.png";
+        public const string Media = $"{ImageBase}Media.png";
+        public const string Monk = $"{ImageBase}Monk.png";
+        public const string Neko = $"{ImageBase}Neko.png";
+        public const string Netrunner = $"{ImageBase}Netrunner.png";
+        public const string Nomad = $"{ImageBase}Nomad.png";
+        public const string Outrider = $"{ImageBase}Outrider.png";
+        public const string Pyro = $"{ImageBase}Pyro.png";
+        public const string Racer = $"{ImageBase}Racer.png";
+        public const string ReclaimerChief = $"{ImageBase}Reclaimer Chief.png";
+        public const string RoadGanger = $"{ImageBase}Road Ganger.png";
+        public const string RoadWarrior = $"{ImageBase}Road Warrior.png";
+        public const string Rockergirl = $"{ImageBase}Rockergirl.png";
+        public const string SecurityOfficer = $"{ImageBase}Security Officer.png";
+        public const string SecurityOperative = $"{ImageBase}Security Operative.png";
+        public const string Solo = $"{ImageBase}Solo.png";
+        public const string Tech = $"{ImageBase}Tech.png";
+        public const string TraumaTeamDoctor = $"{ImageBase}TT Doc.png";
+        public const string TraumaTeamMedic = $"{ImageBase}TT Medic.png";
+        public const string TraumaTeamOfficer = $"{ImageBase}TT Officer.png";
+
         // Message Types
         public const string MessageTypeCombat = "Combat";
 

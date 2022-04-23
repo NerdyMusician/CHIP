@@ -5,13 +5,47 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Chip.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Combatants\Assassin.png" />
+    <None Remove="Resources\Combatants\Bodyguard.png" />
+    <None Remove="Resources\Combatants\Boosterganger.png" />
+    <None Remove="Resources\Combatants\Canine Drone.png" />
+    <None Remove="Resources\Combatants\Cyberpsycho.png" />
+    <None Remove="Resources\Combatants\Edgerunner.png" />
+    <None Remove="Resources\Combatants\Exec Netrunner.png" />
+    <None Remove="Resources\Combatants\Exec.png" />
+    <None Remove="Resources\Combatants\Fixer.png" />
+    <None Remove="Resources\Combatants\MaxTac Riot.png" />
+    <None Remove="Resources\Combatants\MaxTac.png" />
+    <None Remove="Resources\Combatants\Media.png" />
+    <None Remove="Resources\Combatants\Monk.png" />
+    <None Remove="Resources\Combatants\Neko.png" />
+    <None Remove="Resources\Combatants\Netrunner.png" />
+    <None Remove="Resources\Combatants\Nomad.png" />
+    <None Remove="Resources\Combatants\Outrider.png" />
+    <None Remove="Resources\Combatants\Pyro.png" />
+    <None Remove="Resources\Combatants\Racer.png" />
+    <None Remove="Resources\Combatants\Reclaimer Chief.png" />
+    <None Remove="Resources\Combatants\Road Ganger.png" />
+    <None Remove="Resources\Combatants\Road Warrior.png" />
+    <None Remove="Resources\Combatants\Rockergirl.png" />
+    <None Remove="Resources\Combatants\Security Officer.png" />
+    <None Remove="Resources\Combatants\Security Operative.png" />
+    <None Remove="Resources\Combatants\Solo.png" />
+    <None Remove="Resources\Combatants\Tech.png" />
+    <None Remove="Resources\Combatants\TT Doc.png" />
+    <None Remove="Resources\Combatants\TT Medic.png" />
+    <None Remove="Resources\Combatants\TT Officer.png" />
     <None Remove="Resources\Icons\aberration.png" />
     <None Remove="Resources\Icons\abjuration.png" />
     <None Remove="Resources\Icons\action.png" />
+    <None Remove="Resources\Icons\addammo.png" />
     <None Remove="Resources\Icons\additem.png" />
+    <None Remove="Resources\Icons\addpeople.png" />
+    <None Remove="Resources\Icons\addperson.png" />
     <None Remove="Resources\Icons\ale.png" />
     <None Remove="Resources\Icons\alert.png" />
     <None Remove="Resources\Icons\ampersand.png" />
@@ -31,6 +65,7 @@
     <None Remove="Resources\Icons\bow.png" />
     <None Remove="Resources\Icons\buff.png" />
     <None Remove="Resources\Icons\bullet.png" />
+    <None Remove="Resources\Icons\bulletstack.png" />
     <None Remove="Resources\Icons\burrow.png" />
     <None Remove="Resources\Icons\calculator.png" />
     <None Remove="Resources\Icons\campfire.png" />
@@ -203,6 +238,8 @@
     <None Remove="Resources\Icons\puzzle.png" />
     <None Remove="Resources\Icons\quantity.png" />
     <None Remove="Resources\Icons\reddit.png" />
+    <None Remove="Resources\Icons\reload.png" />
+    <None Remove="Resources\Icons\reticle.png" />
     <None Remove="Resources\Icons\ring.png" />
     <None Remove="Resources\Icons\rpg_arrow.png" />
     <None Remove="Resources\Icons\rpg_axe.png" />
@@ -240,6 +277,7 @@
     <None Remove="Resources\Icons\rpg_wand.png" />
     <None Remove="Resources\Icons\rubberduck.png" />
     <None Remove="Resources\Icons\rune.png" />
+    <None Remove="Resources\Icons\runner.png" />
     <None Remove="Resources\Icons\scott.png" />
     <None Remove="Resources\Icons\screen_off.png" />
     <None Remove="Resources\Icons\screen_on.png" />
@@ -297,10 +335,47 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Chip.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Combatants\Assassin.png" />
+    <Resource Include="Resources\Combatants\Bodyguard.png" />
+    <Resource Include="Resources\Combatants\Boosterganger.png" />
+    <Resource Include="Resources\Combatants\Canine Drone.png" />
+    <Resource Include="Resources\Combatants\Cyberpsycho.png" />
+    <Resource Include="Resources\Combatants\Edgerunner.png" />
+    <Resource Include="Resources\Combatants\Exec Netrunner.png" />
+    <Resource Include="Resources\Combatants\Exec.png" />
+    <Resource Include="Resources\Combatants\Fixer.png" />
+    <Resource Include="Resources\Combatants\MaxTac Riot.png" />
+    <Resource Include="Resources\Combatants\MaxTac.png" />
+    <Resource Include="Resources\Combatants\Media.png" />
+    <Resource Include="Resources\Combatants\Monk.png" />
+    <Resource Include="Resources\Combatants\Neko.png" />
+    <Resource Include="Resources\Combatants\Netrunner.png" />
+    <Resource Include="Resources\Combatants\Nomad.png" />
+    <Resource Include="Resources\Combatants\Outrider.png" />
+    <Resource Include="Resources\Combatants\Pyro.png" />
+    <Resource Include="Resources\Combatants\Racer.png" />
+    <Resource Include="Resources\Combatants\Reclaimer Chief.png" />
+    <Resource Include="Resources\Combatants\Road Ganger.png" />
+    <Resource Include="Resources\Combatants\Road Warrior.png" />
+    <Resource Include="Resources\Combatants\Rockergirl.png" />
+    <Resource Include="Resources\Combatants\Security Officer.png" />
+    <Resource Include="Resources\Combatants\Security Operative.png" />
+    <Resource Include="Resources\Combatants\Solo.png" />
+    <Resource Include="Resources\Combatants\Tech.png" />
+    <Resource Include="Resources\Combatants\TT Doc.png" />
+    <Resource Include="Resources\Combatants\TT Medic.png" />
+    <Resource Include="Resources\Combatants\TT Officer.png" />
     <Resource Include="Resources\Icons\aberration.png" />
     <Resource Include="Resources\Icons\abjuration.png" />
     <Resource Include="Resources\Icons\action.png" />
+    <Resource Include="Resources\Icons\addammo.png" />
     <Resource Include="Resources\Icons\additem.png" />
+    <Resource Include="Resources\Icons\addpeople.png" />
+    <Resource Include="Resources\Icons\addperson.png" />
     <Resource Include="Resources\Icons\ale.png" />
     <Resource Include="Resources\Icons\alert.png" />
     <Resource Include="Resources\Icons\ampersand.png" />
@@ -320,6 +395,7 @@
     <Resource Include="Resources\Icons\bow.png" />
     <Resource Include="Resources\Icons\buff.png" />
     <Resource Include="Resources\Icons\bullet.png" />
+    <Resource Include="Resources\Icons\bulletstack.png" />
     <Resource Include="Resources\Icons\burrow.png" />
     <Resource Include="Resources\Icons\calculator.png" />
     <Resource Include="Resources\Icons\campfire.png" />
@@ -492,6 +568,8 @@
     <Resource Include="Resources\Icons\puzzle.png" />
     <Resource Include="Resources\Icons\quantity.png" />
     <Resource Include="Resources\Icons\reddit.png" />
+    <Resource Include="Resources\Icons\reload.png" />
+    <Resource Include="Resources\Icons\reticle.png" />
     <Resource Include="Resources\Icons\ring.png" />
     <Resource Include="Resources\Icons\rpg_arrow.png" />
     <Resource Include="Resources\Icons\rpg_axe.png" />
@@ -529,6 +607,7 @@
     <Resource Include="Resources\Icons\rpg_wand.png" />
     <Resource Include="Resources\Icons\rubberduck.png" />
     <Resource Include="Resources\Icons\rune.png" />
+    <Resource Include="Resources\Icons\runner.png" />
     <Resource Include="Resources\Icons\scott.png" />
     <Resource Include="Resources\Icons\screen_off.png" />
     <Resource Include="Resources\Icons\screen_on.png" />
