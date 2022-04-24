@@ -466,14 +466,16 @@
                                                                                         <DataTemplate>
                                                                                             <StackPanel Orientation="Horizontal">
                                                                                                 <cc:ImageButton ImageResource="{StaticResource Icon_Reticle}" Text="{Binding Name, FallbackValue=Very Heavy Pistol}" />
-                                                                                                <cc:MiniButton ImageResource="{StaticResource Icon_Reload}" />
-                                                                                                <Image Style="{StaticResource Icon_BulletStack}" Margin="4 0" />
-                                                                                                <TextBlock VerticalAlignment="Center" Width="72" FontFamily="Century Gothic" FontSize="15" FontWeight="Normal">
-                                                                                            <Run Text="x" />
-                                                                                            <Run Text="{Binding CurrentAmmoQuantity, FallbackValue=24}" />
-                                                                                            <Run Text="/" />
-                                                                                            <Run Text="{Binding MaxAmmoQuantity, FallbackValue=40}" />
-                                                                                                </TextBlock>
+                                                                                                <StackPanel Orientation="Horizontal" Visibility="{Binding UsesAmmo, Converter={tool:CollapsedIfFalseOtherwiseVisible}}">
+                                                                                                    <cc:MiniButton ImageResource="{StaticResource Icon_Reload}" />
+                                                                                                    <Image Style="{StaticResource Icon_BulletStack}" Margin="4 0" />
+                                                                                                    <TextBlock VerticalAlignment="Center" Width="72" FontFamily="Century Gothic" FontSize="15" FontWeight="Normal">
+                                                                                                        <Run Text="x" />
+                                                                                                        <Run Text="{Binding CurrentClipQuantity, FallbackValue=24}" />
+                                                                                                        <Run Text="/" />
+                                                                                                        <Run Text="{Binding MaxClipQuantity, FallbackValue=40, Mode=OneWay}" />
+                                                                                                    </TextBlock>
+                                                                                                </StackPanel>
                                                                                             </StackPanel>
                                                                                         </DataTemplate>
                                                                                     </ItemsControl.ItemTemplate>
@@ -497,7 +499,7 @@
                                                                                         </ItemsControl.ItemsPanel>
                                                                                         <ItemsControl.ItemTemplate>
                                                                                             <DataTemplate>
-                                                                                                <cc:ImageButton ImageResource="{Binding StatName, Converter={tool:ImageBasedOnStat}}" Text="{Binding StatAbbr}" Width="92" />
+                                                                                                <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnStat}}" Text="{Binding StatAbbr}" Width="92" />
                                                                                             </DataTemplate>
                                                                                         </ItemsControl.ItemTemplate>
                                                                                     </ItemsControl>
@@ -506,7 +508,7 @@
                                                                                     <StackPanel Orientation="Horizontal">
                                                                                         <StackPanel.Resources>
                                                                                             <DataTemplate x:Key="SkillButton">
-                                                                                                <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnSkill}}" Text="{Binding DisplayName}" Width="180" Command="{Binding RollSkill}" />
+                                                                                                <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnSkill}}" Text="{Binding DisplayName}" Width="180" Command="{Binding RollSkill}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
                                                                                             </DataTemplate>
                                                                                         </StackPanel.Resources>
                                                                                         <StackPanel>

@@ -60,7 +60,13 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand RollSkill => new RelayCommand(DoRollSkill);
         private void DoRollSkill(object param)
         {
-            // how get combatant name
+            Combatant combatant = param as Combatant;
+            string output = $"{combatant.DisplayName} made a {Name} check\n";
+            int result = HelperMethods.RollD10();
+            int stat = combatant.Stats.GetValue(ReferenceData.SkillLinks.GetStat(Name));
+            output += $"Result: {result + stat + Level}\n";
+            output += $"Roll: {result} + {stat} + {Level}";
+            HelperMethods.AddToGameplayLog(output, ReferenceData.MessageTypeSkillCheck);
         }
 
     }

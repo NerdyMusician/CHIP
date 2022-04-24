@@ -17,7 +17,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             InitializeLists();
             Name = name;
-            PortraitFilepath = imagePath;
+            PortraitFilePath = imagePath;
             ArmorType = armor;
         }
 
@@ -43,11 +43,11 @@ namespace CyberpunkGameplayAssistant.Models
             get => _DisplayName;
             set => SetAndNotify(ref _DisplayName, value);
         }
-        private string _PortraitFilepath;
-        public string PortraitFilepath
+        private string _PortraitFilePath;
+        public string PortraitFilePath
         {
-            get => _PortraitFilepath;
-            set => SetAndNotify(ref _PortraitFilepath, value);
+            get => _PortraitFilePath;
+            set => SetAndNotify(ref _PortraitFilePath, value);
         }
         private int _Initiative;
         [XmlSaveMode(XSME.Single)]
@@ -246,6 +246,13 @@ namespace CyberpunkGameplayAssistant.Models
             get => _StatSkillMenuOpen;
             set => SetAndNotify(ref _StatSkillMenuOpen, value);
         }
+        private ObservableCollection<Ammo> _AmmoInventory;
+        [XmlSaveMode(XSME.Enumerable)]
+        public ObservableCollection<Ammo> AmmoInventory
+        {
+            get => _AmmoInventory;
+            set => SetAndNotify(ref _AmmoInventory, value);
+        }
 
         // Public Methods
         public void SetStoppingPower()
@@ -301,11 +308,31 @@ namespace CyberpunkGameplayAssistant.Models
         {
             Weapons.Add(new(type, quality, name));
         }
+        public void AddAmmo(string type, int quantity)
+        {
+            AmmoInventory.Add(new(type, quantity));
+        }
         public void SetClipQuantities()
         {
             foreach (CombatantWeapon weapon in Weapons)
             {
                 weapon.CurrentClipQuantity = ReferenceData.ClipChart.GetStandardClipSize(weapon.Type);
+            }
+        }
+        public void ReloadAllWeapons()
+        {
+            foreach (CombatantWeapon weapon in Weapons)
+            {
+                string ammoTypeNeededForThisWeapon = ReferenceData.WeaponRepository.FirstOrDefault(w => w.Type == weapon.Type).AmmoType;
+                Ammo ammoInInventory = AmmoInventory.FirstOrDefault(a => a.Type == ammoTypeNeededForThisWeapon);
+                if (ammoInInventory != null)
+                {
+                    int clipSize = ReferenceData.ClipChart.GetStandardClipSize(weapon.Type);
+                    int quantityNeededToFillClip = clipSize - weapon.CurrentClipQuantity;
+                    int ammoToAddToClip = ammoInInventory.Quantity < quantityNeededToFillClip ? ammoInInventory.Quantity : quantityNeededToFillClip;
+                    ammoInInventory.Quantity -= ammoToAddToClip;
+                    weapon.CurrentClipQuantity += ammoToAddToClip;
+                }
             }
         }
         public void SetDisplayName(string letter = "")
@@ -366,6 +393,7 @@ namespace CyberpunkGameplayAssistant.Models
             RangedWeaponSkills = new();
             SocialSkills = new();
             TechniqueSkills = new();
+            AmmoInventory = new();
         }
 
     }

@@ -1,5 +1,6 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
 using System;
+using System.Linq;
 
 namespace CyberpunkGameplayAssistant.Models
 {
@@ -44,6 +45,22 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get => _CurrentClipQuantity;
             set => SetAndNotify(ref _CurrentClipQuantity, value);
+        }
+
+        // Properties
+        public bool UsesAmmo
+        {
+            get
+            {
+                return ReferenceData.WeaponRepository.FirstOrDefault(w => w.Type == Type).AmmoType != ReferenceData.AmmoTypeNone;
+            }
+        }
+        public int MaxClipQuantity
+        {
+            get
+            {
+                return ReferenceData.ClipChart.FirstOrDefault(w => w.WeaponType == Type).Standard;
+            }
         }
 
     }

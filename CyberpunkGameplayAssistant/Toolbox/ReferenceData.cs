@@ -64,6 +64,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         // Message Types
         public const string MessageTypeCombat = "Combat";
+        public const string MessageTypeSkillCheck = "Skill Check";
 
         // Stat Categories
         public const string StatCategoryMental = "Mental";
@@ -569,7 +570,9 @@ namespace CyberpunkGameplayAssistant.Toolbox
             bodyguard.OrganizeSkillsToCategories();
             bodyguard.AddWeapon(WeaponTypeShotgun, WeaponQualityPoor);
             bodyguard.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
-            bodyguard.SetClipQuantities();
+            bodyguard.AddAmmo(AmmoTypeSlug, 25);
+            bodyguard.AddAmmo(AmmoTypeVeryHeavyPistol, 25);
+            bodyguard.ReloadAllWeapons();
             Combatants.Add(bodyguard);
             #endregion
 
