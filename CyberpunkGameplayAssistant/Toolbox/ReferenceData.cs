@@ -373,6 +373,18 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string ArmorTypeMetalgear = "Metalgear";
         public const string ArmorTypeBulletproofShield = "Bulletproof Shield";
 
+        public static readonly List<Armor> ArmorTable = new()
+        {
+            new(ArmorTypeLeather, 4, 0),
+            new(ArmorTypeKevlar, 7, 0),
+            new(ArmorTypeLightArmorjack, 11, 0),
+            new(ArmorTypeBodyweightSuit, 11, 0),
+            new(ArmorTypeMediumArmorjack, 12, -2),
+            new(ArmorTypeHeavyArmorjack, 13, -2),
+            new(ArmorTypeFlak, 15, -4),
+            new(ArmorTypeMetalgear, 18, -4)
+        };
+
         // Corporation Names
         public const string CorpoArasaka = "Arasaka";
         public const string CorpoChadranArms = "Chadran Arms";
@@ -519,6 +531,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             #region Bodyguard
             Combatant bodyguard = new("Bodyguard", PortraitBodyguard, ArmorTypeKevlar);
+            bodyguard.SetStoppingPower();
             bodyguard.SetStats(3, 6, 5, 2, 4, 4, 0, 4, 6, 3);
             bodyguard.SetDerivedStats();
             bodyguard.SetBaseSkills();
@@ -542,7 +555,9 @@ namespace CyberpunkGameplayAssistant.Toolbox
             bodyguard.AddSkill(SkillResistTortureDrugs, 8);
             bodyguard.AddSkill(SkillShoulderArms, 10);
             bodyguard.AddSkill(SkillStealth, 7);
-
+            bodyguard.AddWeapon(WeaponTypeShotgun, WeaponQualityPoor);
+            bodyguard.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
+            bodyguard.SetClipQuantities();
             Combatants.Add(bodyguard);
             #endregion
 

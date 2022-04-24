@@ -587,7 +587,7 @@
                                                                     <Separator />
                                                                     <cc:ImageButton ImageResource="{StaticResource Icon_MinusTwo}" />
                                                                     <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" />
-                                                                    <TextBlock Text="{Binding HeadStoppingPower, FallbackValue=10}" Style="{StaticResource MidNum}" />
+                                                                    <TextBlock Text="{Binding CurrentHeadStoppingPower, FallbackValue=10}" Style="{StaticResource MidNum}" />
                                                                     <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" />
                                                                     <cc:ImageButton ImageResource="{StaticResource Icon_PlusTwo}" />
                                                                     <Separator />
@@ -598,7 +598,7 @@
                                                                     <Separator />
                                                                     <cc:ImageButton ImageResource="{StaticResource Icon_MinusTwo}" />
                                                                     <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" />
-                                                                    <TextBlock Text="{Binding BodyStoppingPower, FallbackValue=10}" Style="{StaticResource MidNum}" />
+                                                                    <TextBlock Text="{Binding CurrentBodyStoppingPower, FallbackValue=10}" Style="{StaticResource MidNum}" />
                                                                     <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" />
                                                                     <cc:ImageButton ImageResource="{StaticResource Icon_PlusTwo}" />
                                                                 </StackPanel>

@@ -17,6 +17,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         {
             //XmlMethods.XmlToList(Configuration.CampaignDataFilePath, out List<GameCampaign> campaigns);
             //Campaigns = new(campaigns);
+            Campaigns = new();
         }
 
         // Databound Properties

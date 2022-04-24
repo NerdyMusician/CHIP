@@ -9,10 +9,11 @@ namespace CyberpunkGameplayAssistant.Models
         // Constructors
         public Combatant()
         {
-            Stats = new();
+            InitializeLists();
         }
         public Combatant(string name, string imagePath, string armor)
         {
+            InitializeLists();
             Name = name;
             PortraitFilepath = imagePath;
             ArmorType = armor;
@@ -45,6 +46,13 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get => _Skills;
             set => SetAndNotify(ref _Skills, value);
+        }
+        private ObservableCollection<CombatantWeapon> _Weapons;
+        [XmlSaveMode(XSME.Enumerable)]
+        public ObservableCollection<CombatantWeapon> Weapons
+        {
+            get => _Weapons;
+            set => SetAndNotify(ref _Weapons, value);
         }
 
         private int _MaximumHitPoints;
@@ -84,8 +92,41 @@ namespace CyberpunkGameplayAssistant.Models
             get => _ArmorType;
             set => SetAndNotify(ref _ArmorType, value);
         }
+        private int _MaximumHeadStoppingPower;
+        [XmlSaveMode(XSME.Single)]
+        public int MaximumHeadStoppingPower
+        {
+            get => _MaximumHeadStoppingPower;
+            set => SetAndNotify(ref _MaximumHeadStoppingPower, value);
+        }
+        private int _MaximumBodyStoppingPower;
+        [XmlSaveMode(XSME.Single)]
+        public int MaximumBodyStoppingPower
+        {
+            get => _MaximumBodyStoppingPower;
+            set => SetAndNotify(ref _MaximumBodyStoppingPower, value);
+        }
+        private int _CurrentHeadStoppingPower;
+        [XmlSaveMode(XSME.Single)]
+        public int CurrentHeadStoppingPower
+        {
+            get => _CurrentHeadStoppingPower;
+            set => SetAndNotify(ref _CurrentHeadStoppingPower, value);
+        }
+        private int _CurrentBodyStoppingPower;
+        [XmlSaveMode(XSME.Single)]
+        public int CurrentBodyStoppingPower
+        {
+            get => _CurrentBodyStoppingPower;
+            set => SetAndNotify(ref _CurrentBodyStoppingPower, value);
+        }
 
         // Public Methods
+        public void SetStoppingPower()
+        {
+            MaximumHeadStoppingPower = ReferenceData.ArmorTable.GetStoppingPower(ArmorType);
+            MaximumBodyStoppingPower = ReferenceData.ArmorTable.GetStoppingPower(ArmorType);
+        }
         public void SetStats(int INT, int REF, int DEX, int TECH, int COOL, int WILL, int LUCK, int MOVE, int BODY, int EMP)
         {
             Stats = new();
@@ -128,6 +169,25 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 skill.Level = value - Stats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName== name).StatName);
             }
+        }
+        public void AddWeapon(string type, string quality, string name = "")
+        {
+            Weapons.Add(new(type, quality, name));
+        }
+        public void SetClipQuantities()
+        {
+            foreach (CombatantWeapon weapon in Weapons)
+            {
+                weapon.CurrentClipQuantity = ReferenceData.ClipChart.GetStandardClipSize(weapon.Type);
+            }
+        }
+
+        // Private Methods
+        private void InitializeLists()
+        {
+            Stats = new();
+            Skills = new();
+            Weapons = new();
         }
 
     }

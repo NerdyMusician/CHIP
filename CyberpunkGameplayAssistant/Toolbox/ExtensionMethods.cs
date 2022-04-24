@@ -43,6 +43,16 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             return skills.FirstOrDefault(s => s.SkillName == skillName).CostPerLevel;
         }
+        public static int GetStoppingPower(this List<Armor> armorList, string armorType)
+        {
+            return armorList.FirstOrDefault(a => a.Name == armorType).StoppingPower;
+        }
+        public static int GetStandardClipSize(this List<RangedWeaponClip> clipList, string weaponType)
+        {
+            RangedWeaponClip clip = clipList.FirstOrDefault(c => c.WeaponType == weaponType);
+            if (clip != null) { return clip.Standard; }
+            return 0;
+        }
     }
 }
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
