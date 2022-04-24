@@ -15,38 +15,41 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string File_Log = "log.txt";
         public static readonly string File_CampaignData = $"{Environment.CurrentDirectory}/Data/Campaigns.xml";
 
+        // Directories
+        public static readonly string CombatantImageDirectory = $"{Environment.CurrentDirectory}/Resources/Combatants/";
+
         // Image Locations
         private const string ImageBase = "/Resources/Combatants/";
-        public const string Assassin = $"{ImageBase}Assassin.png";
-        public const string Bodyguard = $"{ImageBase}Bodyguard.png";
-        public const string Boosterganger = $"{ImageBase}Boosterganger.png";
-        public const string CanineDrone = $"{ImageBase}Canine Drone.png";
-        public const string Cyberpsycho = $"{ImageBase}Cyberpsycho.png";
-        public const string Edgerunner = $"{ImageBase}Edgerunner.png";
-        public const string ExecNetrunner = $"{ImageBase}Exec Netrunner.png";
-        public const string Exec = $"{ImageBase}Exec.png";
-        public const string Fixer = $"{ImageBase}Fixer.png";
-        public const string MaxTacRiot = $"{ImageBase}MaxTac Riot.png";
-        public const string MaxTac = $"{ImageBase}MaxTac.png";
-        public const string Media = $"{ImageBase}Media.png";
-        public const string Monk = $"{ImageBase}Monk.png";
-        public const string Neko = $"{ImageBase}Neko.png";
-        public const string Netrunner = $"{ImageBase}Netrunner.png";
-        public const string Nomad = $"{ImageBase}Nomad.png";
-        public const string Outrider = $"{ImageBase}Outrider.png";
-        public const string Pyro = $"{ImageBase}Pyro.png";
-        public const string Racer = $"{ImageBase}Racer.png";
-        public const string ReclaimerChief = $"{ImageBase}Reclaimer Chief.png";
-        public const string RoadGanger = $"{ImageBase}Road Ganger.png";
-        public const string RoadWarrior = $"{ImageBase}Road Warrior.png";
-        public const string Rockergirl = $"{ImageBase}Rockergirl.png";
-        public const string SecurityOfficer = $"{ImageBase}Security Officer.png";
-        public const string SecurityOperative = $"{ImageBase}Security Operative.png";
-        public const string Solo = $"{ImageBase}Solo.png";
-        public const string Tech = $"{ImageBase}Tech.png";
-        public const string TraumaTeamDoctor = $"{ImageBase}TT Doc.png";
-        public const string TraumaTeamMedic = $"{ImageBase}TT Medic.png";
-        public const string TraumaTeamOfficer = $"{ImageBase}TT Officer.png";
+        public const string PortraitAssassin = $"{ImageBase}Assassin.png";
+        public const string PortraitBodyguard = $"{ImageBase}Bodyguard.png";
+        public const string PortraitBoosterganger = $"{ImageBase}Boosterganger.png";
+        public const string PortraitCanineDrone = $"{ImageBase}Canine Drone.png";
+        public const string PortraitCyberpsycho = $"{ImageBase}Cyberpsycho.png";
+        public const string PortraitEdgerunner = $"{ImageBase}Edgerunner.png";
+        public const string PortraitExecNetrunner = $"{ImageBase}Exec Netrunner.png";
+        public const string PortraitExec = $"{ImageBase}Exec.png";
+        public const string PortraitFixer = $"{ImageBase}Fixer.png";
+        public const string PortraitMaxTacRiot = $"{ImageBase}MaxTac Riot.png";
+        public const string PortraitMaxTac = $"{ImageBase}MaxTac.png";
+        public const string PortraitMedia = $"{ImageBase}Media.png";
+        public const string PortraitMonk = $"{ImageBase}Monk.png";
+        public const string PortraitNeko = $"{ImageBase}Neko.png";
+        public const string PortraitNetrunner = $"{ImageBase}Netrunner.png";
+        public const string PortraitNomad = $"{ImageBase}Nomad.png";
+        public const string PortraitOutrider = $"{ImageBase}Outrider.png";
+        public const string PortraitPyro = $"{ImageBase}Pyro.png";
+        public const string PortraitRacer = $"{ImageBase}Racer.png";
+        public const string PortraitReclaimerChief = $"{ImageBase}Reclaimer Chief.png";
+        public const string PortraitRoadGanger = $"{ImageBase}Road Ganger.png";
+        public const string PortraitRoadWarrior = $"{ImageBase}Road Warrior.png";
+        public const string PortraitRockergirl = $"{ImageBase}Rockergirl.png";
+        public const string PortraitSecurityOfficer = $"{ImageBase}Security Officer.png";
+        public const string PortraitSecurityOperative = $"{ImageBase}Security Operative.png";
+        public const string PortraitSolo = $"{ImageBase}Solo.png";
+        public const string PortraitTech = $"{ImageBase}Tech.png";
+        public const string PortraitTraumaTeamDoctor = $"{ImageBase}TT Doc.png";
+        public const string PortraitTraumaTeamMedic = $"{ImageBase}TT Medic.png";
+        public const string PortraitTraumaTeamOfficer = $"{ImageBase}TT Officer.png";
 
         // Message Types
         public const string MessageTypeCombat = "Combat";
@@ -102,6 +105,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string LanguageMayan = "Mayan";
         public const string LanguageMongolian = "Mongolian";
         public const string LanguageNavajo = "Navajo";
+        public const string LanguageNative = "Native";
         public const string LanguageNepali = "Nepali";
         public const string LanguageNorwegian = "Norwegian";
         public const string LanguageOromo = "Oromo";
@@ -358,6 +362,17 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         };
 
+        // ArmorTypes
+        public const string ArmorTypeLeather = "Leather";
+        public const string ArmorTypeKevlar = "Kevlar";
+        public const string ArmorTypeLightArmorjack = "Light Armorjack";
+        public const string ArmorTypeBodyweightSuit = "Bodyweight Suit";
+        public const string ArmorTypeMediumArmorjack = "Medium Armorjack";
+        public const string ArmorTypeHeavyArmorjack = "Heavy Armorjack";
+        public const string ArmorTypeFlak = "Flak";
+        public const string ArmorTypeMetalgear = "Metalgear";
+        public const string ArmorTypeBulletproofShield = "Bulletproof Shield";
+
         // Corporation Names
         public const string CorpoArasaka = "Arasaka";
         public const string CorpoChadranArms = "Chadran Arms";
@@ -490,6 +505,48 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         };
 
+        public static List<Combatant> Combatants = new()
+        {
+
+        };
+
+        // Public Methods
+        public static void PopulateData()
+        {
+            PopulateCombatants();
+        }
+        public static void PopulateCombatants()
+        {
+            #region Bodyguard
+            Combatant bodyguard = new("Bodyguard", PortraitBodyguard, ArmorTypeKevlar);
+            bodyguard.SetStats(3, 6, 5, 2, 4, 4, 0, 4, 6, 3);
+            bodyguard.SetDerivedStats();
+            bodyguard.SetBaseSkills();
+            bodyguard.AddSkill(SkillAthletics, 9);
+            bodyguard.AddSkill(SkillBrawling, 11);
+            bodyguard.AddSkill(SkillConcentration, 6);
+            bodyguard.AddSkill(SkillConversation, 5);
+            bodyguard.AddSkill(SkillDriveLandVehicle, 10);
+            bodyguard.AddSkill(SkillEducation, 5);
+            bodyguard.AddSkill(SkillEndurance, 9);
+            bodyguard.AddSkill(SkillEvasion, 7);
+            bodyguard.AddSkill(SkillFirstAid, 4);
+            bodyguard.AddSkill(SkillHandgun, 10);
+            bodyguard.AddSkill(SkillHumanPerception, 5);
+            bodyguard.AddSkill(SkillInterrogation, 6);
+            bodyguard.AddSkill(SkillLanguage, 5, LanguageNative);
+            bodyguard.AddSkill(SkillLanguage, 5, LanguageStreetslang);
+            bodyguard.AddSkill(SkillLocalExpert, 5, LocalExpertYourHome);
+            bodyguard.AddSkill(SkillPerception, 9);
+            bodyguard.AddSkill(SkillPersuasion, 6);
+            bodyguard.AddSkill(SkillResistTortureDrugs, 8);
+            bodyguard.AddSkill(SkillShoulderArms, 10);
+            bodyguard.AddSkill(SkillStealth, 7);
+
+            Combatants.Add(bodyguard);
+            #endregion
+
+        }
 
     }
 }

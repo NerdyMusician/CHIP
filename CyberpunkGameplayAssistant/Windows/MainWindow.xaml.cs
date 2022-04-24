@@ -14,6 +14,7 @@ namespace CyberpunkGameplayAssistant.Windows
     {
         public MainWindow()
         {
+            ReferenceData.PopulateData();
             InitializeComponent();
             DataContext = new MainViewModel();
         }

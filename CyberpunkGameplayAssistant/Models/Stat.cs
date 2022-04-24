@@ -18,6 +18,11 @@ namespace CyberpunkGameplayAssistant.Models
         {
             Name = name;
         }
+        public Stat(string name, int value)
+        {
+            Name = name;
+            Value = value;
+        }
 
         // Databound Properties
         private string _Name;

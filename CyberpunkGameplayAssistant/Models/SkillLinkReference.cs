@@ -14,7 +14,6 @@
         // Properties
         public string Category { get; set; }
         public string SkillName { get; set; }
-        public string VariantName { get; set; }
         public string StatName { get; set; }
         public int CostPerLevel { get; set; }
 

@@ -31,9 +31,9 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             return stats.FirstOrDefault(s => s.Name == statName).Value;
         }
-        public static int GetValue(this ObservableCollection<Skill> skills, string skillName)
+        public static int GetLevel(this ObservableCollection<Skill> skills, string skillName)
         {
-            return skills.FirstOrDefault(s => s.Name == skillName).Value;
+            return skills.FirstOrDefault(s => s.Name == skillName).Level;
         }
         public static bool IsNullOrEmpty(this string text)
         {

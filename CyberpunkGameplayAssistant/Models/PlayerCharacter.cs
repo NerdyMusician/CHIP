@@ -160,7 +160,7 @@ namespace CyberpunkGameplayAssistant.Models
             try
             {
                 SkillLinkReference skillRef = ReferenceData.SkillLinks.FirstOrDefault(s => s.SkillName == skill);
-                int skillValue = Skills.GetValue(skillRef.SkillName);
+                int skillValue = Skills.GetLevel(skillRef.SkillName);
                 int statValue = Stats.GetValue(skillRef.StatName);
                 int roll = HelperMethods.RollD10();
                 string output =

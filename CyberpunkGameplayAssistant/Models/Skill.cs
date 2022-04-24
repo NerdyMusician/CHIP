@@ -14,6 +14,12 @@ namespace CyberpunkGameplayAssistant.Models
             Name = name;
             Variant = variant;
         }
+        public Skill(string name, string variant, int level)
+        {
+            Name = name;
+            Variant = variant;
+            Level = level;
+        }
 
         // Databound Properties
         private string _Name;
@@ -30,12 +36,12 @@ namespace CyberpunkGameplayAssistant.Models
             get => _Variant;
             set => SetAndNotify(ref _Variant, value);
         }
-        private int _Value;
+        private int _Level;
         [XmlSaveMode(XSME.Single)]
-        public int Value
+        public int Level
         {
-            get => _Value;
-            set => SetAndNotify(ref _Value, value);
+            get => _Level;
+            set => SetAndNotify(ref _Level, value);
         }
 
         // Properties
