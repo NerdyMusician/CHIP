@@ -1,9 +1,15 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
+using System;
 
 namespace CyberpunkGameplayAssistant.Models
 {
+    [Serializable]
     public class CombatantWeapon : BaseModel
     {
+        public CombatantWeapon()
+        {
+
+        }
         public CombatantWeapon(string weaponType, string weaponQuality, string weaponName)
         {
             Type = weaponType;

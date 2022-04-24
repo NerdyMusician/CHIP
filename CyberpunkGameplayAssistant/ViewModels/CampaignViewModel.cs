@@ -21,7 +21,6 @@ namespace CyberpunkGameplayAssistant.ViewModels
         }
 
         // Databound Properties
-        #region Campaigns
         private ObservableCollection<GameCampaign> _Campaigns;
         [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<GameCampaign> Campaigns
@@ -29,8 +28,6 @@ namespace CyberpunkGameplayAssistant.ViewModels
             get => _Campaigns;
             set => SetAndNotify(ref _Campaigns, value);
         }
-        #endregion
-        #region ActiveCampaign
         private GameCampaign _ActiveCampaign;
         [XmlSaveMode(XSME.Single)]
         public GameCampaign ActiveCampaign
@@ -38,33 +35,25 @@ namespace CyberpunkGameplayAssistant.ViewModels
             get => _ActiveCampaign;
             set => SetAndNotify(ref _ActiveCampaign, value);
         }
-        #endregion
-        #region LastSave
         private string _LastSave;
         public string LastSave
         {
             get => _LastSave;
             set => SetAndNotify(ref _LastSave, value);
         }
-        #endregion
 
         // Commands
-        #region AddCampaign
         public ICommand AddCampaign => new RelayCommand(DoAddCampaign);
         private void DoAddCampaign(object param)
         {
             Campaigns.Add(new());
             ActiveCampaign = Campaigns.Last();
         }
-        #endregion
-        #region SortCampaigns
         public ICommand SortCampaigns => new RelayCommand(DoSortCampaigns);
         private void DoSortCampaigns(object param)
         {
             Campaigns = new(Campaigns.OrderBy(c => c.Name));
         }
-        #endregion
-        #region SaveCampaigns
         public ICommand SaveCampaigns => new RelayCommand(param => DoSaveCampaigns());
         public void DoSaveCampaigns(bool notifyUser = true)
         {
@@ -83,8 +72,6 @@ namespace CyberpunkGameplayAssistant.ViewModels
             HelperMethods.WriteToLogFile("Campaigns Saved", notifyUser);
             return;
         }
-        #endregion
-        #region ImportCampaigns
         public ICommand ImportCampaigns => new RelayCommand(param => DoImportCampaigns());
         private void DoImportCampaigns()
         {
@@ -108,7 +95,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
                 //HelperMethods.NotifyUser(message);
             }
         }
-        #endregion
+        
 
     }
 }

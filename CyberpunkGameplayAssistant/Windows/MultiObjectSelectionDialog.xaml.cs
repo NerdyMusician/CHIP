@@ -13,11 +13,11 @@ namespace CyberpunkGameplayAssistant.Windows
     public partial class MultiObjectSelectionDialog : Window
     {
         // Constructors
-        public MultiObjectSelectionDialog(List<Combatant> combatants)
+        public MultiObjectSelectionDialog(List<Combatant> combatants, string mode)
         {
             InitializeComponent();
             WindowTitle.Text = "Combatant Selection";
-            DataContext = new MultiObjectSelectionViewModel(combatants);
+            DataContext = new MultiObjectSelectionViewModel(combatants, mode);
 
             SourceItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding
             {
@@ -38,6 +38,14 @@ namespace CyberpunkGameplayAssistant.Windows
             if (objectType == typeof(Combatant))
             {
                 Combatant combatant = (sender as Button).DataContext as Combatant;
+                foreach (Combatant selectedCombatant in (DataContext as MultiObjectSelectionViewModel).SelectedCombatants)
+                {
+                    if (combatant.Name == selectedCombatant.Name)
+                    {
+                        selectedCombatant.QuantityToAdd++;
+                        return;
+                    }
+                }
                 Combatant newCombatant = combatant.DeepClone();
                 newCombatant.QuantityToAdd = 1;
                 (DataContext as MultiObjectSelectionViewModel).SelectedCombatants.Add(newCombatant);

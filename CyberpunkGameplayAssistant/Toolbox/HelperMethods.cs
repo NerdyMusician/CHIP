@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CyberpunkGameplayAssistant.Models;
+using System;
 using System.IO;
 using System.Windows;
 using System.Xml.Serialization;
@@ -28,6 +29,16 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static int RollD10()
         {
             return ReferenceData.RNG.Next(1, 11);
+        }
+        public static string GetAlphabetLetter(int position)
+        {
+            return ReferenceData.Alphabet[position];
+        }
+        public static void AddToGameplayLog(string message, string type = "", bool copyToWeb = false)
+        {
+            if (ReferenceData.MainModelRef.CampaignView == null) { return; }
+            GameCampaign campaign = ReferenceData.MainModelRef.CampaignView.ActiveCampaign;
+            campaign.EventHistory.Insert(0, new(type, message));
         }
     }
 }

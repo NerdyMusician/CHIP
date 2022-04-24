@@ -192,11 +192,11 @@
                                     </StackPanel>
                                     <StackPanel Style="{StaticResource SPNL_FieldRow}">
                                         <cc:FieldLabel Text="Start Date / Time" />
-                                        <TextBlock Text="{Binding CampaignView.StartDate}" Width="160" />
+                                        <TextBlock Text="{Binding CampaignView.ActiveCampaign.FormattedStartDate}" Width="160" VerticalAlignment="Center" />
                                         <Separator />
                                         <StackPanel>
-                                            <cc:MiniToggleButton ImageResource="{StaticResource Icon_Time}" IsChecked="{Binding CampaignView.ShowStartTimeControls, UpdateSourceTrigger=PropertyChanged}" />
-                                            <Popup IsOpen="{Binding CampaignView.ShowStartTimeControls, UpdateSourceTrigger=PropertyChanged}">
+                                            <cc:MiniToggleButton ImageResource="{StaticResource Icon_Time}" IsChecked="{Binding CampaignView.ActiveCampaign.ShowStartTimeControls, UpdateSourceTrigger=PropertyChanged}" />
+                                            <Popup IsOpen="{Binding CampaignView.ActiveCampaign.ShowStartTimeControls, UpdateSourceTrigger=PropertyChanged}">
                                                 <Border Style="{StaticResource BRDR_PopupBorder}">
                                                     <StackPanel Margin="2">
                                                         <StackPanel.Resources>
@@ -244,11 +244,11 @@
                                     </StackPanel>
                                     <StackPanel Style="{StaticResource SPNL_FieldRow}">
                                         <cc:FieldLabel Text="Current Date / Time" />
-                                        <TextBlock Text="{Binding CampaignView.CurrentDate}" Width="160" />
+                                        <TextBlock Text="{Binding CampaignView.ActiveCampaign.FormattedCurrentDate, UpdateSourceTrigger=PropertyChanged}" Width="160" VerticalAlignment="Center" />
                                         <Separator />
                                         <StackPanel>
-                                            <cc:MiniToggleButton ImageResource="{StaticResource Icon_Time}" IsChecked="{Binding CampaignView.ShowCurrentTimeControls, UpdateSourceTrigger=PropertyChanged}" />
-                                            <Popup IsOpen="{Binding CampaignView.ShowCurrentTimeControls, UpdateSourceTrigger=PropertyChanged}">
+                                            <cc:MiniToggleButton ImageResource="{StaticResource Icon_Time}" IsChecked="{Binding CampaignView.ActiveCampaign.ShowCurrentTimeControls, UpdateSourceTrigger=PropertyChanged}" />
+                                            <Popup IsOpen="{Binding CampaignView.ActiveCampaign.ShowCurrentTimeControls, UpdateSourceTrigger=PropertyChanged}">
                                                 <Border Style="{StaticResource BRDR_PopupBorder}">
                                                     <StackPanel Margin="2">
                                                         <StackPanel.Resources>
@@ -294,7 +294,7 @@
                                             </Popup>
                                         </StackPanel>
                                         <Separator />
-                                        <TextBlock Text="{Binding CampaignView.CampaignDayCount}" />
+                                        <TextBlock Text="{Binding CampaignView.ActiveCampaign.CampaignDayCount}" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </StackPanel>
                             </TabItem>
@@ -304,14 +304,14 @@
                                         <Separator Height="0" />
                                         <TextBlock Text="Tools" />
                                         <Rectangle />
-                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Combatants" />
+                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Combatants" Command="{Binding CampaignView.ActiveCampaign.AddCombatants}" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_AddPeople}" Text="Add Encounter" />
                                         <Separator Height="8" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_Runner}" Text="Roll Initiatives" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_Sort}" Text="Sort Combatants" />
                                         <StackPanel>
-                                            <cc:ImageToggleButton ImageResource="{StaticResource Icon_Skull}" Text="Clear..." IsChecked="{Binding CampaignView.ShowClearKillControls}" Margin="2" />
-                                            <Popup IsOpen="{Binding CampaignView.ShowClearKillControls}">
+                                            <cc:ImageToggleButton ImageResource="{StaticResource Icon_Skull}" Text="Clear..." IsChecked="{Binding CampaignView.ActiveCampaign.ShowClearKillControls}" Margin="2" />
+                                            <Popup IsOpen="{Binding CampaignView.ActiveCampaign.ShowClearKillControls}">
                                                 <Border Style="{StaticResource BRDR_PopupBorder}">
                                                     <StackPanel Margin="2">
                                                         <cc:ImageButton ImageResource="{StaticResource Icon_Eraser}" Text="Remove All" />
@@ -350,14 +350,14 @@
                                         <StackPanel Orientation="Horizontal" Height="32">
                                             <StackPanel VerticalAlignment="Bottom">
                                                 <TextBlock Text="DAY" FontSize="14" FontFamily="Century Gothic" FontWeight="Normal" Width="auto" Margin="0" />
-                                                <TextBlock Text="{Binding CampaignView.ActiveCampaign.AdventureDayCount, FallbackValue=234}" FontSize="16" FontWeight="Normal" FontFamily="Century Gothic" Width="auto" Margin="0 -4 0 0" HorizontalAlignment="Center" />
+                                                <TextBlock Text="{Binding CampaignView.ActiveCampaign.CampaignDayCount, FallbackValue=234}" FontSize="16" FontWeight="Normal" FontFamily="Century Gothic" Width="auto" Margin="0 -4 0 0" HorizontalAlignment="Center" />
                                             </StackPanel>
                                             <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" TextAlignment="Right" FontWeight="Normal" FontFamily="Century Gothic" Width="106" Height="34" Margin="0"><Run Text="{Binding CampaignView.ActiveCampaign.TimeDigits, FallbackValue=12:00, UpdateSourceTrigger=PropertyChanged}" FontSize="32" /><Run Text="{Binding CampaignView.ActiveCampaign.TimeIndicator, FallbackValue=PM, UpdateSourceTrigger=PropertyChanged}" FontSize="14" /></TextBlock>
                                         </StackPanel>
-                                        <TextBlock Text="{Binding CampaignView.ActiveCampaign.CalendarProgress_Processed, FallbackValue='Wednesday, 21st of September, 2048'}"  FontSize="14" FontFamily="Century Gothic" FontWeight="ExtraLight" TextWrapping="Wrap" Width="140" />
+                                        <TextBlock Text="{Binding CampaignView.ActiveCampaign.LongFormatCurrentDate, FallbackValue='Wednesday, 21st of September, 2048'}"  FontSize="14" FontFamily="Century Gothic" FontWeight="ExtraLight" TextWrapping="Wrap" Width="140" />
                                         <StackPanel>
-                                            <cc:ImageToggleButton ImageResource="{StaticResource Icon_Time}" Text="Change Time" IsChecked="{Binding CampaignView.ShowCurrentTimeControls, UpdateSourceTrigger=PropertyChanged}" />
-                                            <Popup IsOpen="{Binding CampaignView.ShowCurrentTimeControls, UpdateSourceTrigger=PropertyChanged}">
+                                            <cc:ImageToggleButton ImageResource="{StaticResource Icon_Time}" Text="Change Time" IsChecked="{Binding CampaignView.ActiveCampaign.ShowCurrentTimeControls, UpdateSourceTrigger=PropertyChanged}" />
+                                            <Popup IsOpen="{Binding CampaignView.ActiveCampaign.ShowCurrentTimeControls, UpdateSourceTrigger=PropertyChanged}">
                                                 <Border Style="{StaticResource BRDR_PopupBorder}">
                                                     <StackPanel Margin="2">
                                                         <StackPanel.Resources>
@@ -407,18 +407,18 @@
                                     <StackPanel>
                                         <DockPanel>
                                             <TextBlock Text="Action History" VerticalAlignment="Bottom" />
-                                            <cc:IconButton ImageResource="{StaticResource Icon_Eraser}" Command="{Binding CampaignView.ActiveCampaign.ClearMessages}" CommandParameter="All" HorizontalAlignment="Right" Margin="0 0 0 -2">
+                                            <cc:IconButton ImageResource="{StaticResource Icon_Eraser}" Command="{Binding CampaignView.ActiveCampaign.ClearEventHistory}" CommandParameter="All" HorizontalAlignment="Right" Margin="0 0 0 -2">
                                                 <cc:IconButton.ContextMenu>
                                                     <ContextMenu>
-                                                        <MenuItem Header="Clear After 10" Command="{Binding CampaignView.ActiveCampaign.ClearMessages}" CommandParameter="After10" />
-                                                        <MenuItem Header="Clear After 50" Command="{Binding CampaignView.ActiveCampaign.ClearMessages}" CommandParameter="After50" />
+                                                        <MenuItem Header="Clear After 10" Command="{Binding CampaignView.ActiveCampaign.ClearEventHistory}" CommandParameter="After10" />
+                                                        <MenuItem Header="Clear After 50" Command="{Binding CampaignView.ActiveCampaign.ClearEventHistory}" CommandParameter="After50" />
                                                     </ContextMenu>
                                                 </cc:IconButton.ContextMenu>
                                             </cc:IconButton>
                                         </DockPanel>
                                         <Border Style="{StaticResource ListBorder}">
                                             <ScrollViewer Width="240" Height="556">
-                                                <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.Messages, UpdateSourceTrigger=PropertyChanged}">
+                                                <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.EventHistory, UpdateSourceTrigger=PropertyChanged}">
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate>
                                                             <StackPanel Orientation="Horizontal" Margin="0 0 0 4">
@@ -450,7 +450,7 @@
                                                 <Border Style="{StaticResource BRDR_PopupBorder}" Width="586" Height="84" Margin="0 2 2 2">
                                                     <StackPanel Margin="2">
                                                         <StackPanel Orientation="Horizontal">
-                                                            <Image Source="{Binding ImagePath}" Width="64" Height="64" Margin="6 6 4 6" />
+                                                            <Image Source="{Binding PortraitFilePath}" Width="64" Height="64" Margin="6 6 4 6" />
                                                             <StackPanel>
                                                                 <StackPanel Orientation="Horizontal">
                                                                     <TextBlock Text="{Binding DisplayName, FallbackValue='Security Operative A'}" Width="140" FontSize="14" Margin="3" />
@@ -486,7 +486,7 @@
                                                                     <cc:ImageToggleButton ImageResource="{StaticResource Icon_Hand}" Text="Stats &amp; Skills" IsChecked="{Binding StatSkillMenuOpen}" />
                                                                     <Popup IsOpen="{Binding StatSkillMenuOpen}">
                                                                         <Border Style="{StaticResource BRDR_PopupBorder}">
-                                                                            <ScrollViewer Height="420">
+                                                                            <ScrollViewer Height="420" Width="560">
                                                                                 <StackPanel Margin="4">
                                                                                     <TextBlock Text="Stats" />
                                                                                     <ItemsControl ItemsSource="{Binding Stats}">
@@ -497,7 +497,7 @@
                                                                                         </ItemsControl.ItemsPanel>
                                                                                         <ItemsControl.ItemTemplate>
                                                                                             <DataTemplate>
-                                                                                                <cc:ImageButton ImageResource="{Binding StatName, Converter={tool:ImageBasedOnStat}}" Text="{Binding StatAbbr}" />
+                                                                                                <cc:ImageButton ImageResource="{Binding StatName, Converter={tool:ImageBasedOnStat}}" Text="{Binding StatAbbr}" Width="92" />
                                                                                             </DataTemplate>
                                                                                         </ItemsControl.ItemTemplate>
                                                                                     </ItemsControl>
@@ -506,7 +506,7 @@
                                                                                     <StackPanel Orientation="Horizontal">
                                                                                         <StackPanel.Resources>
                                                                                             <DataTemplate x:Key="SkillButton">
-                                                                                                <cc:ImageButton ImageResource="{Binding SkillName, Converter={tool:ImageBasedOnSkill}}" Text="{Binding SkillDisplayName}" Width="180" />
+                                                                                                <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnSkill}}" Text="{Binding DisplayName}" Width="180" Command="{Binding RollSkill}" />
                                                                                             </DataTemplate>
                                                                                         </StackPanel.Resources>
                                                                                         <StackPanel>
@@ -621,16 +621,16 @@
                                             <TextBlock Text="Round: " VerticalAlignment="Center" />
                                             <TextBox Text="{Binding CampaignView.ActiveCampaign.EncounterRound}" Width="32" />
                                             <Separator Width="16" />
-                                            <cc:IconButton ImageResource="{StaticResource Icon_User_Previous}" Command="{Binding CampaignView.ActiveCampaign.ChangeActiveCreature}" CommandParameter="Previous" />
-                                            <cc:IconButton ImageResource="{StaticResource Icon_User_Next}" Command="{Binding CampaignView.ActiveCampaign.ChangeActiveCreature}" CommandParameter="Next" />
-                                            <cc:IconButton ImageResource="{StaticResource Icon_Refresh}" Command="{Binding CampaignView.ActiveCampaign.ChangeActiveCreature}" CommandParameter="Reset" />
+                                            <cc:IconButton ImageResource="{StaticResource Icon_User_Previous}" Command="{Binding CampaignView.ActiveCampaign.ChangeActiveCombatant}" CommandParameter="Previous" />
+                                            <cc:IconButton ImageResource="{StaticResource Icon_User_Next}" Command="{Binding CampaignView.ActiveCampaign.ChangeActiveCombatant}" CommandParameter="Next" />
+                                            <cc:IconButton ImageResource="{StaticResource Icon_Refresh}" Command="{Binding CampaignView.ActiveCampaign.ChangeActiveCombatant}" CommandParameter="Reset" />
                                         </StackPanel>
                                         <Separator />
                                         <ContentControl Content="{Binding CampaignView.ActiveCampaign.ActiveCombatant}" ContentTemplateSelector="{StaticResource ActiveCombatantTemplateSelector}" />
                                         <TabControl BorderThickness="0 2 0 0">
                                             <TabItem Header="By Initiative">
                                                 <ScrollViewer Height="412">
-                                                    <ItemsControl ItemsSource="{Binding CampaignView.CombatantsByInitiative}" ItemTemplateSelector="{StaticResource ListCombatantTemplateSelector}" />
+                                                    <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.CombatantsByInitiative}" ItemTemplateSelector="{StaticResource ListCombatantTemplateSelector}" />
                                                 </ScrollViewer>
                                             </TabItem>
                                             <TabItem Header="By Name">

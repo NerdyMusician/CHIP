@@ -43,6 +43,10 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             return skills.FirstOrDefault(s => s.SkillName == skillName).CostPerLevel;
         }
+        public static string GetCategory(this List<SkillLinkReference> skills, string skillName)
+        {
+            return skills.FirstOrDefault(s => s.SkillName == skillName).Category;
+        }
         public static int GetStoppingPower(this List<Armor> armorList, string armorType)
         {
             return armorList.FirstOrDefault(a => a.Name == armorType).StoppingPower;

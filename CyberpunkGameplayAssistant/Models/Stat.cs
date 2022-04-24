@@ -39,5 +39,15 @@ namespace CyberpunkGameplayAssistant.Models
             get => _Value;
             set => SetAndNotify(ref _Value, value);
         }
+
+        // Properties
+        public string StatAbbr
+        {
+            get
+            {
+                return ReferenceData.StatLinks.FirstOrDefault(s => s.StatName == Name).Abbreviation;
+            }
+        }
+
     }
 }

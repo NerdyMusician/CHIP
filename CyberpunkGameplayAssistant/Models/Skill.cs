@@ -1,4 +1,5 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
+using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
 {
@@ -53,6 +54,13 @@ namespace CyberpunkGameplayAssistant.Models
                     (!Variant.IsNullOrEmpty() ? $" ({Variant})" : "") + 
                     ((ReferenceData.SkillLinks.GetCost(Name) > 1) ? $" (x{ReferenceData.SkillLinks.GetCost(Name)})" : ""); 
             }
+        }
+
+        // Commands
+        public ICommand RollSkill => new RelayCommand(DoRollSkill);
+        private void DoRollSkill(object param)
+        {
+            // how get combatant name
         }
 
     }

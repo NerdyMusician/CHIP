@@ -430,7 +430,7 @@
         <Setter Property="Source" Value="../Resources/Icons/plus_thirteen.png" />
     </Style>
     <Style TargetType="Image" x:Key="Icon_PlusFifteen" BasedOn="{StaticResource Icon_WideBase}">
-        <Setter Property="Source" Value="../Resources/Icons/plus_thirteen.png" />
+        <Setter Property="Source" Value="../Resources/Icons/plus_fifteen.png" />
     </Style>
     <Style TargetType="Image" x:Key="Icon_PlusThirty" BasedOn="{StaticResource Icon_WideBase}">
         <Setter Property="Source" Value="../Resources/Icons/plus_thirty.png" />
@@ -460,7 +460,7 @@
         <Setter Property="Source" Value="../Resources/Icons/minus_thirteen.png" />
     </Style>
     <Style TargetType="Image" x:Key="Icon_MinusFifteen" BasedOn="{StaticResource Icon_WideBase}">
-        <Setter Property="Source" Value="../Resources/Icons/minus_thirteen.png" />
+        <Setter Property="Source" Value="../Resources/Icons/minus_fifteen.png" />
     </Style>
     <Style TargetType="Image" x:Key="Icon_MinusThirty" BasedOn="{StaticResource Icon_WideBase}">
         <Setter Property="Source" Value="../Resources/Icons/minus_thirty.png" />

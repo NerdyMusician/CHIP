@@ -11,6 +11,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         {
             ApplicationVersion = "CHIP 1.00.00 beta";
             CampaignView = new();
+            ReferenceData.MainModelRef = this;
         }
 
         // Databound Properties

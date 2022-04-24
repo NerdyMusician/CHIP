@@ -1,4 +1,5 @@
 ﻿using CyberpunkGameplayAssistant.Models;
+using CyberpunkGameplayAssistant.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -8,8 +9,15 @@ namespace CyberpunkGameplayAssistant.Toolbox
     public static class ReferenceData
     {
         // Utility
+        public static MainViewModel MainModelRef;
         public static FrameworkElement Framework = new();
         public static Random RNG = new();
+        public static readonly string[] Alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+
+        // Other
+        public static readonly DateTime DefaultDate = new(2045, 1, 1);
+        public const string ShortDateFormat = "yyyy.MM.dd hh:mm";
+        public const string LongDateFormat = "D";
 
         // File Locations
         public const string File_Log = "log.txt";
@@ -17,6 +25,9 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         // Directories
         public static readonly string CombatantImageDirectory = $"{Environment.CurrentDirectory}/Resources/Combatants/";
+
+        // MultiObject Select Modes
+        public const string MultiModeEnemies = "Enemies";
 
         // Image Locations
         private const string ImageBase = "/Resources/Combatants/";
@@ -555,6 +566,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             bodyguard.AddSkill(SkillResistTortureDrugs, 8);
             bodyguard.AddSkill(SkillShoulderArms, 10);
             bodyguard.AddSkill(SkillStealth, 7);
+            bodyguard.OrganizeSkillsToCategories();
             bodyguard.AddWeapon(WeaponTypeShotgun, WeaponQualityPoor);
             bodyguard.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
             bodyguard.SetClipQuantities();

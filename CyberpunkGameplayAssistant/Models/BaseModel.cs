@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 namespace CyberpunkGameplayAssistant.Models
 {
     [Serializable]
-    public class BaseModel
+    public class BaseModel : INotifyPropertyChanged
     {
         // Constructors
         public BaseModel()
@@ -23,17 +23,14 @@ namespace CyberpunkGameplayAssistant.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        protected bool SetAndNotify<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+        protected bool SetAndNotify<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
+            // courtesy of GitHub user stevemonaco
             if (EqualityComparer<T>.Default.Equals(field, value)) { return false; }
-
-            if (string.IsNullOrEmpty(propertyName))
-            {
-                throw new ArgumentException($"'{nameof(propertyName)}' cannot be null or empty.", nameof(propertyName));
-            }
             field = value;
             NotifyPropertyChanged(propertyName);
             return true;
         }
+
     }
 }

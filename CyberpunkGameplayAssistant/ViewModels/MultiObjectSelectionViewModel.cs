@@ -7,15 +7,22 @@ namespace CyberpunkGameplayAssistant.ViewModels
     public class MultiObjectSelectionViewModel : BaseModel
     {
         // Constructors
-        public MultiObjectSelectionViewModel(List<Combatant> combatants)
+        public MultiObjectSelectionViewModel(List<Combatant> combatants, string mode)
         {
             SourceCombatants = new(combatants);
             FilteredSourceCombatants = new();
             SelectedCombatants = new();
+            Mode = mode;
             SourceTextSearch = "";
         }
 
         // Databound Properties
+        private string _Mode;
+        public string Mode
+        {
+            get => _Mode;
+            set => SetAndNotify(ref _Mode, value);
+        }
         private ObservableCollection<Combatant> _SourceCombatants;
         public ObservableCollection<Combatant> SourceCombatants
         {
