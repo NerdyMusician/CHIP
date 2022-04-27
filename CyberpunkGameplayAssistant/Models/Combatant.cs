@@ -377,6 +377,12 @@ namespace CyberpunkGameplayAssistant.Models
                 }
             }
         }
+        public int GetSkillTotal(string skill)
+        {
+            int skillLevel = Skills.FirstOrDefault(s => s.Name == skill).Level;
+            int statLevel = Stats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName == skill).StatName);
+            return skillLevel + statLevel;
+        }
 
         // Private Methods
         private void InitializeLists()

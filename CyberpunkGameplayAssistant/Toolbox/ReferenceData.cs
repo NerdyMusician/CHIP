@@ -493,6 +493,12 @@ namespace CyberpunkGameplayAssistant.Toolbox
             new(WeaponTypeGrenadeLauncher, SkillHeavyWeapons, 6, 2, AmmoTypeGrenade, 1, false, WeaponCostTierHigh),
             new(WeaponTypeRocketLauncher, SkillHeavyWeapons, 8, 2, AmmoTypeRocket, 1, false, WeaponCostTierHigh)
         };
+        public static readonly Dictionary<string, int> AutofireTable = new()
+        {
+            { WeaponTypeSmg, 3 },
+            { WeaponTypeHeavySmg, 3 },
+            { WeaponTypeAssaultRifle, 4 }
+        };
 
         public static readonly List<MarketWeapon> WeaponMarket = new()
         {

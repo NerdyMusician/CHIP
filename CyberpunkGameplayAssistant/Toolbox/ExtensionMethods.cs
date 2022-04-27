@@ -61,6 +61,23 @@ namespace CyberpunkGameplayAssistant.Toolbox
             if (clip != null) { return clip.Standard; }
             return 0;
         }
+        public static int GetDamage(this List<Weapon> weaponList, string weaponType)
+        {
+            return weaponList.FirstOrDefault(w => w.Type == weaponType).Damage;
+        }
+        public static string GetSkill(this List<Weapon> weaponList, string weaponType)
+        {
+            return weaponList.FirstOrDefault(w => w.Type == weaponType).AssociatedSkill;
+        }
+        public static int InstancesOf(this int[] numArray, int matchNum)
+        {
+            int results = 0;
+            foreach (int num in numArray)
+            {
+                if (num == matchNum) { results++; }
+            }
+            return results;
+        }
     }
 }
 #pragma warning restore CS8602 // Dereference of a possibly null reference.

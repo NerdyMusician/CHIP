@@ -461,13 +461,35 @@
                                                                     <Popup IsOpen="{Binding WeaponMenuOpen}">
                                                                         <Border Style="{StaticResource BRDR_PopupBorder}">
                                                                             <StackPanel Margin="2">
+                                                                                <ItemsControl ItemsSource="{Binding AmmoInventory}">
+                                                                                    <ItemsControl.ItemTemplate>
+                                                                                        <DataTemplate>
+                                                                                            <StackPanel Orientation="Horizontal" Margin="2">
+                                                                                                <Image Style="{StaticResource Icon_BulletStack}" />
+                                                                                                <Separator />
+                                                                                                <TextBlock VerticalAlignment="Center">
+                                                                                                    <Run Text="{Binding Type}" />
+                                                                                                    <Run Text="x" />
+                                                                                                    <Run Text="{Binding Quantity}" />
+                                                                                                </TextBlock>
+                                                                                            </StackPanel>
+                                                                                        </DataTemplate>
+                                                                                    </ItemsControl.ItemTemplate>
+                                                                                </ItemsControl>
                                                                                 <ItemsControl ItemsSource="{Binding Weapons}">
                                                                                     <ItemsControl.ItemTemplate>
                                                                                         <DataTemplate>
                                                                                             <StackPanel Orientation="Horizontal">
-                                                                                                <cc:ImageButton ImageResource="{StaticResource Icon_Reticle}" Text="{Binding Name, FallbackValue=Very Heavy Pistol}" />
+                                                                                                <cc:ImageButton ImageResource="{StaticResource Icon_Reticle}" Text="{Binding Name, FallbackValue=Very Heavy Pistol}" Command="{Binding RollBasicAttack}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}">
+                                                                                                    <cc:ImageButton.ContextMenu>
+                                                                                                        <ContextMenu>
+                                                                                                            <MenuItem Header="Aimed Shot" Command="{Binding RollAimedShot}" /><!--FIX COMMAND PARAMETER-->
+                                                                                                            <MenuItem Header="Autofire" Command="{Binding RollAutofire}" />
+                                                                                                        </ContextMenu>
+                                                                                                    </cc:ImageButton.ContextMenu>
+                                                                                                </cc:ImageButton>
                                                                                                 <StackPanel Orientation="Horizontal" Visibility="{Binding UsesAmmo, Converter={tool:CollapsedIfFalseOtherwiseVisible}}">
-                                                                                                    <cc:MiniButton ImageResource="{StaticResource Icon_Reload}" />
+                                                                                                    <cc:MiniButton ImageResource="{StaticResource Icon_Reload}" Command="{Binding ReloadWeapon}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
                                                                                                     <Image Style="{StaticResource Icon_BulletStack}" Margin="4 0" />
                                                                                                     <TextBlock VerticalAlignment="Center" Width="72" FontFamily="Century Gothic" FontSize="15" FontWeight="Normal">
                                                                                                         <Run Text="x" />

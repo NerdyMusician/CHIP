@@ -26,9 +26,28 @@ namespace CyberpunkGameplayAssistant.Toolbox
             }
             return diceResults;
         }
-        public static int RollD10()
+        public static int RollDamage(int numberOfDice, out bool criticalInjury)
         {
-            return ReferenceData.RNG.Next(1, 11);
+            criticalInjury = false;
+            int[] result = RollDice(numberOfDice, 6);
+            if (result.InstancesOf(6) >= 2) { criticalInjury = true; }
+            return result.GetTotal();
+        }
+        public static int RollD10(bool includeCritical = false)
+        {
+            int result = ReferenceData.RNG.Next(1, 11);
+            if (includeCritical)
+            {
+                if (result == 1)
+                {
+                    result -= ReferenceData.RNG.Next(1, 11);
+                }
+                if (result == 10)
+                {
+                    result += ReferenceData.RNG.Next(1, 11);
+                }
+            }
+            return result;
         }
         public static string GetAlphabetLetter(int position)
         {
