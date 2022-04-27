@@ -480,11 +480,11 @@
                                                                                     <ItemsControl.ItemTemplate>
                                                                                         <DataTemplate>
                                                                                             <StackPanel Orientation="Horizontal">
-                                                                                                <cc:ImageButton ImageResource="{StaticResource Icon_Reticle}" Text="{Binding Name, FallbackValue=Very Heavy Pistol}" Command="{Binding RollBasicAttack}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}">
+                                                                                                <cc:ImageButton ImageResource="{StaticResource Icon_Reticle}" Text="{Binding Name, FallbackValue=Very Heavy Pistol}" Command="{Binding RollBasicAttack}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type Popup}, Mode=FindAncestor}}">
                                                                                                     <cc:ImageButton.ContextMenu>
                                                                                                         <ContextMenu>
-                                                                                                            <MenuItem Header="Aimed Shot" Command="{Binding RollAimedShot}" /><!--FIX COMMAND PARAMETER-->
-                                                                                                            <MenuItem Header="Autofire" Command="{Binding RollAutofire}" />
+                                                                                                            <MenuItem Header="Aimed Shot" Command="{Binding RollAimedShot}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.Tag.DataContext}" />
+                                                                                                            <MenuItem Header="Autofire" Command="{Binding RollAutofire}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.Tag.DataContext}" />
                                                                                                         </ContextMenu>
                                                                                                     </cc:ImageButton.ContextMenu>
                                                                                                 </cc:ImageButton>
@@ -598,33 +598,33 @@
                                                                 <StackPanel Orientation="Horizontal">
                                                                     <Image Style="{StaticResource Icon_Heart}" />
                                                                     <Separator />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="-5" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="-1" />
                                                                     <TextBlock Text="{Binding CurrentHitPoints, FallbackValue=20}" Style="{StaticResource MidNum}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="1" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="5" />
                                                                     <Separator />
                                                                     <TextBlock Text="{Binding WoundState, FallbackValue=Seriously Wounded}" VerticalAlignment="Center" Width="128" />
                                                                 </StackPanel>
                                                                 <StackPanel Orientation="Horizontal">
                                                                     <Image Style="{StaticResource Icon_Construct}" />
                                                                     <Separator />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusTwo}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusTwo}" Command="{Binding AdjustStoppingPower}" CommandParameter="Head,-2" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Head,-1" />
                                                                     <TextBlock Text="{Binding CurrentHeadStoppingPower, FallbackValue=10}" Style="{StaticResource MidNum}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusTwo}" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Head,1" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusTwo}" Command="{Binding AdjustStoppingPower}" CommandParameter="Head,2" />
                                                                     <Separator />
                                                                     <TextBlock Text="{Binding ArmorType, FallbackValue=Light Armorjack}" VerticalAlignment="Center" Width="128" />
                                                                 </StackPanel>
                                                                 <StackPanel Orientation="Horizontal">
                                                                     <Image Style="{StaticResource Icon_Shield}" />
                                                                     <Separator />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusTwo}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusTwo}" Command="{Binding AdjustStoppingPower}" CommandParameter="Body,-2" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Body,-1" />
                                                                     <TextBlock Text="{Binding CurrentBodyStoppingPower, FallbackValue=10}" Style="{StaticResource MidNum}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusTwo}" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Body,1" />
+                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusTwo}" Command="{Binding AdjustStoppingPower}" CommandParameter="Body,2" />
                                                                 </StackPanel>
                                                             </StackPanel>
                                                         </StackPanel>

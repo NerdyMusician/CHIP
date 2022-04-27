@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
 {
@@ -253,12 +254,55 @@ namespace CyberpunkGameplayAssistant.Models
             get => _AmmoInventory;
             set => SetAndNotify(ref _AmmoInventory, value);
         }
+        private bool _IsDead;
+        [XmlSaveMode(XSME.Single)]
+        public bool IsDead
+        {
+            get => _IsDead;
+            set => SetAndNotify(ref _IsDead, value);
+        }
+
+        // Commands
+        public ICommand AdjustHitPoints => new RelayCommand(DoAdjustHitPoints);
+        private void DoAdjustHitPoints(object param)
+        {
+            int hitPointChange = Convert.ToInt32(param);
+            CurrentHitPoints += hitPointChange;
+            if (CurrentHitPoints < 0) { CurrentHitPoints = 0; }
+            if (CurrentHitPoints > MaximumHitPoints) { CurrentHitPoints = MaximumHitPoints; }
+            UpdateWoundState();
+        }
+        public ICommand AdjustStoppingPower => new RelayCommand(DoAdjustStoppingPower);
+        private void DoAdjustStoppingPower(object param)
+        {
+            string[] parts = param.ToString().Split(',');
+            string area = parts[0];
+            int amount = Convert.ToInt32(parts[1]);
+            if (area == "Head")
+            {
+                CurrentHeadStoppingPower += amount;
+                if (CurrentHeadStoppingPower < 0) { CurrentHeadStoppingPower = 0; }
+                if (CurrentHeadStoppingPower > MaximumHeadStoppingPower) { CurrentHeadStoppingPower = MaximumHeadStoppingPower; }
+            }
+            if (area == "Body")
+            {
+                CurrentBodyStoppingPower += amount;
+                if (CurrentBodyStoppingPower < 0) { CurrentBodyStoppingPower = 0; }
+                if (CurrentBodyStoppingPower > MaximumBodyStoppingPower) { CurrentBodyStoppingPower = MaximumBodyStoppingPower; }
+            }
+        }
 
         // Public Methods
+        public void InitializeLoadedCombatant()
+        {
+            UpdateWoundState();
+        }
         public void SetStoppingPower()
         {
             MaximumHeadStoppingPower = ReferenceData.ArmorTable.GetStoppingPower(ArmorType);
             MaximumBodyStoppingPower = ReferenceData.ArmorTable.GetStoppingPower(ArmorType);
+            CurrentHeadStoppingPower = MaximumHeadStoppingPower;
+            CurrentBodyStoppingPower = MaximumBodyStoppingPower;
         }
         public void SetStats(int INT, int REF, int DEX, int TECH, int COOL, int WILL, int LUCK, int MOVE, int BODY, int EMP)
         {
@@ -400,6 +444,15 @@ namespace CyberpunkGameplayAssistant.Models
             SocialSkills = new();
             TechniqueSkills = new();
             AmmoInventory = new();
+        }
+        private void UpdateWoundState()
+        {
+            string woundState = ReferenceData.WoundStateUnharmed;
+            if (CurrentHitPoints < MaximumHitPoints) { woundState = ReferenceData.WoundStateLightlyWounded; }
+            if (CurrentHitPoints <= (MaximumHitPoints / 2)) { woundState = ReferenceData.WoundStateSeriouslyWounded; }
+            if (CurrentHitPoints < 1) { woundState = ReferenceData.WoundStateMortallyWounded; }
+            if (IsDead) { woundState = ReferenceData.WoundStateDead; }
+            WoundState = woundState;
         }
 
     }

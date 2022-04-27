@@ -167,6 +167,7 @@ namespace CyberpunkGameplayAssistant.Models
                         int existingCreatureCount = AllCombatants.Where(c => c.Name == newCombatant.Name).Count();
                         if (existingCreatureCount > 25) { break; }
                         newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCreatureCount));
+                        newCombatant.InitializeLoadedCombatant();
                         AllCombatants.Add(newCombatant);
                     }
                 }

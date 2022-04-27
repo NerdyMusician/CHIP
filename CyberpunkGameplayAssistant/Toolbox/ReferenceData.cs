@@ -66,6 +66,13 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string MessageTypeCombat = "Combat";
         public const string MessageTypeSkillCheck = "Skill Check";
 
+        // Wound States
+        public const string WoundStateUnharmed = "Unharmed";
+        public const string WoundStateLightlyWounded = "Lightly Wounded";
+        public const string WoundStateSeriouslyWounded = "Seriously Wounded";
+        public const string WoundStateMortallyWounded = "Mortally Wounded";
+        public const string WoundStateDead = "Dead";
+
         // Stat Categories
         public const string StatCategoryMental = "Mental";
         public const string StatCategoryCombat = "Combat";

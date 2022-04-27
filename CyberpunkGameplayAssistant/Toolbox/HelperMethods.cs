@@ -1,8 +1,7 @@
 ﻿using CyberpunkGameplayAssistant.Models;
+using CyberpunkGameplayAssistant.Windows;
 using System;
 using System.IO;
-using System.Windows;
-using System.Xml.Serialization;
 
 namespace CyberpunkGameplayAssistant.Toolbox
 {
@@ -10,7 +9,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
     {
         public static void NotifyUser(string message)
         {
-            MessageBox.Show(message);
+            new NotificationDialog(message).ShowDialog();
         }
         public static void WriteToLogFile(string message, bool notifyUser = false)
         {

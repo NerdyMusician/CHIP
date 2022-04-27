@@ -1,9 +1,13 @@
-﻿using CyberpunkGameplayAssistant.Toolbox;
+﻿using CyberpunkGameplayAssistant.CustomControls;
+using CyberpunkGameplayAssistant.Toolbox;
 using CyberpunkGameplayAssistant.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace CyberpunkGameplayAssistant.Windows
 {
@@ -25,11 +29,11 @@ namespace CyberpunkGameplayAssistant.Windows
         }
         private void Window_LocationChanged(object sender, EventArgs e)
         {
-
+            ClosePopups(this);
         }
         private void Window_Deactivated(object sender, EventArgs e)
         {
-
+            ClosePopups(this);
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -78,6 +82,51 @@ namespace CyberpunkGameplayAssistant.Windows
         private void CopyTextblockText(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText((sender as MenuItem).CommandParameter.ToString());
+        }
+
+        private void ClosePopups(Window window)
+        {
+            foreach (MiniToggleButton toggleButton in FindVisualChildren<MiniToggleButton>(window))
+            {
+                if (toggleButton.CloseOnWindowFocusLoss == false) { continue; }
+                toggleButton.IsChecked = false;
+            }
+            foreach (ImageToggleButton toggleButton in FindVisualChildren<ImageToggleButton>(window))
+            {
+                if (toggleButton.CloseOnWindowFocusLoss == false) { continue; }
+                toggleButton.IsChecked = false;
+            }
+            foreach (GammaComboBox comboBox in FindVisualChildren<GammaComboBox>(window))
+            {
+                comboBox.IsDropDownOpen = false;
+            }
+            foreach (Popup popup in FindVisualChildren<Popup>(window))
+            {
+                if (popup.IsOpen == true)
+                {
+                    popup.IsOpen = false;
+                    popup.IsOpen = true;
+                }
+            }
+        }
+        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T t)
+                    {
+                        yield return t;
+                    }
+
+                    foreach (T childOfChild in FindVisualChildren<T>(child))
+                    {
+                        yield return childOfChild;
+                    }
+                }
+            }
         }
 
     }
