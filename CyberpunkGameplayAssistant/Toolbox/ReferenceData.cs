@@ -687,6 +687,107 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string CyberwareColorShift = "Color Shift";
         public const string CyberwareDartgun = "Dartgun";
         public const string CyberwareImageEnhance = "Image Enhance";
+        public const string CyberwareLowLightInfraredUv = "Low Light / Infrared / UV";
+        public const string CyberwareMicroOptics = "MicroOptics";
+        public const string CyberwareMicroVideo = "MicroVideo";
+        public const string CyberwareRadiationDetector = "Radiation Detector";
+        public const string CyberwareTargetingScope = "Targeting Scope";
+        public const string CyberwareTeleOptics = "TeleOptics";
+        public const string CyberwareVirtuality = "Virtuality";
+
+        // Cyberaudio
+        public const string CyberwareCyberaudioSuite = "Cyberaudio Suite";
+        public const string CyberwareAmplifiedHearing = "Amplified Hearing";
+        public const string CyberwareAudioRecorder = "Audio Recorder";
+        public const string CyberwareBugDetector = "Bug Detector";
+        public const string CyberwareHomingtracer = "Homing Tracer";
+        public const string CyberwareInternalAgent = "Internal Agent";
+        public const string CyberwareLevelDamper = "Level Damper";
+        public const string CyberwareRadioCommunicator = "Radio Communicator";
+        public const string CyberwareRadioScannerMusicPlayer = "Radio Scanner / Music Player";
+        public const string CyberwareRadarDetector = "Radar Detector";
+        public const string CyberwareScramblerDescrambler = "Scrambler / Descrambler";
+        public const string CyberwareVoiceStressAnalyzer = "Voice Stress Analyzer";
+
+        // Internal Cyberware
+        public const string CyberwareAudioVox = "AudioVox";
+        public const string CyberwareContraceptiveImplant = "Contraceptive Implant";
+        public const string CyberwareEnhancedAntibodies = "Enhanced Antibodies";
+        public const string CyberwareCybersnake = "Cybersnake";
+        public const string CyberwareGills = "Gills";
+        public const string CyberwareGraftedMuscleBoneLace = "Grafted Muscle and Bone Lace";
+        public const string CyberwareIndependentAirSupply = "Independent Air Supply";
+        public const string CyberwareMidnightLady = "Midnight Lady Sexual Implant ";
+        public const string CyberwareMrStudd = "Mr. Studd Sexual Implant";
+        public const string CyberwareNasalFilters = "Nasal Filters";
+        public const string CyberwareRadarSonarImplant = "Radar / Sonar Implant";
+        public const string CyberwareToxinBinders = "Toxin Binders";
+        public const string CyberwareVampyres = "Vampyres";
+
+        // External Cyberware
+        public const string CyberwareHiddenHolster = "Hidden Holster";
+        public const string CyberwareSkinWeave = "Skin Weave";
+        public const string CyberwareSubdermalArmor = "Subdermal Armor";
+        public const string CyberwareSubdermalPocket = "Subdermal Pocket";
+
+        // Cyberlimbs - Arms
+        public const string CyberwareCyberarm = "Cyberarm";
+        public const string CyberwareStandardHand = "Standard Hand";
+        public const string CyberwareBigKnucks = "Big Knucks";
+        public const string CyberwareCyberdeck = "Cyberdeck";
+        public const string CyberwareGrappleHand = "GrappleHand";
+        public const string CyberwareMedscanner = "Medscanner";
+        public const string CyberwarePopupGrenadeLauncher = "Popup Grenade Launcher";
+        public const string CyberwarePopupMeleeWeapon = "Popup Melee Weapon";
+        public const string CyberwarePopupShield = "Popup Shield";
+        public const string CyberwarePopupRangedWeapon = "Popup Ranged Weapon";
+        public const string CyberwareQuickChangeMount = "Quick Change Mount";
+        public const string CyberwareRippers = "Rippers";
+        public const string CyberwareScratchers = "Scratchers";
+        public const string CyberwareShoulderCam = "Shoulder Cam";
+        public const string CyberwareSliceAndDice = "Slice 'N Dice";
+        public const string CyberwareSubdermalGrip = "Subdermal Grip";
+        public const string CyberwareTechscanner = "Techscanner";
+        public const string CyberwareToolHand = "Tool Hand";
+        public const string CyberwareWolvers = "Wolvers";
+
+        // Cyberlimbs - Legs
+        public const string CyberwareCyberleg = "Cyberleg";
+        public const string CyberwareStandardFoot = "Standard Foot";
+        public const string CyberwareGripFoot = "Grip Foot";
+        public const string CyberwareJumpBooster = "Jump Booster";
+        public const string CyberwareSkateFoot = "Skate Foot";
+        public const string CyberwareTalonFoot = "Talon Foot";
+        public const string CyberwareWebFoot = "Web Foot";
+
+        // Cyberlimbs - Both
+        public const string CyberwareHardenedShielding = "Hardened Shielding";
+        public const string CyberwarePlasticCovering = "Plastic Covering";
+        public const string CyberwareRealskinnCovering = "Realskinn Covering";
+        public const string CyberwareSuperchromeCovering = "Superchrome Covering";
+
+        // Borgware
+        public const string CyberwareArtificialShoulderMount = "Artificial Shoulder Mount";
+        public const string CyberwareImplantedLinearFrameBeta = "Implanted Linear Frame Beta";
+        public const string CyberwareImplantedLinearFrameSigma = "Implanted Linear Frame Sigma";
+        public const string CyberwareMultiOpticMount = "MultiOptic Mount";
+        public const string CyberwareSensorArray = "Sensor Array";
+
+        public static readonly Dictionary<string, string> MasterCyberwareList = new()
+        {
+            // Fashionware
+            { CyberwareBiomonitor, "Subdermal implant which generates a readout of vitals. Can link to Agent." },
+            { CyberwareChemskin, "Dyes and pigments infused into the skin to permanently change its hue. +2 to Personal Grooming if user also has Techhair." },
+            { CyberwareEmpThreading, "Thin silver lines that run in circuit-like patterns across the body." },
+            { CyberwareLightTattoo, "Subdermal patches store light and project colored tattoos under the skin. +2 to Wardrobe and Style if user has three or more tattoos." },
+            { CyberwareShiftTacts, "Color-changing lenses implanted into the eye." },
+            { CyberwareSkinwatch, "Subdermally implanted LED watch." },
+            { CyberwareTechhair, "Color-light-emitting artificial hair. +2 to Personal Grooming if user also has Chemskin." },
+
+            // Neuralware
+
+        };
+
         #endregion
 
         public static List<Combatant> Combatants = new()

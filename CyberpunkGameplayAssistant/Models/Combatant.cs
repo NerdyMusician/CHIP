@@ -261,6 +261,13 @@ namespace CyberpunkGameplayAssistant.Models
             get => _GearInventory;
             set => SetAndNotify(ref _GearInventory, value);
         }
+        private ObservableCollection<Cyberware> _InstalledCyberware;
+        [XmlSaveMode(XSME.Enumerable)]
+        public ObservableCollection<Cyberware> InstalledCyberware
+        {
+            get => _InstalledCyberware;
+            set => SetAndNotify(ref _InstalledCyberware, value);
+        }
         private bool _IsDead;
         [XmlSaveMode(XSME.Single)]
         public bool IsDead
@@ -305,6 +312,7 @@ namespace CyberpunkGameplayAssistant.Models
             SetDerivedStats();
             UpdateWoundState();
             UpdateGearDescriptions();
+            UpdateCyberwareDescriptions();
         }
         public void SetStoppingPower()
         {
@@ -367,15 +375,18 @@ namespace CyberpunkGameplayAssistant.Models
         {
             AmmoInventory.Add(new(type, quantity));
         }
-        private void AddGear(string name)
-        {
-            GearInventory.Add(new(name));
-        }
         public void AddGearSet(params string[] names)
         {
             foreach (string name in names)
             {
                 AddGear(name);
+            }
+        }
+        public void AddCyberwareSet(params string[] names)
+        {
+            foreach (string name in names)
+            {
+                AddCyberware(name);
             }
         }
         public void SetClipQuantities()
@@ -456,6 +467,13 @@ namespace CyberpunkGameplayAssistant.Models
                 gear.Description = ReferenceData.MasterGearList[gear.Name];
             }
         }
+        public void UpdateCyberwareDescriptions()
+        {
+            foreach (Cyberware cyberware in InstalledCyberware)
+            {
+                cyberware.Description = ReferenceData.MasterCyberwareList[cyberware.Name];
+            }
+        }
 
         // Private Methods
         private void InitializeLists()
@@ -474,6 +492,7 @@ namespace CyberpunkGameplayAssistant.Models
             TechniqueSkills = new();
             AmmoInventory = new();
             GearInventory = new();
+            InstalledCyberware = new();
         }
         private void UpdateWoundState()
         {
@@ -483,6 +502,14 @@ namespace CyberpunkGameplayAssistant.Models
             if (CurrentHitPoints < 1) { woundState = ReferenceData.WoundStateMortallyWounded; }
             if (IsDead) { woundState = ReferenceData.WoundStateDead; }
             WoundState = woundState;
+        }
+        private void AddGear(string name)
+        {
+            GearInventory.Add(new(name));
+        }
+        private void AddCyberware(string name)
+        {
+            InstalledCyberware.Add(new(name));
         }
 
     }
