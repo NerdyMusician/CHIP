@@ -254,6 +254,13 @@ namespace CyberpunkGameplayAssistant.Models
             get => _AmmoInventory;
             set => SetAndNotify(ref _AmmoInventory, value);
         }
+        private ObservableCollection<Gear> _GearInventory;
+        [XmlSaveMode(XSME.Enumerable)]
+        public ObservableCollection<Gear> GearInventory
+        {
+            get => _GearInventory;
+            set => SetAndNotify(ref _GearInventory, value);
+        }
         private bool _IsDead;
         [XmlSaveMode(XSME.Single)]
         public bool IsDead
@@ -295,7 +302,9 @@ namespace CyberpunkGameplayAssistant.Models
         // Public Methods
         public void InitializeLoadedCombatant()
         {
+            SetDerivedStats();
             UpdateWoundState();
+            UpdateGearDescriptions();
         }
         public void SetStoppingPower()
         {
@@ -312,15 +321,17 @@ namespace CyberpunkGameplayAssistant.Models
             Stats.Add(new(ReferenceData.StatDexterity, DEX));
             Stats.Add(new(ReferenceData.StatTechnique, TECH));
             Stats.Add(new(ReferenceData.StatCool, COOL));
-            Stats.Add(new(ReferenceData.StatWillpower, INT));
-            Stats.Add(new(ReferenceData.StatLuck, INT));
-            Stats.Add(new(ReferenceData.StatMovement, INT));
-            Stats.Add(new(ReferenceData.StatBody, INT));
-            Stats.Add(new(ReferenceData.StatEmpathy, INT));
+            Stats.Add(new(ReferenceData.StatWillpower, WILL));
+            Stats.Add(new(ReferenceData.StatLuck, LUCK));
+            Stats.Add(new(ReferenceData.StatMovement, MOVE));
+            Stats.Add(new(ReferenceData.StatBody, BODY));
+            Stats.Add(new(ReferenceData.StatEmpathy, EMP));
         }
         public void SetDerivedStats()
         {
-            MaximumHitPoints = 5 * ((Stats.GetValue(ReferenceData.StatBody) + Stats.GetValue(ReferenceData.StatWillpower)) / 2);
+            int body = Stats.GetValue(ReferenceData.StatBody);
+            int willpower = Stats.GetValue(ReferenceData.StatWillpower);
+            MaximumHitPoints = 10 + (5 * ((body + willpower) / 2));
             CurrentHitPoints = MaximumHitPoints;
         }
         public void SetBaseSkills()
@@ -355,6 +366,17 @@ namespace CyberpunkGameplayAssistant.Models
         public void AddAmmo(string type, int quantity)
         {
             AmmoInventory.Add(new(type, quantity));
+        }
+        private void AddGear(string name)
+        {
+            GearInventory.Add(new(name));
+        }
+        public void AddGearSet(params string[] names)
+        {
+            foreach (string name in names)
+            {
+                AddGear(name);
+            }
         }
         public void SetClipQuantities()
         {
@@ -427,6 +449,13 @@ namespace CyberpunkGameplayAssistant.Models
             int statLevel = Stats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName == skill).StatName);
             return skillLevel + statLevel;
         }
+        public void UpdateGearDescriptions()
+        {
+            foreach (Gear gear in GearInventory)
+            {
+                gear.Description = ReferenceData.MasterGearList[gear.Name];
+            }
+        }
 
         // Private Methods
         private void InitializeLists()
@@ -444,6 +473,7 @@ namespace CyberpunkGameplayAssistant.Models
             SocialSkills = new();
             TechniqueSkills = new();
             AmmoInventory = new();
+            GearInventory = new();
         }
         private void UpdateWoundState()
         {

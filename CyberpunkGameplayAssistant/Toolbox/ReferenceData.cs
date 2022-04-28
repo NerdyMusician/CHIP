@@ -419,6 +419,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string CorpoTowaManufacturing = "Towa Manufacturing";
         public const string CorpoTsunamiArms = "Tsunami Arms";
 
+        #region WEAPONS
         // Weapon Categories - pg340
         public static readonly string WeaponTypeLightMelee = "Light Melee Weapon";
         public static readonly string WeaponTypeMediumMelee = "Medium Melee Weapon";
@@ -541,6 +542,152 @@ namespace CyberpunkGameplayAssistant.Toolbox
             new($"{CorpoFederatedArms} X-9mm", WeaponTypeMediumPistol, WeaponQualityStandard), // TODO
 
         };
+        #endregion
+
+        #region GEAR
+        public const string GearAgent = "Agent";
+        public const string GearAirhypo = "Airhypo";
+        public const string GearAntiSmogBreathingMask = "Anti-Smog Breathing Mask";
+        public const string GearAudioRecorder = "Audio Recorder";
+        public const string GearAutoLevelDampeningEarProtectors = "Auto Level Dampening Ear Protectors";
+        public const string GearBinoculars = "Binoculars";
+        public const string GearBraindanceViewer = "Braindance Viewer";
+        public const string GearBugDetector = "Bug Detector";
+        public const string GearCarryall = "Carryall";
+        public const string GearChemicalAnalyzer = "Chemical Analyzer";
+        public const string GearComputer = "Computer";
+        public const string GearCryopump = "Cryopump";
+        public const string GearCryotank = "Cryotank";
+        public const string GearCyberdeckExcellent = "Cyberdeck (Excellent Quality)";
+        public const string GearCyberdeckPoor = "Cyberdeck (Poor Quality)";
+        public const string GearCyberdeckStandard = "Cyberdeck (Standard Quality)";
+        public const string GearDisposableCellPhone = "Disposable Cell Phone";
+        public const string GearDrumSynthesizer = "Drum Synthesizer";
+        public const string GearDuctTape = "Duct Tape";
+        public const string GearElectricGuitar = "Electric Guitar";
+        public const string GearFlashlight = "Flashlight";
+        public const string GearFoodStick = "Food Stick";
+        public const string GearGlowPaint = "Glow Paint";
+        public const string GearGlowStick = "Glow Stick";
+        public const string GearGrappleGun = "Grapple Gun";
+        public const string GearHandcuffs = "Handcuffs";
+        public const string GearHomingTracer = "Homing Tracer";
+        public const string GearInflatableBed = "Inflatable Bed & Sleep-bag";
+        public const string GearKibblePack = "Kibble Pack";
+        public const string GearLinearFrameBeta = "Linear Frame Beta";
+        public const string GearLinearFrameSigma = "Linear Frame Sigma";
+        public const string GearLockPickingSet = "Lock Picking Set";
+        public const string GearMedscanner = "Medscanner";
+        public const string GearMedtechBag = "Medtech Bag";
+        public const string GearMemoryChips = "Memory Chips";
+        public const string GearMRE = "MRE";
+        public const string GearPersonalCarePak = "Personal CarePak";
+        public const string GearPocketAmplifier = "Pocket Amplifier";
+        public const string GearRadarDetector = "Radar Detector";
+        public const string GearRadioCommunicator = "Radio Communicator";
+        public const string GearRadioScannerMusicPlayer = "Radio Scanner / Music Player";
+        public const string GearRoadFlare = "Road Flare";
+        public const string GearRope = "Rope (60m)";
+        public const string GearScramblerDescrambler = "Scrambler / Descrambler";
+        public const string GearSmartGlasses = "Smart Glasses";
+        public const string GearTechBag = "Tech Bag";
+        public const string GearTechscanner = "Techscanner";
+        public const string GearTechtool = "Techtool";
+        public const string GearTentAndCampingEquipment = "Tent & Camping Equipment";
+        public const string GearVialOfBiotoxin = "Vial of Biotoxin";
+        public const string GearVialOfPoison = "Vial of Poison";
+        public const string GearVideoCamera = "Video Camera";
+        public const string GearVirtualityGoggles = "Virtuality Goggles";
+        public static readonly Dictionary<string, string> MasterGearList = new()
+        {
+            { GearAgent, "Self-adaptive-AI powered smartphone; that \"learns\" how best to fit your needs simply by interacting with you. While not a true AI, it is more than capable of replacing any need for a secretary. When you sit back and allow your Agent to manage your life, everything is easier, including making sure you have time to do what you need to do (crimes, killing people, getting away with it, and so forth) instead of going to the store to get something you forgot. There are many reasons why almost everyone has one." },
+            { GearAirhypo, "Easy to use drug distribution platform which uses a quick burst of compressed air to force a drug through the skin. Allows user to use an Action to administer a single dose of a desired drug to a willing target, or try to make a Melee Weapon Attack to administer a single dose to an unwilling target on a hit instead of dealing damage. Reloading the Airhypo with a dose of your desired drug isn't an Action." },
+            { GearAntiSmogBreathingMask, "Useful for filtering out toxins and smoke from the local environment. User is immune to the effects of toxic gasses, fumes, and all similar dangers that must be inhaled to affect the user." },
+            { GearAudioRecorder, "Device records up to 24 hours of audio before its output fills up a standard Memory Chip stored in the device." },
+            { GearAutoLevelDampeningEarProtectors, "Compact ear protection. When worn, user is immune to deafness or other effects caused by dangerously loud noises, like those produced by a flashbang." },
+            { GearBinoculars, "You look through them. They double or triple the size of what you are seeing." },
+            { GearBraindanceViewer, "Allows the user to experience braindance content. Braindances are digital recordings of an experience which you view through the eyes of the actor. The experience includes all the subject's senses, and you feel every emotion felt, for better or worse." },
+            { GearBugDetector, "Device beeps when user is within 2m/yds of a tap, bug, or other listening device." },
+            { GearCarryall, "Heavy ripstop nylon bags of varying sizes, from messenger to nearly man-sized duffel bags." },
+            { GearChemicalAnalyzer, "Can test substances as an Action to find their precise chemical composition, identifying most substances instantly from a wide database of samples." },
+            { GearComputer, "Laptop or desktop computer, used mostly for comfortable word processing and surfing the Data Pool." },
+            { GearCryopump, "A Cryopump is a briefcase-sized tool containing a body bag hooked up to a powerful pump. Once willing/unconscious targets have been placed into the bag and hooked up to the pump as an Action, the pump forces a hyper-cooled chemical fluid into the bag, draining one of the Cryopump's charges per target put in stasis (one per person, if the Cryopump can accept multiple people). While in stasis, targets are unconscious and no longer roll any Death Saves for up to a week, as long as they remain inside the bag and the bag has at least 1 HP. A Character in a cryopump bag is considered to be behind a piece of cover that has 15 HP. The bag's transparent top and gloves molded into the lining allow the target to undergo surgery and be stabilized while in stasis, which is much less dangerous to the patient. A standard Cryopump has only 1 charge and can only hold a single roughly humansized target. Refueling a Cryopump costs 50eb (Costly) per charge. A Character who is not a Medtech cannot operate a Cryopump." },
+            { GearCryotank, "A Cryotank is a human-sized container which can hold a fully grown adult. Assuming the Medtech succeeds at a DV13 Medical Tech Check, the Cryotank keeps 1 person in stasis as long as desired. While in the Cryotank, they are considered to be unconscious, but they heal at double the normal rate as long as they remain inside the tank and the tank has at least 1 HP. A Character in a Cryotank is considered to be behind a piece of cover that has 30 HP. A Character who is not a Medtech cannot operate a Cryotank." },
+            { GearCyberdeckExcellent, "A high-end modular platform that Programs and Hardware are installed on for the purpose of Netrunning. This cyberdeck has 9 slots to install Programs and Hardware. Requires Interface Plugs and Neural Link for a Netrunner to operate." },
+            { GearCyberdeckPoor, "A cheap modular platform that Programs and Hardware are installed on for the purpose of Netrunning. This cyberdeck has 5 slots to install Programs and Hardware. Requires Interface Plugs and Neural Link for a Netrunner to operate." },
+            { GearCyberdeckStandard, "Modular platform that Programs and Hardware are installed on for the purpose of Netrunning. This cyberdeck has 7 slots to install Programs and Hardware. Requires Interface Plugs and Neural Link for a Netrunner to operate." },
+            { GearDisposableCellPhone, "There are still billions of the things around. A good choice for Fixers and other people who don't want to be tracked." },
+            { GearDrumSynthesizer, "Flat plastic pads of varying sizes, linked by cables to a central processor. Can simulate almost any kind of drum. Requires some type of amplification to be heard." },
+            { GearDuctTape, "Comes in many colors and optionally can glow in the dark. Glowing duct tape is often used to mark tunnels, dead drops, or caches. It glows in the dark even if there has been no light exposure." },
+            { GearElectricGuitar, "Use your imagination. But remember that you will need an amp to be heard with any electronic-based instrument." },
+            { GearFlashlight, "Rechargeable. 100m/yd beam, lasts up to 10 hours on a charge." },
+            { GearFoodStick, "Grainy, dried food bar that comes in a variety of (awful) flavors. One meal." },
+            { GearGlowPaint, "Glow in the dark paint for marking locations and creating art. Comes in a spray can. Also good for tagging." },
+            { GearGlowStick, "Light tube to illuminate a 4m/yd area for up to 10 hours. One use only" },
+            { GearGrappleGun, "When wielded in a hand, user as an Action can fire a rocket propelled grapple that will attach securely to any \"thick\" cover up to 30m/yds away. Line can only support two times the user's body weight, and has 10 HP. The user negates the normal movement penalty for climbing when they climb this line, and can retract the line without an Action, including as they climb. When used as a grapple, user can't hold anything in the hand used to wield the grapple gun. Ineffective as a weapon, and cannot be used to make the Grab Action." },
+            { GearHandcuffs, "Book 'em, Danno. Can be broken easily if your BODY is higher than 10." },
+            { GearHomingTracer, "Device can follow a linked tracer up to 1-mile away. Comes with a free button sized linked tracer. Replacement linked tracers are 50eb." },
+            { GearInflatableBed, "It's a self-inflating air mattress than comes packed with a thin sleeping bag. The whole thing folds to a 6\"x6\" package for easy storage." },
+            { GearKibblePack, "One foil package of dry, pet food-like cereal or wafers equivalent to a single meal. Usually identified by number rather than the fake appetizing label and description." },
+            { GearLinearFrameBeta, "Powered exoskeleton, giving the user tremendous strength. • User increases their BODY to 14 while plugged into the frame. This cannot increase the user's BODY to 15 or higher. This increase in BODY does not increase the user's HP or change their Death Save. • Requires 2 installation of Interface Plugs to operate." },
+            { GearLinearFrameSigma, "Powered exoskeleton, giving the user even more tremendous strength. • User increases their BODY to 12 while plugged into the frame using two installations of Interface Plugs. This cannot increase the user's BODY to 13 or higher. This increase in BODY does not increase the user's HP or change their Death Save. • Requires 1 installations of Interface Plugs to operate." },
+            { GearLockPickingSet, "A small pouch of tools for cracking mechanical locks." },
+            { GearMedscanner, "Scanner with external probes and contacts that diagnoses injury and illness, assisting user in medical emergencies not requiring Surgery. User adds +2 to their First Aid and Paramedic Skills. This doesn't stack with itself" },
+            { GearMedtechBag, "Medical toolkit that includes everything from dermal staplers to spray skin applicators to sterile scalpels. All you need to save lives using your skills and training." },
+            { GearMemoryChips, "Thin wafers of doped plastic that store information in all forms. Some of these are larger than others." },
+            { GearMRE, "Self-heating plastic and foil meal bag. Add water, snap the tab on the top, and in 2 minutes you have something that resembles a single hot, nourishing meal." },
+            { GearPersonalCarePak, "Toothpaste-loaded toothbrush, all body wet-wipes, depilatory paste, comb, etc." },
+            { GearPocketAmplifier, "About the size of a large book, this rechargeable amplifier delivers sound up to 100m/yd for up to 6 hours. Can support two instruments" },
+            { GearRadarDetector, "Device beeps if an active radar beam is present within 100m/yds." },
+            { GearRadioCommunicator, "Earpiece allowing user to communicate via radio, 1-mile range." },
+            { GearRadioScannerMusicPlayer, "Music player can link to the Data Pool to listen to the hottest music, or play directly from a Memory Chip. User can also scan all radio bands within a mile that are currently being used and tune into them, though some channels might require a Descrambler to understand." },
+            { GearRoadFlare, "Lights an area of 100m/yards for 1 hour. Different colors. One use." },
+            { GearRope, "Nylon rope. Can come in colors if desired. Holds up to 800lbs (360kg)." },
+            { GearScramblerDescrambler, "Allows user to scramble outgoing communications so they cannot be understood without a descrambler, which is also included at no extra charge." },
+            { GearSmartGlasses, "Contains two option slots for Cybereye options. When worn, Smart Glasses give the user access to the benefits of these options. When cybereye options are installed into the glasses, they always count as if they were paired, and it costs the same as installing the option once in a cybereye. You can only wear a single pair at a time. Enthusiasts often replace the frames of their Smart Glasses with nicer ones, as they aren't the prettiest out of the box." },
+            { GearTechBag, "Small bag of tools for fixing electronics and machines. Includes a Techtool, electrical parts like tape and wire wraps, asst. screws and bolts, plug in modules for repairs, heat torch, 2 small prybars, and hammer." },
+            { GearTechscanner, "Scanner diagnoses a wide variety of machinery and electronics, assisting the user in repairs, or other technical work. User adds +2 to their Basic Tech, Cybertech, Land Vehicle Tech, Sea Vehicle Tech, Air Vehicle Tech, Electronics/Security Tech, and Weaponstech Skills. This doesn't stack with itself." },
+            { GearTechtool, "Small bag of tools for fixing electronics and machines. Includes a Techtool, electrical parts like tape and wire wraps, asst. screws and bolts, plug in modules for repairs, heat torch, 2 small prybars, and hammer." },
+            { GearTentAndCampingEquipment, "Small one-person tube tent with plastic stakes, one self-heating, rechargeable pot to boil water (takes 5 min to recharge, lasts 2 hours) and a cheap metal spork that couldn't hurt a fly." },
+            { GearVialOfBiotoxin, "An entire vial of biotoxin can be smeared on any Light Melee Weapon as an Action. For the next 30 minutes after application, instead of dealing the weapon's typical damage, anyone meat hit by the biotoxin-coated Light Melee Weapon must instead attempt to beat a DV15 Resist Torture/Drugs Check. Anyone who fails is dealt 3d6 damage directly to their HP. Their armor isn't ablated because it wasn't interacted with." },
+            { GearVialOfPoison, "An entire vial of poison can be smeared on any Light Melee Weapon as an Action. For the next 30 minutes after application, instead of dealing the weapon's typical damage, anyone meat hit by the poisoned Light Melee Weapon must instead attempt to beat a DV13 Resist Torture/Drugs Check. Anyone who fails is dealt 2d6 damage directly to their HP. Their armor isn't ablated because it wasn't interacted with." },
+            { GearVideoCamera, "When held in a hand, user can record up to 12 hours of video and audio before its output fills up a standard Memory Chip stored in the device." },
+            { GearVirtualityGoggles, "Headset that projects cyberspace imagery over your view of the world around you. Highly advised for Netrunners." },
+        };
+        #endregion
+
+        #region CYBERWARE
+        // Fashionware
+        public const string CyberwareBiomonitor = "Biomonitor";
+        public const string CyberwareChemskin = "Chemskin";
+        public const string CyberwareEmpThreading = "EMP Threading";
+        public const string CyberwareLightTattoo = "Light Tattoo";
+        public const string CyberwareShiftTacts = "Shift Tacts";
+        public const string CyberwareSkinwatch = "Skinwatch";
+        public const string CyberwareTechhair = "Techhair";
+
+        // Neuralware
+        public const string CyberwareNeuralLink = "Neural Link";
+        public const string CyberwareBraindanceRecorder = "Braindance Recorder";
+        public const string CyberwareChipwareSocket = "Chipware Socket";
+        public const string CyberwareInterfacePlugs = "Interface Plugs";
+        public const string CyberwareKerenzikov = "Kerenzikov";
+        public const string CyberwareSandevistan = "Sandevistan";
+        public const string CyberwareChemicalAnalyzer = "Chemical Analyzer";
+        public const string CyberwareMemoryChip = "Memory Chip";
+        public const string CyberwareOlfactoryBoost = "Olfactory Boost";
+        public const string CyberwarePainEditor = "Pain Editor";
+        public const string CyberwareSkillChip = "Skill Chip";
+        public const string CyberwareTactileBoost = "Tactile Boost";
+
+        // Cyberoptics
+        public const string CyberwareCybereye = "Cybereye";
+        public const string CyberwareAntiDazzle = "Anti-Dazzle";
+        public const string CyberwareChyron = "Chyron";
+        public const string CyberwareColorShift = "Color Shift";
+        public const string CyberwareDartgun = "Dartgun";
+        public const string CyberwareImageEnhance = "Image Enhance";
+        #endregion
 
         public static List<Combatant> Combatants = new()
         {
@@ -585,6 +732,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             bodyguard.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
             bodyguard.AddAmmo(AmmoTypeSlug, 25);
             bodyguard.AddAmmo(AmmoTypeVeryHeavyPistol, 25);
+            bodyguard.AddGearSet(GearRadioCommunicator);
             bodyguard.ReloadAllWeapons();
             Combatants.Add(bodyguard);
             #endregion
