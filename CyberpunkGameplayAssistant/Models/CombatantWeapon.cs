@@ -60,7 +60,8 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get
             {
-                return ReferenceData.ClipChart.FirstOrDefault(w => w.WeaponType == Type).Standard;
+                RangedWeaponClip clip = ReferenceData.ClipChart.FirstOrDefault(w => w.WeaponType == Type);
+                return (clip != null) ? clip.Standard : 0;
             }
         }
 
@@ -79,7 +80,7 @@ namespace CyberpunkGameplayAssistant.Models
             int attackBonus = combatant.GetSkillTotal(relevantSkill);
             int attackResult = HelperMethods.RollD10(true) + attackBonus;
             int damage = HelperMethods.RollDamage(6, out bool criticalInjury);
-            HelperMethods.AddToGameplayLog($"{combatant.DisplayName} autofires with {Name}\nAttack: {attackResult}\nDamage: {damage} {(criticalInjury ? "CRIT" : "")}");
+            HelperMethods.AddToGameplayLog($"{combatant.DisplayName} attacks with {Name}\nAttack: {attackResult}\nDamage: {damage} {(criticalInjury ? "CRIT" : "")}");
         }
         public ICommand RollAutofire => new RelayCommand(DoRollAutofire);
         private void DoRollAutofire(object param)

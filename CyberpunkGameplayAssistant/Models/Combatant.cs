@@ -309,17 +309,18 @@ namespace CyberpunkGameplayAssistant.Models
         // Public Methods
         public void InitializeLoadedCombatant()
         {
-            SetDerivedStats();
+            SetDerivedStats(false);
+            SetStoppingPower(false);
             UpdateWoundState();
             UpdateGearDescriptions();
             UpdateCyberwareDescriptions();
+            OrganizeSkillsToCategories();
         }
-        public void SetStoppingPower()
+        public void InitializeNewCombatant()
         {
-            MaximumHeadStoppingPower = ReferenceData.ArmorTable.GetStoppingPower(ArmorType);
-            MaximumBodyStoppingPower = ReferenceData.ArmorTable.GetStoppingPower(ArmorType);
-            CurrentHeadStoppingPower = MaximumHeadStoppingPower;
-            CurrentBodyStoppingPower = MaximumBodyStoppingPower;
+            SetDerivedStats(true);
+            SetStoppingPower(true);
+            ReloadAllWeapons();
         }
         public void SetStats(int INT, int REF, int DEX, int TECH, int COOL, int WILL, int LUCK, int MOVE, int BODY, int EMP)
         {
@@ -335,13 +336,7 @@ namespace CyberpunkGameplayAssistant.Models
             Stats.Add(new(ReferenceData.StatBody, BODY));
             Stats.Add(new(ReferenceData.StatEmpathy, EMP));
         }
-        public void SetDerivedStats()
-        {
-            int body = Stats.GetValue(ReferenceData.StatBody);
-            int willpower = Stats.GetValue(ReferenceData.StatWillpower);
-            MaximumHitPoints = 10 + (5 * ((body + willpower) / 2));
-            CurrentHitPoints = MaximumHitPoints;
-        }
+        
         public void SetBaseSkills()
         {
             Skills = new();
@@ -396,64 +391,13 @@ namespace CyberpunkGameplayAssistant.Models
                 weapon.CurrentClipQuantity = ReferenceData.ClipChart.GetStandardClipSize(weapon.Type);
             }
         }
-        public void ReloadAllWeapons()
-        {
-            foreach (CombatantWeapon weapon in Weapons)
-            {
-                string ammoTypeNeededForThisWeapon = ReferenceData.WeaponRepository.FirstOrDefault(w => w.Type == weapon.Type).AmmoType;
-                Ammo ammoInInventory = AmmoInventory.FirstOrDefault(a => a.Type == ammoTypeNeededForThisWeapon);
-                if (ammoInInventory != null)
-                {
-                    int clipSize = ReferenceData.ClipChart.GetStandardClipSize(weapon.Type);
-                    int quantityNeededToFillClip = clipSize - weapon.CurrentClipQuantity;
-                    int ammoToAddToClip = ammoInInventory.Quantity < quantityNeededToFillClip ? ammoInInventory.Quantity : quantityNeededToFillClip;
-                    ammoInInventory.Quantity -= ammoToAddToClip;
-                    weapon.CurrentClipQuantity += ammoToAddToClip;
-                }
-            }
-        }
+        
         public void SetDisplayName(string letter = "")
         {
             if (!letter.IsNullOrEmpty()) { TrackerIndicator = letter; }
             DisplayName = $"{Name} {TrackerIndicator}";
         }
-        public void OrganizeSkillsToCategories()
-        {
-            foreach (Skill skill in Skills)
-            {
-                switch (ReferenceData.SkillLinks.GetCategory(skill.Name))
-                {
-                    case ReferenceData.SkillCategoryAwareness:
-                        AwarenessSkills.Add(skill);
-                        break;
-                    case ReferenceData.SkillCategoryBody:
-                        BodySkills.Add(skill);
-                        break;
-                    case ReferenceData.SkillCategoryControl:
-                        ControlSkills.Add(skill);
-                        break;
-                    case ReferenceData.SkillCategoryPerformance:
-                        PerformanceSkills.Add(skill);
-                        break;
-                    case ReferenceData.SkillCategoryEducation:
-                        EducationSkills.Add(skill);
-                        break;
-                    case ReferenceData.SkillCategoryFighting:
-                        FightingSkills.Add(skill);
-                        break;
-                    case ReferenceData.SkillCategoryRangedWeapon:
-                        RangedWeaponSkills.Add(skill);
-                        break;
-                    case ReferenceData.SkillCategorySocial:
-                        SocialSkills.Add(skill);
-                        break;
-                    case ReferenceData.SkillCategoryTechnique:
-                        TechniqueSkills.Add(skill);
-                        break;
-                    default:break;
-                }
-            }
-        }
+        
         public int GetSkillTotal(string skill)
         {
             int skillLevel = Skills.FirstOrDefault(s => s.Name == skill).Level;
@@ -510,6 +454,79 @@ namespace CyberpunkGameplayAssistant.Models
         private void AddCyberware(string name)
         {
             InstalledCyberware.Add(new(name));
+        }
+        private void SetStoppingPower(bool setCurrentToMax)
+        {
+            MaximumHeadStoppingPower = ReferenceData.ArmorTable.GetStoppingPower(ArmorType);
+            MaximumBodyStoppingPower = ReferenceData.ArmorTable.GetStoppingPower(ArmorType);
+            if (setCurrentToMax)
+            {
+                CurrentHeadStoppingPower = MaximumHeadStoppingPower;
+                CurrentBodyStoppingPower = MaximumBodyStoppingPower;
+            }
+        }
+        private void ReloadAllWeapons()
+        {
+            foreach (CombatantWeapon weapon in Weapons)
+            {
+                string ammoTypeNeededForThisWeapon = ReferenceData.WeaponRepository.FirstOrDefault(w => w.Type == weapon.Type).AmmoType;
+                Ammo ammoInInventory = AmmoInventory.FirstOrDefault(a => a.Type == ammoTypeNeededForThisWeapon);
+                if (ammoInInventory != null)
+                {
+                    int clipSize = ReferenceData.ClipChart.GetStandardClipSize(weapon.Type);
+                    int quantityNeededToFillClip = clipSize - weapon.CurrentClipQuantity;
+                    int ammoToAddToClip = ammoInInventory.Quantity < quantityNeededToFillClip ? ammoInInventory.Quantity : quantityNeededToFillClip;
+                    ammoInInventory.Quantity -= ammoToAddToClip;
+                    weapon.CurrentClipQuantity += ammoToAddToClip;
+                }
+            }
+        }
+        private void SetDerivedStats(bool setCurrentToMax)
+        {
+            int body = Stats.GetValue(ReferenceData.StatBody);
+            int willpower = Stats.GetValue(ReferenceData.StatWillpower);
+            MaximumHitPoints = 10 + (5 * ((body + willpower) / 2));
+            if (setCurrentToMax)
+            {
+                CurrentHitPoints = MaximumHitPoints;
+            }
+        }
+        private void OrganizeSkillsToCategories()
+        {
+            foreach (Skill skill in Skills)
+            {
+                switch (ReferenceData.SkillLinks.GetCategory(skill.Name))
+                {
+                    case ReferenceData.SkillCategoryAwareness:
+                        AwarenessSkills.Add(skill);
+                        break;
+                    case ReferenceData.SkillCategoryBody:
+                        BodySkills.Add(skill);
+                        break;
+                    case ReferenceData.SkillCategoryControl:
+                        ControlSkills.Add(skill);
+                        break;
+                    case ReferenceData.SkillCategoryPerformance:
+                        PerformanceSkills.Add(skill);
+                        break;
+                    case ReferenceData.SkillCategoryEducation:
+                        EducationSkills.Add(skill);
+                        break;
+                    case ReferenceData.SkillCategoryFighting:
+                        FightingSkills.Add(skill);
+                        break;
+                    case ReferenceData.SkillCategoryRangedWeapon:
+                        RangedWeaponSkills.Add(skill);
+                        break;
+                    case ReferenceData.SkillCategorySocial:
+                        SocialSkills.Add(skill);
+                        break;
+                    case ReferenceData.SkillCategoryTechnique:
+                        TechniqueSkills.Add(skill);
+                        break;
+                    default: break;
+                }
+            }
         }
 
     }

@@ -59,7 +59,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             RangedWeaponClip clip = clipList.FirstOrDefault(c => c.WeaponType == weaponType);
             if (clip != null) { return clip.Standard; }
-            return 0;
+            return 1;
         }
         public static int GetDamage(this List<Weapon> weaponList, string weaponType)
         {

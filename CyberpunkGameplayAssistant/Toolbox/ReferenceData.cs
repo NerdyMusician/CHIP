@@ -227,7 +227,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         // Fighting Skills
         public const string SkillBrawling = "Brawling";
         public const string SkillEvasion = "Evasion";
-        public const string SkillMartialArts = "MartialArts";
+        public const string SkillMartialArts = "Martial Arts";
         public const string SkillMeleeWeapon = "Melee Weapon";
         // Performance Skills
         public const string SkillActing = "Acting";
@@ -760,7 +760,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string CyberwareTalonFoot = "Talon Foot";
         public const string CyberwareWebFoot = "Web Foot";
 
-        // Cyberlimbs - Both
+        // Cyberlimbs - Misc
         public const string CyberwareHardenedShielding = "Hardened Shielding";
         public const string CyberwarePlasticCovering = "Plastic Covering";
         public const string CyberwareRealskinnCovering = "Realskinn Covering";
@@ -785,6 +785,111 @@ namespace CyberpunkGameplayAssistant.Toolbox
             { CyberwareTechhair, "Color-light-emitting artificial hair. +2 to Personal Grooming if user also has Chemskin." },
 
             // Neuralware
+            { CyberwareNeuralLink, "Wired artificial nervous system. Required to use Neuralware and Subdermal Grip. Has 5 Option Slots." },
+            { CyberwareBraindanceRecorder, "Records user's experiences to memory chip or external device. Requires Neural Link." },
+            { CyberwareChipwareSocket, "A single socket installed in back of the neck. Required to use Chipware. Requires Neural Link." },
+            { CyberwareInterfacePlugs, "Plugs in wrist or head that allow connection to machines. Requires Neural Link." },
+            { CyberwareKerenzikov, "Speedware. User adds +2 to Initiative. Only 1 piece of Speedware can be installed at a time. Requires Neural Link." },
+            { CyberwareSandevistan, "Speedware. When activated as an Action adds +3 to Initiative for one minute. Has 1 hour cool down period. Only 1 piece of Speedware can be installed at a time. Requires Neural Link." },
+            { CyberwareChemicalAnalyzer, "Chipware. Tests substance for precise chemical composition and compares to a database. Requires Chipware Socket." },
+            { CyberwareMemoryChip, "Data storage. User's cyberware can store or access data on it." },
+            { CyberwareOlfactoryBoost, "Chipware. User can use Tracking Skill to track via scent. Requires Chipware Socket." },
+            { CyberwarePainEditor, "Chipware. User ignores penalties due to being Seriously Wounded. Requires Chipware Socket." },
+            { CyberwareSkillChip, "Chipware. User has specific Skill at Level 3 unless Skill is already 3+. Skill Chips for (x2) cost Skills cost more. Requires Chipware Socket." },
+            { CyberwareTactileBoost, "Chipware. User can detect motion within 20m/yd by placing hand on surface. Requires Chipware Socket." },
+
+            // Cyberoptics
+            { CyberwareCybereye, "Artificial Eye. Each Cybereye has 3 Option Slots. Some options must be paired (purchased twice and installed in two different Cybereyes on a user. HL must be paid for each)." },
+            { CyberwareAntiDazzle, "User immune to effects caused by flashes of light. Requires two Cybereyes and must be paired." },
+            { CyberwareChyron, "Projects subscreen into user's field of vision. Requires a Cybereye." },
+            { CyberwareColorShift, "Unlimited color and pattern changes for the eye. Requires a Cybereye." },
+            { CyberwareDartgun, "Single shot Dartgun Exotic Weapon concealed in eye. Requires a Cybereye and takes 3 Option Slots." },
+            { CyberwareImageEnhance, "Adds +2 to Perception, Lip Reading, and Conceal/Reveal Object. Requires two Cybereyes and must be paired." },
+            { CyberwareLowLightInfraredUv, "User can ignore penalties due to darkness, smoke, fog, etc. Requires two Cybereyes, must be paired, and takes 2 Option Slots per Cybereye." },
+            { CyberwareMicroOptics, "Provides user with 400x magnification. Requires a Cybereye." },
+            { CyberwareMicroVideo, "Camera in eye. Records audio and video to Memory Chip or linked Agent. Requires a Cybereye and takes 2 Option Slots." },
+            { CyberwareRadiationDetector, "Radiation readings within 100m/yds displayed in form of blue glow. Requires a Cybereye." },
+            { CyberwareTargetingScope, "Adds +1 to Check when making Aimed Shot. Requires a Cybereye." },
+            { CyberwareTeleOptics, "Can see detail up to 800m/yd away. +1 to Aimed Shots against target 51m/yds or farther away. Requires a Cybereye." },
+            { CyberwareVirtuality, "Projects cyberspace imagery over user's view of the world. Requires two Cybereyes and must be paired." },
+
+            // Cyberaudio
+            { CyberwareCyberaudioSuite, "Has 3 Option Slots. Cannot install more than 1." },
+            { CyberwareAmplifiedHearing, "+2 to Perception for Checks involving hearing. Requires a Cyberaudio Suite." },
+            { CyberwareAudioRecorder, "Records audio to Memory Chip or linked Agent. Requires a Cyberaudio Suite." },
+            { CyberwareBugDetector, "Beeps when within 2m/yds of a listening device. Requires a Cyberaudio Suite." },
+            { CyberwareHomingtracer, "Can follow a linked tracer up to 1 mile away. Requires a Cyberaudio Suite." },
+            { CyberwareInternalAgent, "Fully functional Agent installed internally. Can be linked to a Cybereye with Chyron display. Otherwise, audio only. Requires a Cyberaudio Suite." },
+            { CyberwareLevelDamper, "User immune to effects caused by loud noises. Requires a Cyberaudio Suite." },
+            { CyberwareRadioCommunicator, "User can communicate via radio. 1 mile range. Requires a Cyberaudio Suite." },
+            { CyberwareRadioScannerMusicPlayer, "Can play music from Data Pool or Memory Chip or tune into radio broadcasts within 1 mile. Requires a Cyberaudio Suite." },
+            { CyberwareRadarDetector, "Beeps if active radar beam is within 100m/yd. Requires a Cyberaudio Suite." },
+            { CyberwareScramblerDescrambler, "Allows user to scramble outgoing communications and descramble incoming communications. Requires a Cyberaudio Suite." },
+            { CyberwareVoiceStressAnalyzer, "+2 to Human Perception and Interrogation Checks. Requires a Cyberaudio Suite." },
+
+            // Internal Cyberware
+            { CyberwareAudioVox, "Voice synthesizer. Adds +2 to Acting and Play Instrument when singing." },
+            { CyberwareContraceptiveImplant, "Prevents undesired pregnancy." },
+            { CyberwareEnhancedAntibodies, "After stabilization, user heals BODY x 2 for each day spent resting." },
+            { CyberwareCybersnake, "Esophagus mounted Very Heavy Melee Weapon. Can be concealed." },
+            { CyberwareGills, "User can breathe underwater." },
+            { CyberwareGraftedMuscleBoneLace, "Increases BODY by 2. The increase changes HP, Wound Threshold, and Death Save. Cannot raise BODY above 10." },
+            { CyberwareIndependentAirSupply, "Provides 30 minutes of oxygen. Takes 1 hour to refill from ambient atmosphere." },
+            { CyberwareMidnightLady, "Be a Venus, be the fire, be desire." },
+            { CyberwareMrStudd, "All night, every night, and they'll never know." },
+            { CyberwareNasalFilters, "User immune to effects of toxic gases, fumes, and similar dangers." },
+            { CyberwareRadarSonarImplant, "Scans terrain within 50m/yds. Cannot scan through cover." },
+            { CyberwareToxinBinders, "Adds +2 to Resist Torture/Drugs." },
+            { CyberwareVampyres, "Excellent Quality Light Melee Weapon implanted in mouth. Can be concealed. User can add Poison or Biotoxin." },
+
+            // External Cyberware
+            { CyberwareHiddenHolster, "Can store weapon capable of concealment inside body." },
+            { CyberwareSkinWeave, "User's body and head armored at SP7. Does not stack with worn Armor. Ablates. Recovers 1 SP per day of rest." },
+            { CyberwareSubdermalArmor, "User's body and head armored at SP11. Does not stack with worn Armor. Ablates. Recovers 1 SP per day of rest." },
+            { CyberwareSubdermalPocket, "2\" x 4\" (5cm x 10cm) storage space just under the skin with RealSkinn™ zipper." },
+
+            // Cyberlimbs - Arms
+            { CyberwareCyberarm, "Replacement arm. Has 4 Option Slots. Comes installed with Standard Hand that doesn't cause Humanity Loss or take up an Option Slot." },
+            { CyberwareStandardHand, "Standard cybernetic hand. Can be installed in a meat arm." },
+            { CyberwareBigKnucks, "Armored knuckles. Medium Melee Weapon. Can be concealed. Can be installed as only piece of Cyberware in a meat arm." },
+            { CyberwareCyberdeck, "Cyberdeck installed in Cyberarm. Requires a Cyberarm and takes up 3 Option Slots." },
+            { CyberwareGrappleHand, "Fires hand, along with a grapple line up to 30m/yds. Cannot be used as a weapon. Requires a Cyberarm." },
+            { CyberwareMedscanner, "Medscanner installed in Cyberarm. Helps diagnose illness and injury. +2 to First Aid and Paramedic. Requires a Cyberarm and takes 2 Option Slots." },
+            { CyberwarePopupGrenadeLauncher, "A single shot Grenade Launcher installed in a Cyberarm. Weapon can be concealed. Requires a Cyberarm and takes up 2 Option Slots." },
+            { CyberwarePopupMeleeWeapon, "Any Light, Medium, or Heavy Melee Weapon installed in a Cyberarm. Weapon can be concealed even if not normally concealable. Requires a Cyberarm and takes up 2 Option Slots." },
+            { CyberwarePopupShield, "A Bulletproof Shield installed in the Cyberarm. Can be concealed and replaced when at 0 HP. Requires a Cyberarm and takes up 3 Option Slots." },
+            { CyberwarePopupRangedWeapon, "Any One Handed Ranged Weapon installed in a Cyberarm. Weapon can be concealed even if not normally concealable. Requires a Cyberarm and takes up 2 Option Slots." },
+            { CyberwareQuickChangeMount, "Allows user to remove or install a Cyberarm as an Action." },
+            { CyberwareRippers, "Carbo-glass claws. Medium Melee Weapon. Can be concealed. Can be installed as only piece of Cyberware in a meat arm." },
+            { CyberwareScratchers, "Carbo-glass fingernails. Light Melee Weapon. Can be concealed. Can be installed as only piece of Cyberware in a meat arm." },
+            { CyberwareShoulderCam, "Video camera mounted in shoulder. Can be concealed. Requires a Cyberarm and takes up 2 Option Slots." },
+            { CyberwareSliceAndDice, "Monofilament whip implanted in the thumb. Medium Melee Weapon. Can be concealed. Can be installed as only piece of Cyberware in a meat arm." },
+            { CyberwareSubdermalGrip, "Allows user to use Smartgun without Interface Plug. Can be installed as only piece of Cyberware in a meat arm. Requires Neural Link." },
+            { CyberwareTechscanner, "Techscanner installed in Cyberarm. Helps diagnose broken tech. +2 to multiple TECH-based Skills. Requires a Cyberarm and takes 2 Option Slots." },
+            { CyberwareToolHand, "Fingers contain screwdriver, wrench, small drill, and other tools. Can be installed as only piece of Cyberware in a meat arm." },
+            { CyberwareWolvers, "Long claws extended from the knuckles. Heavy Melee Weapon. Can be concealed. Can be installed as only piece of Cyberware in a meat arm." },
+
+            // Cyberlimbs - Legs
+            { CyberwareCyberleg, "Replacement leg. Has 3 Option Slots. Comes installed with Standard Foot that doesn't cause Humanity Loss or take up an Option Slot. Most Cyberleg options must be paired (purchased twice and installed in two different Cyberlegs on a user. HL must be paid for each)." },
+            { CyberwareStandardFoot, "Standard cybernetic foot. Can be installed in a meat leg." },
+            { CyberwareGripFoot, "Traction enhanced. Negates movement penalty when climbing. Requires two Cyberlegs and must be paired." },
+            { CyberwareJumpBooster, "Hydraulics in legs. Negates movement penalty when jumping. Requires two Cyberlegs, takes up 2 Option Slots, and must be paired." },
+            { CyberwareSkateFoot, "Inline skates built into feet. Can be concealed. Increases movement by 6m/yds when using Run Action. Requires two Cyberlegs and must be paired." },
+            { CyberwareTalonFoot, "Blade mounted in foot. Light Melee Weapon. Can be concealed. Can be installed as the only piece of Cyberware in a meat leg." },
+            { CyberwareWebFoot, "Thin webbing between toes. Negates movement penalty when swimming. Requires Two Cyberlegs and must be paired." },
+
+            // Cyberlimbs - Misc
+            { CyberwareHardenedShielding, "Cyberlimb and installed options cannot be rendered inoperable by EMP pulses or Non-Black ICE Program effects. Requires Cyberarm or Cyberleg." },
+            { CyberwarePlasticCovering, "Plastic coating for Cyberlimb. Available in wide variety of colors and patterns. Requires a Cyberarm or Cyberleg but does not take an Option Slot." },
+            { CyberwareRealskinnCovering, "Artificial skin coating for Cyberlimb. Requires a Cyberarm or Cyberleg but does not take an Option Slot." },
+            { CyberwareSuperchromeCovering, "Shiny metallic coating for Cyberlimb. +2 to Wardrobe and Style. Requires a Cyberarm or Cyberleg but does not take an Option Slot." },
+
+            // Borgware
+            { CyberwareArtificialShoulderMount, "User can mount 2 Cyberarms under first set of arms." },
+            { CyberwareImplantedLinearFrameBeta, "Enhanced skeleton and support structure. Increases BODY to 14. The increase changes HP, Wound Threshold, and Death Save. Requires BODY 8 and 2 Grafted Muscles and Bone Lace." },
+            { CyberwareImplantedLinearFrameSigma, "Enhanced skeleton and support structure. Increases BODY to 12. The increase changes HP, Wound Threshold, and Death Save. Requires BODY 6 and Grafted Muscles and Bone Lace." },
+            { CyberwareMultiOpticMount, "User can mount up to 5 additional Cybereyes." },
+            { CyberwareSensorArray, "User can install up to 5 additional Cyberaudio Options. Requires Cyberaudio Suite but does not take up Cyberaudio Option Slot." },
 
         };
 
@@ -804,9 +909,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             #region Bodyguard
             Combatant bodyguard = new("Bodyguard", PortraitBodyguard, ArmorTypeKevlar);
-            bodyguard.SetStoppingPower();
             bodyguard.SetStats(3, 6, 5, 2, 4, 4, 0, 4, 6, 3);
-            bodyguard.SetDerivedStats();
             bodyguard.SetBaseSkills();
             bodyguard.AddSkill(SkillAthletics, 9);
             bodyguard.AddSkill(SkillBrawling, 11);
@@ -828,14 +931,115 @@ namespace CyberpunkGameplayAssistant.Toolbox
             bodyguard.AddSkill(SkillResistTortureDrugs, 8);
             bodyguard.AddSkill(SkillShoulderArms, 10);
             bodyguard.AddSkill(SkillStealth, 7);
-            bodyguard.OrganizeSkillsToCategories();
             bodyguard.AddWeapon(WeaponTypeShotgun, WeaponQualityPoor);
             bodyguard.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
             bodyguard.AddAmmo(AmmoTypeSlug, 25);
             bodyguard.AddAmmo(AmmoTypeVeryHeavyPistol, 25);
             bodyguard.AddGearSet(GearRadioCommunicator);
-            bodyguard.ReloadAllWeapons();
+            bodyguard.InitializeNewCombatant();
             Combatants.Add(bodyguard);
+            #endregion
+            #region Boosterganger
+            Combatant boosterganger = new("Boosterganger", PortraitBoosterganger, ArmorTypeLeather);
+            boosterganger.SetStats(2, 6, 5, 2, 4, 2, 0, 4, 4, 3);
+            boosterganger.SetBaseSkills();
+            boosterganger.AddSkill(SkillAthletics, 9);
+            boosterganger.AddSkill(SkillBrawling, 9);
+            boosterganger.AddSkill(SkillConcealRevealObject, 4);
+            boosterganger.AddSkill(SkillConcentration, 4);
+            boosterganger.AddSkill(SkillConversation, 5);
+            boosterganger.AddSkill(SkillDriveLandVehicle, 10);
+            boosterganger.AddSkill(SkillEducation, 4);
+            boosterganger.AddSkill(SkillEndurance, 6);
+            boosterganger.AddSkill(SkillEvasion, 7);
+            boosterganger.AddSkill(SkillFirstAid, 4);
+            boosterganger.AddSkill(SkillHandgun, 12);
+            boosterganger.AddSkill(SkillHumanPerception, 5);
+            boosterganger.AddSkill(SkillInterrogation, 6);
+            boosterganger.AddSkill(SkillLanguage, 4, LanguageNative);
+            boosterganger.AddSkill(SkillLanguage, 4, LanguageStreetslang);
+            boosterganger.AddSkill(SkillLocalExpert, 4, LocalExpertYourHome);
+            boosterganger.AddSkill(SkillMeleeWeapon, 11);
+            boosterganger.AddSkill(SkillPerception, 6);
+            boosterganger.AddSkill(SkillPersuasion, 6);
+            boosterganger.AddSkill(SkillResistTortureDrugs, 4);
+            boosterganger.AddSkill(SkillStealth, 7);
+            boosterganger.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityPoor);
+            boosterganger.AddWeapon(WeaponTypeMediumMelee, WeaponQualityStandard, "Rippers");
+            boosterganger.AddAmmo(AmmoTypeVeryHeavyPistol, 30);
+            boosterganger.AddGearSet(GearDisposableCellPhone);
+            boosterganger.AddCyberwareSet(CyberwareRippers, CyberwareTechhair);
+            boosterganger.InitializeNewCombatant();
+            Combatants.Add(boosterganger);
+            #endregion
+            #region Road Ganger
+            Combatant roadGanger = new("Road Ganger", PortraitRoadGanger, ArmorTypeLeather);
+            roadGanger.SetStats(4, 6, 4, 4, 3, 3, 0, 3, 3, 3);
+            roadGanger.SetBaseSkills();
+            roadGanger.AddSkill(SkillArchery, 10);
+            roadGanger.AddSkill(SkillAthletics, 10);
+            roadGanger.AddSkill(SkillBrawling, 6);
+            roadGanger.AddSkill(SkillConcentration, 5);
+            roadGanger.AddSkill(SkillConversation, 6);
+            roadGanger.AddSkill(SkillDriveLandVehicle, 12);
+            roadGanger.AddSkill(SkillEducation, 6);
+            roadGanger.AddSkill(SkillEndurance, 5);
+            roadGanger.AddSkill(SkillEvasion, 6);
+            roadGanger.AddSkill(SkillFirstAid, 6);
+            roadGanger.AddSkill(SkillHandgun, 10);
+            roadGanger.AddSkill(SkillHumanPerception, 5);
+            roadGanger.AddSkill(SkillLandVehicleTech, 10);
+            roadGanger.AddSkill(SkillLanguage, 6, LanguageNative);
+            roadGanger.AddSkill(SkillLanguage, 6, LanguageStreetslang);
+            roadGanger.AddSkill(SkillLocalExpert, 6, LocalExpertYourHome);
+            roadGanger.AddSkill(SkillMeleeWeapon, 8);
+            roadGanger.AddSkill(SkillPerception, 6);
+            roadGanger.AddSkill(SkillPersuasion, 5);
+            roadGanger.AddSkill(SkillStealth, 8);
+            roadGanger.AddSkill(SkillTracking, 8);
+            roadGanger.AddSkill(SkillWildernessSurvival, 8);
+            roadGanger.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
+            roadGanger.AddWeapon(WeaponTypeBowsAndCrossbows, WeaponQualityStandard, "Crossbow");
+            roadGanger.AddWeapon(WeaponTypeLightMelee, WeaponQualityStandard, "Tomahawk");
+            roadGanger.AddAmmo(AmmoTypeVeryHeavyPistol, 20);
+            roadGanger.AddAmmo(AmmoTypeArrow, 20);
+            roadGanger.AddGearSet(GearRope, GearFlashlight);
+            roadGanger.AddCyberwareSet(CyberwareNeuralLink, CyberwareInterfacePlugs);
+            roadGanger.InitializeNewCombatant();
+            Combatants.Add(roadGanger);
+            #endregion
+            #region Security Operative
+            Combatant securityOperative = new("Security Operative", PortraitSecurityOperative, ArmorTypeKevlar);
+            securityOperative.SetStats(3, 7, 4, 2, 2, 3, 0, 3, 5, 3);
+            securityOperative.SetBaseSkills();
+            securityOperative.AddSkill(SkillAthletics, 8);
+            securityOperative.AddSkill(SkillAutofire, 10);
+            securityOperative.AddSkill(SkillBrawling, 6);
+            securityOperative.AddSkill(SkillConcentration, 7);
+            securityOperative.AddSkill(SkillConversation, 5);
+            securityOperative.AddSkill(SkillEducation, 5);
+            securityOperative.AddSkill(SkillEvasion, 6);
+            securityOperative.AddSkill(SkillFirstAid, 4);
+            securityOperative.AddSkill(SkillHandgun, 10);
+            securityOperative.AddSkill(SkillHumanPerception, 5);
+            securityOperative.AddSkill(SkillInterrogation, 6);
+            securityOperative.AddSkill(SkillLanguage, 5, LanguageNative);
+            securityOperative.AddSkill(SkillLanguage, 5, LanguageStreetslang);
+            securityOperative.AddSkill(SkillLocalExpert, 5, LocalExpertYourHome);
+            securityOperative.AddSkill(SkillMeleeWeapon, 6);
+            securityOperative.AddSkill(SkillPerception, 5);
+            securityOperative.AddSkill(SkillPersuasion, 4);
+            securityOperative.AddSkill(SkillResistTortureDrugs, 5);
+            securityOperative.AddSkill(SkillShoulderArms, 10);
+            securityOperative.AddSkill(SkillStealth, 6);
+            securityOperative.AddWeapon(WeaponTypeAssaultRifle, WeaponQualityPoor);
+            securityOperative.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
+            securityOperative.AddWeapon(WeaponTypeMediumMelee, WeaponQualityStandard, "Baton");
+            securityOperative.AddAmmo(AmmoTypeRifle, 40);
+            securityOperative.AddAmmo(AmmoTypeVeryHeavyPistol, 20);
+            securityOperative.AddGearSet(GearRadioCommunicator);
+            securityOperative.InitializeNewCombatant();
+            Combatants.Add(securityOperative);
             #endregion
 
         }
