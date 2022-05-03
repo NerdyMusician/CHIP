@@ -451,7 +451,13 @@
                                                 <Border Style="{StaticResource BRDR_PopupBorder}" Width="586" Height="84" Margin="0 2 2 2">
                                                     <StackPanel Margin="2">
                                                         <StackPanel Orientation="Horizontal">
-                                                            <Image Source="{Binding PortraitFilePath}" Width="64" Height="64" Margin="6 6 4 6" />
+                                                            <Image Source="{Binding PortraitFilePath}" Width="64" Height="64" Margin="6 6 4 6">
+                                                                <Image.ContextMenu>
+                                                                    <ContextMenu>
+                                                                        <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
+                                                                    </ContextMenu>
+                                                                </Image.ContextMenu>
+                                                            </Image>
                                                             <StackPanel>
                                                                 <StackPanel Orientation="Horizontal">
                                                                     <TextBlock Text="{Binding DisplayName, FallbackValue='Security Operative A'}" Width="136" FontSize="14" Margin="3" />
@@ -517,7 +523,7 @@
                                                                                     <ItemsControl ItemsSource="{Binding StandardActions}">
                                                                                         <ItemsControl.ItemTemplate>
                                                                                             <DataTemplate>
-                                                                                                <cc:ImageButton ImageResource="{Binding Name}" Text="{Binding Name}" Command="{Binding PerformStandardAction}">
+                                                                                                <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnAction}}" Text="{Binding Name}" Command="{Binding PerformStandardAction}">
                                                                                                     <cc:ImageButton.CommandParameter>
                                                                                                         <MultiBinding Converter="{StaticResource MultiValueConverter}">
                                                                                                             <Binding Path="DataContext" RelativeSource="{RelativeSource AncestorType=ItemsControl}" />
@@ -640,6 +646,8 @@
                                                                     <TextBlock Text="{Binding CurrentHeadStoppingPower, FallbackValue=10}" Style="{StaticResource MidNum}" />
                                                                     <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Head,1" />
                                                                     <Separator />
+                                                                    <Image Style="{StaticResource Icon_Rpg_Light_Armor}" />
+                                                                    <Separator />
                                                                     <TextBlock Text="{Binding ArmorType, FallbackValue=Light Armorjack}" VerticalAlignment="Center" Width="128" />
                                                                 </StackPanel>
                                                                 <StackPanel Orientation="Horizontal">
@@ -648,6 +656,14 @@
                                                                     <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Body,-1" />
                                                                     <TextBlock Text="{Binding CurrentBodyStoppingPower, FallbackValue=10}" Style="{StaticResource MidNum}" />
                                                                     <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Body,1" />
+                                                                    <Separator />
+                                                                    <Image Style="{StaticResource Icon_Rpg_Boot}" />
+                                                                    <Separator />
+                                                                    <TextBlock Text="{Binding MoveSpeed}" Width="24" VerticalAlignment="Center" />
+                                                                    <Separator />
+                                                                    <Image Style="{StaticResource Icon_Skull}" />
+                                                                    <Separator />
+                                                                    <TextBlock Text="{Binding DeathSave}" Width="24" VerticalAlignment="Center"  />
                                                                 </StackPanel>
                                                             </StackPanel>
                                                         </StackPanel>
@@ -655,9 +671,10 @@
                                                 </Border>
                                             </DataTemplate>
                                             <tool:CombatTrackerTemplateSelector x:Key="ActiveCombatantTemplateSelector" 
+                                                                                CombatantDataTemplate="{StaticResource StandardCombatantCard}"
                                                                                 DefaultDataTemplate="{StaticResource EmptyCard}" />
                                             <tool:CombatTrackerTemplateSelector x:Key="ListCombatantTemplateSelector"
-                                                                                DefaultDataTemplate="{StaticResource StandardCombatantCard}" />
+                                                                                CombatantDataTemplate="{StaticResource StandardCombatantCard}" />
                                         </StackPanel.Resources>
                                         <Separator Height="0" />
                                         <TextBlock Text="Combatants" />

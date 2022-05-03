@@ -7,11 +7,12 @@ namespace CyberpunkGameplayAssistant.Toolbox
     public class CombatTrackerTemplateSelector : DataTemplateSelector
     {
         public DataTemplate DefaultDataTemplate { get; set; }
+        public DataTemplate CombatantDataTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item == null) { return DefaultDataTemplate; }
-            return DefaultDataTemplate;
+            return CombatantDataTemplate;
         }
     }
 

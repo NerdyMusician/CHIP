@@ -55,6 +55,10 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             return armorList.FirstOrDefault(a => a.Name == armorType).StoppingPower;
         }
+        public static int GetPenalty(this List<Armor> armorList, string armorType)
+        {
+            return armorList.FirstOrDefault(a => a.Name == armorType).ArmorPenalty;
+        }
         public static int GetStandardClipSize(this List<RangedWeaponClip> clipList, string weaponType)
         {
             RangedWeaponClip clip = clipList.FirstOrDefault(c => c.WeaponType == weaponType);

@@ -76,6 +76,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         // Standard Actions
         public const string ActionBrawl = "Brawl";
         public const string ActionChoke = "Choke";
+        public const string ActionDeathSave = "Death Save";
         public const string ActionEvade = "Evade";
         public const string ActionGrab = "Grab";
         public const string ActionThrowGrapple = "Throw (Grapple)";

@@ -39,6 +39,7 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 ReferenceData.ActionBrawl => PerformActionBrawl(combatant),
                 ReferenceData.ActionChoke => PerformActionChoke(combatant),
+                ReferenceData.ActionDeathSave => PerformActionDeathSave(combatant),
                 ReferenceData.ActionEvade => PerformActionEvade(combatant),
                 ReferenceData.ActionGrab => PerformActionGrab(combatant),
                 ReferenceData.ActionThrowGrapple => PerformActionThrowGrapple(combatant),
@@ -85,6 +86,14 @@ namespace CyberpunkGameplayAssistant.Models
         private static string PerformActionChoke(Combatant combatant)
         {
             return $"{combatant.DisplayName} choked their target for {combatant.Stats.GetValue(ReferenceData.StatBody)} damage";
+        }
+        private static string PerformActionDeathSave(Combatant combatant)
+        {
+            int result = HelperMethods.RollD10();
+            bool success = result < combatant.DeathSave;
+            if (!success) { combatant.IsDead = true; }
+            // TODO - success increases death save number
+            return $"{combatant.DisplayName} made a death save\nResult: {(success ? "Success" : "Fail")}";
         }
         private static string PerformActionEvade(Combatant combatant)
         {

@@ -368,6 +368,33 @@ namespace CyberpunkGameplayAssistant.Toolbox
             return ReferenceData.Framework.FindResource(iconName) as Style;
         }
     }
+    public class ImageBasedOnAction : ConverterMarkupExtension<ImageBasedOnAction>
+    {
+        public ImageBasedOnAction()
+        {
+
+        }
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string iconName = value switch
+            {
+                "Ability Check" => "Icon_Hex_A",
+                "Attack" => "Icon_Crossed_Swords",
+                "Coin Flip" => "Icon_CopperCoin",
+                "DM Roll" => "Icon_Dice",
+                "Fall Damage" => "Icon_Fall",
+                "Initiative" => "Icon_Initiative",
+                "Loot" => "Icon_Pack",
+                "Rest" => "Icon_Sleep",
+                "Saving Throw" => "Icon_Letter_S",
+                "Skill Check" => "Icon_Hand",
+                "Spell" => "Icon_Rpg_Staff",
+                "Weather Change" => "Icon_Weather_PartlyCloudy",
+                _ => "Icon_Rpg_Note"
+            };
+            return ReferenceData.Framework.FindResource(iconName) as Style;
+        }
+    }
     public class HiddenIfNull : ConverterMarkupExtension<HiddenIfNull>
     {
         public override object Convert(

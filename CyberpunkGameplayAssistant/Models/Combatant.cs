@@ -189,12 +189,6 @@ namespace CyberpunkGameplayAssistant.Models
             get => _SeriouslyWoundedThreshold;
             set => SetAndNotify(ref _SeriouslyWoundedThreshold, value);
         }
-        private int _DeathSave;
-        public int DeathSave
-        {
-            get => _DeathSave;
-            set => SetAndNotify(ref _DeathSave, value);
-        }
         private int _QuantityToAdd;
         public int QuantityToAdd
         {
@@ -287,6 +281,23 @@ namespace CyberpunkGameplayAssistant.Models
             get => _StandardActions;
             set => SetAndNotify(ref _StandardActions, value);
         }
+        public int MoveSpeed
+        {
+            get
+            {
+                int move = Stats.GetValue(ReferenceData.StatMovement);
+                int penalty = ReferenceData.ArmorTable.GetPenalty(ArmorType);
+                return move - penalty;
+            }
+        }
+        public int DeathSave
+        {
+            get
+            {
+                int death = Stats.GetValue(ReferenceData.StatBody);
+                return death;
+            }
+        }
 
         // Commands
         public ICommand AdjustHitPoints => new RelayCommand(DoAdjustHitPoints);
@@ -316,6 +327,12 @@ namespace CyberpunkGameplayAssistant.Models
                 if (CurrentBodyStoppingPower < 0) { CurrentBodyStoppingPower = 0; }
                 if (CurrentBodyStoppingPower > MaximumBodyStoppingPower) { CurrentBodyStoppingPower = MaximumBodyStoppingPower; }
             }
+        }
+        public ICommand ToggleDeath => new RelayCommand(DoToggleDeath);
+        private void DoToggleDeath(object param)
+        {
+            IsDead = !IsDead;
+            UpdateWoundState();
         }
 
         // Public Methods
@@ -548,6 +565,7 @@ namespace CyberpunkGameplayAssistant.Models
             StandardActions.Clear();
             StandardActions.Add(new(ReferenceData.ActionBrawl));
             StandardActions.Add(new(ReferenceData.ActionChoke));
+            StandardActions.Add(new(ReferenceData.ActionDeathSave));
             StandardActions.Add(new(ReferenceData.ActionEvade));
             StandardActions.Add(new(ReferenceData.ActionGrab));
             StandardActions.Add(new(ReferenceData.ActionThrowGrapple));
