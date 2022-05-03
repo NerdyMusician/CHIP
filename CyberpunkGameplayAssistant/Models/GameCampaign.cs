@@ -2,6 +2,7 @@
 using CyberpunkGameplayAssistant.ViewModels;
 using CyberpunkGameplayAssistant.Windows;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -171,7 +172,7 @@ namespace CyberpunkGameplayAssistant.Models
                         AllCombatants.Add(newCombatant);
                     }
                 }
-                SortCombatants();
+                SortCombatantsToLists();
             }
         }
         public ICommand ChangeStartTime => new RelayCommand(DoChangeStartTime);
@@ -307,11 +308,31 @@ namespace CyberpunkGameplayAssistant.Models
                     break;
             }
         }
+        public ICommand RollInitatives => new RelayCommand(DoRollInitatives);
+        private void DoRollInitatives(object param)
+        {
+            List<string> initiativeResults = new();
+            foreach (Combatant combatant in AllCombatants)
+            {
+                if (combatant.Initiative == 0) 
+                { 
+                    combatant.Initiative = combatant.GetInitiative(); 
+                    initiativeResults.Add($"{combatant.DisplayName} : {combatant.Initiative}");
+                }
+            }
+            HelperMethods.AddToGameplayLog($"Rolling Combatant initatives\n{initiativeResults.ToFormattedString()}");
+            SortCombatantsToLists();
+        }
+        public ICommand SortCombatants => new RelayCommand(DoSortCombatants);
+        private void DoSortCombatants(object param)
+        {
+            SortCombatantsToLists();
+        }
 
         // Public Methods
         public void UpdateActiveCombatant()
         {
-            ActiveCombatant = CombatantsByInitiative.FirstOrDefault(c => c.IsActive);
+            ActiveCombatant = CombatantsByInitiative.FirstOrDefault(c => c.IsActive)!;
         }
 
         // Private Methods
@@ -335,7 +356,7 @@ namespace CyberpunkGameplayAssistant.Models
             NpcCombatants = new();
             EventHistory = new();
         }
-        private void SortCombatants()
+        private void SortCombatantsToLists()
         {
             if (AllCombatants.Count == 0)
             {

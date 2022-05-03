@@ -1,4 +1,5 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
+using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
@@ -63,7 +64,12 @@ namespace CyberpunkGameplayAssistant.Models
             Combatant combatant = param as Combatant;
             string output = $"{combatant.DisplayName} made a {Name} check\n";
             int result = HelperMethods.RollD10();
-            int stat = combatant.Stats.GetValue(ReferenceData.SkillLinks.GetStat(Name));
+            string statName = ReferenceData.SkillLinks.GetStat(Name);
+            int stat = combatant.Stats.GetValue(statName);
+            if (new List<string> { ReferenceData.StatReflexes, ReferenceData.StatDexterity, ReferenceData.StatMovement}.Contains(statName))
+            {
+                stat -= ReferenceData.ArmorTable.GetPenalty(combatant.ArmorType);
+            }
             output += $"Result: {result + stat + Level}\n";
             output += $"Roll: {result} + {stat} + {Level}";
             HelperMethods.AddToGameplayLog(output, ReferenceData.MessageTypeSkillCheck);

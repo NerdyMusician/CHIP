@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
 {
@@ -45,8 +46,24 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get
             {
-                return ReferenceData.StatLinks.FirstOrDefault(s => s.StatName == Name).Abbreviation;
+                return ReferenceData.StatLinks.FirstOrDefault(s => s.StatName == Name)!.Abbreviation;
             }
+        }
+
+        // Commands
+        public ICommand RollStat => new RelayCommand(DoRollStat);
+        private void DoRollStat(object param)
+        {
+            Combatant combatant = param as Combatant;
+            string output = $"{combatant.DisplayName} made a {Name} check\n";
+            int result = HelperMethods.RollD10();
+            int stat = combatant.Stats.GetValue(Name);
+            if (new List<string> { ReferenceData.StatReflexes, ReferenceData.StatDexterity, ReferenceData.StatMovement }.Contains(Name))
+            {
+                stat -= ReferenceData.ArmorTable.GetPenalty(combatant.ArmorType);
+            }
+            output += $"Result: {result + stat}\n";
+            HelperMethods.AddToGameplayLog(output, ReferenceData.MessageTypeSkillCheck);
         }
 
     }

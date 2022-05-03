@@ -25,6 +25,12 @@ namespace CyberpunkGameplayAssistant.Toolbox
             }
             return diceResults;
         }
+        public static int RollSkillCheck(Combatant combatant, string stat, string skill)
+        {
+            return RollD10() +
+                combatant.Skills.GetLevel(skill) +
+                combatant.Stats.GetValue(stat);
+        }
         public static int RollDamage(int numberOfDice, out bool criticalInjury)
         {
             criticalInjury = false;

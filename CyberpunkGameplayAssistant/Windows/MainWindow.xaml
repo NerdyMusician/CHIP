@@ -308,8 +308,8 @@
                                         <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Combatants" Command="{Binding CampaignView.ActiveCampaign.AddCombatants}" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_AddPeople}" Text="Add Encounter" />
                                         <Separator Height="8" />
-                                        <cc:ImageButton ImageResource="{StaticResource Icon_Runner}" Text="Roll Initiatives" />
-                                        <cc:ImageButton ImageResource="{StaticResource Icon_Sort}" Text="Sort Combatants" />
+                                        <cc:ImageButton ImageResource="{StaticResource Icon_Runner}" Text="Roll Initiatives" Command="{Binding CampaignView.ActiveCampaign.RollInitatives}" />
+                                        <cc:ImageButton ImageResource="{StaticResource Icon_Sort}" Text="Sort Combatants" Command="{Binding CampaignView.ActiveCampaign.SortCombatants}" />
                                         <StackPanel>
                                             <cc:ImageToggleButton ImageResource="{StaticResource Icon_Skull}" Text="Clear..." IsChecked="{Binding CampaignView.ActiveCampaign.ShowClearKillControls}" Margin="2" />
                                             <Popup IsOpen="{Binding CampaignView.ActiveCampaign.ShowClearKillControls}">
@@ -554,7 +554,7 @@
                                                                                         </ItemsControl.ItemsPanel>
                                                                                         <ItemsControl.ItemTemplate>
                                                                                             <DataTemplate>
-                                                                                                <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnStat}}" Text="{Binding StatAbbr}" Width="92" />
+                                                                                                <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnStat}}" Text="{Binding StatAbbr}" Width="92" Command="{Binding RollStat}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
                                                                                             </DataTemplate>
                                                                                         </ItemsControl.ItemTemplate>
                                                                                     </ItemsControl>

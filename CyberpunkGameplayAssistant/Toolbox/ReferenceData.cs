@@ -79,6 +79,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string ActionDeathSave = "Death Save";
         public const string ActionEvade = "Evade";
         public const string ActionGrab = "Grab";
+        public const string ActionInitiative = "Initiative";
         public const string ActionThrowGrapple = "Throw (Grapple)";
         public const string ActionThrowObject = "Throw (Object)";
 
@@ -908,6 +909,78 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
 
         };
+
+        #region Critical Injuries
+        // Body Injuries
+        public const string CriticalInjuryDismemberedArm = "Dismembered Arm";
+        public const string CriticalInjuryDismemberedHand = "Dismembered Hand";
+        public const string CriticalInjuryCollapsedLung = "Collapsed Lung";
+        public const string CriticalInjuryBrokenRibs = "Broken Ribs";
+        public const string CriticalInjuryBrokenArm = "Broken Arm";
+        public const string CriticalInjuryForeignObject = "Foreign Object";
+        public const string CriticalInjuryBrokenLeg = "Broken Leg";
+        public const string CriticalInjuryTornMuscle = "Torn Muscle";
+        public const string CriticalInjurySpinalInjury = "Spinal Injury";
+        public const string CriticalInjuryCrushedFingers = "Crushed Fingers";
+        public const string CriticalInjuryDismemberedLeg = "Dismembered Leg";
+
+        // Head Injuries
+        public const string CriticalInjuryLostEye = "Lost Eye";
+        public const string CriticalInjuryBrainInjury = "Brain Injury";
+        public const string CriticalInjuryDamagedEye = "Damaged Eye";
+        public const string CriticalInjuryConcussion = "Concussion";
+        public const string CriticalInjuryBrokenJaw = "Broken Jaw";
+        public const string CriticalInjuryWhiplash = "Whiplash";
+        public const string CriticalInjuryCrackedSkull = "Cracked Skull";
+        public const string CriticalInjuryDamagedEar = "Damaged Ear";
+        public const string CriticalInjuryCrushedWindpipe = "Crushed Windpipe";
+        public const string CriticalInjuryLostEar = "Lost Ear";
+
+        public static readonly List<CriticalInjury> CriticalInjuriesToBody = new()
+        {
+            new(CriticalInjuryDismemberedArm, "The Dismembered Arm is gone. You drop any items in that dismembered arm's hand immediately. Base Death Save Penalty is increased by 1."),
+            new(CriticalInjuryDismemberedHand, "The Dismembered Hand is gone. You drop any items in the dismembered hand immediately. Base Death Save Penalty is increased by 1."),
+            new(CriticalInjuryCollapsedLung, "-2 to MOVE (minimum 1) Base Death Save Penalty is increased by 1."),
+            new(CriticalInjuryBrokenRibs, "At the end of every Turn where you move further than 4m/yds on foot, you re-suffer this Critical Injury's Bonus Damage directly to your Hit Points."),
+            new(CriticalInjuryBrokenArm, "The Broken Arm cannot be used. You drop any items in that arm's hand immediately."),
+            new(CriticalInjuryForeignObject, "At the end of every Turn where you move further than 4m/yds on foot, you re-suffer this Critical Injury's Bonus Damage directly to your Hit Points."),
+            new(CriticalInjuryBrokenLeg, "-4 to MOVE (minimum 1)"),
+            new(CriticalInjuryTornMuscle, "-2 to Melee Attacks"),
+            new(CriticalInjurySpinalInjury, "Next Turn, you cannot take an Action, but you can still take a Move Action. Base Death Save Penalty is increased by 1."),
+            new(CriticalInjuryCrushedFingers, "-4 to all Actions involving that hand"),
+            new(CriticalInjuryDismemberedLeg, "The Dismembered Leg is gone. -6 to MOVE (minimum 1) You cannot dodge attacks. Base Death Save Penalty is increased by 1.")
+        };
+
+        public static readonly List<CriticalInjury> CriticalInjuriesToHead = new()
+        {
+            new(CriticalInjuryLostEye, "The Lost Eye is gone. -4 to Ranged Attacks & Perception Checks involving vision. Base Death Save Penalty is increased by 1."),
+            new(CriticalInjuryBrainInjury, "-2 to all Actions. Base Death Save Penalty is increased by 1."),
+            new(CriticalInjuryDamagedEye, "-2 to Ranged Attacks & Perception Checks involving vision."),
+            new(CriticalInjuryConcussion, "-2 to all Actions"),
+            new(CriticalInjuryBrokenJaw, "-4 to all Actions involving speech"),
+            new(CriticalInjuryForeignObject, "At the end of every Turn where you move further than 4m/yds on foot, you re-suffer this Critical Injury's Bonus Damage directly to your Hit Points."),
+            new(CriticalInjuryWhiplash, "Base Death Save Penalty is increased by 1."),
+            new(CriticalInjuryCrackedSkull, "Aimed Shots to your head multiply the damage that gets through your SP by 3 instead of 2. Base Death Save Penalty is increased by 1."),
+            new(CriticalInjuryDamagedEar, "Whenever you move further than 4m/yds on foot in a Turn, you cannot take a Move Action on your next Turn. Additionally you take a -2 to Perception Checks involving hearing."),
+            new(CriticalInjuryCrushedWindpipe, "You cannot speak. Base Death Save Penalty is increased by 1."),
+            new(CriticalInjuryLostEar, "The Lost Ear is gone. Whenever you move further than 4m/yds on foot in a Turn, you cannot take a Move Action on your next Turn. Additionally you take a -4 to Perception Checks involving hearing. Base Death Save Penalty is increased by 1.")
+        };
+
+        public static readonly List<string> CriticalInjuriesThatIncreaseDeathSavePenalty = new()
+        {
+            CriticalInjuryDismemberedArm, CriticalInjuryDismemberedHand, CriticalInjuryCollapsedLung, CriticalInjurySpinalInjury, CriticalInjuryDismemberedLeg,
+            CriticalInjuryLostEye, CriticalInjuryBrainInjury, CriticalInjuryWhiplash, CriticalInjuryCrackedSkull, CriticalInjuryCrushedWindpipe, CriticalInjuryLostEar
+        };
+
+        public static readonly Dictionary<string, int> CriticalInjuryMovePenalties = new()
+        {
+            { CriticalInjuryCollapsedLung, 2 },
+            { CriticalInjuryBrokenLeg, 4 },
+            { CriticalInjuryDismemberedLeg, 6 }
+        };
+
+        #endregion
+
 
         // Public Methods
         public static void PopulateData()

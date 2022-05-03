@@ -281,13 +281,24 @@ namespace CyberpunkGameplayAssistant.Models
             get => _StandardActions;
             set => SetAndNotify(ref _StandardActions, value);
         }
+        private ObservableCollection<CriticalInjury> _CriticalInjuries;
+        [XmlSaveMode(XSME.Enumerable)]
+        public ObservableCollection<CriticalInjury> CriticalInjuries
+        {
+            get => _CriticalInjuries;
+            set => SetAndNotify(ref _CriticalInjuries, value);
+        }
         public int MoveSpeed
         {
             get
             {
                 int move = Stats.GetValue(ReferenceData.StatMovement);
                 int penalty = ReferenceData.ArmorTable.GetPenalty(ArmorType);
-                return move - penalty;
+                penalty += CriticalInjuries.GetMovePenaltyTotal();
+                penalty += ReferenceData.ArmorTable.GetPenalty(ArmorType);
+                move -= penalty;
+                if (move < 1) { move = 1; }
+                return move;
             }
         }
         public int DeathSave
@@ -297,6 +308,13 @@ namespace CyberpunkGameplayAssistant.Models
                 int death = Stats.GetValue(ReferenceData.StatBody);
                 return death;
             }
+        }
+        private int _DeathSavePasses;
+        [XmlSaveMode(XSME.Single)]
+        public int DeathSavePasses
+        {
+            get => _DeathSavePasses;
+            set => SetAndNotify(ref _DeathSavePasses, value);
         }
 
         // Commands
@@ -345,6 +363,7 @@ namespace CyberpunkGameplayAssistant.Models
             UpdateCyberwareDescriptions();
             OrganizeSkillsToCategories();
             SetStandardActions();
+            GetCriticalInjuryDescriptions();
         }
         public void InitializeNewCombatant()
         {
@@ -449,6 +468,22 @@ namespace CyberpunkGameplayAssistant.Models
                 cyberware.Description = ReferenceData.MasterCyberwareList[cyberware.Name];
             }
         }
+        public int GetInitiative()
+        {
+            if (IsPlayer) { return Initiative; }
+            int reflex = Stats.GetValue(ReferenceData.StatReflexes);
+            reflex -= ReferenceData.ArmorTable.GetPenalty(ArmorType);
+            return HelperMethods.RollD10() + reflex;
+        }
+        public void UpdateWoundState()
+        {
+            string woundState = ReferenceData.WoundStateUnharmed;
+            if (CurrentHitPoints < MaximumHitPoints) { woundState = ReferenceData.WoundStateLightlyWounded; }
+            if (CurrentHitPoints <= (MaximumHitPoints / 2)) { woundState = ReferenceData.WoundStateSeriouslyWounded; }
+            if (CurrentHitPoints < 1) { woundState = ReferenceData.WoundStateMortallyWounded; }
+            if (IsDead) { woundState = ReferenceData.WoundStateDead; }
+            WoundState = woundState;
+        }
 
         // Private Methods
         private void InitializeLists()
@@ -469,15 +504,7 @@ namespace CyberpunkGameplayAssistant.Models
             GearInventory = new();
             InstalledCyberware = new();
             StandardActions = new();
-        }
-        private void UpdateWoundState()
-        {
-            string woundState = ReferenceData.WoundStateUnharmed;
-            if (CurrentHitPoints < MaximumHitPoints) { woundState = ReferenceData.WoundStateLightlyWounded; }
-            if (CurrentHitPoints <= (MaximumHitPoints / 2)) { woundState = ReferenceData.WoundStateSeriouslyWounded; }
-            if (CurrentHitPoints < 1) { woundState = ReferenceData.WoundStateMortallyWounded; }
-            if (IsDead) { woundState = ReferenceData.WoundStateDead; }
-            WoundState = woundState;
+            CriticalInjuries = new();
         }
         private void AddGear(string name)
         {
@@ -560,6 +587,16 @@ namespace CyberpunkGameplayAssistant.Models
                 }
             }
         }
+        private void GetCriticalInjuryDescriptions()
+        {
+            foreach (CriticalInjury injury in CriticalInjuries)
+            {
+                CriticalInjury bodyInjury = ReferenceData.CriticalInjuriesToBody.FirstOrDefault(i => i.Name == injury.Name)!;
+                CriticalInjury headInjury = ReferenceData.CriticalInjuriesToHead.FirstOrDefault(i => i.Name == injury.Name)!;
+                if (bodyInjury != null) { injury.Description = bodyInjury.Description; }
+                if (headInjury != null) { injury.Description = headInjury.Description; }
+            }
+        }
         private void SetStandardActions()
         {
             StandardActions.Clear();
@@ -568,6 +605,7 @@ namespace CyberpunkGameplayAssistant.Models
             StandardActions.Add(new(ReferenceData.ActionDeathSave));
             StandardActions.Add(new(ReferenceData.ActionEvade));
             StandardActions.Add(new(ReferenceData.ActionGrab));
+            StandardActions.Add(new(ReferenceData.ActionInitiative));
             StandardActions.Add(new(ReferenceData.ActionThrowGrapple));
             StandardActions.Add(new(ReferenceData.ActionThrowObject));
         }

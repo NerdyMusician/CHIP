@@ -1,9 +1,6 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
@@ -42,6 +39,7 @@ namespace CyberpunkGameplayAssistant.Models
                 ReferenceData.ActionDeathSave => PerformActionDeathSave(combatant),
                 ReferenceData.ActionEvade => PerformActionEvade(combatant),
                 ReferenceData.ActionGrab => PerformActionGrab(combatant),
+                ReferenceData.ActionInitiative => PerformActionInitiative(combatant),
                 ReferenceData.ActionThrowGrapple => PerformActionThrowGrapple(combatant),
                 ReferenceData.ActionThrowObject => PerformActionThrowObject(combatant),
                 _ => ""
@@ -61,9 +59,7 @@ namespace CyberpunkGameplayAssistant.Models
         // Private Methods
         private static string PerformActionBrawl(Combatant combatant)
         {
-            int attack = HelperMethods.RollD10() +
-                combatant.Skills.GetLevel(ReferenceData.SkillBrawling) +
-                combatant.Stats.GetValue(ReferenceData.StatDexterity);
+            int attack = HelperMethods.RollSkillCheck(combatant, ReferenceData.StatDexterity, ReferenceData.SkillBrawling);
             int body = combatant.Stats.GetValue(ReferenceData.StatBody);
             if (combatant.InstalledCyberware.FirstOrDefault(c => c.Name == ReferenceData.CyberwareCyberarm) != null)
             {
@@ -90,24 +86,28 @@ namespace CyberpunkGameplayAssistant.Models
         private static string PerformActionDeathSave(Combatant combatant)
         {
             int result = HelperMethods.RollD10();
+            result += combatant.DeathSavePasses;
+            result += combatant.CriticalInjuries.GetDeathPenaltyTotal();
             bool success = result < combatant.DeathSave;
-            if (!success) { combatant.IsDead = true; }
-            // TODO - success increases death save number
+            if (!success) { combatant.IsDead = true; combatant.UpdateWoundState(); }
+            if (success) { combatant.DeathSavePasses++; }
             return $"{combatant.DisplayName} made a death save\nResult: {(success ? "Success" : "Fail")}";
         }
         private static string PerformActionEvade(Combatant combatant)
         {
-            int result = HelperMethods.RollD10() +
-                combatant.Skills.GetLevel(ReferenceData.SkillEvasion) +
-                combatant.Stats.GetValue(ReferenceData.StatDexterity);
+            int result = HelperMethods.RollSkillCheck(combatant, ReferenceData.StatDexterity, ReferenceData.SkillEvasion);
             return $"{combatant.DisplayName} attempted to Evade\nResult: {result}";
         }
         private static string PerformActionGrab(Combatant combatant)
         {
-            int result = HelperMethods.RollD10() +
-                combatant.Skills.GetLevel(ReferenceData.SkillBrawling) +
-                combatant.Stats.GetValue(ReferenceData.StatDexterity);
+            int result = HelperMethods.RollSkillCheck(combatant, ReferenceData.StatDexterity, ReferenceData.SkillBrawling);
             return $"{combatant.DisplayName} attempted to Grab/Resist\nResult: {result}";
+        }
+        private static string PerformActionInitiative(Combatant combatant)
+        {
+            int result = combatant.GetInitiative();
+            combatant.Initiative = result;
+            return $"{combatant.DisplayName} rolled initiative\nResult: {result}";
         }
         private static string PerformActionThrowGrapple(Combatant combatant)
         {
@@ -115,9 +115,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private static string PerformActionThrowObject(Combatant combatant)
         {
-            int result = HelperMethods.RollD10() +
-                combatant.Skills.GetLevel(ReferenceData.SkillAthletics) +
-                combatant.Stats.GetValue(ReferenceData.StatDexterity);
+            int result = HelperMethods.RollSkillCheck(combatant, ReferenceData.StatDexterity, ReferenceData.SkillAthletics);
             return $"{combatant.DisplayName} threw an object\nResult: {result}";
         }
 

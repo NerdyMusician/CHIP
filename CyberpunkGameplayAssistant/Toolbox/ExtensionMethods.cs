@@ -82,6 +82,37 @@ namespace CyberpunkGameplayAssistant.Toolbox
             }
             return results;
         }
+        public static int GetDeathPenaltyTotal(this ObservableCollection<CriticalInjury> injuries)
+        {
+            int total = 0;
+            foreach (CriticalInjury injury in injuries)
+            {
+                if (ReferenceData.CriticalInjuriesThatIncreaseDeathSavePenalty.Contains(injury.Name)) { total++; }
+            }
+            return total;
+        }
+        public static int GetMovePenaltyTotal(this ObservableCollection<CriticalInjury> injuries)
+        {
+            int total = 0;
+            foreach (CriticalInjury injury in injuries)
+            {
+                if (ReferenceData.CriticalInjuryMovePenalties.ContainsKey(injury.Name))
+                {
+                    total += ReferenceData.CriticalInjuryMovePenalties[injury.Name];
+                }
+            }
+            return total;
+        }
+        public static string ToFormattedString(this List<string> parts, string separator = "\n")
+        {
+            string output = "";
+            for (int i = 0; i < parts.Count; i++)
+            {
+                if (i > 0) { output += separator; }
+                output += parts[i];
+            }
+            return output;
+        }
     }
 }
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
