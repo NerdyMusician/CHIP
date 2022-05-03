@@ -73,6 +73,14 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string WoundStateMortallyWounded = "Mortally Wounded";
         public const string WoundStateDead = "Dead";
 
+        // Standard Actions
+        public const string ActionBrawl = "Brawl";
+        public const string ActionChoke = "Choke";
+        public const string ActionEvade = "Evade";
+        public const string ActionGrab = "Grab";
+        public const string ActionThrowGrapple = "Throw (Grapple)";
+        public const string ActionThrowObject = "Throw (Object)";
+
         // Stat Categories
         public const string StatCategoryMental = "Mental";
         public const string StatCategoryCombat = "Combat";

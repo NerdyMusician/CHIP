@@ -247,6 +247,12 @@ namespace CyberpunkGameplayAssistant.Models
             get => _StatSkillMenuOpen;
             set => SetAndNotify(ref _StatSkillMenuOpen, value);
         }
+        private bool _ActionMenuOpen;
+        public bool ActionMenuOpen
+        {
+            get => _ActionMenuOpen;
+            set => SetAndNotify(ref _ActionMenuOpen, value);
+        }
         private ObservableCollection<Ammo> _AmmoInventory;
         [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Ammo> AmmoInventory
@@ -274,6 +280,12 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get => _IsDead;
             set => SetAndNotify(ref _IsDead, value);
+        }
+        private ObservableCollection<Action> _StandardActions;
+        public ObservableCollection<Action> StandardActions
+        {
+            get => _StandardActions;
+            set => SetAndNotify(ref _StandardActions, value);
         }
 
         // Commands
@@ -315,12 +327,14 @@ namespace CyberpunkGameplayAssistant.Models
             UpdateGearDescriptions();
             UpdateCyberwareDescriptions();
             OrganizeSkillsToCategories();
+            SetStandardActions();
         }
         public void InitializeNewCombatant()
         {
             SetDerivedStats(true);
             SetStoppingPower(true);
             ReloadAllWeapons();
+            SetStandardActions();
         }
         public void SetStats(int INT, int REF, int DEX, int TECH, int COOL, int WILL, int LUCK, int MOVE, int BODY, int EMP)
         {
@@ -437,6 +451,7 @@ namespace CyberpunkGameplayAssistant.Models
             AmmoInventory = new();
             GearInventory = new();
             InstalledCyberware = new();
+            StandardActions = new();
         }
         private void UpdateWoundState()
         {
@@ -527,6 +542,16 @@ namespace CyberpunkGameplayAssistant.Models
                     default: break;
                 }
             }
+        }
+        private void SetStandardActions()
+        {
+            StandardActions.Clear();
+            StandardActions.Add(new(ReferenceData.ActionBrawl));
+            StandardActions.Add(new(ReferenceData.ActionChoke));
+            StandardActions.Add(new(ReferenceData.ActionEvade));
+            StandardActions.Add(new(ReferenceData.ActionGrab));
+            StandardActions.Add(new(ReferenceData.ActionThrowGrapple));
+            StandardActions.Add(new(ReferenceData.ActionThrowObject));
         }
 
     }
