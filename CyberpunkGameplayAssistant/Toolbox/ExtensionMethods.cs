@@ -113,6 +113,19 @@ namespace CyberpunkGameplayAssistant.Toolbox
             }
             return output;
         }
+        public static List<NamedRecord> ToNamedRecordList(this List<CriticalInjury> injuries)
+        {
+            List<NamedRecord> records = new();
+            foreach (CriticalInjury injury in injuries)
+            {
+                records.Add(new(injury.Name, injury.Description));
+            }
+            return records;
+        }
+        public static CriticalInjury ToCriticalInjury(this NamedRecord record)
+        {
+            return new(record.Name, record.Description);
+        }
     }
 }
 #pragma warning restore CS8602 // Dereference of a possibly null reference.

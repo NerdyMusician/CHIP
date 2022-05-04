@@ -460,12 +460,12 @@
                                                             </Image>
                                                             <StackPanel>
                                                                 <StackPanel Orientation="Horizontal">
-                                                                    <TextBlock Text="{Binding DisplayName, FallbackValue='Security Operative A'}" Width="136" FontSize="14" Margin="3" />
+                                                                    <TextBlock Text="{Binding DisplayName, FallbackValue='Security Operative A'}" Width="134" FontSize="14" Margin="3" />
                                                                     <Image Style="{StaticResource Icon_Info}" Margin="4 0 8 0" />
                                                                 </StackPanel>
                                                                 <StackPanel Orientation="Horizontal">
                                                                     <StackPanel>
-                                                                        <cc:ImageToggleButton ImageResource="{StaticResource Icon_Pistol}" Text="Weapons" Margin="2" IsChecked="{Binding WeaponMenuOpen}" />
+                                                                        <cc:ImageToggleButton ImageResource="{StaticResource Icon_Pistol}" Text="Weapons" IsChecked="{Binding WeaponMenuOpen}" />
                                                                         <Popup IsOpen="{Binding WeaponMenuOpen}">
                                                                             <Border Style="{StaticResource BRDR_PopupBorder}">
                                                                                 <StackPanel Margin="2">
@@ -539,80 +539,113 @@
                                                                         </Popup>
                                                                     </StackPanel>
                                                                 </StackPanel>
-                                                                <StackPanel>
-                                                                    <cc:ImageToggleButton ImageResource="{StaticResource Icon_Hand}" Text="Stats &amp; Skills" IsChecked="{Binding StatSkillMenuOpen}" />
-                                                                    <Popup IsOpen="{Binding StatSkillMenuOpen}">
-                                                                        <Border Style="{StaticResource BRDR_PopupBorder}">
-                                                                            <ScrollViewer Height="420" Width="560">
-                                                                                <StackPanel Margin="4">
-                                                                                    <TextBlock Text="Stats" />
-                                                                                    <ItemsControl ItemsSource="{Binding Stats}">
-                                                                                        <ItemsControl.ItemsPanel>
-                                                                                            <ItemsPanelTemplate>
-                                                                                                <WrapPanel></WrapPanel>
-                                                                                            </ItemsPanelTemplate>
-                                                                                        </ItemsControl.ItemsPanel>
-                                                                                        <ItemsControl.ItemTemplate>
-                                                                                            <DataTemplate>
-                                                                                                <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnStat}}" Text="{Binding StatAbbr}" Width="92" Command="{Binding RollStat}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
-                                                                                            </DataTemplate>
-                                                                                        </ItemsControl.ItemTemplate>
-                                                                                    </ItemsControl>
-                                                                                    <Rectangle />
-                                                                                    <Separator />
-                                                                                    <StackPanel Orientation="Horizontal">
-                                                                                        <StackPanel.Resources>
-                                                                                            <DataTemplate x:Key="SkillButton">
-                                                                                                <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnSkill}}" Text="{Binding DisplayName}" Width="180" Command="{Binding RollSkill}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
-                                                                                            </DataTemplate>
-                                                                                        </StackPanel.Resources>
-                                                                                        <StackPanel>
-                                                                                            <TextBlock Text="Awareness Skills" />
-                                                                                            <Rectangle />
-                                                                                            <ItemsControl ItemsSource="{Binding AwarenessSkills}" ItemTemplate="{StaticResource SkillButton}" />
-                                                                                            <Separator />
-                                                                                            <TextBlock Text="Body Skills" />
-                                                                                            <Rectangle />
-                                                                                            <ItemsControl ItemsSource="{Binding BodySkills}" ItemTemplate="{StaticResource SkillButton}" />
-                                                                                            <Separator />
-                                                                                            <TextBlock Text="Control Skills" />
-                                                                                            <Rectangle />
-                                                                                            <ItemsControl ItemsSource="{Binding ControlSkills}" ItemTemplate="{StaticResource SkillButton}" />
-                                                                                            <Separator />
-                                                                                            <TextBlock Text="Performance Skills" />
-                                                                                            <Rectangle />
-                                                                                            <ItemsControl ItemsSource="{Binding PerformanceSkills}" ItemTemplate="{StaticResource SkillButton}" />
-                                                                                        </StackPanel>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <StackPanel>
+                                                                        <cc:ImageToggleButton ImageResource="{StaticResource Icon_Hand}" Text="Stats &amp; Skills" IsChecked="{Binding StatSkillMenuOpen}" />
+                                                                        <Popup IsOpen="{Binding StatSkillMenuOpen}">
+                                                                            <Border Style="{StaticResource BRDR_PopupBorder}">
+                                                                                <ScrollViewer Height="420" Width="560">
+                                                                                    <StackPanel Margin="4">
+                                                                                        <TextBlock Text="Stats" />
+                                                                                        <ItemsControl ItemsSource="{Binding Stats}">
+                                                                                            <ItemsControl.ItemsPanel>
+                                                                                                <ItemsPanelTemplate>
+                                                                                                    <WrapPanel></WrapPanel>
+                                                                                                </ItemsPanelTemplate>
+                                                                                            </ItemsControl.ItemsPanel>
+                                                                                            <ItemsControl.ItemTemplate>
+                                                                                                <DataTemplate>
+                                                                                                    <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnStat}}" Text="{Binding StatAbbr}" Width="92" Command="{Binding RollStat}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
+                                                                                                </DataTemplate>
+                                                                                            </ItemsControl.ItemTemplate>
+                                                                                        </ItemsControl>
+                                                                                        <Rectangle />
                                                                                         <Separator />
-                                                                                        <StackPanel>
-                                                                                            <TextBlock Text="Education Skills" />
-                                                                                            <Rectangle />
-                                                                                            <ItemsControl ItemsSource="{Binding EducationSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                        <StackPanel Orientation="Horizontal">
+                                                                                            <StackPanel.Resources>
+                                                                                                <DataTemplate x:Key="SkillButton">
+                                                                                                    <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnSkill}}" Text="{Binding DisplayName}" Width="180" Command="{Binding RollSkill}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
+                                                                                                </DataTemplate>
+                                                                                            </StackPanel.Resources>
+                                                                                            <StackPanel>
+                                                                                                <TextBlock Text="Awareness Skills" />
+                                                                                                <Rectangle />
+                                                                                                <ItemsControl ItemsSource="{Binding AwarenessSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                                <Separator />
+                                                                                                <TextBlock Text="Body Skills" />
+                                                                                                <Rectangle />
+                                                                                                <ItemsControl ItemsSource="{Binding BodySkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                                <Separator />
+                                                                                                <TextBlock Text="Control Skills" />
+                                                                                                <Rectangle />
+                                                                                                <ItemsControl ItemsSource="{Binding ControlSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                                <Separator />
+                                                                                                <TextBlock Text="Performance Skills" />
+                                                                                                <Rectangle />
+                                                                                                <ItemsControl ItemsSource="{Binding PerformanceSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                            </StackPanel>
                                                                                             <Separator />
-                                                                                            <TextBlock Text="Fighting Skills" />
-                                                                                            <Rectangle />
-                                                                                            <ItemsControl ItemsSource="{Binding FightingSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                            <StackPanel>
+                                                                                                <TextBlock Text="Education Skills" />
+                                                                                                <Rectangle />
+                                                                                                <ItemsControl ItemsSource="{Binding EducationSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                                <Separator />
+                                                                                                <TextBlock Text="Fighting Skills" />
+                                                                                                <Rectangle />
+                                                                                                <ItemsControl ItemsSource="{Binding FightingSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                                <Separator />
+                                                                                                <TextBlock Text="Ranged Weapon Skills" />
+                                                                                                <Rectangle />
+                                                                                                <ItemsControl ItemsSource="{Binding RangedWeaponSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                            </StackPanel>
                                                                                             <Separator />
-                                                                                            <TextBlock Text="Ranged Weapon Skills" />
-                                                                                            <Rectangle />
-                                                                                            <ItemsControl ItemsSource="{Binding RangedWeaponSkills}" ItemTemplate="{StaticResource SkillButton}" />
-                                                                                        </StackPanel>
-                                                                                        <Separator />
-                                                                                        <StackPanel>
-                                                                                            <TextBlock Text="Social Skills" />
-                                                                                            <Rectangle />
-                                                                                            <ItemsControl ItemsSource="{Binding SocialSkills}" ItemTemplate="{StaticResource SkillButton}" />
-                                                                                            <Separator />
-                                                                                            <TextBlock Text="Technique Skills" />
-                                                                                            <Rectangle />
-                                                                                            <ItemsControl ItemsSource="{Binding TechniqueSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                            <StackPanel>
+                                                                                                <TextBlock Text="Social Skills" />
+                                                                                                <Rectangle />
+                                                                                                <ItemsControl ItemsSource="{Binding SocialSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                                <Separator />
+                                                                                                <TextBlock Text="Technique Skills" />
+                                                                                                <Rectangle />
+                                                                                                <ItemsControl ItemsSource="{Binding TechniqueSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                            </StackPanel>
                                                                                         </StackPanel>
                                                                                     </StackPanel>
+                                                                                </ScrollViewer>
+                                                                            </Border>
+                                                                        </Popup>
+                                                                    </StackPanel>
+                                                                    <Separator />
+                                                                    <StackPanel>
+                                                                        <cc:MiniToggleButton ImageResource="{StaticResource Icon_Bandage}" IsChecked="{Binding InjuryMenuOpen}" Margin="0 2" />
+                                                                        <Popup IsOpen="{Binding InjuryMenuOpen}">
+                                                                            <Border Style="{StaticResource BRDR_PopupBorder}">
+                                                                                <StackPanel Margin="4">
+                                                                                    <DockPanel>
+                                                                                        <TextBlock Text="Critical Injuries" />
+                                                                                        <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding AddCriticalInjury}" HorizontalAlignment="Right" />
+                                                                                    </DockPanel>
+                                                                                    <Border Style="{StaticResource ListBorder}">
+                                                                                        <ItemsControl ItemsSource="{Binding CriticalInjuries}">
+                                                                                            <ItemsControl.ItemTemplate>
+                                                                                                <DataTemplate>
+                                                                                                    <Border Style="{StaticResource SegmentTile}">
+                                                                                                        <StackPanel Orientation="Horizontal">
+                                                                                                            <Separator />
+                                                                                                            <TextBlock Text="{Binding Name, FallbackValue=Dismembered Hand}" Width="128" VerticalAlignment="Center" />
+                                                                                                            <Separator />
+                                                                                                            <cc:IconButton ImageResource="{StaticResource Icon_X}" Command="{Binding RemoveInjury}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
+                                                                                                        </StackPanel>
+                                                                                                    </Border>
+                                                                                                </DataTemplate>
+                                                                                            </ItemsControl.ItemTemplate>
+                                                                                        </ItemsControl>
+                                                                                    </Border>
                                                                                 </StackPanel>
-                                                                            </ScrollViewer>
-                                                                        </Border>
-                                                                    </Popup>
+                                                                            </Border>
+                                                                        </Popup>
+                                                                    </StackPanel>
                                                                 </StackPanel>
+                                                                
                                                             </StackPanel>
                                                             <Separator />
                                                             <StackPanel>

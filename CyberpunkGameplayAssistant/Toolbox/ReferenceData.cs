@@ -9,6 +9,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
     public static class ReferenceData
     {
         // Utility
+        public const bool DebugMode = true;
         public static MainViewModel MainModelRef;
         public static FrameworkElement Framework = new();
         public static Random RNG = new();
@@ -28,6 +29,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         // MultiObject Select Modes
         public const string MultiModeEnemies = "Enemies";
+        public const string MultiModeCriticalInjuries = "Critical Injuries";
 
         // Image Locations
         private const string ImageBase = "/Resources/Combatants/";
@@ -966,6 +968,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
             new(CriticalInjuryLostEar, "The Lost Ear is gone. Whenever you move further than 4m/yds on foot in a Turn, you cannot take a Move Action on your next Turn. Additionally you take a -4 to Perception Checks involving hearing. Base Death Save Penalty is increased by 1.")
         };
 
+        public static List<CriticalInjury> AllCriticalInjuries;
+
         public static readonly List<string> CriticalInjuriesThatIncreaseDeathSavePenalty = new()
         {
             CriticalInjuryDismemberedArm, CriticalInjuryDismemberedHand, CriticalInjuryCollapsedLung, CriticalInjurySpinalInjury, CriticalInjuryDismemberedLeg,
@@ -985,9 +989,12 @@ namespace CyberpunkGameplayAssistant.Toolbox
         // Public Methods
         public static void PopulateData()
         {
+            PopulateCriticalInjuries();
             PopulateCombatants();
         }
-        public static void PopulateCombatants()
+
+        // Private Methods
+        private static void PopulateCombatants()
         {
             #region Bodyguard
             Combatant bodyguard = new("Bodyguard", PortraitBodyguard, ArmorTypeKevlar);
@@ -1125,6 +1132,13 @@ namespace CyberpunkGameplayAssistant.Toolbox
             #endregion
 
         }
+        private static void PopulateCriticalInjuries()
+        {
+            AllCriticalInjuries = new();
+            AllCriticalInjuries.AddRange(CriticalInjuriesToBody);
+            AllCriticalInjuries.AddRange(CriticalInjuriesToHead);
+        }
+
 
     }
 }

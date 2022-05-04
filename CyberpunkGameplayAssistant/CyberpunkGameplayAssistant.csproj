@@ -59,6 +59,7 @@
     <None Remove="Resources\Icons\arrow_up_blue.png" />
     <None Remove="Resources\Icons\art.png" />
     <None Remove="Resources\Icons\bag.png" />
+    <None Remove="Resources\Icons\bandage.png" />
     <None Remove="Resources\Icons\beast.png" />
     <None Remove="Resources\Icons\bluebox.png" />
     <None Remove="Resources\Icons\book.png" />
@@ -389,6 +390,7 @@
     <Resource Include="Resources\Icons\arrow_up_blue.png" />
     <Resource Include="Resources\Icons\art.png" />
     <Resource Include="Resources\Icons\bag.png" />
+    <Resource Include="Resources\Icons\bandage.png" />
     <Resource Include="Resources\Icons\beast.png" />
     <Resource Include="Resources\Icons\bluebox.png" />
     <Resource Include="Resources\Icons\book.png" />

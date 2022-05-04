@@ -78,9 +78,13 @@ namespace CyberpunkGameplayAssistant.Models
             int damageDice = ReferenceData.WeaponRepository.GetDamage(Type);
             string relevantSkill = ReferenceData.WeaponRepository.GetSkill(Type);
             int attackBonus = combatant.GetSkillTotal(relevantSkill);
-            int attackResult = HelperMethods.RollD10(true) + attackBonus;
-            int damage = HelperMethods.RollDamage(6, out bool criticalInjury);
-            HelperMethods.AddToGameplayLog($"{combatant.DisplayName} attacks with {Name}\nAttack: {attackResult}\nDamage: {damage} {(criticalInjury ? "CRIT" : "")}");
+            int attackRoll = HelperMethods.RollD10(true);
+            if (Quality == ReferenceData.WeaponQualityPoor && attackRoll <= 1) { HelperMethods.AddToGameplayLog($"{combatant.DisplayName}'s {Name} malfunctioned!"); return; }
+            int attackResult = attackRoll + attackBonus;
+            int damage = HelperMethods.RollDamage(damageDice, out bool criticalInjury);
+            string output = $"{combatant.DisplayName} attacks with {Name}\nAttack: {attackResult}\nDamage: {damage} {(criticalInjury ? "CRIT" : "")}";
+            if (ReferenceData.DebugMode) { output += $"\nATK DBG: ROLL:{attackRoll}, SKILL+STAT:{attackBonus}"; }
+            HelperMethods.AddToGameplayLog(output);
         }
         public ICommand RollAutofire => new RelayCommand(DoRollAutofire);
         private void DoRollAutofire(object param)
@@ -90,12 +94,16 @@ namespace CyberpunkGameplayAssistant.Models
             if (!HasEnoughAmmo(10)) { return; }
             CurrentClipQuantity -= 10;
             int attackBonus = combatant.GetSkillTotal(ReferenceData.SkillAutofire);
-            int attackResult = HelperMethods.RollD10(true) + attackBonus;
+            int attackRoll = HelperMethods.RollD10(true);
+            if (Quality == ReferenceData.WeaponQualityPoor && attackRoll <= 1) { HelperMethods.AddToGameplayLog($"{combatant.DisplayName}'s {Name} malfunctioned!"); return; }
+            int attackResult = attackRoll + attackBonus;
             int damage = HelperMethods.RollDamage(2, out bool criticalInjury);
             string output = $"{combatant.DisplayName} uses {Name}\nAttack: {attackResult}";
+            if (ReferenceData.DebugMode) { output += $"\nATK DBG: ROLL:{attackRoll}, SKILL+STAT:{attackBonus}"; }
             for (int i = 0; i < ReferenceData.AutofireTable[Type]; i++)
             {
                 output += $"\nDamage x{(i + 1)}: {(damage * (i + 1))}";
+                if (i == 0 && criticalInjury) { output += " CRIT"; }
             }
             HelperMethods.AddToGameplayLog(output);
         }
@@ -111,9 +119,13 @@ namespace CyberpunkGameplayAssistant.Models
             int damageDice = ReferenceData.WeaponRepository.GetDamage(Type);
             string relevantSkill = ReferenceData.WeaponRepository.GetSkill(Type);
             int attackBonus = combatant.GetSkillTotal(relevantSkill);
-            int attackResult = HelperMethods.RollD10(true) + attackBonus - 8; //pg170
-            int damage = HelperMethods.RollDamage(6, out bool criticalInjury);
-            HelperMethods.AddToGameplayLog($"{combatant.DisplayName} aims {Name}\nAttack: {attackResult}\nDamage: {damage} {(criticalInjury ? "CRIT" : "")}");
+            int attackRoll = HelperMethods.RollD10(true);
+            if (Quality == ReferenceData.WeaponQualityPoor && attackRoll <= 1) { HelperMethods.AddToGameplayLog($"{combatant.DisplayName}'s {Name} malfunctioned!"); return; }
+            int attackResult = attackRoll + attackBonus - 8; //pg170
+            int damage = HelperMethods.RollDamage(damageDice, out bool criticalInjury);
+            string output = $"{combatant.DisplayName} aims {Name}\nAttack: {attackResult}\nDamage: {damage} {(criticalInjury ? "CRIT" : "")}";
+            if (ReferenceData.DebugMode) { output += $"\nATK DBG: ROLL:{attackRoll}, SKILL+STAT:{attackBonus}"; }
+            HelperMethods.AddToGameplayLog(output);
         }
         public ICommand ReloadWeapon => new RelayCommand(DoReloadWeapon);
         private void DoReloadWeapon(object param)

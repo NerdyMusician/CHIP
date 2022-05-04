@@ -20,8 +20,9 @@
             <Setter Property="Width" Value="4" />
         </Style>
         <DataTemplate x:Key="SourceDefaultTemplate">
-            <StackPanel>
+            <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Name, Mode=OneWay}" Foreground="{StaticResource PrimaryFontColor}" FontWeight="Bold" Width="180" />
+                <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Click="AddItem_Clicked" />
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="SourceCombatantTemplate">
@@ -34,8 +35,9 @@
         </DataTemplate>
 
         <DataTemplate x:Key="SelectedDefaultTemplate">
-            <StackPanel>
+            <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Name, Mode=OneWay}" Foreground="{StaticResource PrimaryFontColor}" FontWeight="Bold" Width="180" />
+                <cc:IconButton ImageResource="{StaticResource Icon_X}" Click="RemoveItem_Clicked" />
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="SelectedCombatantTemplate">

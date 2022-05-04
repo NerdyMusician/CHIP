@@ -1,4 +1,6 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
+using CyberpunkGameplayAssistant.ViewModels;
+using CyberpunkGameplayAssistant.Windows;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -247,6 +249,12 @@ namespace CyberpunkGameplayAssistant.Models
             get => _ActionMenuOpen;
             set => SetAndNotify(ref _ActionMenuOpen, value);
         }
+        private bool _InjuryMenuOpen;
+        public bool InjuryMenuOpen
+        {
+            get => _InjuryMenuOpen;
+            set => SetAndNotify(ref _InjuryMenuOpen, value);
+        }
         private ObservableCollection<Ammo> _AmmoInventory;
         [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Ammo> AmmoInventory
@@ -351,6 +359,24 @@ namespace CyberpunkGameplayAssistant.Models
         {
             IsDead = !IsDead;
             UpdateWoundState();
+        }
+        public ICommand AddCriticalInjury => new RelayCommand(DoAddCriticalInjury);
+        private void DoAddCriticalInjury(object param)
+        {
+            MultiObjectSelectionDialog selectionDialog = new(ReferenceData.AllCriticalInjuries.ToNamedRecordList(), ReferenceData.MultiModeCriticalInjuries);
+
+            if (selectionDialog.ShowDialog() == true)
+            {
+                foreach (NamedRecord record in (selectionDialog.DataContext as MultiObjectSelectionViewModel).SelectedRecords)
+                {
+                    if (CriticalInjuries.FirstOrDefault(c => c.Name == record.Name) != null) { continue; }
+                    else
+                    {
+                        CriticalInjuries.Add(record.ToCriticalInjury());
+                    }
+                }
+                NotifyPropertyChanged(nameof(MoveSpeed));
+            }
         }
 
         // Public Methods
