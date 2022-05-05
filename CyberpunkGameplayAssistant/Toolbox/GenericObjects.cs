@@ -20,7 +20,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         // Databound Properties
         #region Name
         private string _Name;
-        [XmlSaveMode(XSME.Single)]
+        
         public string Name
         {
             get => _Name;
@@ -29,7 +29,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         #endregion
         #region Description
         private string _Description;
-        [XmlSaveMode(XSME.Single)]
+        
         public string Description
         {
             get => _Description;

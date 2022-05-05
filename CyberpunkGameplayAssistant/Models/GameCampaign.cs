@@ -210,7 +210,7 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand AddNpcs => new RelayCommand(DoAddNpcs);
         private void DoAddNpcs(object param)
         {
-            MultiObjectSelectionDialog selectionDialog = new(Npcs.Where(npc => string.IsNullOrEmpty(npc.BaseCombatant)).ToList().ToNamedRecordList(), "NPCs");
+            MultiObjectSelectionDialog selectionDialog = new(Npcs.Where(npc => !string.IsNullOrEmpty(npc.BaseCombatant)).ToList().ToNamedRecordList(), "NPCs");
             if (selectionDialog.ShowDialog() == true)
             {
                 foreach (NamedRecord selectedRecord in (selectionDialog.DataContext as MultiObjectSelectionViewModel).SelectedRecords)

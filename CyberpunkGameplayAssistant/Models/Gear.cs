@@ -23,7 +23,7 @@ namespace CyberpunkGameplayAssistant.Models
 
         // Databound Properties
         private string _Name;
-        [XmlSaveMode(XSME.Single)]
+        
         public string Name
         {
             get => _Name;

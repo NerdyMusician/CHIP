@@ -1,10 +1,6 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
 using CyberpunkGameplayAssistant.Windows;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
@@ -20,24 +16,33 @@ namespace CyberpunkGameplayAssistant.Models
 
         // Databound Properties
         private string _Name;
-        [XmlSaveMode(XSME.Single)]
         public string Name
         {
             get => _Name;
             set => SetAndNotify(ref _Name, value);
         }
         private string _BaseCombatant;
-        [XmlSaveMode(XSME.Single)]
         public string BaseCombatant
         {
             get => _BaseCombatant;
             set => SetAndNotify(ref _BaseCombatant, value);
         }
+        private string _PortraitFilePath;
+        public string PortraitFilePath
+        {
+            get => _PortraitFilePath;
+            set => SetAndNotify(ref _PortraitFilePath, value);
+        }
+        private bool _IsAlly;
+        public bool IsAlly
+        {
+            get => _IsAlly;
+            set => SetAndNotify(ref _IsAlly, value);
+        }
 
         // Commands
-        #region SelectBaseCreature
-        public ICommand SelectBaseCreature => new RelayCommand(param => DoSelectBaseCreature());
-        private void DoSelectBaseCreature()
+        public ICommand SelectBaseCombatant => new RelayCommand(DoSelectBaseCombatant);
+        private void DoSelectBaseCombatant(object param)
         {
             ObjectSelectionDialog itemSelect = new(ReferenceData.Combatants.ToNamedRecordList(), "Select Base Combatant");
             if (itemSelect.ShowDialog() == true)
@@ -47,14 +52,16 @@ namespace CyberpunkGameplayAssistant.Models
             }
 
         }
-        #endregion
-        #region RemoveNpcFromCampaign
+        public ICommand SelectPortraitImage => new RelayCommand(DoSelectPortraitImage);
+        private void DoSelectPortraitImage(object param)
+        {
+
+        }
         public ICommand RemoveNpcFromCampaign => new RelayCommand(param => DoRemoveNpcFromCampaign());
         private void DoRemoveNpcFromCampaign()
         {
             ReferenceData.MainModelRef.CampaignView.ActiveCampaign.Npcs.Remove(this);
         }
-        #endregion
 
 
     }

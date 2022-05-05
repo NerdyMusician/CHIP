@@ -59,32 +59,9 @@ namespace CyberpunkGameplayAssistant.ViewModels
             System.Xml.Serialization.XmlSerializer serializer = new(typeof(CampaignViewModel));
             using (System.IO.StreamWriter writer = new(ReferenceData.File_CampaignData))
             {
-                serializer.Serialize(writer, this);
+                serializer.Serialize(writer, this.DeepClone());
             }
             HelperMethods.WriteToLogFile("Campaigns Saved", notifyUser);
-        }
-        public ICommand ImportCampaigns => new RelayCommand(param => DoImportCampaigns());
-        private void DoImportCampaigns()
-        {
-            OpenFileDialog openWindow = new()
-            {
-                Filter = "XML Files (*.xml)|*.xml"
-            };
-
-            if (Campaigns.Count > 0)
-            {
-                YesNoDialog question = new("Prior to import, the current campaign list must be saved.\nContinue?");
-                question.ShowDialog();
-                if (question.Answer == false) { return; }
-
-                DoSaveCampaigns(false);
-            }
-
-            if (openWindow.ShowDialog() == true)
-            {
-                //DataImport.ImportData_Campaigns(openWindow.FileName, out string message); // TODO
-                //HelperMethods.NotifyUser(message);
-            }
         }
         
 

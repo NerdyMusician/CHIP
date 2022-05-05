@@ -25,21 +25,21 @@ namespace CyberpunkGameplayAssistant.Models
 
         // Databound Properties
         private string _Name;
-        [XmlSaveMode(XSME.Single)]
+        
         public string Name
         {
             get => _Name;
             set => SetAndNotify(ref _Name, value);
         }
         private string _Variant;
-        [XmlSaveMode(XSME.Single)]
+        
         public string Variant
         {
             get => _Variant;
             set => SetAndNotify(ref _Variant, value);
         }
         private int _Level;
-        [XmlSaveMode(XSME.Single)]
+        
         public int Level
         {
             get => _Level;

@@ -20,7 +20,7 @@ namespace CyberpunkGameplayAssistant.Models
         // Databound Properties
         #region MessageType
         private string _MessageType;
-        [XmlSaveMode(XSME.Single)]
+        
         public string MessageType
         {
             get => _MessageType;
@@ -29,7 +29,7 @@ namespace CyberpunkGameplayAssistant.Models
         #endregion
         #region MessageContent
         private string _MessageContent;
-        [XmlSaveMode(XSME.Single)]
+        
         public string MessageContent
         {
             get => _MessageContent;

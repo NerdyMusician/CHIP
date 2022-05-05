@@ -21,7 +21,7 @@ namespace CyberpunkGameplayAssistant.Models
         // Databound Properties
         // Utility
         private ObservableCollection<GameMessage> _Messages;
-        [XmlSaveMode(XSME.Enumerable)]
+        
         public ObservableCollection<GameMessage> Messages
         {
             get => _Messages;
@@ -30,49 +30,49 @@ namespace CyberpunkGameplayAssistant.Models
 
         // About Your Character
         private string _Name;
-        [XmlSaveMode(XSME.Single)]
+        
         public string Name
         {
             get => _Name;
             set => SetAndNotify(ref _Name, value);
         }
         private string _CulturalOrigin;
-        [XmlSaveMode(XSME.Single)]
+        
         public string CulturalOrigin
         {
             get => _CulturalOrigin;
             set => SetAndNotify(ref _CulturalOrigin, value);
         }
         private string _RoleAbility;
-        [XmlSaveMode(XSME.Single)]
+        
         public string RoleAbility
         {
             get => _RoleAbility;
             set => SetAndNotify(ref _RoleAbility, value);
         }
         private string _Personality;
-        [XmlSaveMode(XSME.Single)]
+        
         public string Personality
         {
             get => _Personality;
             set => SetAndNotify(ref _Personality, value);
         }
         private string _Appearance;
-        [XmlSaveMode(XSME.Single)]
+        
         public string Appearance
         {
             get => _Appearance;
             set => SetAndNotify(ref _Appearance, value);
         }
         private string _Background;
-        [XmlSaveMode(XSME.Single)]
+        
         public string Background
         {
             get => _Background;
             set => SetAndNotify(ref _Background, value);
         }
         private string _Relationships;
-        [XmlSaveMode(XSME.Single)]
+        
         public string Relationships
         {
             get => _Relationships;
@@ -81,14 +81,14 @@ namespace CyberpunkGameplayAssistant.Models
 
         // THE STAT BLOCK - pg 72
         private string _Rank; // pg 78 - determines stat points
-        [XmlSaveMode(XSME.Single)]
+        
         public string Rank
         {
             get => _Rank;
             set => SetAndNotify(ref _Rank, value);
         }
         private ObservableCollection<Stat> _Stats;
-        [XmlSaveMode(XSME.Enumerable)]
+        
         public ObservableCollection<Stat> Stats
         {
             get => _Stats;
@@ -97,14 +97,14 @@ namespace CyberpunkGameplayAssistant.Models
 
         // Derived Stats - pg 79
         private int _HitPointsMaximum;
-        [XmlSaveMode(XSME.Single)]
+        
         public int HitPointsMaximum
         {
             get => _HitPointsMaximum;
             set => SetAndNotify(ref _HitPointsMaximum, value);
         }
         private int _HitPointsCurrent;
-        [XmlSaveMode(XSME.Single)]
+        
         public int HitPointsCurrent
         {
             get => _HitPointsCurrent;
@@ -117,21 +117,21 @@ namespace CyberpunkGameplayAssistant.Models
             set => SetAndNotify(ref _SeriouslyWoundedThreshold, value);
         }
         private int _HumanityMaximum;
-        [XmlSaveMode(XSME.Single)]
+        
         public int HumanityMaximum
         {
             get => _HumanityMaximum;
             set => SetAndNotify(ref _HumanityMaximum, value);
         }
         private int _HumanityCurrent;
-        [XmlSaveMode(XSME.Single)]
+        
         public int HumanityCurrent
         {
             get => _HumanityCurrent;
             set => SetAndNotify(ref _HumanityCurrent, value);
         }
         private int _Initiative;
-        [XmlSaveMode(XSME.Single)]
+        
         public int Initiative
         {
             get => _Initiative;
@@ -140,7 +140,7 @@ namespace CyberpunkGameplayAssistant.Models
 
         // SKILLS
         private ObservableCollection<Skill> _Skills;
-        [XmlSaveMode(XSME.Enumerable)]
+        
         public ObservableCollection<Skill> Skills
         {
             get => _Skills;

@@ -29,7 +29,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
         }
         public static int GetValue(this ObservableCollection<Stat> stats, string statName)
         {
-            return stats.FirstOrDefault(s => s.Name == statName).Value;
+            Stat matchedStat = stats.FirstOrDefault(s => s.Name == statName)!;
+            return (matchedStat != null) ? matchedStat.Value : 0;
         }
         public static int GetLevel(this ObservableCollection<Skill> skills, string skillName)
         {
@@ -57,11 +58,12 @@ namespace CyberpunkGameplayAssistant.Toolbox
         }
         public static int GetPenalty(this List<Armor> armorList, string armorType)
         {
-            return armorList.FirstOrDefault(a => a.Name == armorType).ArmorPenalty;
+            Armor matchedArmor = armorList.FirstOrDefault(a => a.Name == armorType)!;
+            return (matchedArmor != null) ? matchedArmor.ArmorPenalty : 0;
         }
         public static int GetStandardClipSize(this List<RangedWeaponClip> clipList, string weaponType)
         {
-            RangedWeaponClip clip = clipList.FirstOrDefault(c => c.WeaponType == weaponType);
+            RangedWeaponClip clip = clipList.FirstOrDefault(c => c.WeaponType == weaponType)!;
             if (clip != null) { return clip.Standard; }
             return 1;
         }
@@ -136,7 +138,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             List<NamedRecord> records = new();
             foreach (NPC npc in npcs)
             {
-                records.Add(new(npc.Name, string.Empty));
+                records.Add(new(npc.Name, npc.BaseCombatant));
             }
             return records;
         }

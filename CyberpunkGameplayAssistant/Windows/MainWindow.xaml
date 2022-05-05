@@ -160,7 +160,6 @@
                                 <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CampaignView.AddCampaign}" />
                                 <cc:IconButton ImageResource="{StaticResource Icon_Save}" Command="{Binding CampaignView.SaveCampaigns}" />
                                 <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CampaignView.SortCampaigns}" />
-                                <cc:IconButton ImageResource="{StaticResource Icon_Import}" Command="{Binding CampaignView.ImportCampaigns}" />
                             </StackPanel>
                         </DockPanel>
                         <Border Style="{StaticResource ListBorder}">
@@ -306,7 +305,8 @@
                                         <TextBlock Text="Tools" />
                                         <Rectangle />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Combatants" Command="{Binding CampaignView.ActiveCampaign.AddCombatants}" />
-                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPeople}" Text="Add Encounter" />
+                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Players" Command="{Binding CampaignView.ActiveCampaign.AddPlayers}" />
+                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add NPCs" Command="{Binding CampaignView.ActiveCampaign.AddNpcs}" />
                                         <Separator Height="8" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_Runner}" Text="Roll Initiatives" Command="{Binding CampaignView.ActiveCampaign.RollInitatives}" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_Sort}" Text="Sort Combatants" Command="{Binding CampaignView.ActiveCampaign.SortCombatants}" />
@@ -646,7 +646,7 @@
                                                                         </Popup>
                                                                     </StackPanel>
                                                                 </StackPanel>
-                                                                
+
                                                             </StackPanel>
                                                             <Separator />
                                                             <StackPanel>
@@ -747,12 +747,12 @@
                                                 </ScrollViewer>
                                             </TabItem>
                                         </TabControl>
-                                        
+
                                     </StackPanel>
                                 </StackPanel>
                             </TabItem>
                             <TabItem Header="Netrun">
-                                
+
                             </TabItem>
                             <TabItem Header="Players">
                                 <StackPanel Orientation="Horizontal">
@@ -828,13 +828,13 @@
                                         <Separator />
                                         <StackPanel Orientation="Horizontal">
                                             <cc:FieldLabel Text="Based On" />
-                                            <cc:MiniButton ImageResource="{StaticResource Icon_Clone}" Command="{Binding CampaignView.ActiveCampaign.ActiveNpc.SelectBaseCreature}" />
+                                            <cc:MiniButton ImageResource="{StaticResource Icon_Clone}" Command="{Binding CampaignView.ActiveCampaign.ActiveNpc.SelectBaseCombatant}" />
                                             <Separator />
-                                            <TextBlock Text="{Binding CampaignView.ActiveCampaign.ActiveNpc.BaseCreatureName}" VerticalAlignment="Center" />
+                                            <TextBlock Text="{Binding CampaignView.ActiveCampaign.ActiveNpc.BaseCombatant}" VerticalAlignment="Center" />
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
                                             <cc:FieldLabel Text="Portrait Image" />
-                                            <cc:MiniButton ImageResource="{StaticResource Icon_Folder}" Command="{Binding CampaignView.ActiveCampaign.ActiveNpc.SelectBaseCombatant}" VerticalAlignment="Top" />
+                                            <cc:MiniButton ImageResource="{StaticResource Icon_Folder}" Command="{Binding CampaignView.ActiveCampaign.ActiveNpc.SelectPortraitImage}" VerticalAlignment="Top" />
                                             <Image Source="{Binding CampaignView.ActiveCampaign.ActiveNpc.PortraitFilepath}" Height="64" Width="64" RenderOptions.BitmapScalingMode="NearestNeighbor" Margin="4" HorizontalAlignment="Left" />
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
@@ -845,22 +845,8 @@
                                     </StackPanel>
                                 </StackPanel>
                             </TabItem>
-                            <TabItem Header="Encounters">
-
-                            </TabItem>
                         </TabControl>
                     </StackPanel>
-                </StackPanel>
-            </TabItem>
-            <TabItem Header="Player Characters" Visibility="Collapsed">
-
-            </TabItem>
-            <TabItem Header="Settings">
-
-            </TabItem>
-            <TabItem Header="Dev Space">
-                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
-                    
                 </StackPanel>
             </TabItem>
         </TabControl>
