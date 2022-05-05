@@ -9,6 +9,7 @@ using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
 {
+    [Serializable]
     public class GameCampaign : BaseModel
     {
         // Constructors
@@ -22,7 +23,6 @@ namespace CyberpunkGameplayAssistant.Models
 
         // Databound Properties
         private string _Name;
-        [XmlSaveMode(XSME.Single)]
         public string Name
         {
             get => _Name;
@@ -35,42 +35,36 @@ namespace CyberpunkGameplayAssistant.Models
             set => SetAndNotify(ref _ActiveCombatant, value);
         }
         private ObservableCollection<Combatant> _AllCombatants;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Combatant> AllCombatants
         {
             get => _AllCombatants;
             set => SetAndNotify(ref _AllCombatants, value);
         }
         private ObservableCollection<Combatant> _CombatantsByInitiative;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Combatant> CombatantsByInitiative
         {
             get => _CombatantsByInitiative;
             set => SetAndNotify(ref _CombatantsByInitiative, value);
         }
         private ObservableCollection<Combatant> _CombatantsByName;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Combatant> CombatantsByName
         {
             get => _CombatantsByName;
             set => SetAndNotify(ref _CombatantsByName, value);
         }
         private ObservableCollection<Combatant> _NpcCombatants;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Combatant> NpcCombatants
         {
             get => _NpcCombatants;
             set => SetAndNotify(ref _NpcCombatants, value);
         }
         private ObservableCollection<Combatant> _PlayerCombatants;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Combatant> PlayerCombatants
         {
             get => _PlayerCombatants;
             set => SetAndNotify(ref _PlayerCombatants, value);
         }
         private string _StartDate;
-        [XmlSaveMode(XSME.Single)]
         public string StartDate
         {
             get => _StartDate;
@@ -89,7 +83,6 @@ namespace CyberpunkGameplayAssistant.Models
             set => SetAndNotify(ref _ShowStartTimeControls, value);
         }
         private string _CurrentDate;
-        [XmlSaveMode(XSME.Single)]
         public string CurrentDate
         {
             get => _CurrentDate;
@@ -126,7 +119,6 @@ namespace CyberpunkGameplayAssistant.Models
             set => SetAndNotify(ref _ShowClearKillControls, value);
         }
         private ObservableCollection<GameMessage> _EventHistory;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<GameMessage> EventHistory
         {
             get => _EventHistory;
@@ -145,11 +137,34 @@ namespace CyberpunkGameplayAssistant.Models
             set => SetAndNotify(ref _TimeIndicator, value);
         }
         private int _EncounterRound;
-        [XmlSaveMode(XSME.Single)]
         public int EncounterRound
         {
             get => _EncounterRound;
             set => SetAndNotify(ref _EncounterRound, value);
+        }
+        private ObservableCollection<Combatant> _Players;
+        public ObservableCollection<Combatant> Players
+        {
+            get => _Players;
+            set => SetAndNotify(ref _Players, value);
+        }
+        private Combatant _ActivePlayer;
+        public Combatant ActivePlayer
+        {
+            get => _ActivePlayer;
+            set => SetAndNotify(ref _ActivePlayer, value);
+        }
+        private ObservableCollection<NPC> _Npcs;
+        public ObservableCollection<NPC> Npcs
+        {
+            get => _Npcs;
+            set => SetAndNotify(ref _Npcs, value);
+        }
+        private NPC _ActiveNpc;
+        public NPC ActiveNpc
+        {
+            get => _ActiveNpc;
+            set => SetAndNotify(ref _ActiveNpc, value);
         }
 
         // Commands
@@ -171,6 +186,40 @@ namespace CyberpunkGameplayAssistant.Models
                         newCombatant.InitializeLoadedCombatant();
                         AllCombatants.Add(newCombatant);
                     }
+                }
+                SortCombatantsToLists();
+            }
+        }
+        public ICommand AddPlayers => new RelayCommand(DoAddPlayers);
+        private void DoAddPlayers(object param)
+        {
+            MultiObjectSelectionDialog selectionDialog = new(Players.ToList().ToNamedRecordList(), "Players");
+
+            if (selectionDialog.ShowDialog() == true)
+            {
+                foreach (NamedRecord selectedRecord in (selectionDialog.DataContext as MultiObjectSelectionViewModel).SelectedRecords)
+                {
+                    Combatant playerToAdd = Players.First(c => c.Name == selectedRecord.Name).DeepClone();
+                    if (AllCombatants.FirstOrDefault(p => p.Name == playerToAdd.Name) != null) { continue; }
+                    playerToAdd.IsPlayer = true;
+                    AllCombatants.Add(playerToAdd);
+                }
+                SortCombatantsToLists();
+            }
+        }
+        public ICommand AddNpcs => new RelayCommand(DoAddNpcs);
+        private void DoAddNpcs(object param)
+        {
+            MultiObjectSelectionDialog selectionDialog = new(Npcs.Where(npc => string.IsNullOrEmpty(npc.BaseCombatant)).ToList().ToNamedRecordList(), "NPCs");
+            if (selectionDialog.ShowDialog() == true)
+            {
+                foreach (NamedRecord selectedRecord in (selectionDialog.DataContext as MultiObjectSelectionViewModel).SelectedRecords)
+                {
+                    NPC npc = Npcs.First(n => n.Name == selectedRecord.Name);
+                    Combatant npcToAdd = ReferenceData.Combatants.First(c => c.Name == npc.BaseCombatant).DeepClone();
+                    npcToAdd.DisplayName = npc.Name;
+                    npcToAdd.IsNpc = true;
+                    AllCombatants.Add(npcToAdd);
                 }
                 SortCombatantsToLists();
             }
@@ -329,6 +378,28 @@ namespace CyberpunkGameplayAssistant.Models
         {
             SortCombatantsToLists();
         }
+        public ICommand AddPlayer => new RelayCommand(param => DoAddPlayer());
+        private void DoAddPlayer()
+        {
+            Players.Add(new() { Name = "New Player", IsPlayer = true });
+            ActivePlayer = Players.Last();
+        }
+        public ICommand SortPlayers => new RelayCommand(param => DoSortPlayers());
+        private void DoSortPlayers()
+        {
+            Players = new ObservableCollection<Combatant>(Players.OrderBy(crt => crt.Name));
+        }
+        public ICommand AddNpc => new RelayCommand(param => DoAddNpc());
+        private void DoAddNpc()
+        {
+            Npcs.Add(new NPC());
+            ActiveNpc = Npcs.Last();
+        }
+        public ICommand SortNpcs => new RelayCommand(param => DoSortNpcs());
+        private void DoSortNpcs()
+        {
+            Npcs = new(Npcs.OrderBy(npc => npc.Name));
+        }
 
         // Public Methods
         public void UpdateActiveCombatant()
@@ -356,6 +427,8 @@ namespace CyberpunkGameplayAssistant.Models
             PlayerCombatants = new();
             NpcCombatants = new();
             EventHistory = new();
+            Players = new();
+            Npcs = new();
         }
         private void SortCombatantsToLists()
         {

@@ -3,6 +3,7 @@ using CyberpunkGameplayAssistant.Toolbox;
 using CyberpunkGameplayAssistant.Windows;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -10,26 +11,23 @@ using System.Xml.Linq;
 
 namespace CyberpunkGameplayAssistant.ViewModels
 {
+    [Serializable]
     public class CampaignViewModel : BaseModel
     {
         // Constructors
         public CampaignViewModel()
         {
-            //XmlMethods.XmlToList(Configuration.CampaignDataFilePath, out List<GameCampaign> campaigns);
-            //Campaigns = new(campaigns);
             Campaigns = new();
         }
 
         // Databound Properties
         private ObservableCollection<GameCampaign> _Campaigns;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<GameCampaign> Campaigns
         {
             get => _Campaigns;
             set => SetAndNotify(ref _Campaigns, value);
         }
         private GameCampaign _ActiveCampaign;
-        [XmlSaveMode(XSME.Single)]
         public GameCampaign ActiveCampaign
         {
             get => _ActiveCampaign;
@@ -58,19 +56,12 @@ namespace CyberpunkGameplayAssistant.ViewModels
         public void DoSaveCampaigns(bool notifyUser = true)
         {
             LastSave = DateTime.Now.ToString();
-            if (Campaigns.Count == 0)
+            System.Xml.Serialization.XmlSerializer serializer = new(typeof(CampaignViewModel));
+            using (System.IO.StreamWriter writer = new(ReferenceData.File_CampaignData))
             {
-                // Prevents zero character save crash
-                XDocument blankDoc = new();
-                blankDoc.Add(new XElement("GameCampaignSet"));
-                blankDoc.Save(ReferenceData.File_CampaignData);
-                return;
+                serializer.Serialize(writer, this);
             }
-            XDocument itemDocument = new();
-            itemDocument.Add(XmlMethods.ListToXml(Campaigns.ToList()));
-            itemDocument.Save(ReferenceData.File_CampaignData);
             HelperMethods.WriteToLogFile("Campaigns Saved", notifyUser);
-            return;
         }
         public ICommand ImportCampaigns => new RelayCommand(param => DoImportCampaigns());
         private void DoImportCampaigns()

@@ -10,7 +10,16 @@ namespace CyberpunkGameplayAssistant.ViewModels
         public MainViewModel()
         {
             ApplicationVersion = "CHIP 1.00.00 beta";
-            CampaignView = new();
+            try
+            {
+                System.Xml.Serialization.XmlSerializer xmlSerializer = new(typeof(CampaignViewModel));
+                using System.IO.FileStream fs = new(ReferenceData.File_CampaignData, System.IO.FileMode.Open);
+                CampaignView = (CampaignViewModel)xmlSerializer.Deserialize(fs);
+            }
+            catch
+            {
+                CampaignView = new();
+            }
             ReferenceData.MainModelRef = this;
         }
 

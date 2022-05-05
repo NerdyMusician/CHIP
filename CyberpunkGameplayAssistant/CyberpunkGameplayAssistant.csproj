@@ -76,6 +76,7 @@
     <None Remove="Resources\Icons\chip.png" />
     <None Remove="Resources\Icons\civic.png" />
     <None Remove="Resources\Icons\clock.png" />
+    <None Remove="Resources\Icons\clone.png" />
     <None Remove="Resources\Icons\coins.png" />
     <None Remove="Resources\Icons\coins_add.png" />
     <None Remove="Resources\Icons\coins_subtract.png" />
@@ -407,6 +408,7 @@
     <Resource Include="Resources\Icons\chip.png" />
     <Resource Include="Resources\Icons\civic.png" />
     <Resource Include="Resources\Icons\clock.png" />
+    <Resource Include="Resources\Icons\clone.png" />
     <Resource Include="Resources\Icons\coins.png" />
     <Resource Include="Resources\Icons\coins_add.png" />
     <Resource Include="Resources\Icons\coins_subtract.png" />

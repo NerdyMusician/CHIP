@@ -122,6 +122,24 @@ namespace CyberpunkGameplayAssistant.Toolbox
             }
             return records;
         }
+        public static List<NamedRecord> ToNamedRecordList(this List<Combatant> combatants)
+        {
+            List<NamedRecord> records = new();
+            foreach (Combatant combatant in combatants)
+            {
+                records.Add(new(combatant.Name, string.Empty));
+            }
+            return records;
+        }
+        public static List<NamedRecord> ToNamedRecordList(this List<NPC> npcs)
+        {
+            List<NamedRecord> records = new();
+            foreach (NPC npc in npcs)
+            {
+                records.Add(new(npc.Name, string.Empty));
+            }
+            return records;
+        }
         public static CriticalInjury ToCriticalInjury(this NamedRecord record)
         {
             return new(record.Name, record.Description);

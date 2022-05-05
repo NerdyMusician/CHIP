@@ -381,6 +381,9 @@
 
 
     <!-- Unsorted -->
+    <Style TargetType="Image" x:Key="Icon_Clone" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/clone.png" />
+    </Style>
     <Style TargetType="Image" x:Key="Icon_Bandage" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/bandage.png" />
     </Style>

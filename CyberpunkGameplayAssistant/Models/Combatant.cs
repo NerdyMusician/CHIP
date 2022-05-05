@@ -27,21 +27,18 @@ namespace CyberpunkGameplayAssistant.Models
 
         // Databound Properties
         private string _Name;
-        [XmlSaveMode(XSME.Single)]
         public string Name
         {
             get => _Name;
             set => SetAndNotify(ref _Name, value);
         }
         private string _TrackerIndicator;
-        [XmlSaveMode(XSME.Single)]
         public string TrackerIndicator
         {
             get => _TrackerIndicator;
             set => SetAndNotify(ref _TrackerIndicator, value);
         }
         private string _DisplayName;
-        [XmlSaveMode(XSME.Single)]
         public string DisplayName
         {
             get => _DisplayName;
@@ -54,35 +51,30 @@ namespace CyberpunkGameplayAssistant.Models
             set => SetAndNotify(ref _PortraitFilePath, value);
         }
         private int _Initiative;
-        [XmlSaveMode(XSME.Single)]
         public int Initiative
         {
             get => _Initiative;
             set => SetAndNotify(ref _Initiative, value);
         }
         private bool _IsPlayer;
-        [XmlSaveMode(XSME.Single)]
         public bool IsPlayer
         {
             get => _IsPlayer;
             set => SetAndNotify(ref _IsPlayer, value);
         }
         private bool _IsNpc;
-        [XmlSaveMode(XSME.Single)]
         public bool IsNpc
         {
             get => _IsNpc;
             set => SetAndNotify(ref _IsNpc, value);
         }
         private bool _IsActive;
-        [XmlSaveMode(XSME.Single)]
         public bool IsActive
         {
             get => _IsActive;
             set => SetAndNotify(ref _IsActive, value);
         }
         private ObservableCollection<Stat> _BaseStats;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Stat> BaseStats
         {
             get => _BaseStats;
@@ -95,7 +87,6 @@ namespace CyberpunkGameplayAssistant.Models
             set => SetAndNotify(ref _CalculatedStats, value);
         }
         private ObservableCollection<Skill> _Skills;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Skill> Skills
         {
             get => _Skills;
@@ -163,7 +154,6 @@ namespace CyberpunkGameplayAssistant.Models
         }
 
         private ObservableCollection<CombatantWeapon> _Weapons;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<CombatantWeapon> Weapons
         {
             get => _Weapons;
@@ -177,7 +167,6 @@ namespace CyberpunkGameplayAssistant.Models
             set => SetAndNotify(ref _MaximumHitPoints, value);
         }
         private int _CurrentHitPoints;
-        [XmlSaveMode(XSME.Single)]
         public int CurrentHitPoints
         {
             get => _CurrentHitPoints;
@@ -202,28 +191,24 @@ namespace CyberpunkGameplayAssistant.Models
             set => SetAndNotify(ref _ArmorType, value);
         }
         private int _MaximumHeadStoppingPower;
-        [XmlSaveMode(XSME.Single)]
         public int MaximumHeadStoppingPower
         {
             get => _MaximumHeadStoppingPower;
             set => SetAndNotify(ref _MaximumHeadStoppingPower, value);
         }
         private int _MaximumBodyStoppingPower;
-        [XmlSaveMode(XSME.Single)]
         public int MaximumBodyStoppingPower
         {
             get => _MaximumBodyStoppingPower;
             set => SetAndNotify(ref _MaximumBodyStoppingPower, value);
         }
         private int _CurrentHeadStoppingPower;
-        [XmlSaveMode(XSME.Single)]
         public int CurrentHeadStoppingPower
         {
             get => _CurrentHeadStoppingPower;
             set => SetAndNotify(ref _CurrentHeadStoppingPower, value);
         }
         private int _CurrentBodyStoppingPower;
-        [XmlSaveMode(XSME.Single)]
         public int CurrentBodyStoppingPower
         {
             get => _CurrentBodyStoppingPower;
@@ -254,28 +239,24 @@ namespace CyberpunkGameplayAssistant.Models
             set => SetAndNotify(ref _InjuryMenuOpen, value);
         }
         private ObservableCollection<Ammo> _AmmoInventory;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Ammo> AmmoInventory
         {
             get => _AmmoInventory;
             set => SetAndNotify(ref _AmmoInventory, value);
         }
         private ObservableCollection<Gear> _GearInventory;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Gear> GearInventory
         {
             get => _GearInventory;
             set => SetAndNotify(ref _GearInventory, value);
         }
         private ObservableCollection<Cyberware> _InstalledCyberware;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Cyberware> InstalledCyberware
         {
             get => _InstalledCyberware;
             set => SetAndNotify(ref _InstalledCyberware, value);
         }
         private bool _IsDead;
-        [XmlSaveMode(XSME.Single)]
         public bool IsDead
         {
             get => _IsDead;
@@ -288,7 +269,6 @@ namespace CyberpunkGameplayAssistant.Models
             set => SetAndNotify(ref _StandardActions, value);
         }
         private ObservableCollection<CriticalInjury> _CriticalInjuries;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<CriticalInjury> CriticalInjuries
         {
             get => _CriticalInjuries;
@@ -316,7 +296,6 @@ namespace CyberpunkGameplayAssistant.Models
             }
         }
         private int _DeathSavePasses;
-        [XmlSaveMode(XSME.Single)]
         public int DeathSavePasses
         {
             get => _DeathSavePasses;
@@ -382,6 +361,11 @@ namespace CyberpunkGameplayAssistant.Models
             IsActive = true;
             ReferenceData.MainModelRef.CampaignView.ActiveCampaign.MarkCombatantsInactiveExcept(this);
             ReferenceData.MainModelRef.CampaignView.ActiveCampaign.UpdateActiveCombatant();
+        }
+        public ICommand DeletePlayer => new RelayCommand(DoDeletePlayer);
+        private void DoDeletePlayer(object param)
+        {
+            ReferenceData.MainModelRef.CampaignView.ActiveCampaign.Players.Remove(this);
         }
 
         // Public Methods

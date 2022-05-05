@@ -762,7 +762,6 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                                 <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CampaignView.ActiveCampaign.AddPlayer}" ToolTip="Add New Player" />
                                                 <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CampaignView.ActiveCampaign.SortPlayers}" ToolTip="Sort Player List" />
-                                                <cc:IconButton ImageResource="{StaticResource Icon_Sync}" Command="{Binding CampaignView.ActiveCampaign.SyncPlayerData}" ToolTip="Sync Player Data" />
                                             </StackPanel>
                                         </DockPanel>
                                         <ListView Style="{StaticResource BorderedListView}"
@@ -771,7 +770,7 @@
                                                   SelectedItem="{Binding CampaignView.ActiveCampaign.ActivePlayer}">
                                             <ListView.ItemTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Name}" Foreground="{Binding IsActive, Converter={tool:ValidationFontColor}}" />
+                                                    <TextBlock Text="{Binding Name}" Foreground="{StaticResource PrimaryFontColor}" />
                                                 </DataTemplate>
                                             </ListView.ItemTemplate>
                                         </ListView>
@@ -791,11 +790,60 @@
                                             <cc:FieldLabel Text="Player Name" />
                                             <TextBox Text="{Binding CampaignView.ActiveCampaign.ActivePlayer.PlayerName, UpdateSourceTrigger=PropertyChanged}" />
                                         </StackPanel>
+                                        <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                            <cc:FieldLabel Text="" />
+                                            <cc:ImageButton ImageResource="{StaticResource Icon_X}" Text="Delete Player" Command="{Binding CampaignView.ActiveCampaign.ActivePlayer.DeletePlayer}" />
+                                        </StackPanel>
                                     </StackPanel>
                                 </StackPanel>
                             </TabItem>
                             <TabItem Header="NPCs">
-
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel>
+                                        <DockPanel>
+                                            <Label Content="NPCs" />
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CampaignView.ActiveCampaign.AddNpc}" />
+                                                <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CampaignView.ActiveCampaign.SortNpcs}" />
+                                            </StackPanel>
+                                        </DockPanel>
+                                        <ListView Style="{StaticResource BorderedListView}"
+                                                  Width="216" Height="592"
+                                                  ItemsSource="{Binding CampaignView.ActiveCampaign.Npcs}"
+                                                  SelectedItem="{Binding CampaignView.ActiveCampaign.ActiveNpc}">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Name}" Foreground="{StaticResource PrimaryFontColor}" />
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </StackPanel>
+                                    <StackPanel Margin="16 24 0 0" Visibility="{Binding CampaignView.ActiveCampaign.ActiveNpc, Converter={tool:CollapsedIfNull}}">
+                                        <TextBlock Text="NPC Information" />
+                                        <Rectangle Margin="0 0 0 6" />
+                                        <StackPanel Orientation="Horizontal">
+                                            <cc:FieldLabel Text="NPC Name" />
+                                            <TextBox Text="{Binding CampaignView.ActiveCampaign.ActiveNpc.Name, UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                        <Separator />
+                                        <StackPanel Orientation="Horizontal">
+                                            <cc:FieldLabel Text="Based On" />
+                                            <cc:MiniButton ImageResource="{StaticResource Icon_Clone}" Command="{Binding CampaignView.ActiveCampaign.ActiveNpc.SelectBaseCreature}" />
+                                            <Separator />
+                                            <TextBlock Text="{Binding CampaignView.ActiveCampaign.ActiveNpc.BaseCreatureName}" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <cc:FieldLabel Text="Portrait Image" />
+                                            <cc:MiniButton ImageResource="{StaticResource Icon_Folder}" Command="{Binding CampaignView.ActiveCampaign.ActiveNpc.SelectBaseCombatant}" VerticalAlignment="Top" />
+                                            <Image Source="{Binding CampaignView.ActiveCampaign.ActiveNpc.PortraitFilepath}" Height="64" Width="64" RenderOptions.BitmapScalingMode="NearestNeighbor" Margin="4" HorizontalAlignment="Left" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <cc:FieldLabel Text="Is Ally?" />
+                                            <CheckBox IsChecked="{Binding CampaignView.ActiveCampaign.ActiveNpc.IsAlly}" />
+                                        </StackPanel>
+                                        <cc:ImageButton ImageResource="{StaticResource Icon_X}" Text="Delete NPC" Margin="128 2 0 2" Command="{Binding CampaignView.ActiveCampaign.ActiveNpc.RemoveNpcFromCampaign}" />
+                                    </StackPanel>
+                                </StackPanel>
                             </TabItem>
                             <TabItem Header="Encounters">
 
