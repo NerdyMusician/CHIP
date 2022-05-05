@@ -454,6 +454,7 @@
                                                             <Image Source="{Binding PortraitFilePath}" Width="64" Height="64" Margin="6 6 4 6">
                                                                 <Image.ContextMenu>
                                                                     <ContextMenu>
+                                                                        <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
                                                                         <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
                                                                     </ContextMenu>
                                                                 </Image.ContextMenu>
@@ -547,7 +548,7 @@
                                                                                 <ScrollViewer Height="420" Width="560">
                                                                                     <StackPanel Margin="4">
                                                                                         <TextBlock Text="Stats" />
-                                                                                        <ItemsControl ItemsSource="{Binding Stats}">
+                                                                                        <ItemsControl ItemsSource="{Binding CalculatedStats}">
                                                                                             <ItemsControl.ItemsPanel>
                                                                                                 <ItemsPanelTemplate>
                                                                                                     <WrapPanel></WrapPanel>
@@ -731,13 +732,19 @@
                                                 </ScrollViewer>
                                             </TabItem>
                                             <TabItem Header="By Name">
-
+                                                <ScrollViewer Height="412">
+                                                    <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.CombatantsByName}" ItemTemplateSelector="{StaticResource ListCombatantTemplateSelector}" />
+                                                </ScrollViewer>
                                             </TabItem>
                                             <TabItem Header="NPCs">
-
+                                                <ScrollViewer Height="412">
+                                                    <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.NpcCombatants}" ItemTemplateSelector="{StaticResource ListCombatantTemplateSelector}" />
+                                                </ScrollViewer>
                                             </TabItem>
                                             <TabItem Header="Players">
-
+                                                <ScrollViewer Height="412">
+                                                    <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.PlayerCombatants}" ItemTemplateSelector="{StaticResource ListCombatantTemplateSelector}" />
+                                                </ScrollViewer>
                                             </TabItem>
                                         </TabControl>
                                         
@@ -748,7 +755,44 @@
                                 
                             </TabItem>
                             <TabItem Header="Players">
-
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel>
+                                        <DockPanel>
+                                            <Label Content="Players" />
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CampaignView.ActiveCampaign.AddPlayer}" ToolTip="Add New Player" />
+                                                <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CampaignView.ActiveCampaign.SortPlayers}" ToolTip="Sort Player List" />
+                                                <cc:IconButton ImageResource="{StaticResource Icon_Sync}" Command="{Binding CampaignView.ActiveCampaign.SyncPlayerData}" ToolTip="Sync Player Data" />
+                                            </StackPanel>
+                                        </DockPanel>
+                                        <ListView Style="{StaticResource BorderedListView}"
+                                                  Width="216" Height="562"
+                                                  ItemsSource="{Binding CampaignView.ActiveCampaign.Players}"
+                                                  SelectedItem="{Binding CampaignView.ActiveCampaign.ActivePlayer}">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Name}" Foreground="{Binding IsActive, Converter={tool:ValidationFontColor}}" />
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </StackPanel>
+                                    <StackPanel Margin="16 24 0 0" Visibility="{Binding CampaignView.ActiveCampaign.ActivePlayer, Converter={tool:CollapsedIfNull}}">
+                                        <TextBlock Text="Player Character Information" />
+                                        <Rectangle />
+                                        <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                            <cc:FieldLabel Text="Character Name" />
+                                            <TextBox Text="{Binding CampaignView.ActiveCampaign.ActivePlayer.Name, UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                        <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                            <cc:FieldLabel Text="Character Role" />
+                                            <TextBox Text="{Binding CampaignView.ActiveCampaign.ActivePlayer.PlayerName, UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                        <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                            <cc:FieldLabel Text="Player Name" />
+                                            <TextBox Text="{Binding CampaignView.ActiveCampaign.ActivePlayer.PlayerName, UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
                             </TabItem>
                             <TabItem Header="NPCs">
 

@@ -60,7 +60,7 @@ namespace CyberpunkGameplayAssistant.Models
         private static string PerformActionBrawl(Combatant combatant)
         {
             int attack = HelperMethods.RollSkillCheck(combatant, ReferenceData.StatDexterity, ReferenceData.SkillBrawling);
-            int body = combatant.Stats.GetValue(ReferenceData.StatBody);
+            int body = combatant.CalculatedStats.GetValue(ReferenceData.StatBody);
             if (combatant.InstalledCyberware.FirstOrDefault(c => c.Name == ReferenceData.CyberwareCyberarm) != null)
             {
                 body = (body > 5) ? body : 5;
@@ -81,7 +81,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private static string PerformActionChoke(Combatant combatant)
         {
-            return $"{combatant.DisplayName} choked their target for {combatant.Stats.GetValue(ReferenceData.StatBody)} damage";
+            return $"{combatant.DisplayName} choked their target for {combatant.CalculatedStats.GetValue(ReferenceData.StatBody)} damage";
         }
         private static string PerformActionDeathSave(Combatant combatant)
         {
@@ -111,7 +111,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private static string PerformActionThrowGrapple(Combatant combatant)
         {
-            return $"{combatant.DisplayName} threw their target prone for {combatant.Stats.GetValue(ReferenceData.StatBody)} damage";
+            return $"{combatant.DisplayName} threw their target prone for {combatant.CalculatedStats.GetValue(ReferenceData.StatBody)} damage";
         }
         private static string PerformActionThrowObject(Combatant combatant)
         {

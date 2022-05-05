@@ -2,6 +2,7 @@
 using CyberpunkGameplayAssistant.ViewModels;
 using CyberpunkGameplayAssistant.Windows;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -80,12 +81,18 @@ namespace CyberpunkGameplayAssistant.Models
             get => _IsActive;
             set => SetAndNotify(ref _IsActive, value);
         }
-        private ObservableCollection<Stat> _Stats;
+        private ObservableCollection<Stat> _BaseStats;
         [XmlSaveMode(XSME.Enumerable)]
-        public ObservableCollection<Stat> Stats
+        public ObservableCollection<Stat> BaseStats
         {
-            get => _Stats;
-            set => SetAndNotify(ref _Stats, value);
+            get => _BaseStats;
+            set => SetAndNotify(ref _BaseStats, value);
+        }
+        private ObservableCollection<Stat> _CalculatedStats;
+        public ObservableCollection<Stat> CalculatedStats
+        {
+            get => _CalculatedStats;
+            set => SetAndNotify(ref _CalculatedStats, value);
         }
         private ObservableCollection<Skill> _Skills;
         [XmlSaveMode(XSME.Enumerable)]
@@ -95,63 +102,54 @@ namespace CyberpunkGameplayAssistant.Models
             set => SetAndNotify(ref _Skills, value);
         }
         private ObservableCollection<Skill> _AwarenessSkills;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Skill> AwarenessSkills
         {
             get => _AwarenessSkills;
             set => SetAndNotify(ref _AwarenessSkills, value);
         }
         private ObservableCollection<Skill> _BodySkills;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Skill> BodySkills
         {
             get => _BodySkills;
             set => SetAndNotify(ref _BodySkills, value);
         }
         private ObservableCollection<Skill> _ControlSkills;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Skill> ControlSkills
         {
             get => _ControlSkills;
             set => SetAndNotify(ref _ControlSkills, value);
         }
         private ObservableCollection<Skill> _PerformanceSkills;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Skill> PerformanceSkills
         {
             get => _PerformanceSkills;
             set => SetAndNotify(ref _PerformanceSkills, value);
         }
         private ObservableCollection<Skill> _EducationSkills;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Skill> EducationSkills
         {
             get => _EducationSkills;
             set => SetAndNotify(ref _EducationSkills, value);
         }
         private ObservableCollection<Skill> _FightingSkills;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Skill> FightingSkills
         {
             get => _FightingSkills;
             set => SetAndNotify(ref _FightingSkills, value);
         }
         private ObservableCollection<Skill> _RangedWeaponSkills;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Skill> RangedWeaponSkills
         {
             get => _RangedWeaponSkills;
             set => SetAndNotify(ref _RangedWeaponSkills, value);
         }
         private ObservableCollection<Skill> _SocialSkills;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Skill> SocialSkills
         {
             get => _SocialSkills;
             set => SetAndNotify(ref _SocialSkills, value);
         }
         private ObservableCollection<Skill> _TechniqueSkills;
-        [XmlSaveMode(XSME.Enumerable)]
         public ObservableCollection<Skill> TechniqueSkills
         {
             get => _TechniqueSkills;
@@ -300,7 +298,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get
             {
-                int move = Stats.GetValue(ReferenceData.StatMovement);
+                int move = CalculatedStats.GetValue(ReferenceData.StatMovement);
                 int penalty = ReferenceData.ArmorTable.GetPenalty(ArmorType);
                 penalty += CriticalInjuries.GetMovePenaltyTotal();
                 penalty += ReferenceData.ArmorTable.GetPenalty(ArmorType);
@@ -313,7 +311,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get
             {
-                int death = Stats.GetValue(ReferenceData.StatBody);
+                int death = CalculatedStats.GetValue(ReferenceData.StatBody);
                 return death;
             }
         }
@@ -378,11 +376,19 @@ namespace CyberpunkGameplayAssistant.Models
                 NotifyPropertyChanged(nameof(MoveSpeed));
             }
         }
+        public ICommand MakeActive => new RelayCommand(DoMakeActive);
+        private void DoMakeActive(object param)
+        {
+            IsActive = true;
+            ReferenceData.MainModelRef.CampaignView.ActiveCampaign.MarkCombatantsInactiveExcept(this);
+            ReferenceData.MainModelRef.CampaignView.ActiveCampaign.UpdateActiveCombatant();
+        }
 
         // Public Methods
         public void InitializeLoadedCombatant()
         {
-            SetDerivedStats(false);
+            SetCalculatedStats();
+            SetHitPoints(false);
             SetStoppingPower(false);
             UpdateWoundState();
             UpdateGearDescriptions();
@@ -393,24 +399,35 @@ namespace CyberpunkGameplayAssistant.Models
         }
         public void InitializeNewCombatant()
         {
-            SetDerivedStats(true);
+            SetHitPoints(true);
             SetStoppingPower(true);
             ReloadAllWeapons();
             SetStandardActions();
         }
         public void SetStats(int INT, int REF, int DEX, int TECH, int COOL, int WILL, int LUCK, int MOVE, int BODY, int EMP)
         {
-            Stats = new();
-            Stats.Add(new(ReferenceData.StatIntelligence, INT));
-            Stats.Add(new(ReferenceData.StatReflexes, REF));
-            Stats.Add(new(ReferenceData.StatDexterity, DEX));
-            Stats.Add(new(ReferenceData.StatTechnique, TECH));
-            Stats.Add(new(ReferenceData.StatCool, COOL));
-            Stats.Add(new(ReferenceData.StatWillpower, WILL));
-            Stats.Add(new(ReferenceData.StatLuck, LUCK));
-            Stats.Add(new(ReferenceData.StatMovement, MOVE));
-            Stats.Add(new(ReferenceData.StatBody, BODY));
-            Stats.Add(new(ReferenceData.StatEmpathy, EMP));
+            BaseStats = new();
+            BaseStats.Add(new(ReferenceData.StatIntelligence, INT));
+            BaseStats.Add(new(ReferenceData.StatReflexes, REF));
+            BaseStats.Add(new(ReferenceData.StatDexterity, DEX));
+            BaseStats.Add(new(ReferenceData.StatTechnique, TECH));
+            BaseStats.Add(new(ReferenceData.StatCool, COOL));
+            BaseStats.Add(new(ReferenceData.StatWillpower, WILL));
+            BaseStats.Add(new(ReferenceData.StatLuck, LUCK));
+            BaseStats.Add(new(ReferenceData.StatMovement, MOVE));
+            BaseStats.Add(new(ReferenceData.StatBody, BODY));
+            BaseStats.Add(new(ReferenceData.StatEmpathy, EMP));
+        }
+        public void SetCalculatedStats()
+        {
+            CalculatedStats = new();
+            List<string> statsAffectedByArmorPenalty = new() { ReferenceData.StatReflexes, ReferenceData.StatDexterity, ReferenceData.StatMovement };
+            foreach (Stat stat in BaseStats)
+            {
+                Stat statToAdd = stat.DeepClone();
+                if (statsAffectedByArmorPenalty.Contains(stat.Name)) { statToAdd.Value -= ReferenceData.ArmorTable.GetPenalty(ArmorType); }
+                CalculatedStats.Add(statToAdd);
+            }
         }
         
         public void SetBaseSkills()
@@ -430,12 +447,12 @@ namespace CyberpunkGameplayAssistant.Models
             Skill skill = Skills.FirstOrDefault(s => s.Name == name && s.Variant == variant);
             if (skill == null)
             {
-                int level = value - Stats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName == name).StatName);
+                int level = value - CalculatedStats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName == name).StatName);
                 Skills.Add(new(name, variant, level));
             }
             else
             {
-                skill.Level = value - Stats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName== name).StatName);
+                skill.Level = value - CalculatedStats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName== name).StatName);
             }
         }
         public void AddWeapon(string type, string quality, string name = "")
@@ -477,7 +494,7 @@ namespace CyberpunkGameplayAssistant.Models
         public int GetSkillTotal(string skill)
         {
             int skillLevel = Skills.FirstOrDefault(s => s.Name == skill).Level;
-            int statLevel = Stats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName == skill).StatName);
+            int statLevel = CalculatedStats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName == skill).StatName);
             return skillLevel + statLevel;
         }
         public void UpdateGearDescriptions()
@@ -497,7 +514,7 @@ namespace CyberpunkGameplayAssistant.Models
         public int GetInitiative()
         {
             if (IsPlayer) { return Initiative; }
-            int reflex = Stats.GetValue(ReferenceData.StatReflexes);
+            int reflex = CalculatedStats.GetValue(ReferenceData.StatReflexes);
             reflex -= ReferenceData.ArmorTable.GetPenalty(ArmorType);
             return HelperMethods.RollD10() + reflex;
         }
@@ -514,7 +531,8 @@ namespace CyberpunkGameplayAssistant.Models
         // Private Methods
         private void InitializeLists()
         {
-            Stats = new();
+            BaseStats = new();
+            CalculatedStats = new();
             Skills = new();
             Weapons = new();
             AwarenessSkills = new();
@@ -566,10 +584,10 @@ namespace CyberpunkGameplayAssistant.Models
                 }
             }
         }
-        private void SetDerivedStats(bool setCurrentToMax)
+        private void SetHitPoints(bool setCurrentToMax)
         {
-            int body = Stats.GetValue(ReferenceData.StatBody);
-            int willpower = Stats.GetValue(ReferenceData.StatWillpower);
+            int body = CalculatedStats.GetValue(ReferenceData.StatBody);
+            int willpower = CalculatedStats.GetValue(ReferenceData.StatWillpower);
             MaximumHitPoints = 10 + (5 * ((body + willpower) / 2));
             if (setCurrentToMax)
             {

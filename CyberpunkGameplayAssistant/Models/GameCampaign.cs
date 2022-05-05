@@ -298,10 +298,11 @@ namespace CyberpunkGameplayAssistant.Models
                     YesNoDialog question = new("Reset combat to round 1?");
                     question.ShowDialog();
                     if (question.Answer == false) { return; }
-                    Combatant resetCreature = CombatantsByInitiative.FirstOrDefault(crt => !crt.IsDead || crt.IsPlayer);
-                    if (resetCreature == null) { UpdateActiveCombatant(); return; }
-                    else { resetCreature.IsActive = true; }
+                    Combatant resetCombatant = CombatantsByInitiative.FirstOrDefault(crt => !crt.IsDead || crt.IsPlayer);
+                    if (resetCombatant == null) { UpdateActiveCombatant(); return; }
+                    else { resetCombatant.IsActive = true; }
                     EncounterRound = 1;
+                    MarkCombatantsInactiveExcept(resetCombatant);
                     UpdateActiveCombatant();
                     break;
                 default:
@@ -334,18 +335,18 @@ namespace CyberpunkGameplayAssistant.Models
         {
             ActiveCombatant = CombatantsByInitiative.FirstOrDefault(c => c.IsActive)!;
         }
-
-        // Private Methods
-        private bool IsEligibleCombatant(Combatant combatant)
-        {
-            return !combatant.IsDead || combatant.IsPlayer;
-        }
-        private void MarkCombatantsInactiveExcept(Combatant activeCombatant)
+        public void MarkCombatantsInactiveExcept(Combatant activeCombatant)
         {
             foreach (Combatant combatant in AllCombatants)
             {
                 if (combatant != activeCombatant) { combatant.IsActive = false; }
             }
+        }
+
+        // Private Methods
+        private bool IsEligibleCombatant(Combatant combatant)
+        {
+            return !combatant.IsDead || combatant.IsPlayer;
         }
         private void InitializeLists()
         {

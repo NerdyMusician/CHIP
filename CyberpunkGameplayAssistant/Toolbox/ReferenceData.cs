@@ -999,6 +999,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             #region Bodyguard
             Combatant bodyguard = new("Bodyguard", PortraitBodyguard, ArmorTypeKevlar);
             bodyguard.SetStats(3, 6, 5, 2, 4, 4, 0, 4, 6, 3);
+            bodyguard.SetCalculatedStats();
             bodyguard.SetBaseSkills();
             bodyguard.AddSkill(SkillAthletics, 9);
             bodyguard.AddSkill(SkillBrawling, 11);
@@ -1031,6 +1032,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             #region Boosterganger
             Combatant boosterganger = new("Boosterganger", PortraitBoosterganger, ArmorTypeLeather);
             boosterganger.SetStats(2, 6, 5, 2, 4, 2, 0, 4, 4, 3);
+            boosterganger.SetCalculatedStats();
             boosterganger.SetBaseSkills();
             boosterganger.AddSkill(SkillAthletics, 9);
             boosterganger.AddSkill(SkillBrawling, 9);
@@ -1064,6 +1066,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             #region Road Ganger
             Combatant roadGanger = new("Road Ganger", PortraitRoadGanger, ArmorTypeLeather);
             roadGanger.SetStats(4, 6, 4, 4, 3, 3, 0, 3, 3, 3);
+            roadGanger.SetCalculatedStats();
             roadGanger.SetBaseSkills();
             roadGanger.AddSkill(SkillArchery, 10);
             roadGanger.AddSkill(SkillAthletics, 10);
@@ -1100,6 +1103,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             #region Security Operative
             Combatant securityOperative = new("Security Operative", PortraitSecurityOperative, ArmorTypeKevlar);
             securityOperative.SetStats(3, 7, 4, 2, 2, 3, 0, 3, 5, 3);
+            securityOperative.SetCalculatedStats();
             securityOperative.SetBaseSkills();
             securityOperative.AddSkill(SkillAthletics, 8);
             securityOperative.AddSkill(SkillAutofire, 10);

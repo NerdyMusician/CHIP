@@ -57,7 +57,7 @@ namespace CyberpunkGameplayAssistant.Models
             Combatant combatant = param as Combatant;
             string output = $"{combatant.DisplayName} made a {Name} check\n";
             int result = HelperMethods.RollD10();
-            int stat = combatant.Stats.GetValue(Name);
+            int stat = combatant.CalculatedStats.GetValue(Name);
             if (new List<string> { ReferenceData.StatReflexes, ReferenceData.StatDexterity, ReferenceData.StatMovement }.Contains(Name))
             {
                 stat -= ReferenceData.ArmorTable.GetPenalty(combatant.ArmorType);

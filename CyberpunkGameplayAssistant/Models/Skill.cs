@@ -65,7 +65,7 @@ namespace CyberpunkGameplayAssistant.Models
             string output = $"{combatant.DisplayName} made a {Name} check\n";
             int result = HelperMethods.RollD10();
             string statName = ReferenceData.SkillLinks.GetStat(Name);
-            int stat = combatant.Stats.GetValue(statName);
+            int stat = combatant.CalculatedStats.GetValue(statName);
             if (new List<string> { ReferenceData.StatReflexes, ReferenceData.StatDexterity, ReferenceData.StatMovement}.Contains(statName))
             {
                 stat -= ReferenceData.ArmorTable.GetPenalty(combatant.ArmorType);

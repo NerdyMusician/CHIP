@@ -29,7 +29,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             return RollD10() +
                 combatant.Skills.GetLevel(skill) +
-                combatant.Stats.GetValue(stat);
+                combatant.CalculatedStats.GetValue(stat);
         }
         public static int RollDamage(int numberOfDice, out bool criticalInjury)
         {
