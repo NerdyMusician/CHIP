@@ -442,13 +442,26 @@
                                     <Separator Width="8" />
                                     <StackPanel>
                                         <StackPanel.Resources>
+                                            <Style TargetType="Border" BasedOn="{StaticResource BRDR_PopupBorder}" x:Key="BRDR_TrackerCard">
+                                                <Setter Property="Width" Value="586" />
+                                                <Setter Property="Height" Value="84" />
+                                                <Setter Property="Margin" Value="0 2 2 2" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsActive}" Value="true">
+                                                        <Setter Property="BorderBrush" Value="{StaticResource TrackerCardActive}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding IsActive}" Value="false">
+                                                        <Setter Property="BorderBrush" Value="{StaticResource TrackerCardInactive}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
                                             <DataTemplate x:Key="EmptyCard">
-                                                <Border Style="{StaticResource BRDR_PopupBorder}" Width="586" Height="84" Margin="0 2 2 2">
+                                                <Border Style="{StaticResource BRDR_TrackerCard}">
                                                     <TextBlock Text="Active Combatant will display here" VerticalAlignment="Center" HorizontalAlignment="Center" />
                                                 </Border>
                                             </DataTemplate>
                                             <DataTemplate x:Key="StandardCombatantCard">
-                                                <Border Style="{StaticResource BRDR_PopupBorder}" Width="586" Height="84" Margin="0 2 2 2">
+                                                <Border Style="{StaticResource BRDR_TrackerCard}">
                                                     <StackPanel Margin="2">
                                                         <StackPanel Orientation="Horizontal">
                                                             <Image Source="{Binding PortraitFilePath}" Width="64" Height="64" Margin="6 6 4 6">
@@ -456,6 +469,7 @@
                                                                     <ContextMenu>
                                                                         <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
                                                                         <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
+                                                                        <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
                                                                     </ContextMenu>
                                                                 </Image.ContextMenu>
                                                             </Image>
@@ -704,11 +718,45 @@
                                                     </StackPanel>
                                                 </Border>
                                             </DataTemplate>
+                                            <DataTemplate x:Key="StandardPlayerCard">
+                                                <Border Style="{StaticResource BRDR_TrackerCard}">
+                                                    <StackPanel Margin="2">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="{Binding PortraitFilePath}" Width="64" Height="64" Margin="6 6 4 6">
+                                                                <Image.ContextMenu>
+                                                                    <ContextMenu>
+                                                                        <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
+                                                                        <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
+                                                                        <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
+                                                                    </ContextMenu>
+                                                                </Image.ContextMenu>
+                                                            </Image>
+                                                            <StackPanel Margin="3">
+                                                                <TextBlock Text="{Binding Name, FallbackValue='Security Operative A'}" Width="134" FontSize="14" />
+                                                                <TextBlock>
+                                                                    <Run Text="{Binding PlayerRole}" />
+                                                                    <Run Text="-" />
+                                                                    <Run Text="{Binding PlayerName}" />
+                                                                </TextBlock>
+                                                                <Separator />
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Image Style="{StaticResource Icon_Runner}" />
+                                                                    <Separator />
+                                                                    <TextBox Text="{Binding Initiative, UpdateSourceTrigger=PropertyChanged}" Width="32" />
+                                                                </StackPanel>
+                                                            </StackPanel>
+                                                            <TextBox Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TallPartialBorderTextBox}" Height="74" Width="362" />
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
                                             <tool:CombatTrackerTemplateSelector x:Key="ActiveCombatantTemplateSelector" 
                                                                                 CombatantDataTemplate="{StaticResource StandardCombatantCard}"
+                                                                                PlayerDataTemplate="{StaticResource StandardPlayerCard}"
                                                                                 DefaultDataTemplate="{StaticResource EmptyCard}" />
                                             <tool:CombatTrackerTemplateSelector x:Key="ListCombatantTemplateSelector"
-                                                                                CombatantDataTemplate="{StaticResource StandardCombatantCard}" />
+                                                                                CombatantDataTemplate="{StaticResource StandardCombatantCard}"
+                                                                                PlayerDataTemplate="{StaticResource StandardPlayerCard}" />
                                         </StackPanel.Resources>
                                         <Separator Height="0" />
                                         <TextBlock Text="Combatants" />
@@ -784,11 +832,16 @@
                                         </StackPanel>
                                         <StackPanel Style="{StaticResource SPNL_FieldRow}">
                                             <cc:FieldLabel Text="Character Role" />
-                                            <TextBox Text="{Binding CampaignView.ActiveCampaign.ActivePlayer.PlayerName, UpdateSourceTrigger=PropertyChanged}" />
+                                            <TextBox Text="{Binding CampaignView.ActiveCampaign.ActivePlayer.PlayerRole, UpdateSourceTrigger=PropertyChanged}" />
                                         </StackPanel>
                                         <StackPanel Style="{StaticResource SPNL_FieldRow}">
                                             <cc:FieldLabel Text="Player Name" />
                                             <TextBox Text="{Binding CampaignView.ActiveCampaign.ActivePlayer.PlayerName, UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                        <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                            <cc:FieldLabel Text="Portrait Image" />
+                                            <cc:MiniButton ImageResource="{StaticResource Icon_Folder}" Command="{Binding CampaignView.ActiveCampaign.ActivePlayer.SelectPortraitImage}" VerticalAlignment="Top" />
+                                            <Image Source="{Binding CampaignView.ActiveCampaign.ActivePlayer.PortraitFilePath}" Height="64" Width="64" RenderOptions.BitmapScalingMode="NearestNeighbor" Margin="4" HorizontalAlignment="Left" />
                                         </StackPanel>
                                         <StackPanel Style="{StaticResource SPNL_FieldRow}">
                                             <cc:FieldLabel Text="" />
@@ -835,7 +888,7 @@
                                         <StackPanel Orientation="Horizontal">
                                             <cc:FieldLabel Text="Portrait Image" />
                                             <cc:MiniButton ImageResource="{StaticResource Icon_Folder}" Command="{Binding CampaignView.ActiveCampaign.ActiveNpc.SelectPortraitImage}" VerticalAlignment="Top" />
-                                            <Image Source="{Binding CampaignView.ActiveCampaign.ActiveNpc.PortraitFilepath}" Height="64" Width="64" RenderOptions.BitmapScalingMode="NearestNeighbor" Margin="4" HorizontalAlignment="Left" />
+                                            <Image Source="{Binding CampaignView.ActiveCampaign.ActiveNpc.PortraitFilePath}" Height="64" Width="64" RenderOptions.BitmapScalingMode="NearestNeighbor" Margin="4" HorizontalAlignment="Left" />
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
                                             <cc:FieldLabel Text="Is Ally?" />

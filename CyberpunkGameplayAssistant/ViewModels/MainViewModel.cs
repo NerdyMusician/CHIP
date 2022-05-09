@@ -10,6 +10,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         public MainViewModel()
         {
             ApplicationVersion = "CHIP 1.00.00 beta";
+            HelperMethods.CreateDirectories(ReferenceData.Directories);
             try
             {
                 System.Xml.Serialization.XmlSerializer xmlSerializer = new(typeof(CampaignViewModel));
@@ -44,8 +45,10 @@ namespace CyberpunkGameplayAssistant.ViewModels
             switch (key.ToString())
             {
                 case "CtrlS":
+                    CampaignView.SaveCampaigns.Execute(null);
                     break;
                 case "CtrlN":
+                    CampaignView.AddCampaign.Execute(null);
                     break;
                 default:
                     break;

@@ -32,6 +32,18 @@ namespace CyberpunkGameplayAssistant.Models
             get => _Name;
             set => SetAndNotify(ref _Name, value);
         }
+        private string _PlayerName;
+        public string PlayerName
+        {
+            get => _PlayerName;
+            set => SetAndNotify(ref _PlayerName, value);
+        }
+        private string _PlayerRole;
+        public string PlayerRole
+        {
+            get => _PlayerRole;
+            set => SetAndNotify(ref _PlayerRole, value);
+        }
         private string _TrackerIndicator;
         public string TrackerIndicator
         {
@@ -366,6 +378,17 @@ namespace CyberpunkGameplayAssistant.Models
         private void DoDeletePlayer(object param)
         {
             ReferenceData.MainModelRef.CampaignView.ActiveCampaign.Players.Remove(this);
+        }
+        public ICommand SelectPortraitImage => new RelayCommand(DoSelectPortraitImage);
+        private void DoSelectPortraitImage(object param)
+        {
+            PortraitFilePath = HelperMethods.GetFile(ReferenceData.FilterImageFiles, ReferenceData.PlayerImageDirectory);
+        }
+        public ICommand RemoveFromFirefight => new RelayCommand(DoRemoveFromFirefight);
+        private void DoRemoveFromFirefight(object param)
+        {
+            ReferenceData.MainModelRef.CampaignView.ActiveCampaign.AllCombatants.Remove(this);
+            ReferenceData.MainModelRef.CampaignView.ActiveCampaign.SortCombatants.Execute(null);
         }
 
         // Public Methods

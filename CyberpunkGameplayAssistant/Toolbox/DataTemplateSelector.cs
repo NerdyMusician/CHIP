@@ -8,11 +8,16 @@ namespace CyberpunkGameplayAssistant.Toolbox
     {
         public DataTemplate DefaultDataTemplate { get; set; }
         public DataTemplate CombatantDataTemplate { get; set; }
+        public DataTemplate PlayerDataTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item == null) { return DefaultDataTemplate; }
-            return CombatantDataTemplate;
+            if (item.GetType() == typeof(Combatant))
+            {
+                return ((item as Combatant)!.IsPlayer) ? PlayerDataTemplate : CombatantDataTemplate;
+            }
+            return DefaultDataTemplate;
         }
     }
 
@@ -22,7 +27,10 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public DataTemplate CombatantTemplate { get; set; }
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            if (item.GetType() == typeof(Combatant)) { return CombatantTemplate; }
+            if (item.GetType() == typeof(Combatant)) 
+            {
+                return CombatantTemplate;
+            }
             return DefaultDataTemplate;
 
         }

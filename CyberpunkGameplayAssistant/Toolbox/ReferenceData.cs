@@ -20,12 +20,21 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string ShortDateFormat = "yyyy.MM.dd hh:mm";
         public const string LongDateFormat = "D";
 
-        // File Locations
-        public const string File_Log = "log.txt";
-        public static readonly string File_CampaignData = $"{Environment.CurrentDirectory}/Data/Campaigns.xml";
+        // File Format Filters
+        public const string FilterImageFiles = "Image Files |*.png;*.jpg;*.gif;*.bmp";
 
         // Directories
-        public static readonly string CombatantImageDirectory = $"{Environment.CurrentDirectory}/Resources/Combatants/";
+        public static readonly string CurrentDirectory = $"{Environment.CurrentDirectory}/";
+        public static readonly string DataDirectory = $"{CurrentDirectory}Data/";
+        public static readonly string ResourcesDirectory = $"{CurrentDirectory}Resources/";
+        public static readonly string CombatantImageDirectory = $"{ResourcesDirectory}Combatants/";
+        public static readonly string NpcImageDirectory = $"{DataDirectory}NpcImages/";
+        public static readonly string PlayerImageDirectory = $"{DataDirectory}PlayerImages/";
+        public static readonly string[] Directories = new string[] { DataDirectory, ResourcesDirectory, CombatantImageDirectory, NpcImageDirectory, PlayerImageDirectory };
+
+        // File Locations
+        public const string File_Log = "log.txt";
+        public static readonly string File_CampaignData = $"{DataDirectory}Campaigns.xml";
 
         // MultiObject Select Modes
         public const string MultiModeEnemies = "Enemies";

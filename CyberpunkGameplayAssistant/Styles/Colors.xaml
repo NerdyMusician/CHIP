@@ -12,4 +12,7 @@
 
     <SolidColorBrush x:Key="ScrollBarBackground" Color="#0d0d0d" />
 
+    <SolidColorBrush x:Key="TrackerCardActive" Color="DarkGreen" />
+    <SolidColorBrush x:Key="TrackerCardInactive" Color="#333333" />
+
 </ResourceDictionary>

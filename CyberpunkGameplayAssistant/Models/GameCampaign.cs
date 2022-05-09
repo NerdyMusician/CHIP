@@ -219,6 +219,7 @@ namespace CyberpunkGameplayAssistant.Models
                     Combatant npcToAdd = ReferenceData.Combatants.First(c => c.Name == npc.BaseCombatant).DeepClone();
                     npcToAdd.DisplayName = npc.Name;
                     npcToAdd.IsNpc = true;
+                    npcToAdd.PortraitFilePath = npc.PortraitFilePath;
                     AllCombatants.Add(npcToAdd);
                 }
                 SortCombatantsToLists();
@@ -412,6 +413,7 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 if (combatant != activeCombatant) { combatant.IsActive = false; }
             }
+            SortCombatantsToLists();
         }
 
         // Private Methods

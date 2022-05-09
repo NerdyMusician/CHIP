@@ -1,5 +1,6 @@
 ﻿using CyberpunkGameplayAssistant.Models;
 using CyberpunkGameplayAssistant.Windows;
+using Microsoft.Win32;
 using System;
 using System.IO;
 
@@ -63,6 +64,31 @@ namespace CyberpunkGameplayAssistant.Toolbox
             if (ReferenceData.MainModelRef.CampaignView == null) { return; }
             GameCampaign campaign = ReferenceData.MainModelRef.CampaignView.ActiveCampaign;
             campaign.EventHistory.Insert(0, new(type, message));
+        }
+        public static string GetUniqueId()
+        {
+            return Guid.NewGuid().ToString().Replace("-","");
+        }
+        public static string GetFile(string fileTypeFilter, string saveDirectory)
+        {
+            OpenFileDialog openFileDialog = new() { Filter = fileTypeFilter };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string fileName = $"{saveDirectory}{GetUniqueId()}{Path.GetExtension(openFileDialog.FileName)}";
+                File.Copy(openFileDialog.FileName, fileName, true);
+                return fileName;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+        public static void CreateDirectories(string[] directories)
+        {
+            foreach (string directory in directories)
+            {
+                Directory.CreateDirectory(directory);
+            }
         }
     }
 }
