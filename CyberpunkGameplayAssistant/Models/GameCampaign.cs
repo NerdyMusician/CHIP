@@ -64,6 +64,12 @@ namespace CyberpunkGameplayAssistant.Models
             get => _PlayerCombatants;
             set => SetAndNotify(ref _PlayerCombatants, value);
         }
+        private ObservableCollection<Combatant> _DeadCombatants;
+        public ObservableCollection<Combatant> DeadCombatants
+        {
+            get => _DeadCombatants;
+            set => SetAndNotify(ref _DeadCombatants, value);
+        }
         private string _StartDate;
         public string StartDate
         {
@@ -220,12 +226,58 @@ namespace CyberpunkGameplayAssistant.Models
                     npcToAdd.DisplayName = npc.Name;
                     npcToAdd.Type = ReferenceData.NPC;
                     npcToAdd.PortraitFilePath = npc.PortraitFilePath;
+                    npcToAdd.InitializeLoadedCombatant();
                     AllCombatants.Add(npcToAdd);
                 }
                 SortCombatantsToLists();
             }
         }
-        // TODO - AddBlackIce
+        public ICommand AddBlackIce => new RelayCommand(DoAddBlackIce);
+        private void DoAddBlackIce(object param)
+        {
+            MultiObjectSelectionDialog selectionDialog = new(ReferenceData.BlackIcePrograms, ReferenceData.MultiModeEnemies);
+
+            if (selectionDialog.ShowDialog() == true)
+            {
+                foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel).SelectedCombatants)
+                {
+                    for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
+                    {
+                        Combatant newCombatant = selectedCombatant.DeepClone();
+                        int existingCreatureCount = AllCombatants.Where(c => c.Name == newCombatant.Name).Count();
+                        if (existingCreatureCount > 25) { break; }
+                        newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCreatureCount));
+                        newCombatant.Initiative = 50; // Top of the order force
+                        newCombatant.UpdateWoundState();
+                        AllCombatants.Add(newCombatant);
+                    }
+                }
+                SortCombatantsToLists();
+            }
+        }
+        public ICommand AddDemons => new RelayCommand(DoAddDemons);
+        private void DoAddDemons(object param)
+        {
+            MultiObjectSelectionDialog selectionDialog = new(ReferenceData.Demons, ReferenceData.MultiModeEnemies);
+
+            if (selectionDialog.ShowDialog() == true)
+            {
+                foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel).SelectedCombatants)
+                {
+                    for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
+                    {
+                        Combatant newCombatant = selectedCombatant.DeepClone();
+                        int existingCreatureCount = AllCombatants.Where(c => c.Name == newCombatant.Name).Count();
+                        if (existingCreatureCount > 25) { break; }
+                        newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCreatureCount));
+                        newCombatant.Initiative = 70; // Top(est) of the order force
+                        newCombatant.UpdateWoundState();
+                        AllCombatants.Add(newCombatant);
+                    }
+                }
+                SortCombatantsToLists();
+            }
+        }
         public ICommand ChangeStartTime => new RelayCommand(DoChangeStartTime);
         private void DoChangeStartTime(object param)
         {
@@ -447,11 +499,11 @@ namespace CyberpunkGameplayAssistant.Models
             }
             string output =
                 $"Bodies were looted:\n" +
-                $"Ammo:\n{ammoLoot.ToFormattedString()}\n" +
-                $"Weapons:\n{weaponLoot.ToFormattedString()}\n" +
-                $"Gear:\n{gearLoot.ToFormattedString()}\n" +
-                $"Armor:\n{armorLoot.ToFormattedString()}\n" +
-                $"Cyberware:\n{cyberwareLoot.ToFormattedString()}\n";
+                $"**AMMO**\n{ammoLoot.ToFormattedString()}\n" +
+                $"**WEAPONS**\n{weaponLoot.ToFormattedString()}\n" +
+                $"**GEAR**\n{gearLoot.ToFormattedString()}\n" +
+                $"**ARMOR**\n{armorLoot.ToFormattedString()}\n" +
+                $"**CYBERWARE**\n{cyberwareLoot.ToFormattedString()}\n";
             HelperMethods.AddToGameplayLog(output, ReferenceData.MessageLoot);
             RemoveTheFallen();
         }
@@ -465,16 +517,17 @@ namespace CyberpunkGameplayAssistant.Models
             switch (param.ToString())
             {
                 case paramAll:
-                    if (!HelperMethods.AskYesNoQuestion("Are you sure you want to removal all combatants?")) { return; }
+                    if (HelperMethods.AskYesNoQuestion("Are you sure you want to removal all combatants?") == false) { return; }
                     ResetCombatantLists();
                     break;
                 case paramDead:
-                    AllCombatants = new(AllCombatants.Where(c => !c.IsDead || c.Type == ReferenceData.Player));
+                    RemoveTheFallen();
                     break;
                 case paramKill:
-                    if (!HelperMethods.AskYesNoQuestion("Are you sure you want to kill all non-player combatants?")) { return; }
+                    if (!HelperMethods.AskYesNoQuestion("Are you sure you want to kill all non-player and non-NPC combatants?")) { return; }
                     foreach (Combatant combatant in AllCombatants)
                     {
+                        if (combatant.Type == ReferenceData.NPC) { continue; }
                         combatant.CurrentHitPoints = 0;
                         combatant.IsDead = true;
                     }
@@ -500,7 +553,18 @@ namespace CyberpunkGameplayAssistant.Models
         // Private Methods
         private void RemoveTheFallen()
         {
-            AllCombatants = new(AllCombatants.Where(c => !c.IsDead || c.Type == ReferenceData.Player));
+            List<Combatant> combatants = new();
+            foreach (Combatant combatant in AllCombatants)
+            {
+                if (combatant.Type == ReferenceData.Player) { combatants.Add(combatant); continue; }
+                if (combatant.Type == ReferenceData.BlackIce || combatant.Type == ReferenceData.Demon)
+                {
+                    if (combatant.CurrentHitPoints <= 0) { continue; }
+                }
+                if (combatant.IsDead) { continue; }
+                combatants.Add(combatant);
+            }
+            AllCombatants = new(combatants);
             SortCombatantsToLists();
         }
         private bool IsEligibleCombatant(Combatant combatant)
@@ -509,11 +573,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private void InitializeLists()
         {
-            AllCombatants = new();
-            CombatantsByInitiative = new();
-            CombatantsByName = new();
-            PlayerCombatants = new();
-            NpcCombatants = new();
+            ResetCombatantLists();
             EventHistory = new();
             Players = new();
             Npcs = new();
@@ -525,17 +585,20 @@ namespace CyberpunkGameplayAssistant.Models
                 ResetCombatantLists();
                 return;
             }
-            CombatantsByInitiative = new(AllCombatants.Where(c => !c.IsDead || c.Type == ReferenceData.Player).OrderByDescending(c => c.Initiative).ToList());
+            CombatantsByInitiative = new(AllCombatants.Where(c => !c.IsDead || c.Type == ReferenceData.Player).OrderByDescending(c => c.Initiative));
             CombatantsByName = new(AllCombatants.Where(c => !c.IsDead || c.Type == ReferenceData.Player).OrderBy(c => c.Type != ReferenceData.Player).ThenBy(c => c.DisplayName));
             PlayerCombatants = new(AllCombatants.Where(c => c.Type == ReferenceData.Player).OrderBy(c => c.Name));
             NpcCombatants = new(AllCombatants.Where(c => c.Type == ReferenceData.NPC).OrderBy(c => c.Name));
+            DeadCombatants = new(AllCombatants.Where(c => c.IsDead));
         }
         private void ResetCombatantLists()
         {
+            AllCombatants = new();
             CombatantsByInitiative = new();
             CombatantsByName = new();
             NpcCombatants = new();
             PlayerCombatants = new();
+            DeadCombatants = new();
         }
         private DateTime AdjustDateTime(string currentDateTime, string timescale, int quantity)
         {

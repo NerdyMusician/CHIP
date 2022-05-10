@@ -10,6 +10,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public DataTemplate CombatantDataTemplate { get; set; }
         public DataTemplate PlayerDataTemplate { get; set; }
         public DataTemplate BlackIceDataTemplate { get; set; }
+        public DataTemplate DemonDataTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -20,6 +21,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
                 {
                     ReferenceData.Player => PlayerDataTemplate,
                     ReferenceData.BlackIce => BlackIceDataTemplate,
+                    ReferenceData.Demon => DemonDataTemplate,
                     _ => CombatantDataTemplate
                 };
             }

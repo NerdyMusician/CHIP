@@ -449,6 +449,17 @@ namespace CyberpunkGameplayAssistant.Models
             CurrentHitPoints = REZ;
             Notes = effect;
         }
+        public void SetDemonStats(int REZ, int INT, int netActions, int combatNumber)
+        {
+            Type = ReferenceData.Demon;
+            PlayerRole = ReferenceData.Demon;
+            Notes = netActions.ToString();
+            BaseStats = new();
+            BaseStats.Add(new(ReferenceData.SkillInterface, INT));
+            BaseStats.Add(new(ReferenceData.SkillCombatNumber, combatNumber));
+            MaximumHitPoints = REZ;
+            CurrentHitPoints = REZ;
+        }
         public void SetCalculatedStats()
         {
             CalculatedStats = new();
@@ -551,11 +562,18 @@ namespace CyberpunkGameplayAssistant.Models
         }
         public void UpdateWoundState()
         {
+            if (Type == ReferenceData.BlackIce || Type == ReferenceData.Demon) { UpdateBlackIceWoundState(); return; }
             string woundState = ReferenceData.WoundStateUnharmed;
             if (CurrentHitPoints < MaximumHitPoints) { woundState = ReferenceData.WoundStateLightlyWounded; }
             if (CurrentHitPoints <= (MaximumHitPoints / 2)) { woundState = ReferenceData.WoundStateSeriouslyWounded; }
             if (CurrentHitPoints < 1) { woundState = ReferenceData.WoundStateMortallyWounded; }
             if (IsDead) { woundState = ReferenceData.WoundStateDead; }
+            WoundState = woundState;
+        }
+        public void UpdateBlackIceWoundState()
+        {
+            string woundState = ReferenceData.ProgramStateRezzed;
+            if (CurrentHitPoints == 0) { woundState = ReferenceData.ProgramStateDerezzed; }
             WoundState = woundState;
         }
 

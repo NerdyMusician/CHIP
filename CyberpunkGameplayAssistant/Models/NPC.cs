@@ -1,6 +1,7 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
 using CyberpunkGameplayAssistant.Windows;
 using System;
+using System.Linq;
 using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
@@ -49,6 +50,7 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 if (itemSelect.SelectedObject == null) { return; }
                 BaseCombatant = (itemSelect.SelectedObject as NamedRecord).Name;
+                PortraitFilePath = ReferenceData.Combatants.First(c => c.Name == BaseCombatant).PortraitFilePath;
             }
 
         }

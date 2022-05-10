@@ -29,9 +29,12 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static readonly string DataDirectory = $"{CurrentDirectory}Data/";
         public static readonly string ResourcesDirectory = $"{CurrentDirectory}Resources/";
         public static readonly string CombatantImageDirectory = $"{ResourcesDirectory}Combatants/";
+        public static readonly string ProgramImageDirectory = $"{ResourcesDirectory}Programs/";
         public static readonly string NpcImageDirectory = $"{DataDirectory}NpcImages/";
         public static readonly string PlayerImageDirectory = $"{DataDirectory}PlayerImages/";
-        public static readonly string[] Directories = new string[] { DataDirectory, ResourcesDirectory, CombatantImageDirectory, NpcImageDirectory, PlayerImageDirectory };
+        public static readonly string[] Directories = new string[] { 
+            DataDirectory, ResourcesDirectory, CombatantImageDirectory, 
+            ProgramImageDirectory, NpcImageDirectory, PlayerImageDirectory };
 
         // File Locations
         public const string File_Log = "log.txt";
@@ -41,6 +44,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string Player = "Player";
         public const string NPC = "NPC";
         public const string BlackIce = "Black ICE";
+        public const string Demon = "Demon";
 
         // Program Types
         public const string AntiPersonnelBlackIce = "Anti-Personnel Black ICE";
@@ -102,6 +106,9 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string WoundStateSeriouslyWounded = "Seriously Wounded";
         public const string WoundStateMortallyWounded = "Mortally Wounded";
         public const string WoundStateDead = "Dead";
+
+        public const string ProgramStateRezzed = "Rezzed";
+        public const string ProgramStateDerezzed = "Derezzed";
 
         // Standard Actions
         public const string ActionBrawl = "Brawl";
@@ -235,6 +242,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string SkillCategoryTechnique = "Technique";
 
         // Skills
+        public const string SkillInterface = "Interface"; // Netrunners and Demons
+        public const string SkillCombatNumber = "Combat Number"; // Demons
         // Awareness Skills
         public const string SkillConcentration = "Concentration";
         public const string SkillConcealRevealObject = "Conceal / Reveal Object";
@@ -908,6 +917,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         public static List<Combatant> Combatants = new();
         public static List<Combatant> BlackIcePrograms = new();
+        public static List<Combatant> Demons = new();
 
         #region Critical Injuries
         // Body Injuries
@@ -989,6 +999,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             PopulateCriticalInjuries();
             PopulateCombatants();
             PopulateBlackIcePrograms();
+            PopulateDemons();
         }
 
         // Private Methods
@@ -1158,6 +1169,25 @@ namespace CyberpunkGameplayAssistant.Toolbox
             // continue on pg 207
 
         }
+        private static void PopulateDemons()
+        {
+            // TODO - proper Demon portraits
+            Combatant imp = new("Imp", PortraitNetrunner);
+            imp.SetDemonStats(15, 3, 2, 14);
+            Demons.Add(imp);
+
+            Combatant efreet = new("Efreet", PortraitAssassin);
+            efreet.SetDemonStats(25, 3, 2, 14);
+            Demons.Add(efreet);
+
+            Combatant balron = new("Balron", PortraitBodyguard);
+            balron.SetDemonStats(30, 7, 4, 14);
+            Demons.Add(balron);
+
+        }
+
+        // TODO - Active Defenses - pg213
+        // TODO - Emplaced Defenses - pg214
 
 
     }

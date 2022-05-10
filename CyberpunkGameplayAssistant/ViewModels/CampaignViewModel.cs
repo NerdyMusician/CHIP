@@ -63,6 +63,18 @@ namespace CyberpunkGameplayAssistant.ViewModels
             }
             HelperMethods.WriteToLogFile("Campaigns Saved", notifyUser);
         }
+
+        // Public Methods
+        public void ResetActiveItems()
+        {
+            ActiveCampaign = null;
+            foreach (GameCampaign gameCampaign in Campaigns)
+            {
+                gameCampaign.ActiveNpc = null;
+                gameCampaign.ActivePlayer = null;
+                gameCampaign.UpdateActiveCombatant();
+            }
+        }
         
 
     }

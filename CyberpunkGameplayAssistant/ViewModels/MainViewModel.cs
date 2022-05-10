@@ -1,5 +1,6 @@
 ﻿using CyberpunkGameplayAssistant.Models;
 using CyberpunkGameplayAssistant.Toolbox;
+using System.Linq;
 using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.ViewModels
@@ -16,6 +17,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
                 System.Xml.Serialization.XmlSerializer xmlSerializer = new(typeof(CampaignViewModel));
                 using System.IO.FileStream fs = new(ReferenceData.File_CampaignData, System.IO.FileMode.Open);
                 CampaignView = (CampaignViewModel)xmlSerializer.Deserialize(fs);
+                CampaignView!.ResetActiveItems();
             }
             catch
             {
