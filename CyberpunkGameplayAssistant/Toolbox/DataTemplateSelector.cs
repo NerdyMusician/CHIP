@@ -11,6 +11,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public DataTemplate PlayerDataTemplate { get; set; }
         public DataTemplate BlackIceDataTemplate { get; set; }
         public DataTemplate DemonDataTemplate { get; set; }
+        public DataTemplate ActiveDefenseDataTemplate { get; set; }
+        public DataTemplate EmplacedDefenseDataTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -22,6 +24,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
                     ReferenceData.Player => PlayerDataTemplate,
                     ReferenceData.BlackIce => BlackIceDataTemplate,
                     ReferenceData.Demon => DemonDataTemplate,
+                    ReferenceData.ActiveDefense => ActiveDefenseDataTemplate,
+                    ReferenceData.EmplacedDefense => EmplacedDefenseDataTemplate,
                     _ => CombatantDataTemplate
                 };
             }

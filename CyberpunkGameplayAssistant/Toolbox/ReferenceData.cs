@@ -45,6 +45,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string NPC = "NPC";
         public const string BlackIce = "Black ICE";
         public const string Demon = "Demon";
+        public const string ActiveDefense = "Active Defense";
+        public const string EmplacedDefense = "Emplaced Defense";
 
         // Program Types
         public const string AntiPersonnelBlackIce = "Anti-Personnel Black ICE";
@@ -491,6 +493,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static readonly string WeaponTypeBowsAndCrossbows = "Bows & Crossbows";
         public static readonly string WeaponTypeGrenadeLauncher = "Grenade Launcher";
         public static readonly string WeaponTypeRocketLauncher = "Rocket Launcher";
+        public static readonly string WeaponTypeDartgun = "Dartgun";
+        public static readonly string WeaponTypeFlamethrower = "Flamethrower";
 
         // Ammunition Types
         public static readonly string AmmoTypeNone = "None";
@@ -502,6 +506,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static readonly string AmmoTypeArrow = "Arrow";
         public static readonly string AmmoTypeGrenade = "Grenade";
         public static readonly string AmmoTypeRocket = "Rocket";
+        public static readonly string AmmoTypeDart = "Dart";
+        public static readonly string AmmoTypeIncendiaryShell = "Incendiary Shotgun Shell";
 
         // Weapon Quality Tier
         public static readonly string WeaponQualityPoor = "Poor";
@@ -554,7 +560,9 @@ namespace CyberpunkGameplayAssistant.Toolbox
             new(WeaponTypeSniperRifle, SkillShoulderArms, 5, 2, AmmoTypeRifle, 1, false, WeaponCostTierHigh),
             new(WeaponTypeBowsAndCrossbows, SkillArchery, 4, 2, AmmoTypeArrow, 1, false, WeaponCostTierMedium),
             new(WeaponTypeGrenadeLauncher, SkillHeavyWeapons, 6, 2, AmmoTypeGrenade, 1, false, WeaponCostTierHigh),
-            new(WeaponTypeRocketLauncher, SkillHeavyWeapons, 8, 2, AmmoTypeRocket, 1, false, WeaponCostTierHigh)
+            new(WeaponTypeRocketLauncher, SkillHeavyWeapons, 8, 2, AmmoTypeRocket, 1, false, WeaponCostTierHigh),
+            new(WeaponTypeDartgun, SkillHandgun, 2, 1, AmmoTypeDart, 1, true, WeaponCostTierMedium),
+            new(WeaponTypeFlamethrower, SkillHeavyWeapons, 1, 2, AmmoTypeIncendiaryShell, 1, false, WeaponCostTierHigh)
         };
         public static readonly Dictionary<string, int> AutofireTable = new()
         {
@@ -915,10 +923,6 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         #endregion
 
-        public static List<Combatant> Combatants = new();
-        public static List<Combatant> BlackIcePrograms = new();
-        public static List<Combatant> Demons = new();
-
         #region Critical Injuries
         // Body Injuries
         public const string CriticalInjuryDismemberedArm = "Dismembered Arm";
@@ -992,6 +996,11 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         #endregion
 
+        public static List<Combatant> Combatants = new();
+        public static List<Combatant> BlackIcePrograms = new();
+        public static List<Combatant> Demons = new();
+        public static List<Combatant> ActiveDefenses = new();
+        public static List<Combatant> EmplacedDefenses = new();
 
         // Public Methods
         public static void PopulateData()
@@ -1000,6 +1009,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
             PopulateCombatants();
             PopulateBlackIcePrograms();
             PopulateDemons();
+            PopulateActiveDefenses();
+            PopulateEmplacedDefenses();
         }
 
         // Private Methods
@@ -1166,7 +1177,41 @@ namespace CyberpunkGameplayAssistant.Toolbox
             hellhound.SetBlackIceStats(AntiPersonnelBlackIce, 6, 6, 6, 2, 20, "Does 2d6 damage direct to the Netrunner's brain. Unless insulated, their Cyberdeck catches fire along with their clothing. Until they spend a Meat Action to put themselves out, they take 2 damage to their HP whenever they end their Turn. Multiple instances of this effect cannot stack.");
             BlackIcePrograms.Add(hellhound);
 
-            // continue on pg 207
+            Combatant kraken = new("Kraken", PortraitNetrunner);
+            kraken.SetBlackIceStats(AntiPersonnelBlackIce, 6, 2, 8, 4, 30, "Does 3d6 damage direct to an enemy Netrunner's brain. Until the end of the Netrunner's next Turn, the Netrunner cannot progress deeper into the Architecture or Jack Out safely (The Netrunner can still perform an unsafe Jack Out).");
+            BlackIcePrograms.Add(kraken);
+
+            Combatant liche = new("Liche", PortraitNetrunner);
+            liche.SetBlackIceStats(AntiPersonnelBlackIce, 8, 2, 6, 2, 25, "Enemy Netrunner's INT, REF, and DEX are each lowered by 1d6 for the next hour (minimum 1). The effects are largely psychosomatic and leave no permanent effects.");
+            BlackIcePrograms.Add(liche);
+
+            Combatant raven = new("Raven", PortraitNetrunner);
+            raven.SetBlackIceStats(AntiPersonnelBlackIce, 6, 4, 4, 2, 15, "Derezzes a single Defender Program the enemy Netrunner has Rezzed at random, then deals 1d6 damage direct to the Netrunner's brain.");
+            BlackIcePrograms.Add(raven);
+
+            Combatant scorpion = new("Scorpion", PortraitNetrunner);
+            scorpion.SetBlackIceStats(AntiPersonnelBlackIce, 2, 6, 2, 2, 15, "Enemy Netrunner's MOVE is lowered by 1d6 for the next hour (minimum 1). The effects are largely psychosomatic and leave no permanent effects.");
+            BlackIcePrograms.Add(scorpion);
+
+            Combatant skunk = new("Skunk", PortraitNetrunner);
+            skunk.SetBlackIceStats(AntiPersonnelBlackIce, 2, 4, 4, 2, 10, "Until this Program is Derezzed, an enemy Netrunner hit by this Effect makes all Slide Checks at a -2. Each Skunk Black ICE can only affect a single Netrunner at a time, but the effects of multiple Skunks can stack.");
+            BlackIcePrograms.Add(skunk);
+
+            Combatant wisp = new("Wisp", PortraitNetrunner);
+            wisp.SetBlackIceStats(AntiPersonnelBlackIce, 4, 4, 4, 2, 15, "Does 1d6 damage direct to the enemy Netrunner's brain and lowers the amount of total NET Actions the Netrunner can accomplish on their next Turn by 1 (minimum 2).");
+            BlackIcePrograms.Add(wisp);
+
+            Combatant dragon = new("Dragon", PortraitNetrunner);
+            dragon.SetBlackIceStats(AntiProgramBlackIce, 6, 4, 6, 6, 30, "Deals 6d6 damage to a Program. If this damage would be enough to Derezz the Program, it is instead Destroyed.");
+            BlackIcePrograms.Add(dragon);
+
+            Combatant killer = new("Killer", PortraitNetrunner);
+            killer.SetBlackIceStats(AntiProgramBlackIce, 4, 8, 6, 2, 20, "Deals 4d6 damage to a Program. If this damage would be enough to Derezz the Program, it is instead Destroyed.");
+            BlackIcePrograms.Add(killer);
+
+            Combatant sabertooth = new("Sabertooth", PortraitNetrunner);
+            sabertooth.SetBlackIceStats(AntiProgramBlackIce, 8, 6, 6, 2, 25, "Deals 6d6 damage to a Program. If this damage would be enough to Derezz the Program, it is instead Destroyed.");
+            BlackIcePrograms.Add(sabertooth);
 
         }
         private static void PopulateDemons()
@@ -1185,9 +1230,73 @@ namespace CyberpunkGameplayAssistant.Toolbox
             Demons.Add(balron);
 
         }
+        private static void PopulateActiveDefenses()
+        {
+            // TODO - portraits
+            Combatant airSwarm = new("Air Swarm Drone Cloud", PortraitNetrunner);
+            airSwarm.SetActiveDefenseStats(8, 15, 17);
+            airSwarm.AddWeapon(WeaponTypeVeryHeavyMelee, WeaponQualityStandard);
+            ActiveDefenses.Add(airSwarm);
 
-        // TODO - Active Defenses - pg213
-        // TODO - Emplaced Defenses - pg214
+            Combatant groundDrone = new("Ground Drone", PortraitNetrunner);
+            groundDrone.SetActiveDefenseStats(4, 30, 21);
+            groundDrone.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
+            groundDrone.AddWeapon(WeaponTypeSmg, WeaponQualityStandard);
+            groundDrone.AddAmmo(AmmoTypeVeryHeavyPistol, 8); // TODO - ammo variants
+            groundDrone.AddAmmo(AmmoTypeMediumPistol, 30);
+            ActiveDefenses.Add(groundDrone);
+
+            Combatant largeAirDrone = new("Large Air Drone", PortraitNetrunner);
+            largeAirDrone.SetActiveDefenseStats(6, 20, 21);
+            largeAirDrone.AddWeapon(WeaponTypeDartgun, WeaponQualityStandard);
+            largeAirDrone.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
+            largeAirDrone.AddAmmo(AmmoTypeDart, 8);
+            largeAirDrone.AddAmmo(AmmoTypeVeryHeavyPistol, 8);
+            ActiveDefenses.Add(largeAirDrone);
+
+            Combatant miniAirDrone = new("Mini Air Drone", PortraitNetrunner);
+            miniAirDrone.SetActiveDefenseStats(6, 15, 17);
+            miniAirDrone.AddWeapon(WeaponTypeDartgun, WeaponQualityStandard);
+            miniAirDrone.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
+            miniAirDrone.AddAmmo(AmmoTypeDart, 8);
+            miniAirDrone.AddAmmo(AmmoTypeVeryHeavyPistol, 8);
+            ActiveDefenses.Add(miniAirDrone);
+
+            Combatant spiderDrone = new("Spider Walking Drone", PortraitNetrunner);
+            spiderDrone.SetActiveDefenseStats(4, 40, 21);
+            spiderDrone.AddWeapon(WeaponTypeGrenadeLauncher, WeaponQualityStandard);
+            spiderDrone.AddWeapon(WeaponTypeVeryHeavyMelee, WeaponQualityStandard);
+            spiderDrone.AddWeapon(WeaponTypeHeavySmg, WeaponQualityStandard);
+            spiderDrone.AddAmmo(AmmoTypeGrenade, 2); // TODO - teargas grenades lol, no need to have office security destroying whole cubicles
+            spiderDrone.AddAmmo(AmmoTypeHeavyPistol, 40);
+
+        }
+        private static void PopulateEmplacedDefenses()
+        {
+            Combatant bloodSwarm = new("Automated Blood Swarm", PortraitNetrunner);
+            bloodSwarm.SetEmplacedDefenseStats(0, 1, 21, "Automated weapon disperses a swarm of nanites into the room as a red fog. The nanites, when inhaled, attack their victim from within by binding the hemoglobin in their blood into clots. Anything that filters gas attacks blocks the Automated Blood Swarm.\nEveryone Meat within the Defended Area must succeed at a DV15 Resist Torture/ Drugs Check. Anyone who fails is dealt 3d6 damage directly to their HP. Their armor isn't ablated.");
+            EmplacedDefenses.Add(bloodSwarm);
+
+            Combatant melee = new("Automated Melee Weapon", PortraitNetrunner);
+            melee.SetEmplacedDefenseStats(14, 25, 17);
+            melee.AddWeapon(WeaponTypeVeryHeavyMelee, WeaponQualityStandard);
+            EmplacedDefenses.Add(melee);
+
+            Combatant turret = new("Automated Turret", PortraitNetrunner);
+            turret.SetEmplacedDefenseStats(14, 25, 17);
+            turret.AddWeapon(WeaponTypeAssaultRifle, WeaponQualityStandard);
+            turret.AddWeapon(WeaponTypeFlamethrower, WeaponQualityStandard);
+            turret.AddWeapon(WeaponTypeDartgun, WeaponQualityStandard);
+            turret.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
+            turret.AddWeapon(WeaponTypeHeavySmg, WeaponQualityStandard);
+            turret.AddAmmo(AmmoTypeRifle, 25);
+            turret.AddAmmo(AmmoTypeIncendiaryShell, 4);
+            turret.AddAmmo(AmmoTypeDart, 8);
+            turret.AddAmmo(AmmoTypeVeryHeavyPistol, 8); // armor piercing
+            turret.AddAmmo(AmmoTypeHeavyPistol, 40);
+            EmplacedDefenses.Add(turret);
+
+        }
 
 
     }

@@ -460,6 +460,24 @@ namespace CyberpunkGameplayAssistant.Models
             MaximumHitPoints = REZ;
             CurrentHitPoints = REZ;
         }
+        public void SetActiveDefenseStats(int MOVE, int HP, int DV)
+        {
+            Type = ReferenceData.ActiveDefense;
+            Notes = MOVE.ToString();
+            PlayerRole = DV.ToString();
+            MaximumHitPoints = HP;
+            CurrentHitPoints = HP;
+        }
+        public void SetEmplacedDefenseStats(int combatNumber, int HP, int DV, string note = "")
+        {
+            Type = ReferenceData.EmplacedDefense;
+            PlayerRole = DV.ToString();
+            Notes = note;
+            BaseStats = new();
+            BaseStats.Add(new(ReferenceData.SkillCombatNumber, combatNumber));
+            MaximumHitPoints = HP;
+            CurrentHitPoints = HP;
+        }
         public void SetCalculatedStats()
         {
             CalculatedStats = new();

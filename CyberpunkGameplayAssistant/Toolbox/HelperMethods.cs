@@ -56,6 +56,10 @@ namespace CyberpunkGameplayAssistant.Toolbox
             }
             return result;
         }
+        public static bool FlipCoin()
+        {
+            return ReferenceData.RNG.Next(0,2) == 0 ? true : false;
+        }
         public static string GetAlphabetLetter(int position)
         {
             return ReferenceData.Alphabet[position];

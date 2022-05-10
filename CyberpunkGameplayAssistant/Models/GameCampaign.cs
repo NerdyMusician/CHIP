@@ -278,6 +278,52 @@ namespace CyberpunkGameplayAssistant.Models
                 SortCombatantsToLists();
             }
         }
+        public ICommand AddActiveDefenses => new RelayCommand(DoAddActiveDefenses);
+        private void DoAddActiveDefenses(object param)
+        {
+            MultiObjectSelectionDialog selectionDialog = new(ReferenceData.ActiveDefenses, ReferenceData.MultiModeEnemies);
+
+            if (selectionDialog.ShowDialog() == true)
+            {
+                foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel).SelectedCombatants)
+                {
+                    for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
+                    {
+                        Combatant newCombatant = selectedCombatant.DeepClone();
+                        int existingCreatureCount = AllCombatants.Where(c => c.Name == newCombatant.Name).Count();
+                        if (existingCreatureCount > 25) { break; }
+                        newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCreatureCount));
+                        newCombatant.Initiative = 60; // Top(er) of the order force
+                        newCombatant.UpdateWoundState();
+                        AllCombatants.Add(newCombatant);
+                    }
+                }
+                SortCombatantsToLists();
+            }
+        }
+        public ICommand AddEmplacedDefenses => new RelayCommand(DoAddEmplacedDefenses);
+        private void DoAddEmplacedDefenses(object param)
+        {
+            MultiObjectSelectionDialog selectionDialog = new(ReferenceData.EmplacedDefenses, ReferenceData.MultiModeEnemies);
+
+            if (selectionDialog.ShowDialog() == true)
+            {
+                foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel).SelectedCombatants)
+                {
+                    for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
+                    {
+                        Combatant newCombatant = selectedCombatant.DeepClone();
+                        int existingCreatureCount = AllCombatants.Where(c => c.Name == newCombatant.Name).Count();
+                        if (existingCreatureCount > 25) { break; }
+                        newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCreatureCount));
+                        newCombatant.Initiative = 60; // Top(er) of the order force
+                        newCombatant.UpdateWoundState();
+                        AllCombatants.Add(newCombatant);
+                    }
+                }
+                SortCombatantsToLists();
+            }
+        }
         public ICommand ChangeStartTime => new RelayCommand(DoChangeStartTime);
         private void DoChangeStartTime(object param)
         {
