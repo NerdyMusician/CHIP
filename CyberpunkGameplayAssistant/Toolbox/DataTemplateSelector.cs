@@ -15,7 +15,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             if (item == null) { return DefaultDataTemplate; }
             if (item.GetType() == typeof(Combatant))
             {
-                return ((item as Combatant)!.IsPlayer) ? PlayerDataTemplate : CombatantDataTemplate;
+                return ((item as Combatant)!.Type == ReferenceData.Player) ? PlayerDataTemplate : CombatantDataTemplate;
             }
             return DefaultDataTemplate;
         }

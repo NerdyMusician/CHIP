@@ -10,12 +10,24 @@ using System.Windows.Input;
 namespace CyberpunkGameplayAssistant.Models
 {
     [Serializable]
-    public class Combatant : Entity
+    public class Combatant : BaseModel
     {
         // Constructors
         public Combatant()
         {
             InitializeLists();
+        }
+        /// <summary>
+        /// BLACK ICE PROGRAM
+        /// </summary>
+        /// <param name="name">Name of the program</param>
+        /// <param name="imagePath">Image path for the program</param>
+        public Combatant(string name, string imagePath)
+        {
+            InitializeLists();
+            Name = name;
+            PortraitFilePath = imagePath;
+            Type = ReferenceData.BlackIce;
         }
         public Combatant(string name, string imagePath, string armor)
         {
@@ -74,17 +86,11 @@ namespace CyberpunkGameplayAssistant.Models
             get => _Initiative;
             set => SetAndNotify(ref _Initiative, value);
         }
-        private bool _IsPlayer;
-        public bool IsPlayer
+        private string _Type;
+        public string Type
         {
-            get => _IsPlayer;
-            set => SetAndNotify(ref _IsPlayer, value);
-        }
-        private bool _IsNpc;
-        public bool IsNpc
-        {
-            get => _IsNpc;
-            set => SetAndNotify(ref _IsNpc, value);
+            get => _Type;
+            set => SetAndNotify(ref _Type, value);
         }
         private bool _IsActive;
         public bool IsActive
@@ -431,6 +437,18 @@ namespace CyberpunkGameplayAssistant.Models
             BaseStats.Add(new(ReferenceData.StatBody, BODY));
             BaseStats.Add(new(ReferenceData.StatEmpathy, EMP));
         }
+        public void SetBlackIceStats(string role, int PER, int SPD, int ATK, int DEF, int REZ, string effect)
+        {
+            PlayerRole = role;
+            BaseStats = new();
+            BaseStats.Add(new(ReferenceData.NetPerception, PER));
+            BaseStats.Add(new(ReferenceData.NetSpeed, SPD));
+            BaseStats.Add(new(ReferenceData.NetAttack, ATK));
+            BaseStats.Add(new(ReferenceData.NetDefense, DEF));
+            MaximumHitPoints = REZ;
+            CurrentHitPoints = REZ;
+            Notes = effect;
+        }
         public void SetCalculatedStats()
         {
             CalculatedStats = new();
@@ -526,7 +544,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         public int GetInitiative()
         {
-            if (IsPlayer) { return Initiative; }
+            if (Type == ReferenceData.Player) { return Initiative; }
             int reflex = CalculatedStats.GetValue(ReferenceData.StatReflexes);
             reflex -= ReferenceData.ArmorTable.GetPenalty(ArmorType);
             return HelperMethods.RollD10() + reflex;

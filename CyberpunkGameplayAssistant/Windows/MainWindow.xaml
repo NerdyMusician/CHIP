@@ -331,16 +331,8 @@
                                                 </Style>
                                             </StackPanel.Resources>
                                             <StackPanel Orientation="Horizontal">
-                                                <cc:ImageButton Text="1d4" ImageResource="{StaticResource Icon_Dice}" Command="{Binding CampaignView.ActiveCampaign.RollDice}" CommandParameter="4" />
                                                 <cc:ImageButton Text="1d6" ImageResource="{StaticResource Icon_Dice}" Command="{Binding CampaignView.ActiveCampaign.RollDice}" CommandParameter="6" />
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal">
-                                                <cc:ImageButton Text="1d8" ImageResource="{StaticResource Icon_Dice}" Command="{Binding CampaignView.ActiveCampaign.RollDice}" CommandParameter="8" />
                                                 <cc:ImageButton Text="1d10" ImageResource="{StaticResource Icon_Dice}" Command="{Binding CampaignView.ActiveCampaign.RollDice}" CommandParameter="10" />
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal">
-                                                <cc:ImageButton Text="1d12" ImageResource="{StaticResource Icon_Dice}" Command="{Binding CampaignView.ActiveCampaign.RollDice}" CommandParameter="12" />
-                                                <cc:ImageButton Text="1d20" ImageResource="{StaticResource Icon_Dice}" Command="{Binding CampaignView.ActiveCampaign.RollDice}" CommandParameter="20" />
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
                                                 <cc:ImageButton Text="1d100" ImageResource="{StaticResource Icon_Dice}" Command="{Binding CampaignView.ActiveCampaign.RollDice}" CommandParameter="100" />

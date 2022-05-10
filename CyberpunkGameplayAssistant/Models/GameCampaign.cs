@@ -201,7 +201,7 @@ namespace CyberpunkGameplayAssistant.Models
                 {
                     Combatant playerToAdd = Players.First(c => c.Name == selectedRecord.Name).DeepClone();
                     if (AllCombatants.FirstOrDefault(p => p.Name == playerToAdd.Name) != null) { continue; }
-                    playerToAdd.IsPlayer = true;
+                    playerToAdd.Type = ReferenceData.Player;
                     AllCombatants.Add(playerToAdd);
                 }
                 SortCombatantsToLists();
@@ -218,7 +218,7 @@ namespace CyberpunkGameplayAssistant.Models
                     NPC npc = Npcs.First(n => n.Name == selectedRecord.Name);
                     Combatant npcToAdd = ReferenceData.Combatants.First(c => c.Name == npc.BaseCombatant).DeepClone();
                     npcToAdd.DisplayName = npc.Name;
-                    npcToAdd.IsNpc = true;
+                    npcToAdd.Type = ReferenceData.NPC;
                     npcToAdd.PortraitFilePath = npc.PortraitFilePath;
                     AllCombatants.Add(npcToAdd);
                 }
@@ -348,7 +348,7 @@ namespace CyberpunkGameplayAssistant.Models
                     YesNoDialog question = new("Reset combat to round 1?");
                     question.ShowDialog();
                     if (question.Answer == false) { return; }
-                    Combatant resetCombatant = CombatantsByInitiative.FirstOrDefault(crt => !crt.IsDead || crt.IsPlayer);
+                    Combatant resetCombatant = CombatantsByInitiative.FirstOrDefault(crt => !crt.IsDead || crt.Type == ReferenceData.Player);
                     if (resetCombatant == null) { UpdateActiveCombatant(); return; }
                     else { resetCombatant.IsActive = true; }
                     EncounterRound = 1;
@@ -365,7 +365,7 @@ namespace CyberpunkGameplayAssistant.Models
             List<string> initiativeResults = new();
             foreach (Combatant combatant in AllCombatants)
             {
-                if (combatant.Initiative == 0) 
+                if (combatant.Initiative == 0 && combatant.Type != ReferenceData.Player) 
                 { 
                     combatant.Initiative = combatant.GetInitiative(); 
                     initiativeResults.Add($"{combatant.DisplayName} : {combatant.Initiative}");
@@ -382,7 +382,7 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand AddPlayer => new RelayCommand(param => DoAddPlayer());
         private void DoAddPlayer()
         {
-            Players.Add(new() { Name = "New Player", IsPlayer = true });
+            Players.Add(new() { Name = "New Player", Type = ReferenceData.Player });
             ActivePlayer = Players.Last();
         }
         public ICommand SortPlayers => new RelayCommand(param => DoSortPlayers());
@@ -472,12 +472,12 @@ namespace CyberpunkGameplayAssistant.Models
         // Private Methods
         private void RemoveTheFallen()
         {
-            AllCombatants = new(AllCombatants.Where(c => !c.IsDead || c.IsPlayer));
+            AllCombatants = new(AllCombatants.Where(c => !c.IsDead || c.Type == ReferenceData.Player));
             SortCombatantsToLists();
         }
         private bool IsEligibleCombatant(Combatant combatant)
         {
-            return !combatant.IsDead || combatant.IsPlayer;
+            return !combatant.IsDead || combatant.Type == ReferenceData.Player;
         }
         private void InitializeLists()
         {
@@ -497,10 +497,10 @@ namespace CyberpunkGameplayAssistant.Models
                 ResetCombatantLists();
                 return;
             }
-            CombatantsByInitiative = new(AllCombatants.Where(c => c.CurrentHitPoints > 0 || c.IsPlayer).OrderByDescending(c => c.Initiative).ToList());
-            CombatantsByName = new(AllCombatants.Where(c => c.CurrentHitPoints > 0 || c.IsPlayer).OrderBy(c => c.IsPlayer == false).ThenBy(c => c.DisplayName));
-            PlayerCombatants = new(AllCombatants.Where(c => c.IsPlayer).OrderBy(c => c.Name));
-            NpcCombatants = new(AllCombatants.Where(c => c.IsNpc).OrderBy(c => c.Name));
+            CombatantsByInitiative = new(AllCombatants.Where(c => c.CurrentHitPoints > 0 || c.Type == ReferenceData.Player).OrderByDescending(c => c.Initiative).ToList());
+            CombatantsByName = new(AllCombatants.Where(c => c.CurrentHitPoints > 0 || c.Type == ReferenceData.Player).OrderBy(c => c.Type != ReferenceData.Player).ThenBy(c => c.DisplayName));
+            PlayerCombatants = new(AllCombatants.Where(c => c.Type == ReferenceData.Player).OrderBy(c => c.Name));
+            NpcCombatants = new(AllCombatants.Where(c => c.Type == ReferenceData.NPC).OrderBy(c => c.Name));
         }
         private void ResetCombatantLists()
         {

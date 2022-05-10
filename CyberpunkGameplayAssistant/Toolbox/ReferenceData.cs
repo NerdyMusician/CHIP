@@ -36,6 +36,15 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string File_Log = "log.txt";
         public static readonly string File_CampaignData = $"{DataDirectory}Campaigns.xml";
 
+        // Combatant Types
+        public const string Player = "Player";
+        public const string NPC = "NPC";
+        public const string BlackIce = "Black ICE";
+
+        // Program Types
+        public const string AntiPersonnelBlackIce = "Anti-Personnel Black ICE";
+        public const string AntiProgramBlackIce = "Anti-Program Black ICE";
+
         // MultiObject Select Modes
         public const string MultiModeEnemies = "Enemies";
         public const string MultiModeCriticalInjuries = "Critical Injuries";
@@ -180,6 +189,12 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string LocalExpertYourHome = "Your Home";
 
         // Stats
+        // Black ICE / Programs
+        public const string NetPerception = "PER";
+        public const string NetSpeed = "SPD";
+        public const string NetAttack = "ATK";
+        public const string NetDefense = "DEF";
+        public const string NetHitPoints = "REZ";
         // Mental Group
         public const string StatIntelligence = "Intelligence";
         public const string StatWillpower = "Willpower";
@@ -536,41 +551,6 @@ namespace CyberpunkGameplayAssistant.Toolbox
             { WeaponTypeHeavySmg, 3 },
             { WeaponTypeAssaultRifle, 4 }
         };
-
-        public static readonly List<MarketWeapon> WeaponMarket = new()
-        {
-            // Melee Weapons
-            new("Combat Knife", WeaponTypeLightMelee, WeaponQualityStandard),
-            new("Tomahawk", WeaponTypeLightMelee, WeaponQualityStandard),
-            new("Baseball Bat", WeaponTypeMediumMelee, WeaponQualityStandard),
-            new("Crowbar", WeaponTypeMediumMelee, WeaponQualityStandard),
-            new("Machete", WeaponTypeMediumMelee, WeaponQualityStandard),
-            new("Lead Pipe", WeaponTypeHeavyMelee, WeaponQualityStandard),
-            new("Sword", WeaponTypeHeavyMelee, WeaponQualityStandard),
-            new("Spiked Bat", WeaponTypeHeavyMelee, WeaponQualityStandard),
-            new("Chainsaw", WeaponTypeVeryHeavyMelee, WeaponQualityStandard),
-            new("Sledgehammer", WeaponTypeVeryHeavyMelee, WeaponQualityStandard),
-            new("Helicopter Blade", WeaponTypeVeryHeavyMelee, WeaponQualityStandard),
-            new("Naginata", WeaponTypeVeryHeavyMelee, WeaponQualityStandard),
-
-            // Poor Quality Weapons
-            new($"{CorpoDaiLung} Streetmaster", WeaponTypeMediumPistol, WeaponQualityPoor),
-            new($"{CorpoDaiLung} Magnum", WeaponTypeHeavyPistol, WeaponQualityPoor),
-            new($"{CorpoFederatedArms} Super Chief", WeaponTypeVeryHeavyPistol, WeaponQualityPoor),
-            new($"{CorpoGunMart} Sherwood", WeaponTypeBowsAndCrossbows, WeaponQualityPoor),
-            new($"{CorpoGunMart} Hunter", WeaponTypeBowsAndCrossbows, WeaponQualityPoor),
-            new($"{CorpoFederatedArms} Tech-Assault III", WeaponTypeSmg, WeaponQualityPoor),
-            new($"{CorpoChadranArms} City Reaper", WeaponTypeHeavySmg, WeaponQualityPoor),
-            new($"{CorpoGunMart} Home Defender", WeaponTypeShotgun, WeaponQualityPoor),
-            new($"{CorpoChadranArms} Jungle Reaper", WeaponTypeAssaultRifle, WeaponQualityPoor),
-            new($"{CorpoGunMart} Snipe-Star", WeaponTypeSniperRifle, WeaponQualityPoor),
-            new($"{CorpoTowaManufacturing} Type-G", WeaponTypeGrenadeLauncher, WeaponQualityPoor),
-            new($"{CorpoTowaManufacturing} Type-R", WeaponTypeRocketLauncher, WeaponQualityPoor),
-
-            // Standard Quality Weapons
-            new($"{CorpoFederatedArms} X-9mm", WeaponTypeMediumPistol, WeaponQualityStandard), // TODO
-
-        };
         #endregion
 
         #region GEAR
@@ -924,10 +904,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         #endregion
 
-        public static List<Combatant> Combatants = new()
-        {
-
-        };
+        public static List<Combatant> Combatants = new();
+        public static List<Combatant> BlackIcePrograms = new();
 
         #region Critical Injuries
         // Body Injuries
@@ -1008,6 +986,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             PopulateCriticalInjuries();
             PopulateCombatants();
+            PopulateBlackIcePrograms();
         }
 
         // Private Methods
@@ -1158,6 +1137,24 @@ namespace CyberpunkGameplayAssistant.Toolbox
             AllCriticalInjuries = new();
             AllCriticalInjuries.AddRange(CriticalInjuriesToBody);
             AllCriticalInjuries.AddRange(CriticalInjuriesToHead);
+        }
+        private static void PopulateBlackIcePrograms()
+        {
+            // TODO - proper portraits for the Black ICE programs
+            Combatant asp = new("Asp", PortraitNetrunner);
+            asp.SetBlackIceStats(AntiPersonnelBlackIce, 4, 6, 2, 2, 15, "Destroys a single Program installed on the enemy Netrunner's Cyberdeck at random.");
+            BlackIcePrograms.Add(asp);
+
+            Combatant giant = new("Giant", PortraitNetrunner);
+            giant.SetBlackIceStats(AntiPersonnelBlackIce, 2, 2, 8, 4, 25, "Does 3d6 damage direct to an enemy Netrunner's brain. The Netrunner is forcibly and unsafely Jacked Out of their current Netrun. They suffer the effect of all Rezzed enemy Black ICE they've encountered in the Architecture as they leave, not including the Giant.");
+            BlackIcePrograms.Add(giant);
+
+            Combatant hellhound = new("Hellhound", PortraitNetrunner);
+            hellhound.SetBlackIceStats(AntiPersonnelBlackIce, 6, 6, 6, 2, 20, "Does 2d6 damage direct to the Netrunner's brain. Unless insulated, their Cyberdeck catches fire along with their clothing. Until they spend a Meat Action to put themselves out, they take 2 damage to their HP whenever they end their Turn. Multiple instances of this effect cannot stack.");
+            BlackIcePrograms.Add(hellhound);
+
+            // continue on pg 207
+
         }
 
 
