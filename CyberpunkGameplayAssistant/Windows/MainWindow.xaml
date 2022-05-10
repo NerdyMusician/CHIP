@@ -315,9 +315,9 @@
                                             <Popup IsOpen="{Binding CampaignView.ActiveCampaign.ShowClearKillControls}">
                                                 <Border Style="{StaticResource BRDR_PopupBorder}">
                                                     <StackPanel Margin="2">
-                                                        <cc:ImageButton ImageResource="{StaticResource Icon_Eraser}" Text="Remove All" />
-                                                        <cc:ImageButton ImageResource="{StaticResource Icon_Eraser}" Text="Remove Dead" />
-                                                        <cc:ImageButton ImageResource="{StaticResource Icon_Skull}" Text="Kill Enemies" />
+                                                        <cc:ImageButton ImageResource="{StaticResource Icon_Eraser}" Text="Remove All" Command="{Binding CampaignView.ActiveCampaign.RemoveCombatants}" CommandParameter="All" />
+                                                        <cc:ImageButton ImageResource="{StaticResource Icon_Eraser}" Text="Remove Dead" Command="{Binding CampaignView.ActiveCampaign.RemoveCombatants}" CommandParameter="Dead" />
+                                                        <cc:ImageButton ImageResource="{StaticResource Icon_Skull}" Text="Kill Enemies" Command="{Binding CampaignView.ActiveCampaign.RemoveCombatants}" CommandParameter="Kill" />
                                                     </StackPanel>
                                                 </Border>
                                             </Popup>

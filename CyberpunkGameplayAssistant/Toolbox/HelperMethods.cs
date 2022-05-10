@@ -65,6 +65,15 @@ namespace CyberpunkGameplayAssistant.Toolbox
             GameCampaign campaign = ReferenceData.MainModelRef.CampaignView.ActiveCampaign;
             campaign.EventHistory.Insert(0, new(type, message));
         }
+        public static bool AskYesNoQuestion(string question)
+        {
+            YesNoDialog yesNoDialog = new(question);
+            if (yesNoDialog.ShowDialog() == true)
+            {
+                return yesNoDialog.Answer;
+            }
+            return false;
+        }
         public static string GetUniqueId()
         {
             return Guid.NewGuid().ToString().Replace("-","");

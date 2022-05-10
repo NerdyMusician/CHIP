@@ -454,6 +454,33 @@ namespace CyberpunkGameplayAssistant.Models
             HelperMethods.AddToGameplayLog(output, ReferenceData.MessageLoot);
             RemoveTheFallen();
         }
+        public ICommand RemoveCombatants => new RelayCommand(DoRemoveCombatants);
+        private void DoRemoveCombatants(object param)
+        {
+            const string paramAll = "All";
+            const string paramDead = "Dead";
+            const string paramKill = "Kill";
+            if (param == null) { return; }
+            switch (param.ToString())
+            {
+                case paramAll:
+                    if (!HelperMethods.AskYesNoQuestion("Are you sure you want to removal all combatants?")) { return; }
+                    ResetCombatantLists();
+                    break;
+                case paramDead:
+                    AllCombatants = new(AllCombatants.Where(c => !c.IsDead || c.Type == ReferenceData.Player));
+                    break;
+                case paramKill:
+                    if (!HelperMethods.AskYesNoQuestion("Are you sure you want to kill all non-player combatants?")) { return; }
+                    foreach (Combatant combatant in AllCombatants)
+                    {
+                        combatant.CurrentHitPoints = 0;
+                        combatant.IsDead = true;
+                    }
+                    break;
+            }
+            SortCombatantsToLists();
+        }
 
         // Public Methods
         public void UpdateActiveCombatant()
@@ -497,8 +524,8 @@ namespace CyberpunkGameplayAssistant.Models
                 ResetCombatantLists();
                 return;
             }
-            CombatantsByInitiative = new(AllCombatants.Where(c => c.CurrentHitPoints > 0 || c.Type == ReferenceData.Player).OrderByDescending(c => c.Initiative).ToList());
-            CombatantsByName = new(AllCombatants.Where(c => c.CurrentHitPoints > 0 || c.Type == ReferenceData.Player).OrderBy(c => c.Type != ReferenceData.Player).ThenBy(c => c.DisplayName));
+            CombatantsByInitiative = new(AllCombatants.Where(c => !c.IsDead || c.Type == ReferenceData.Player).OrderByDescending(c => c.Initiative).ToList());
+            CombatantsByName = new(AllCombatants.Where(c => !c.IsDead || c.Type == ReferenceData.Player).OrderBy(c => c.Type != ReferenceData.Player).ThenBy(c => c.DisplayName));
             PlayerCombatants = new(AllCombatants.Where(c => c.Type == ReferenceData.Player).OrderBy(c => c.Name));
             NpcCombatants = new(AllCombatants.Where(c => c.Type == ReferenceData.NPC).OrderBy(c => c.Name));
         }
