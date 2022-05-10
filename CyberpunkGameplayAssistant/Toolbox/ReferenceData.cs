@@ -14,6 +14,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static FrameworkElement Framework = new();
         public static Random RNG = new();
         public static readonly string[] Alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+        public static readonly string[] Vowels = { "A", "E", "I", "O", "U" };
 
         // Other
         public static readonly DateTime DefaultDate = new(2045, 1, 1);
@@ -51,6 +52,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         // Gameplay Message Types
         public const string MessageOther = "Other";
+        public const string MessageBlackIceStat = "Black Ice";
         public const string MessageCoinFllip = "Coin Flip";
         public const string MessageGmRoll = "GM Roll";
         public const string MessageInitiative = "Initiative";

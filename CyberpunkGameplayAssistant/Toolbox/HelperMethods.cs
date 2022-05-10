@@ -3,6 +3,7 @@ using CyberpunkGameplayAssistant.Windows;
 using Microsoft.Win32;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace CyberpunkGameplayAssistant.Toolbox
 {
@@ -73,6 +74,10 @@ namespace CyberpunkGameplayAssistant.Toolbox
                 return yesNoDialog.Answer;
             }
             return false;
+        }
+        public static string AorAn(string word)
+        {
+            return ReferenceData.Vowels.ToList().Contains(word[0].ToString()) ? "an" : "a";
         }
         public static string GetUniqueId()
         {

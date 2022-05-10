@@ -9,13 +9,19 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public DataTemplate DefaultDataTemplate { get; set; }
         public DataTemplate CombatantDataTemplate { get; set; }
         public DataTemplate PlayerDataTemplate { get; set; }
+        public DataTemplate BlackIceDataTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item == null) { return DefaultDataTemplate; }
             if (item.GetType() == typeof(Combatant))
             {
-                return ((item as Combatant)!.Type == ReferenceData.Player) ? PlayerDataTemplate : CombatantDataTemplate;
+                return ((item as Combatant)!.Type) switch
+                {
+                    ReferenceData.Player => PlayerDataTemplate,
+                    ReferenceData.BlackIce => BlackIceDataTemplate,
+                    _ => CombatantDataTemplate
+                };
             }
             return DefaultDataTemplate;
         }

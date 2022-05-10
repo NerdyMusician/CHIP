@@ -65,6 +65,16 @@ namespace CyberpunkGameplayAssistant.Models
             output += $"Result: {result + stat}\n";
             HelperMethods.AddToGameplayLog(output, ReferenceData.MessageStatCheck);
         }
+        public ICommand RollBlackIceStat => new RelayCommand(DoRollBlackIceStat);
+        private void DoRollBlackIceStat(object param)
+        {
+            Combatant combatant = param as Combatant;
+            string output = $"{combatant.DisplayName} made {HelperMethods.AorAn(Name)} {Name} roll\n";
+            int result = HelperMethods.RollD10();
+            output += $"Result: {result + Value}\n";
+            if (ReferenceData.DebugMode) { output += $"DBG: [{result}] + {Value}"; }
+            HelperMethods.AddToGameplayLog(output, ReferenceData.MessageBlackIceStat);
+        }
 
     }
 }

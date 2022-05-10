@@ -225,6 +225,7 @@ namespace CyberpunkGameplayAssistant.Models
                 SortCombatantsToLists();
             }
         }
+        // TODO - AddBlackIce
         public ICommand ChangeStartTime => new RelayCommand(DoChangeStartTime);
         private void DoChangeStartTime(object param)
         {
