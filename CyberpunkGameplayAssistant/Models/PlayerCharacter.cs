@@ -167,7 +167,7 @@ namespace CyberpunkGameplayAssistant.Models
                     $"{Name} makes a {skill} check\n" +
                     $"Result: {(roll + statValue + skillValue)}" +
                     $"Roll: [{roll}] + {statValue} + {skillValue}";
-                Messages.Add(new(ReferenceData.MessageTypeCombat, output));
+                Messages.Add(new(ReferenceData.MessageSkillCheck, output));
             }
             catch (Exception e)
             {

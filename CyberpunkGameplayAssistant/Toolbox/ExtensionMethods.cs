@@ -146,6 +146,22 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             return new(record.Name, record.Description);
         }
+        public static Dictionary<string, int> AddPlus(this Dictionary<string, int> dictionary, string key, int value)
+        {
+            if (dictionary.ContainsKey(key)) { dictionary[key] += value; }
+            else { dictionary.Add(key, value); }
+            return dictionary;
+        }
+        public static string ToFormattedString(this Dictionary<string, int> dictionary, string separator = "\n")
+        {
+            string output = "";
+            for (int i = 0; i < dictionary.Count; i++)
+            {
+                if (i > 0) { output += separator; }
+                output += $"{dictionary.ElementAt(i).Key} x {dictionary.ElementAt(i).Value}";
+            }
+            return output;
+        }
     }
 }
 #pragma warning restore CS8602 // Dereference of a possibly null reference.

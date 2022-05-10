@@ -295,18 +295,15 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             string iconName = value switch
             {
-                "Ability Check" => "Icon_Hex_A",
-                "Attack" => "Icon_Crossed_Swords",
-                "Coin Flip" => "Icon_CopperCoin",
-                "DM Roll" => "Icon_Dice",
-                "Fall Damage" => "Icon_Fall",
-                "Initiative" => "Icon_Initiative",
-                "Loot" => "Icon_Pack",
-                "Rest" => "Icon_Sleep",
-                "Saving Throw" => "Icon_Letter_S",
-                "Skill Check" => "Icon_Hand",
-                "Spell" => "Icon_Rpg_Staff",
-                "Weather Change" => "Icon_Weather_PartlyCloudy",
+                ReferenceData.MessageInitiative => "Icon_Runner",
+                ReferenceData.MessageCoinFllip => "Icon_SilverCoin",
+                ReferenceData.MessageGmRoll => "Icon_Dice",
+                ReferenceData.MessageLoot => "Icon_Pack",
+                ReferenceData.MessageReload => "Icon_Reload",
+                ReferenceData.MessageSkillCheck => "Icon_Hand",
+                ReferenceData.MessageStandardAction => "Icon_Action",
+                ReferenceData.MessageStatCheck => "Icon_Hex_A",
+                ReferenceData.MessageWeaponAttack => "Icon_Reticle",
                 _ => "Icon_Rpg_Note"
             };
             return ReferenceData.Framework.FindResource(iconName) as Style;

@@ -72,7 +72,7 @@ namespace CyberpunkGameplayAssistant.Models
             }
             output += $"Result: {result + stat + Level}\n";
             output += $"Roll: {result} + {stat} + {Level}";
-            HelperMethods.AddToGameplayLog(output, ReferenceData.MessageTypeSkillCheck);
+            HelperMethods.AddToGameplayLog(output, ReferenceData.MessageSkillCheck);
         }
 
     }

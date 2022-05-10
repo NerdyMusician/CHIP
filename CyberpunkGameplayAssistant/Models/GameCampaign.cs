@@ -263,13 +263,13 @@ namespace CyberpunkGameplayAssistant.Models
         {
             int result = ReferenceData.RNG.Next(1, Convert.ToInt32(param) + 1);
             string message = "DM rolls 1d" + param + "\nResult: " + result;
-            HelperMethods.AddToGameplayLog(message, "DM Roll");
+            HelperMethods.AddToGameplayLog(message, ReferenceData.MessageGmRoll);
         }
         public ICommand FlipCoin => new RelayCommand(DoFlipCoin);
         private void DoFlipCoin(object param)
         {
             int result = ReferenceData.RNG.Next(1, 3);
-            HelperMethods.AddToGameplayLog(string.Format("DM flips a coin.\nResult: {0}.", (result == 1) ? "Heads" : "Tails"), "Coin Flip");
+            HelperMethods.AddToGameplayLog(string.Format("DM flips a coin.\nResult: {0}.", (result == 1) ? "Heads" : "Tails"), ReferenceData.MessageCoinFllip);
         }
         public ICommand ClearEventHistory => new RelayCommand(DoClearEventHistory);
         private void DoClearEventHistory(object param)
@@ -371,7 +371,7 @@ namespace CyberpunkGameplayAssistant.Models
                     initiativeResults.Add($"{combatant.DisplayName} : {combatant.Initiative}");
                 }
             }
-            HelperMethods.AddToGameplayLog($"Rolling Combatant initatives\n{initiativeResults.ToFormattedString()}");
+            HelperMethods.AddToGameplayLog($"Rolling Combatant initatives\n{initiativeResults.ToFormattedString()}", ReferenceData.MessageInitiative);
             SortCombatantsToLists();
         }
         public ICommand SortCombatants => new RelayCommand(DoSortCombatants);
@@ -401,6 +401,59 @@ namespace CyberpunkGameplayAssistant.Models
         {
             Npcs = new(Npcs.OrderBy(npc => npc.Name));
         }
+        public ICommand LootTheFallen => new RelayCommand(DoLootTheFallen);
+        private void DoLootTheFallen(object param)
+        {
+            Dictionary<string, int> ammoLoot = new();
+            Dictionary<string, int> weaponLoot = new();
+            Dictionary<string, int> armorLoot = new();
+            Dictionary<string, int> gearLoot = new();
+            Dictionary<string, int> cyberwareLoot = new();
+            foreach (Combatant combatant in AllCombatants)
+            {
+                if (combatant.IsDead)
+                {
+                    foreach (Ammo ammo in combatant.AmmoInventory)
+                    {
+                        ammoLoot.AddPlus(ammo.Type, ammo.Quantity);
+                    }
+                    foreach (CombatantWeapon weapon in combatant.Weapons)
+                    {
+                        if (weapon.UsesAmmo)
+                        {
+                            string ammoType = ReferenceData.WeaponRepository.First(w => w.Type == weapon.Type).AmmoType;
+                            ammoLoot.AddPlus(ammoType, weapon.CurrentClipQuantity);
+                        }
+                        weaponLoot.AddPlus(weapon.Name, 1);
+                    }
+                    foreach (Gear gear in combatant.GearInventory)
+                    {
+                        gearLoot.AddPlus(gear.Name, gear.Quantity);
+                    }
+                    if (combatant.CurrentHeadStoppingPower > 0)
+                    {
+                        armorLoot.AddPlus($"{combatant.ArmorType} Head Armor ({combatant.CurrentHeadStoppingPower}/{combatant.MaximumHeadStoppingPower})", 1);
+                    }
+                    if (combatant.CurrentBodyStoppingPower > 0)
+                    {
+                        armorLoot.AddPlus($"{combatant.ArmorType} Body Armor ({combatant.CurrentBodyStoppingPower}/{combatant.MaximumBodyStoppingPower})", 1);
+                    }
+                    foreach (Cyberware cyberware in combatant.InstalledCyberware)
+                    {
+                        cyberwareLoot.AddPlus(cyberware.Name, 1);
+                    }
+                }
+            }
+            string output =
+                $"Bodies were looted:\n" +
+                $"Ammo:\n{ammoLoot.ToFormattedString()}\n" +
+                $"Weapons:\n{weaponLoot.ToFormattedString()}\n" +
+                $"Gear:\n{gearLoot.ToFormattedString()}\n" +
+                $"Armor:\n{armorLoot.ToFormattedString()}\n" +
+                $"Cyberware:\n{cyberwareLoot.ToFormattedString()}\n";
+            HelperMethods.AddToGameplayLog(output, ReferenceData.MessageLoot);
+            RemoveTheFallen();
+        }
 
         // Public Methods
         public void UpdateActiveCombatant()
@@ -417,6 +470,11 @@ namespace CyberpunkGameplayAssistant.Models
         }
 
         // Private Methods
+        private void RemoveTheFallen()
+        {
+            AllCombatants = new(AllCombatants.Where(c => !c.IsDead || c.IsPlayer));
+            SortCombatantsToLists();
+        }
         private bool IsEligibleCombatant(Combatant combatant)
         {
             return !combatant.IsDead || combatant.IsPlayer;

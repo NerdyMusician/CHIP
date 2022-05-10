@@ -44,6 +44,12 @@ namespace CyberpunkGameplayAssistant.Models
             get => _PlayerRole;
             set => SetAndNotify(ref _PlayerRole, value);
         }
+        private string _Notes;
+        public string Notes
+        {
+            get => _Notes;
+            set => SetAndNotify(ref _Notes, value);
+        }
         private string _TrackerIndicator;
         public string TrackerIndicator
         {
@@ -559,6 +565,11 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private void AddGear(string name)
         {
+            if (GearInventory.FirstOrDefault(g => g.Name == name) != null)
+            {
+                GearInventory.First(g => g.Name == name).Quantity++;
+                return;
+            }
             GearInventory.Add(new(name));
         }
         private void AddCyberware(string name)

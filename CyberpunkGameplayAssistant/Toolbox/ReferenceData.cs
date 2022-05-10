@@ -40,6 +40,18 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string MultiModeEnemies = "Enemies";
         public const string MultiModeCriticalInjuries = "Critical Injuries";
 
+        // Gameplay Message Types
+        public const string MessageOther = "Other";
+        public const string MessageCoinFllip = "Coin Flip";
+        public const string MessageGmRoll = "GM Roll";
+        public const string MessageInitiative = "Initiative";
+        public const string MessageLoot = "Loot";
+        public const string MessageReload = "Reload";
+        public const string MessageSkillCheck = "Skill Check";
+        public const string MessageStandardAction = "Standard Action";
+        public const string MessageStatCheck = "Stat Check";
+        public const string MessageWeaponAttack = "Weapon Attack";
+
         // Image Locations
         private const string ImageBase = "/Resources/Combatants/";
         public const string PortraitAssassin = $"{ImageBase}Assassin.png";
@@ -72,10 +84,6 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string PortraitTraumaTeamDoctor = $"{ImageBase}TT Doc.png";
         public const string PortraitTraumaTeamMedic = $"{ImageBase}TT Medic.png";
         public const string PortraitTraumaTeamOfficer = $"{ImageBase}TT Officer.png";
-
-        // Message Types
-        public const string MessageTypeCombat = "Combat";
-        public const string MessageTypeSkillCheck = "Skill Check";
 
         // Wound States
         public const string WoundStateUnharmed = "Unharmed";

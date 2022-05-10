@@ -63,7 +63,7 @@ namespace CyberpunkGameplayAssistant.Models
                 stat -= ReferenceData.ArmorTable.GetPenalty(combatant.ArmorType);
             }
             output += $"Result: {result + stat}\n";
-            HelperMethods.AddToGameplayLog(output, ReferenceData.MessageTypeSkillCheck);
+            HelperMethods.AddToGameplayLog(output, ReferenceData.MessageStatCheck);
         }
 
     }

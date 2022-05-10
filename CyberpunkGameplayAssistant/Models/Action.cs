@@ -51,7 +51,7 @@ namespace CyberpunkGameplayAssistant.Models
             }
             else
             {
-                HelperMethods.AddToGameplayLog(result);
+                HelperMethods.AddToGameplayLog(result, ReferenceData.MessageStandardAction);
             }
 
         }

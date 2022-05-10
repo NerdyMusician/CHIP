@@ -322,7 +322,7 @@
                                                 </Border>
                                             </Popup>
                                         </StackPanel>
-                                        <cc:ImageButton ImageResource="{StaticResource Icon_BlueBox}" Text="Loot Fallen" />
+                                        <cc:ImageButton ImageResource="{StaticResource Icon_BlueBox}" Text="Loot Fallen" Command="{Binding CampaignView.ActiveCampaign.LootTheFallen}" />
                                         <Separator Height="8" />
                                         <StackPanel>
                                             <StackPanel.Resources>
