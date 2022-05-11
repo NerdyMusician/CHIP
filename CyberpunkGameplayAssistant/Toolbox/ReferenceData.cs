@@ -935,6 +935,37 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         #endregion
 
+        #region PROGRAMS
+        public const string ProgramClassBooster = "Booster";
+        public const string ProgramClassDefender = "Defender";
+        public const string ProgramClassAttacker = "Attacker";
+
+        public const string ProgramEraser = "Eraser";
+        public const string ProgramSeeYa = "See Ya";
+        public const string ProgramSpeedyGonzalvez = "Speedy Gonzalvez";
+        public const string ProgramWorm = "Worm";
+
+        public const string ProgramArmor = "Armor";
+        public const string ProgramFlak = "Flak";
+        public const string ProgramShield = "Shield";
+
+        public const string ProgramBanhammer = "Banhammer";
+        public const string ProgramSword = "Sword";
+        public const string ProgramDeckKrash = "DeckKRASH";
+        public const string ProgramHellbolt = "Hellbolt";
+        public const string ProgramNervescrub = "Nervescrub";
+
+        // TODO - program portraits
+        public static readonly List<CyberdeckProgram> cyberdeckPrograms = new()
+        {
+            new(ProgramEraser, PortraitAssassin, ProgramClassBooster, 0, 0, 7, "Increases all CLoak Checks you make by +2 as long as this Program remains Rezzed."),
+            new(ProgramSeeYa, PortraitAssassin, ProgramClassBooster, 0, 0, 7, "Increases all Pathfinder Checks you make by +2 as long as this Program remains Rezzed"),
+            new(ProgramSpeedyGonzalvez, PortraitAssassin, ProgramClassBooster, 0, 0, 7, "Increases you Speed by +2 as long as this Program remains rezzed"),
+            new(ProgramWorm, PortraitAssassin, ProgramClassBooster, 0, 0, 7, "Increases all Backdoor Checks you make by +2 as long as this Program remains Rezzed"),
+
+        };
+        #endregion
+
         #region Critical Injuries
         // Body Injuries
         public const string CriticalInjuryDismemberedArm = "Dismembered Arm";
@@ -1165,6 +1196,9 @@ namespace CyberpunkGameplayAssistant.Toolbox
             securityOperative.AddGearSet(GearRadioCommunicator);
             securityOperative.InitializeNewCombatant();
             Combatants.Add(securityOperative);
+            #endregion
+            #region Netrunner
+
             #endregion
 
         }
