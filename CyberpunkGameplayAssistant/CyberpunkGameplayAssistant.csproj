@@ -62,6 +62,7 @@
     <None Remove="Resources\Icons\bandage.png" />
     <None Remove="Resources\Icons\beast.png" />
     <None Remove="Resources\Icons\bluebox.png" />
+    <None Remove="Resources\Icons\bluegear.png" />
     <None Remove="Resources\Icons\book.png" />
     <None Remove="Resources\Icons\booze.png" />
     <None Remove="Resources\Icons\bow.png" />
@@ -394,6 +395,7 @@
     <Resource Include="Resources\Icons\bandage.png" />
     <Resource Include="Resources\Icons\beast.png" />
     <Resource Include="Resources\Icons\bluebox.png" />
+    <Resource Include="Resources\Icons\bluegear.png" />
     <Resource Include="Resources\Icons\book.png" />
     <Resource Include="Resources\Icons\booze.png" />
     <Resource Include="Resources\Icons\bow.png" />

@@ -166,7 +166,7 @@
     <Style TargetType="Image" x:Key="Icon_Envelope" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/envelope.png" />
     </Style>
-    
+
     <!-- Weather Icons -->
     <Style TargetType="Image" x:Key="Icon_Weather_Clear" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/weather_clear.png" />
@@ -381,6 +381,9 @@
 
 
     <!-- Unsorted -->
+    <Style TargetType="Image" x:Key="Icon_BlueGear" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/bluegear.png" />
+    </Style>
     <Style TargetType="Image" x:Key="Icon_Clone" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/clone.png" />
     </Style>

@@ -1165,7 +1165,68 @@
                                 </StackPanel>
                             </TabItem>
                             <TabItem Header="Netrun">
-
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel>
+                                        <DockPanel>
+                                            <Label Content="NET Architectures" />
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CampaignView.ActiveCampaign.AddNetArchitecture}" ToolTip="Add New NET Architecture" />
+                                                <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CampaignView.ActiveCampaign.SortNetArchitectures}" ToolTip="Sort NET Architecture List" />
+                                            </StackPanel>
+                                        </DockPanel>
+                                        <ListView Style="{StaticResource BorderedListView}"
+                                                  Width="216" Height="562"
+                                                  ItemsSource="{Binding CampaignView.ActiveCampaign.NetArchitectures}"
+                                                  SelectedItem="{Binding CampaignView.ActiveCampaign.ActiveNetArchitecture}">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Name}" Foreground="{StaticResource PrimaryFontColor}" />
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </StackPanel>
+                                    <StackPanel Margin="16 24 0 0" Visibility="{Binding CampaignView.ActiveCampaign.ActiveNetArchitecture, Converter={tool:CollapsedIfNull}}">
+                                        <TextBlock Text="NET Architecture Information" />
+                                        <Rectangle />
+                                        <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                            <cc:FieldLabel Text="Architecture Name" />
+                                            <TextBox Text="{Binding CampaignView.ActiveCampaign.ActiveNetArchitecture.Name, UpdateSourceTrigger=PropertyChanged}" />
+                                            <Separator />
+                                            <cc:MiniButton ImageResource="{StaticResource Icon_X}" Command="{Binding CampaignView.ActiveCampaign.ActiveNetArchitecture.DeleteArchitecture}" />
+                                        </StackPanel>
+                                        <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                            <cc:FieldLabel Text="Difficulty" />
+                                            <cc:GammaComboBox ItemsSource="{Binding CampaignView.ActiveCampaign.ActiveNetArchitecture.DifficultyOptions}" Text="{Binding CampaignView.ActiveCampaign.ActiveNetArchitecture.Difficulty, UpdateSourceTrigger=PropertyChanged}" IsEditable="False" />
+                                        </StackPanel>
+                                        <Separator />
+                                        <DockPanel>
+                                            <cc:FieldLabel Text="NET Architecture Floors" Width="256" VerticalAlignment="Bottom" Margin="4 2" />
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <cc:MiniButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CampaignView.ActiveCampaign.ActiveNetArchitecture.AddFloor}" CommandParameter="Blank" />
+                                                <cc:MiniButton ImageResource="{StaticResource Icon_BlueGear}" Command="{Binding CampaignView.ActiveCampaign.ActiveNetArchitecture.AddFloor}" CommandParameter="Generated" />
+                                            </StackPanel>
+                                        </DockPanel>
+                                        <Border Style="{StaticResource ListBorder}">
+                                            <ScrollViewer Height="444">
+                                                <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.ActiveNetArchitecture.Floors}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Border Style="{StaticResource SegmentTile}">
+                                                                <StackPanel Orientation="Horizontal" Margin="2">
+                                                                    <TextBlock Text="{Binding Level, FallbackValue=12}" Width="24" Height="24" TextAlignment="Center" FontSize="20" FontFamily="Consolas" />
+                                                                    <Separator />
+                                                                    <TextBox Text="{Binding Description}" Width="300" Height="48" AcceptsReturn="True" />
+                                                                    <Separator />
+                                                                    <cc:MiniButton ImageResource="{StaticResource Icon_X}" Command="{Binding RemoveFloor}" />
+                                                                </StackPanel>
+                                                            </Border>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </ScrollViewer>
+                                        </Border>
+                                    </StackPanel>
+                                </StackPanel>
                             </TabItem>
                             <TabItem Header="Players">
                                 <StackPanel Orientation="Horizontal">
