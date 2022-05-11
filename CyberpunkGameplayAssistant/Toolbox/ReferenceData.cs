@@ -52,6 +52,12 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string AntiPersonnelBlackIce = "Anti-Personnel Black ICE";
         public const string AntiProgramBlackIce = "Anti-Program Black ICE";
 
+        // NET Architecture Difficulties
+        public const string NetArchitectureDifficultyBasic = "Basic";
+        public const string NetArchitectureDifficultyStandard = "Standard";
+        public const string NetArchitectureDifficultyUncommon = "Uncommon";
+        public const string NetArchitectureDifficultyAdvanced = "Advanced";
+
         // MultiObject Select Modes
         public const string MultiModeEnemies = "Enemies";
         public const string MultiModeCriticalInjuries = "Critical Injuries";

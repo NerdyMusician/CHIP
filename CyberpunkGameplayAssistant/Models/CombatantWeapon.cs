@@ -133,14 +133,15 @@ namespace CyberpunkGameplayAssistant.Models
             int ammoTaken = (matchedAmmo.Quantity <= ammoNeeded) ? matchedAmmo.Quantity : ammoNeeded;
             CurrentClipQuantity += ammoTaken;
             matchedAmmo.Quantity -= ammoTaken;
-            HelperMethods.AddToGameplayLog($"{combatant.DisplayName} reloaded their {Name}.", ReferenceData.MessageReload);
+            if (ammoTaken == 0) { ThrowError("Not enough ammo to reload"); return; }
+            HelperMethods.AddToGameplayLog($"{combatant.DisplayName}{(ammoNeeded > ammoTaken ? "partially" : "")} reloaded their {Name}.", ReferenceData.MessageReload);
         }
 
         // Private Methods
         private bool HasEnoughAmmo(int ammoRequired)
         {
             bool hasEnoughAmmo = ammoRequired <= CurrentClipQuantity;
-            if (!hasEnoughAmmo) { HelperMethods.NotifyUser("Not enough ammo in clip"); }
+            if (!hasEnoughAmmo) { ThrowError("Not enough ammo in clip"); }
             return hasEnoughAmmo;
         }
 

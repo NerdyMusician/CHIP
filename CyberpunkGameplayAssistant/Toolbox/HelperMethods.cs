@@ -2,6 +2,7 @@
 using CyberpunkGameplayAssistant.Windows;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -107,6 +108,107 @@ namespace CyberpunkGameplayAssistant.Toolbox
             {
                 Directory.CreateDirectory(directory);
             }
+        }
+        public static string RollNetFloor(int level, string difficulty)
+        {
+            if (level <= 0) { NotifyUser($"Invalid floor level {level} passed to HelperMethods.RollNetFloor"); return string.Empty; }
+            bool isLobby = (level == 1 || level == 2);
+            Dictionary<int, string> lobbyTable = new()
+            {
+                { 1, "File DV6" },
+                { 2, "Password DV6" },
+                { 3, "Password DV8" },
+                { 4, "Skunk" },
+                { 5, "Wisp" },
+                { 6, "Killer" }
+            };
+            Dictionary<int, string> basicTable = new()
+            {
+                { 3, "Hellhound" },
+                { 4, "Sabertooth" },
+                { 5, "Raven x 2" },
+                { 6, "Hellhound" },
+                { 7, "Wisp" },
+                { 8, "Raven" },
+                { 9, "Password DV6" },
+                { 10, "File DV6" },
+                { 11, "Control Node DV6" },
+                { 12, "Password DV6" },
+                { 13, "Skunk" },
+                { 14, "Asp" },
+                { 15, "Scorpion" },
+                { 16, "Killer, Skunk" },
+                { 17, "Wisp x 3" },
+                { 18, "Liche" }
+            };
+            Dictionary<int, string> standardTable = new()
+            {
+                { 3, "Hellhound x 2" },
+                { 4, "Hellhound, Killer" },
+                { 5, "Skunk x 2" },
+                { 6, "Sabertooth" },
+                { 7, "Scorpion" },
+                { 8, "Hellhound" },
+                { 9, "Password DV8" },
+                { 10, "File DV8" },
+                { 11, "Control Node DV8" },
+                { 12, "Password DV8" },
+                { 13, "Asp" },
+                { 14, "Killer" },
+                { 15, "Liche" },
+                { 16, "Asp" },
+                { 17, "Raven x 3" },
+                { 18, "Liche, Raven" }
+            };
+            Dictionary<int, string> uncommonTable = new()
+            {
+                { 3, "Kraken" },
+                { 4, "Hellhound, Scorpion" },
+                { 5, "Hellhound, Killer" },
+                { 6, "Raven x 2" },
+                { 7, "Sabertooth" },
+                { 8, "Hellhound" },
+                { 9, "Password DV10" },
+                { 10, "File DV10" },
+                { 11, "Control Node DV10" },
+                { 12, "Password DV10" },
+                { 13, "Killer" },
+                { 14, "Liche" },
+                { 15, "Dragon" },
+                { 16, "Asp, Raven" },
+                { 17, "Dragon, Wisp" },
+                { 18, "Giant" },
+            };
+            Dictionary<int, string> advancedTable = new()
+            {
+                { 3, "Hellhound x 3" },
+                { 4, "Asp x 2" },
+                { 5, "Hellhound, Liche" },
+                { 6, "Wisp x 3" },
+                { 7, "Hellhound, Sabertooth" },
+                { 8, "Kraken" },
+                { 9, "Password DV12" },
+                { 10, "File DV12" },
+                { 11, "Control Node DV12" },
+                { 12, "Password DV12" },
+                { 13, "Giant" },
+                { 14, "Dragon" },
+                { 15, "Killer, Scorpion" },
+                { 16, "Kraken" },
+                { 17, "Raven, Wisp, Hellhound" },
+                { 18, "Dragon x 2" }
+            };
+
+            int diceResult = isLobby ? RollDice(1, 6).Sum() : RollDice(3, 6).Sum();
+            Dictionary<int, string> otherTable = difficulty switch
+            {
+                ReferenceData.NetArchitectureDifficultyBasic => basicTable,
+                ReferenceData.NetArchitectureDifficultyStandard => standardTable,
+                ReferenceData.NetArchitectureDifficultyUncommon => uncommonTable,
+                _ => advancedTable
+            };
+            return (level == 1 || level == 2) ? lobbyTable[diceResult] : otherTable[diceResult];
+
         }
     }
 }

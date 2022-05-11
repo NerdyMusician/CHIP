@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CyberpunkGameplayAssistant.Toolbox;
+using System;
+using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
 {
@@ -34,6 +36,14 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get => _Notes;
             set => SetAndNotify(ref _Notes, value);
+        }
+
+        // Commands
+        public ICommand RemoveFloor => new RelayCommand(DoRemoveFloor);
+        private void DoRemoveFloor(object param)
+        {
+            ReferenceData.MainModelRef.CampaignView.ActiveCampaign.ActiveNetArchitecture.Floors.Remove(this);
+            ReferenceData.MainModelRef.CampaignView.ActiveCampaign.ActiveNetArchitecture.RenumberFloors();
         }
 
     }

@@ -10,7 +10,7 @@ using System.Windows.Input;
 namespace CyberpunkGameplayAssistant.Models
 {
     [Serializable]
-    public class Combatant : BaseModel
+    public partial class Combatant : BaseModel
     {
         // Constructors
         public Combatant()
@@ -43,24 +43,6 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get => _Name;
             set => SetAndNotify(ref _Name, value);
-        }
-        private string _PlayerName;
-        public string PlayerName
-        {
-            get => _PlayerName;
-            set => SetAndNotify(ref _PlayerName, value);
-        }
-        private string _PlayerRole;
-        public string PlayerRole
-        {
-            get => _PlayerRole;
-            set => SetAndNotify(ref _PlayerRole, value);
-        }
-        private string _Notes;
-        public string Notes
-        {
-            get => _Notes;
-            set => SetAndNotify(ref _Notes, value);
         }
         private string _TrackerIndicator;
         public string TrackerIndicator

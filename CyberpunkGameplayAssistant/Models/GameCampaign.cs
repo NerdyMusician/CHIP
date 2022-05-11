@@ -172,6 +172,18 @@ namespace CyberpunkGameplayAssistant.Models
             get => _ActiveNpc;
             set => SetAndNotify(ref _ActiveNpc, value);
         }
+        private ObservableCollection<NetArchitecture> _NetArchitectures;
+        public ObservableCollection<NetArchitecture> NetArchitectures
+        {
+            get => _NetArchitectures;
+            set => SetAndNotify(ref _NetArchitectures, value);
+        }
+        private NetArchitecture _ActiveNetArchitecture;
+        public NetArchitecture ActiveNetArchitecture
+        {
+            get => _ActiveNetArchitecture;
+            set => SetAndNotify(ref _ActiveNetArchitecture, value);
+        }
 
         // Commands
         public ICommand AddCombatants => new RelayCommand(DoAddCombatants);
@@ -498,6 +510,17 @@ namespace CyberpunkGameplayAssistant.Models
         {
             Npcs = new(Npcs.OrderBy(npc => npc.Name));
         }
+        public ICommand AddNetArchitecture => new RelayCommand(DoAddNetArchitecture);
+        private void DoAddNetArchitecture(object param)
+        {
+            NetArchitectures.Add(new("New NET Architecture", ReferenceData.NetArchitectureDifficultyBasic));
+            ActiveNetArchitecture = NetArchitectures.Last();
+        }
+        public ICommand SortNetArchitectures => new RelayCommand(DoSortNetArchitectures);
+        private void DoSortNetArchitectures(object param)
+        {
+            NetArchitectures = new(NetArchitectures.OrderBy(n => n.Name));
+        }
         public ICommand LootTheFallen => new RelayCommand(DoLootTheFallen);
         private void DoLootTheFallen(object param)
         {
@@ -622,6 +645,7 @@ namespace CyberpunkGameplayAssistant.Models
             EventHistory = new();
             Players = new();
             Npcs = new();
+            NetArchitectures = new();
         }
         private void SortCombatantsToLists()
         {

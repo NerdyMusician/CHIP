@@ -1,6 +1,7 @@
 ﻿using CyberpunkGameplayAssistant.Models;
 using CyberpunkGameplayAssistant.Toolbox;
-using System.Linq;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.ViewModels
@@ -38,6 +39,21 @@ namespace CyberpunkGameplayAssistant.ViewModels
         {
             get => _CampaignView;
             set => SetAndNotify(ref _CampaignView, value);
+        }
+
+        // Dropdown Sources
+        public List<string> NetArchitectureDifficultyOptions 
+        { 
+            get
+            {
+                return new()
+                {
+                    ReferenceData.NetArchitectureDifficultyBasic,
+                    ReferenceData.NetArchitectureDifficultyStandard,
+                    ReferenceData.NetArchitectureDifficultyUncommon,
+                    ReferenceData.NetArchitectureDifficultyAdvanced
+                };
+            } 
         }
 
         // Commands

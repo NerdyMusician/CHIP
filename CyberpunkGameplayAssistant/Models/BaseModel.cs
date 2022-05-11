@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CyberpunkGameplayAssistant.Toolbox;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -30,6 +31,11 @@ namespace CyberpunkGameplayAssistant.Models
             field = value;
             NotifyPropertyChanged(propertyName);
             return true;
+        }
+
+        protected void ThrowError(string message)
+        {
+            HelperMethods.NotifyUser(message);
         }
 
     }

@@ -1196,7 +1196,7 @@
                                         </StackPanel>
                                         <StackPanel Style="{StaticResource SPNL_FieldRow}">
                                             <cc:FieldLabel Text="Difficulty" />
-                                            <cc:GammaComboBox ItemsSource="{Binding CampaignView.ActiveCampaign.ActiveNetArchitecture.DifficultyOptions}" Text="{Binding CampaignView.ActiveCampaign.ActiveNetArchitecture.Difficulty, UpdateSourceTrigger=PropertyChanged}" IsEditable="False" />
+                                            <cc:GammaComboBox ItemsSource="{Binding NetArchitectureDifficultyOptions}" Text="{Binding CampaignView.ActiveCampaign.ActiveNetArchitecture.Difficulty, UpdateSourceTrigger=PropertyChanged}" IsEditable="False" />
                                         </StackPanel>
                                         <Separator />
                                         <DockPanel>
