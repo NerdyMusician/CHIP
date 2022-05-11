@@ -553,6 +553,8 @@ namespace CyberpunkGameplayAssistant.Models
         
         public int GetSkillTotal(string skill)
         {
+            if (Type == ReferenceData.ActiveDefense) { return GetDemonCombatNumber(); }
+            if (Type == ReferenceData.EmplacedDefense) { return GetDemonCombatNumber(); }
             int skillLevel = Skills.FirstOrDefault(s => s.Name == skill).Level;
             int statLevel = CalculatedStats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName == skill).StatName);
             return skillLevel + statLevel;
@@ -581,6 +583,7 @@ namespace CyberpunkGameplayAssistant.Models
         public void UpdateWoundState()
         {
             if (Type == ReferenceData.BlackIce || Type == ReferenceData.Demon) { UpdateBlackIceWoundState(); return; }
+            if (Type == ReferenceData.ActiveDefense || Type == ReferenceData.EmplacedDefense) { UpdateDefenseWoundState(); return; }
             string woundState = ReferenceData.WoundStateUnharmed;
             if (CurrentHitPoints < MaximumHitPoints) { woundState = ReferenceData.WoundStateLightlyWounded; }
             if (CurrentHitPoints <= (MaximumHitPoints / 2)) { woundState = ReferenceData.WoundStateSeriouslyWounded; }
@@ -593,6 +596,19 @@ namespace CyberpunkGameplayAssistant.Models
             string woundState = ReferenceData.ProgramStateRezzed;
             if (CurrentHitPoints == 0) { woundState = ReferenceData.ProgramStateDerezzed; }
             WoundState = woundState;
+        }
+        public void UpdateDefenseWoundState()
+        {
+            string woundState = ReferenceData.DefenseStateOperational;
+            if (CurrentHitPoints == 0) { woundState = ReferenceData.DefenseStateDestroyed; }
+            WoundState = woundState;
+        }
+        public void ReadyUpActiveDefense(int count)
+        {
+            SetDisplayName(HelperMethods.GetAlphabetLetter(count));
+            Initiative = 60; // Top(er) of the order force
+            UpdateWoundState();
+            ReloadAllWeapons();
         }
 
         // Private Methods
@@ -724,6 +740,15 @@ namespace CyberpunkGameplayAssistant.Models
             StandardActions.Add(new(ReferenceData.ActionInitiative));
             StandardActions.Add(new(ReferenceData.ActionThrowGrapple));
             StandardActions.Add(new(ReferenceData.ActionThrowObject));
+        }
+        private int GetDemonCombatNumber()
+        {
+            Combatant demon = ReferenceData.MainModelRef.CampaignView.ActiveCampaign.AllCombatants.FirstOrDefault(c => c.Type == ReferenceData.Demon);
+            if (demon == null) { HelperMethods.NotifyUser(ReferenceData.ErrorNoDemonAvailableForActiveDefense); return 0; }
+            else
+            {
+                return demon.BaseStats.GetValue(ReferenceData.SkillCombatNumber);
+            }
         }
 
     }

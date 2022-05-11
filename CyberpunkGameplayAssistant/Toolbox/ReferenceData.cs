@@ -69,6 +69,9 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string MessageStatCheck = "Stat Check";
         public const string MessageWeaponAttack = "Weapon Attack";
 
+        // Error Messages
+        public const string ErrorNoDemonAvailableForActiveDefense = "No Demon available to run this Active Defense.";
+
         // Image Locations
         private const string ImageBase = "/Resources/Combatants/";
         public const string PortraitAssassin = $"{ImageBase}Assassin.png";
@@ -111,6 +114,9 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         public const string ProgramStateRezzed = "Rezzed";
         public const string ProgramStateDerezzed = "Derezzed";
+
+        public const string DefenseStateOperational = "Operational";
+        public const string DefenseStateDestroyed = "Destroyed";
 
         // Standard Actions
         public const string ActionBrawl = "Brawl";

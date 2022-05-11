@@ -292,9 +292,7 @@ namespace CyberpunkGameplayAssistant.Models
                         Combatant newCombatant = selectedCombatant.DeepClone();
                         int existingCreatureCount = AllCombatants.Where(c => c.Name == newCombatant.Name).Count();
                         if (existingCreatureCount > 25) { break; }
-                        newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCreatureCount));
-                        newCombatant.Initiative = 60; // Top(er) of the order force
-                        newCombatant.UpdateWoundState();
+                        newCombatant.ReadyUpActiveDefense(existingCreatureCount);
                         AllCombatants.Add(newCombatant);
                     }
                 }
@@ -399,7 +397,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             if (CombatantsByInitiative.Count <= 0) { return; }
             Combatant activeCombatant = CombatantsByInitiative.FirstOrDefault(c => c.IsActive);
-            Combatant firstCombatant = CombatantsByInitiative.First();
+            Combatant firstCombatant = CombatantsByInitiative.FirstOrDefault(c => c.Type != ReferenceData.ActiveDefense && c.Type != ReferenceData.EmplacedDefense);
             Combatant lastCombatant = CombatantsByInitiative.Last();
             if (activeCombatant == null) { param = "Reset"; }
             string action = param.ToString();
@@ -447,7 +445,7 @@ namespace CyberpunkGameplayAssistant.Models
                     YesNoDialog question = new("Reset combat to round 1?");
                     question.ShowDialog();
                     if (question.Answer == false) { return; }
-                    Combatant resetCombatant = CombatantsByInitiative.FirstOrDefault(crt => !crt.IsDead || crt.Type == ReferenceData.Player);
+                    Combatant resetCombatant = CombatantsByInitiative.FirstOrDefault(crt => (!crt.IsDead || crt.Type == ReferenceData.Player) && crt.Type != ReferenceData.ActiveDefense && crt.Type != ReferenceData.EmplacedDefense);
                     if (resetCombatant == null) { UpdateActiveCombatant(); return; }
                     else { resetCombatant.IsActive = true; }
                     EncounterRound = 1;
@@ -603,7 +601,7 @@ namespace CyberpunkGameplayAssistant.Models
             foreach (Combatant combatant in AllCombatants)
             {
                 if (combatant.Type == ReferenceData.Player) { combatants.Add(combatant); continue; }
-                if (combatant.Type == ReferenceData.BlackIce || combatant.Type == ReferenceData.Demon)
+                if (combatant.Type == ReferenceData.BlackIce || combatant.Type == ReferenceData.Demon || combatant.Type == ReferenceData.ActiveDefense || combatant.Type == ReferenceData.EmplacedDefense)
                 {
                     if (combatant.CurrentHitPoints <= 0) { continue; }
                 }
@@ -615,6 +613,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private bool IsEligibleCombatant(Combatant combatant)
         {
+            if (combatant.Type == ReferenceData.ActiveDefense || combatant.Type == ReferenceData.EmplacedDefense) { return false; }
             return !combatant.IsDead || combatant.Type == ReferenceData.Player;
         }
         private void InitializeLists()
