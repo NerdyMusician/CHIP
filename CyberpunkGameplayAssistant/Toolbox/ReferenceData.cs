@@ -210,6 +210,10 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         // Local Expert Locations
         public const string LocalExpertYourHome = "Your Home";
+        public const string LocalExpertBadlands = "Badlands";
+
+        // Science Subcategories
+        public const string ScienceChemistry = "Chemistry";
 
         // Stats
         // Black ICE / Programs
@@ -460,6 +464,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string ArmorTypeFlak = "Flak";
         public const string ArmorTypeMetalgear = "Metalgear";
         public const string ArmorTypeBulletproofShield = "Bulletproof Shield";
+        public const string ArmorTypeSubdermal = "Subdermal";
 
         public static readonly List<Armor> ArmorTable = new()
         {
@@ -470,7 +475,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
             new(ArmorTypeMediumArmorjack, 12, -2),
             new(ArmorTypeHeavyArmorjack, 13, -2),
             new(ArmorTypeFlak, 15, -4),
-            new(ArmorTypeMetalgear, 18, -4)
+            new(ArmorTypeMetalgear, 18, -4),
+            new(ArmorTypeSubdermal, 11, 0)
         };
 
         // Corporation Names
@@ -507,6 +513,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static readonly string WeaponTypeRocketLauncher = "Rocket Launcher";
         public static readonly string WeaponTypeDartgun = "Dartgun";
         public static readonly string WeaponTypeFlamethrower = "Flamethrower";
+        public static readonly string WeaponTypePopupGrenadeLauncher = "Popup Grenade Launcher";
 
         // Ammunition Types
         public static readonly string AmmoTypeNone = "None";
@@ -550,9 +557,11 @@ namespace CyberpunkGameplayAssistant.Toolbox
             new(WeaponTypeSmg, 30, 40, 50),
             new(WeaponTypeHeavySmg, 40, 50, 60),
             new(WeaponTypeShotgun, 4, 8, 16),
+            new(WeaponTypeFlamethrower, 4, 8, 16),
             new(WeaponTypeAssaultRifle, 25, 35, 45),
             new(WeaponTypeSniperRifle, 4, 8, 12),
             new(WeaponTypeGrenadeLauncher, 2, 4, 6),
+            new(WeaponTypePopupGrenadeLauncher, 1, 1, 1),
             new(WeaponTypeRocketLauncher, 1, 2, 3)
         };
 
@@ -572,6 +581,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             new(WeaponTypeSniperRifle, SkillShoulderArms, 5, 2, AmmoTypeRifle, 1, false, WeaponCostTierHigh),
             new(WeaponTypeBowsAndCrossbows, SkillArchery, 4, 2, AmmoTypeArrow, 1, false, WeaponCostTierMedium),
             new(WeaponTypeGrenadeLauncher, SkillHeavyWeapons, 6, 2, AmmoTypeGrenade, 1, false, WeaponCostTierHigh),
+            new(WeaponTypePopupGrenadeLauncher, SkillHeavyWeapons, 6, 1, AmmoTypeGrenade, 1, true, WeaponCostTierHigh),
             new(WeaponTypeRocketLauncher, SkillHeavyWeapons, 8, 2, AmmoTypeRocket, 1, false, WeaponCostTierHigh),
             new(WeaponTypeDartgun, SkillHandgun, 2, 1, AmmoTypeDart, 1, true, WeaponCostTierMedium),
             new(WeaponTypeFlamethrower, SkillHeavyWeapons, 1, 2, AmmoTypeIncendiaryShell, 1, false, WeaponCostTierHigh)
@@ -938,7 +948,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
         #region PROGRAMS
         public const string ProgramClassBooster = "Booster";
         public const string ProgramClassDefender = "Defender";
-        public const string ProgramClassAttacker = "Attacker";
+        public const string ProgramClassAntiPersonnelAttacker = "Anti-Personnel Attacker";
+        public const string ProgramClassAntiProgramAttacker = "Anti-Program Attacker";
 
         public const string ProgramEraser = "Eraser";
         public const string ProgramSeeYa = "See Ya";
@@ -954,15 +965,30 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string ProgramDeckKrash = "DeckKRASH";
         public const string ProgramHellbolt = "Hellbolt";
         public const string ProgramNervescrub = "Nervescrub";
+        public const string ProgramPoisonFlatline = "Poison Flatline";
+        public const string ProgramSuperglue = "Superglue";
+        public const string ProgramVrizzbolt = "Vrizzbolt";
 
         // TODO - program portraits
-        public static readonly List<CyberdeckProgram> cyberdeckPrograms = new()
+        public static readonly List<CyberdeckProgram> CyberdeckPrograms = new()
         {
             new(ProgramEraser, PortraitAssassin, ProgramClassBooster, 0, 0, 7, "Increases all CLoak Checks you make by +2 as long as this Program remains Rezzed."),
             new(ProgramSeeYa, PortraitAssassin, ProgramClassBooster, 0, 0, 7, "Increases all Pathfinder Checks you make by +2 as long as this Program remains Rezzed"),
             new(ProgramSpeedyGonzalvez, PortraitAssassin, ProgramClassBooster, 0, 0, 7, "Increases you Speed by +2 as long as this Program remains rezzed"),
             new(ProgramWorm, PortraitAssassin, ProgramClassBooster, 0, 0, 7, "Increases all Backdoor Checks you make by +2 as long as this Program remains Rezzed"),
 
+            new(ProgramArmor, PortraitAssassin, ProgramClassDefender, 0, 0, 7, "Lowers all brain damage you would receive by 4, as long as this Program remains Rezzed. Only 1 copy of this Program can be running at a time. Each copy of this Program can only be used once per Netrun."),
+            new(ProgramFlak, PortraitAssassin, ProgramClassDefender, 0, 0, 7, "Reduces the ATK of all Non-Black ICE Attacker Programs run against you to 0 as long as this Program remains Rezzed. Only 1 copy of this Program can be running at a time. Each copy of this Program can only be used once per Netrun."),
+            new(ProgramShield, PortraitAssassin, ProgramClassDefender, 0, 0, 7, "Stops the first successful Non-Black ICE Program Effect from dealing brain damage. After stopping this damage, the Shield Derezzes itself. Only 1 copy of this Program can be running at a time. Each copy of this Program can only be used once per Netrun."),
+
+            new(ProgramBanhammer, PortraitAssassin, ProgramClassAntiProgramAttacker, 1, 0, 0, "Does 3d6 REZ to a Non-Black ICE Program, or 2d6 REZ to a Black ICE Program."),
+            new(ProgramSword, PortraitAssassin, ProgramClassAntiProgramAttacker, 1, 0, 0, "Does 3d6 REZ to a Black ICE Program, or 2d6 REZ to a Non-Black ICE Program."),
+            new(ProgramDeckKrash, PortraitAssassin, ProgramClassAntiPersonnelAttacker, 0, 0, 0, "Enemy Netrunner is forcibly and unsafely Jacked Out of the Architecture, suffering the effect of all Rezzed enemy Black ICE they've encountered in the Architecture as they leave."),
+            new(ProgramHellbolt, PortraitAssassin, ProgramClassAntiPersonnelAttacker, 2, 0, 0, "Does 2d6 Damage direct to the enemy Netrunner's brain. Unless insulated, their Cyberdeck catches fire along with their clothing. Until they spend a Meat Action to put themselves out, they take 2 damage to their HP whenever they end their Turn. Multiple instances of this effect cannot stack."),
+            new(ProgramNervescrub, PortraitAssassin, ProgramClassAntiPersonnelAttacker, 0, 0, 0, "Enemy Netrunner's INT, REF, and DEX are each lowered by 1d6 for the next hour (minimum 1). The effects are largely psychosomatic and leave no permanent effects."),
+            new(ProgramPoisonFlatline, PortraitAssassin, ProgramClassAntiPersonnelAttacker, 0, 0, 0, "Destroys a single Non-Black ICE Program installed on the Netrunner target's Cyberdeck at random."),
+            new(ProgramSuperglue, PortraitAssassin, ProgramClassAntiPersonnelAttacker, 2, 0, 0, "Enemy Netrunner cannot progress deeper into the Architecture or Jack Out safely for 1d6 Rounds (enemy Netrunner can still perform an unsafe Jack Out, though). Each copy of this Program can only be used once per Netrun."),
+            new(ProgramVrizzbolt, PortraitAssassin, ProgramClassAntiPersonnelAttacker, 1, 0, 0, "Does 1d6 Damage direct to a Netrunner's brain and lowers the amount of total NET Actions the Netrunner can accomplish on their next Turn by 1 (minimum 2).")
         };
         #endregion
 
@@ -1198,9 +1224,249 @@ namespace CyberpunkGameplayAssistant.Toolbox
             Combatants.Add(securityOperative);
             #endregion
             #region Netrunner
-
+            Combatant netrunner = new("Netrunner", PortraitNetrunner, ArmorTypeBodyweightSuit); // todo - functionality for netrunner combatants
+            netrunner.SetStats(7, 5, 4, 7, 4, 5, 0, 5, 3, 4);
+            netrunner.SetCalculatedStats();
+            netrunner.SetBaseSkills();
+            netrunner.AddSkill(SkillInterface, 4);
+            netrunner.AddSkill(SkillAthletics, 9);
+            netrunner.AddSkill(SkillBasicTech, 13);
+            netrunner.AddSkill(SkillBrawling, 6);
+            netrunner.AddSkill(SkillConcealRevealObject, 11);
+            netrunner.AddSkill(SkillConcentration, 9);
+            netrunner.AddSkill(SkillConversation, 6);
+            netrunner.AddSkill(SkillCryptography, 11);
+            netrunner.AddSkill(SkillDeduction, 11);
+            netrunner.AddSkill(SkillEducation, 11);
+            netrunner.AddSkill(SkillElectronicsSecurityTech, 11);
+            netrunner.AddSkill(SkillEvasion, 6);
+            netrunner.AddSkill(SkillFirstAid, 9);
+            netrunner.AddSkill(SkillForgery, 13);
+            netrunner.AddSkill(SkillHandgun, 10);
+            netrunner.AddSkill(SkillHumanPerception, 6);
+            netrunner.AddSkill(SkillLanguage, 9, LanguageNative);
+            netrunner.AddSkill(SkillLanguage, 9, LanguageStreetslang);
+            netrunner.AddSkill(SkillLocalExpert, 13, LocalExpertYourHome);
+            netrunner.AddSkill(SkillLibrarySearch, 9);
+            netrunner.AddSkill(SkillPerception, 11);
+            netrunner.AddSkill(SkillPersuasion, 6);
+            netrunner.AddSkill(SkillPickLock, 11);
+            netrunner.AddSkill(SkillResistTortureDrugs, 7);
+            netrunner.AddSkill(SkillStealth, 8);
+            netrunner.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
+            netrunner.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
+            netrunner.AddCyberwareSet(CyberwareNeuralLink, CyberwareInterfacePlugs);
+            netrunner.AddGearSet(GearFlashlight, GearVirtualityGoggles);
+            netrunner.AddCyberdeckPrograms(ProgramBanhammer, ProgramDeckKrash, ProgramEraser, ProgramHellbolt, ProgramShield, ProgramSword, ProgramWorm);
+            netrunner.InitializeNewCombatant(); // TODO - add NET actions to standard actions, or to new collection
+            Combatants.Add(netrunner);
             #endregion
-
+            #region Reclaimer Chief
+            Combatant reclaimerChief = new("Reclaimer Chief", PortraitReclaimerChief, ArmorTypeLightArmorjack);
+            reclaimerChief.SetStats(3, 6, 6, 5, 4, 5, 0, 4, 6, 4);
+            reclaimerChief.SetCalculatedStats();
+            reclaimerChief.SetBaseSkills();
+            reclaimerChief.AddSkill(SkillAthletics, 12);
+            reclaimerChief.AddSkill(SkillBasicTech, 9);
+            reclaimerChief.AddSkill(SkillBrawling, 8);
+            reclaimerChief.AddSkill(SkillConcentration, 7);
+            reclaimerChief.AddSkill(SkillConversation, 6);
+            reclaimerChief.AddSkill(SkillDeduction, 7);
+            reclaimerChief.AddSkill(SkillDriveLandVehicle, 10);
+            reclaimerChief.AddSkill(SkillEducation, 5);
+            reclaimerChief.AddSkill(SkillElectronicsSecurityTech, 9);
+            reclaimerChief.AddSkill(SkillEndurance, 11);
+            reclaimerChief.AddSkill(SkillEvasion, 8);
+            reclaimerChief.AddSkill(SkillFirstAid, 7);
+            reclaimerChief.AddSkill(SkillHandgun, 10);
+            reclaimerChief.AddSkill(SkillHumanPerception, 6);
+            reclaimerChief.AddSkill(SkillLandVehicleTech, 7);
+            reclaimerChief.AddSkill(SkillLanguage, 5, LanguageNative);
+            reclaimerChief.AddSkill(SkillLanguage, 5, LanguageStreetslang);
+            reclaimerChief.AddSkill(SkillLocalExpert, 5, LocalExpertYourHome);
+            reclaimerChief.AddSkill(SkillMeleeWeapon, 10);
+            reclaimerChief.AddSkill(SkillParamedic, 7);
+            reclaimerChief.AddSkill(SkillPerception, 8);
+            reclaimerChief.AddSkill(SkillPersuasion, 6);
+            reclaimerChief.AddSkill(SkillPickLock, 7);
+            reclaimerChief.AddSkill(SkillResistTortureDrugs, 10);
+            reclaimerChief.AddSkill(SkillShoulderArms, 10);
+            reclaimerChief.AddSkill(SkillStealth, 10);
+            reclaimerChief.AddSkill(SkillWeaponstech, 9);
+            reclaimerChief.AddSkill(SkillWildernessSurvival, 7);
+            reclaimerChief.AddWeapon(WeaponTypeShotgun, WeaponQualityStandard);
+            reclaimerChief.AddWeapon(WeaponTypeHeavyPistol, WeaponQualityStandard);
+            reclaimerChief.AddWeapon(WeaponTypeLightMelee, WeaponQualityStandard);
+            reclaimerChief.AddWeapon(WeaponTypeHeavyMelee, WeaponQualityStandard);
+            reclaimerChief.AddAmmo(AmmoTypeSlug, 25);
+            reclaimerChief.AddAmmo(AmmoTypeHeavyPistol, 25);
+            reclaimerChief.AddGearSet(GearAgent, GearGrappleGun, GearRadioCommunicator, GearTentAndCampingEquipment);
+            reclaimerChief.AddCyberwareSet(CyberwareNasalFilters, CyberwareNeuralLink, CyberwareChipwareSocket, CyberwareTactileBoost);
+            Combatants.Add(reclaimerChief);
+            #endregion
+            #region Security Officer
+            Combatant securityOfficer = new("Security Officer", PortraitSecurityOfficer, ArmorTypeMediumArmorjack);
+            securityOfficer.SetStats(4, 8, 6, 4, 6, 5, 0, 6, 7, 4);
+            securityOfficer.SetCalculatedStats();
+            securityOfficer.SetBaseSkills();
+            securityOfficer.AddSkill(SkillAthletics, 10);
+            securityOfficer.AddSkill(SkillAutofire, 12);
+            securityOfficer.AddSkill(SkillBrawling, 10);
+            securityOfficer.AddSkill(SkillConcentration, 7);
+            securityOfficer.AddSkill(SkillConversation, 6);
+            securityOfficer.AddSkill(SkillDeduction, 6);
+            securityOfficer.AddSkill(SkillDriveLandVehicle, 12);
+            securityOfficer.AddSkill(SkillEducation, 6);
+            securityOfficer.AddSkill(SkillEvasion, 10);
+            securityOfficer.AddSkill(SkillFirstAid, 6);
+            securityOfficer.AddSkill(SkillHandgun, 10);
+            securityOfficer.AddSkill(SkillHumanPerception, 6);
+            securityOfficer.AddSkill(SkillInterrogation, 8);
+            securityOfficer.AddSkill(SkillLanguage, 6, LanguageNative);
+            securityOfficer.AddSkill(SkillLanguage, 6, LanguageStreetslang);
+            securityOfficer.AddSkill(SkillLocalExpert, 6, LocalExpertYourHome);
+            securityOfficer.AddSkill(SkillMeleeWeapon, 10);
+            securityOfficer.AddSkill(SkillPerception, 6);
+            securityOfficer.AddSkill(SkillPersuasion, 8);
+            securityOfficer.AddSkill(SkillResistTortureDrugs, 10);
+            securityOfficer.AddSkill(SkillShoulderArms, 10);
+            securityOfficer.AddSkill(SkillStealth, 6);
+            securityOfficer.AddSkill(SkillTactics, 8);
+            securityOfficer.AddWeapon(WeaponTypeAssaultRifle, WeaponQualityStandard);
+            securityOfficer.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
+            securityOfficer.AddWeapon(WeaponTypeMediumMelee, WeaponQualityStandard);
+            securityOfficer.AddAmmo(AmmoTypeRifle, 50);
+            securityOfficer.AddAmmo(AmmoTypeVeryHeavyPistol, 30);
+            // TODO - Bulletproof shield SP / HP
+            securityOfficer.AddGearSet(GearBinoculars, GearDisposableCellPhone, GearFlashlight, GearHandcuffs, GearHandcuffs, GearRadioCommunicator, GearRadioScannerMusicPlayer);
+            securityOfficer.AddCyberwareSet(CyberwareNeuralLink, CyberwareKerenzikov);
+            securityOfficer.InitializeNewCombatant();
+            Combatants.Add(securityOfficer);
+            #endregion
+            #region Outrider
+            Combatant outrider = new("Outrider", PortraitOutrider, ArmorTypeLightArmorjack);
+            outrider.SetStats(6, 8, 8, 3, 5, 6, 0, 6, 6, 6);
+            outrider.SetCalculatedStats();
+            outrider.SetBaseSkills();
+            outrider.AddSkill(SkillAnimalHandling, 8);
+            outrider.AddSkill(SkillAthletics, 14);
+            outrider.AddSkill(SkillAutofire, 12);
+            outrider.AddSkill(SkillBasicTech, 5);
+            outrider.AddSkill(SkillBrawling, 14);
+            outrider.AddSkill(SkillConcentration, 10);
+            outrider.AddSkill(SkillConversation, 6);
+            outrider.AddSkill(SkillCriminology, 10);
+            outrider.AddSkill(SkillDriveLandVehicle, 14);
+            outrider.AddSkill(SkillEducation, 8);
+            outrider.AddSkill(SkillEndurance, 10);
+            outrider.AddSkill(SkillEvasion, 14);
+            outrider.AddSkill(SkillFirstAid, 5);
+            outrider.AddSkill(SkillHandgun, 14);
+            outrider.AddSkill(SkillHumanPerception, 8);
+            outrider.AddSkill(SkillLandVehicleTech, 7);
+            outrider.AddSkill(SkillLanguage, 8, LanguageNative);
+            outrider.AddSkill(SkillLanguage, 8, LanguageStreetslang);
+            outrider.AddSkill(SkillLocalExpert, 8, LocalExpertBadlands);
+            outrider.AddSkill(SkillLocalExpert, 8, LocalExpertYourHome);
+            outrider.AddSkill(SkillMeleeWeapon, 12);
+            outrider.AddSkill(SkillPerception, 14);
+            outrider.AddSkill(SkillPersuasion, 7);
+            outrider.AddSkill(SkillResistTortureDrugs, 12);
+            outrider.AddSkill(SkillShoulderArms, 14);
+            outrider.AddSkill(SkillStealth, 12);
+            outrider.AddSkill(SkillStreetwise, 9);
+            outrider.AddSkill(SkillTracking, 10);
+            outrider.AddWeapon(WeaponTypeAssaultRifle, WeaponQualityStandard);
+            outrider.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
+            outrider.AddWeapon(WeaponTypeLightMelee, WeaponQualityStandard);
+            outrider.AddAmmo(AmmoTypeRifle, 60);
+            outrider.AddAmmo(AmmoTypeVeryHeavyPistol, 40);
+            outrider.AddGearSet(GearHandcuffs, GearHandcuffs, GearHomingTracer, GearRadioCommunicator);
+            outrider.AddCyberwareSet(CyberwareCyberaudioSuite, CyberwareAmplifiedHearing, CyberwareCybereye, CyberwareTargetingScope, CyberwareTeleOptics, CyberwareNeuralLink, CyberwareInterfacePlugs);
+            outrider.InitializeNewCombatant();
+            Combatants.Add(outrider);
+            #endregion
+            #region Pyro
+            Combatant pyro = new("Pyro", PortraitPyro, ArmorTypeLightArmorjack);
+            pyro.SetStats(5, 8, 6, 7, 4, 4, 0, 6, 5, 3);
+            pyro.SetCalculatedStats();
+            pyro.SetBaseSkills();
+            pyro.AddSkill(SkillAthletics, 11);
+            pyro.AddSkill(SkillBasicTech, 12);
+            pyro.AddSkill(SkillBrawling, 10);
+            pyro.AddSkill(SkillConcentration, 8);
+            pyro.AddSkill(SkillConversation, 5);
+            pyro.AddSkill(SkillDemolitions, 13);
+            pyro.AddSkill(SkillDriveLandVehicle, 10);
+            pyro.AddSkill(SkillEducation, 7);
+            pyro.AddSkill(SkillEvasion, 13);
+            pyro.AddSkill(SkillFirstAid, 9);
+            pyro.AddSkill(SkillHandgun, 14);
+            pyro.AddSkill(SkillHeavyWeapons, 14);
+            pyro.AddSkill(SkillHumanPerception, 5);
+            pyro.AddSkill(SkillInterrogation, 10);
+            pyro.AddSkill(SkillLanguage, 7, LanguageNative);
+            pyro.AddSkill(SkillLanguage, 7, LanguageStreetslang);
+            pyro.AddSkill(SkillLocalExpert, 7, LocalExpertYourHome);
+            pyro.AddSkill(SkillMeleeWeapon, 13);
+            pyro.AddSkill(SkillPerception, 12);
+            pyro.AddSkill(SkillPersuasion, 6);
+            pyro.AddSkill(SkillResistTortureDrugs, 14);
+            pyro.AddSkill(SkillScience, 10, ScienceChemistry);
+            pyro.AddSkill(SkillStealth, 10);
+            pyro.AddSkill(SkillStreetwise, 8);
+            pyro.AddSkill(SkillTactics, 8);
+            pyro.AddWeapon(WeaponTypeFlamethrower, WeaponQualityStandard);
+            pyro.AddWeapon(WeaponTypeHeavyPistol, WeaponQualityStandard);
+            pyro.AddWeapon(WeaponTypeHeavyMelee, WeaponQualityStandard);
+            pyro.AddAmmo(AmmoTypeIncendiaryShell, 8);
+            pyro.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
+            // TODO - add consumable weapons (grenades)
+            pyro.AddCyberwareSet(CyberwareCyberaudioSuite, CyberwareLevelDamper, CyberwareCybereye, CyberwareCybereye, CyberwareAntiDazzle, CyberwareAntiDazzle, CyberwareNasalFilters);
+            pyro.InitializeNewCombatant();
+            Combatants.Add(pyro);
+            #endregion
+            #region Cyberpsycho
+            Combatant cyberpsycho = new("Cyberpsycho", PortraitCyberpsycho, ArmorTypeSubdermal);
+            cyberpsycho.SetStats(5, 8, 8, 5, 4, 7, 0, 8, 10, 0);
+            cyberpsycho.SetCalculatedStats();
+            cyberpsycho.SetBaseSkills();
+            cyberpsycho.AddSkill(SkillAthletics, 16);
+            cyberpsycho.AddSkill(SkillAutofire, 14);
+            cyberpsycho.AddSkill(SkillBasicTech, 11);
+            cyberpsycho.AddSkill(SkillBrawling, 15);
+            cyberpsycho.AddSkill(SkillConcentration, 6);
+            cyberpsycho.AddSkill(SkillConversation, 2);
+            cyberpsycho.AddSkill(SkillDriveLandVehicle, 10);
+            cyberpsycho.AddSkill(SkillEducation, 7);
+            cyberpsycho.AddSkill(SkillEndurance, 10);
+            cyberpsycho.AddSkill(SkillEvasion, 13);
+            cyberpsycho.AddSkill(SkillFirstAid, 6);
+            cyberpsycho.AddSkill(SkillHandgun, 12);
+            cyberpsycho.AddSkill(SkillHeavyWeapons, 14);
+            cyberpsycho.AddSkill(SkillHumanPerception, 2);
+            cyberpsycho.AddSkill(SkillInterrogation, 13);
+            cyberpsycho.AddSkill(SkillLanguage, 7, LanguageNative);
+            cyberpsycho.AddSkill(SkillLanguage, 7, LanguageStreetslang);
+            cyberpsycho.AddSkill(SkillLocalExpert, 7, LocalExpertYourHome);
+            cyberpsycho.AddSkill(SkillMeleeWeapon, 17);
+            cyberpsycho.AddSkill(SkillPerception, 9);
+            cyberpsycho.AddSkill(SkillPersuasion, 6);
+            cyberpsycho.AddSkill(SkillResistTortureDrugs, 15);
+            cyberpsycho.AddSkill(SkillStealth, 10);
+            cyberpsycho.AddSkill(SkillTracking, 10);
+            cyberpsycho.AddWeapon(WeaponTypePopupGrenadeLauncher, WeaponQualityStandard);
+            cyberpsycho.AddWeapon(WeaponTypeHeavySmg, WeaponQualityStandard, "Popup Heavy SMG");
+            cyberpsycho.AddWeapon(WeaponTypeVeryHeavyMelee, WeaponQualityStandard, "Cybersnake");
+            cyberpsycho.AddWeapon(WeaponTypeHeavyMelee, WeaponQualityStandard, "Wolvers");
+            cyberpsycho.AddAmmo(AmmoTypeGrenade, 2);
+            cyberpsycho.AddAmmo(AmmoTypeHeavyPistol, 100);
+            cyberpsycho.AddCyberwareSet(CyberwareCyberarm, CyberwareCyberarm, CyberwarePopupGrenadeLauncher, CyberwarePopupGrenadeLauncher,
+                CyberwarePopupRangedWeapon, CyberwareWolvers, CyberwareCyberleg, CyberwareCyberleg, CyberwareJumpBooster, CyberwareCybersnake,
+                CyberwareGraftedMuscleBoneLace, CyberwareNeuralLink, CyberwareChipwareSocket, CyberwarePainEditor, CyberwareSubdermalArmor);
+            cyberpsycho.InitializeNewCombatant();
+            Combatants.Add(cyberpsycho);
+            #endregion
         }
         private static void PopulateCriticalInjuries()
         {

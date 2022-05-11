@@ -495,6 +495,7 @@ namespace CyberpunkGameplayAssistant.Models
             Skill skill = Skills.FirstOrDefault(s => s.Name == name && s.Variant == variant);
             if (skill == null)
             {
+                if (name == ReferenceData.SkillInterface) { return; } // This will be handled elsewhere
                 int level = value - CalculatedStats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName == name).StatName);
                 Skills.Add(new(name, variant, level));
             }
@@ -516,6 +517,13 @@ namespace CyberpunkGameplayAssistant.Models
             foreach (string name in names)
             {
                 AddGear(name);
+            }
+        }
+        public void AddCyberdeckPrograms(params string[] names)
+        {
+            foreach (string name in names)
+            {
+                AddCyberdeckProgram(name);
             }
         }
         public void AddCyberwareSet(params string[] names)
@@ -620,6 +628,7 @@ namespace CyberpunkGameplayAssistant.Models
             InstalledCyberware = new();
             StandardActions = new();
             CriticalInjuries = new();
+            CyberdeckPrograms = new();
         }
         private void AddGear(string name)
         {
@@ -629,6 +638,11 @@ namespace CyberpunkGameplayAssistant.Models
                 return;
             }
             GearInventory.Add(new(name));
+        }
+        private void AddCyberdeckProgram(string name)
+        {
+            if (CyberdeckPrograms.FirstOrDefault(p => p.Name == name) != null) { return; }
+            CyberdeckPrograms.Add(ReferenceData.CyberdeckPrograms.FirstOrDefault(p => p.Name == name).DeepClone());
         }
         private void AddCyberware(string name)
         {
