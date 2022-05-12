@@ -47,6 +47,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string Demon = "Demon";
         public const string ActiveDefense = "Active Defense";
         public const string EmplacedDefense = "Emplaced Defense";
+        public const string ExecTeamMember = "Exec Team Member";
 
         // Program Types
         public const string AntiPersonnelBlackIce = "Anti-Personnel Black ICE";
@@ -1085,6 +1086,16 @@ namespace CyberpunkGameplayAssistant.Toolbox
         // Private Methods
         private static void PopulateCombatants()
         {
+            // pg 155 - Exec Company Aides
+            // TODO - loyalty stat
+            // TODO - exec team portraits
+            Combatant companyBodyguard = new Combatant("Company Bodyguard", ExecTeamMember, PortraitAssassin, ArmorTypeLightArmorjack);
+            companyBodyguard.StatTable.Add(1, new() { 3, 7, 7, 4, 7, 6, 4, 8, 4 });
+            companyBodyguard.StatTable.Add(2, new() { 5, 8, 6, 2, 7, 8, 4, 8, 2 });
+            companyBodyguard.StatTable.Add(3, new() { 4, 8, 5, 3, 7, 8, 6, 6, 3 });
+            // TODO - continue here
+
+            // pg 412 - Mooks and Grunts
             #region Bodyguard
             Combatant bodyguard = new("Bodyguard", PortraitBodyguard, ArmorTypeKevlar);
             bodyguard.SetStats(3, 6, 5, 2, 4, 4, 0, 4, 6, 3);
