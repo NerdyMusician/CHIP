@@ -66,6 +66,8 @@ namespace CyberpunkGameplayAssistant.Models
         private void DoRollBasicAttack(object param)
         {
             Combatant combatant = (Combatant)param;
+            int attackRoll = HelperMethods.RollD10(true);
+            if (Quality == ReferenceData.WeaponQualityPoor && attackRoll <= 1) { HelperMethods.AddToGameplayLog($"{combatant.DisplayName}'s {Name} malfunctioned!", ReferenceData.MessageWeaponAttack); return; }
             if (UsesAmmo)
             {
                 if (!HasEnoughAmmo(1)) { return; }
@@ -74,24 +76,23 @@ namespace CyberpunkGameplayAssistant.Models
             int damageDice = ReferenceData.WeaponRepository.GetDamage(Type);
             string relevantSkill = ReferenceData.WeaponRepository.GetSkill(Type);
             int attackBonus = combatant.GetSkillTotal(relevantSkill);
-            int attackRoll = HelperMethods.RollD10(true);
-            if (Quality == ReferenceData.WeaponQualityPoor && attackRoll <= 1) { HelperMethods.AddToGameplayLog($"{combatant.DisplayName}'s {Name} malfunctioned!", ReferenceData.MessageWeaponAttack); return; }
             int attackResult = attackRoll + attackBonus;
             int damage = HelperMethods.RollDamage(damageDice, out bool criticalInjury);
             string output = $"{combatant.DisplayName} attacks with {Name}\nAttack: {attackResult}\nDamage: {damage} {(criticalInjury ? "CRIT" : "")}";
             if (ReferenceData.DebugMode) { output += $"\nATK DBG: ROLL:{attackRoll}, SKILL+STAT:{attackBonus}"; }
             HelperMethods.AddToGameplayLog(output, ReferenceData.MessageWeaponAttack);
+            HelperMethods.PlayWeaponSound(Type);
         }
         public ICommand RollAutofire => new RelayCommand(DoRollAutofire);
         private void DoRollAutofire(object param)
         {
             if (!ReferenceData.AutofireTable.ContainsKey(Type)) { HelperMethods.NotifyUser("This weapon does not have Autofire"); return; }
             Combatant combatant = (Combatant)param;
+            int attackRoll = HelperMethods.RollD10(true);
+            if (Quality == ReferenceData.WeaponQualityPoor && attackRoll <= 1) { HelperMethods.AddToGameplayLog($"{combatant.DisplayName}'s {Name} malfunctioned!", ReferenceData.MessageWeaponAttack); return; }
             if (!HasEnoughAmmo(10)) { return; }
             CurrentClipQuantity -= 10;
             int attackBonus = combatant.GetSkillTotal(ReferenceData.SkillAutofire);
-            int attackRoll = HelperMethods.RollD10(true);
-            if (Quality == ReferenceData.WeaponQualityPoor && attackRoll <= 1) { HelperMethods.AddToGameplayLog($"{combatant.DisplayName}'s {Name} malfunctioned!", ReferenceData.MessageWeaponAttack); return; }
             int attackResult = attackRoll + attackBonus;
             int damage = HelperMethods.RollDamage(2, out bool criticalInjury);
             string output = $"{combatant.DisplayName} uses {Name}\nAttack: {attackResult}";
@@ -102,11 +103,14 @@ namespace CyberpunkGameplayAssistant.Models
                 if (i == 0 && criticalInjury) { output += " CRIT"; }
             }
             HelperMethods.AddToGameplayLog(output, ReferenceData.MessageWeaponAttack);
+            HelperMethods.PlayAutofireSound();
         }
         public ICommand RollAimedShot => new RelayCommand(DoRollAimedShot);
         private void DoRollAimedShot(object param)
         {
             Combatant combatant = (Combatant)param;
+            int attackRoll = HelperMethods.RollD10(true);
+            if (Quality == ReferenceData.WeaponQualityPoor && attackRoll <= 1) { HelperMethods.AddToGameplayLog($"{combatant.DisplayName}'s {Name} malfunctioned!", ReferenceData.MessageWeaponAttack); return; }
             if (UsesAmmo)
             {
                 if (!HasEnoughAmmo(1)) { return; }
@@ -115,13 +119,13 @@ namespace CyberpunkGameplayAssistant.Models
             int damageDice = ReferenceData.WeaponRepository.GetDamage(Type);
             string relevantSkill = ReferenceData.WeaponRepository.GetSkill(Type);
             int attackBonus = combatant.GetSkillTotal(relevantSkill);
-            int attackRoll = HelperMethods.RollD10(true);
-            if (Quality == ReferenceData.WeaponQualityPoor && attackRoll <= 1) { HelperMethods.AddToGameplayLog($"{combatant.DisplayName}'s {Name} malfunctioned!", ReferenceData.MessageWeaponAttack); return; }
+            
             int attackResult = attackRoll + attackBonus - 8; //pg170
             int damage = HelperMethods.RollDamage(damageDice, out bool criticalInjury);
             string output = $"{combatant.DisplayName} aims {Name}\nAttack: {attackResult}\nDamage: {damage} {(criticalInjury ? "CRIT" : "")}";
             if (ReferenceData.DebugMode) { output += $"\nATK DBG: ROLL:{attackRoll}, SKILL+STAT:{attackBonus}"; }
             HelperMethods.AddToGameplayLog(output, ReferenceData.MessageWeaponAttack);
+            HelperMethods.PlayWeaponSound(Type);
         }
         public ICommand ReloadWeapon => new RelayCommand(DoReloadWeapon);
         private void DoReloadWeapon(object param)
@@ -135,6 +139,7 @@ namespace CyberpunkGameplayAssistant.Models
             matchedAmmo.Quantity -= ammoTaken;
             if (ammoTaken == 0) { ThrowError("Not enough ammo to reload"); return; }
             HelperMethods.AddToGameplayLog($"{combatant.DisplayName}{(ammoNeeded > ammoTaken ? "partially" : "")} reloaded their {Name}.", ReferenceData.MessageReload);
+            HelperMethods.PlayReloadSound();
         }
 
         // Private Methods

@@ -1,5 +1,6 @@
 ﻿using CyberpunkGameplayAssistant.Models;
 using CyberpunkGameplayAssistant.ViewModels;
+using CyberpunkGameplayAssistant.Windows;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -11,6 +12,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         // Utility
         public const bool DebugMode = true;
         public static MainViewModel MainModelRef;
+        public static MainWindow WindowRef;
         public static FrameworkElement Framework = new();
         public static Random RNG = new();
         public static readonly string[] Alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
@@ -93,6 +95,14 @@ namespace CyberpunkGameplayAssistant.Toolbox
         private const string PortraitSecurityOfficer = $"{ImageBase}TokenSecurityOfficer.png";
         private const string PortraitSecurityOperative = $"{ImageBase}TokenSecurityOperative.png";
         private const string PortraitTech = $"{ImageBase}TokenTech.png";
+
+        // Audio Locations
+        private static readonly string AudioBase = $"{CurrentDirectory}Resources/Audio/";
+        public static readonly string AudioAutofire = $"{AudioBase}Autofire.mp3";
+        public static readonly string AudioDeepGunshot = $"{AudioBase}DeepGunshot.mp3";
+        public static readonly string AudioExplosion = $"{AudioBase}Explosion.mp3";
+        public static readonly string AudioGunshot = $"{AudioBase}Gunshot.mp3";
+        public static readonly string AudioReload = $"{AudioBase}Reload.mp3";
 
         // Wound States
         public const string WoundStateUnharmed = "Unharmed";
@@ -496,6 +506,21 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static readonly string WeaponTypeDartgun = "Dartgun";
         public static readonly string WeaponTypeFlamethrower = "Flamethrower";
         public static readonly string WeaponTypePopupGrenadeLauncher = "Popup Grenade Launcher";
+
+        public static Dictionary<string, string> WeaponSounds = new()
+        {
+            { WeaponTypeMediumPistol, AudioGunshot },
+            { WeaponTypeHeavyPistol, AudioGunshot },
+            { WeaponTypeVeryHeavyPistol, AudioDeepGunshot },
+            { WeaponTypeSmg, AudioGunshot },
+            { WeaponTypeHeavySmg, AudioGunshot },
+            { WeaponTypeShotgun, AudioDeepGunshot },
+            { WeaponTypeAssaultRifle, AudioGunshot },
+            { WeaponTypeSniperRifle, AudioGunshot },
+            { WeaponTypeGrenadeLauncher, AudioExplosion },
+            { WeaponTypeRocketLauncher, AudioExplosion },
+            { WeaponTypePopupGrenadeLauncher, AudioExplosion },
+        };
 
         // Ammunition Types
         public static readonly string AmmoTypeNone = "None";
@@ -1086,6 +1111,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             companyBodyguard.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
             companyBodyguard.AddGearSet(GearAgent);
             companyBodyguard.AddCyberwareSet(CyberwareCybereye, CyberwareLowLightInfraredUv, CyberwareCyberarm, CyberwareGrappleHand, CyberwarePopupRangedWeapon, CyberwareRealskinnCovering);
+            companyBodyguard.InitializeNewCombatant();
             Combatants.Add(companyBodyguard);
             #endregion
             #region Company Driver
@@ -1100,6 +1126,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             companyDriver.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
             // TODO - vehicles
             companyDriver.AddCyberwareSet(CyberwareRadarSonarImplant, CyberwareCyberaudioSuite, CyberwareInternalAgent, CyberwareHomingtracer, CyberwareRadarDetector);
+            companyDriver.InitializeNewCombatant();
             Combatants.Add(companyDriver);
             #endregion
             #region Company Netrunner
@@ -1114,6 +1141,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             companyNetrunner.AddGearSet(GearAgent);
             companyNetrunner.AddCyberwareSet(CyberwareNeuralLink, CyberwareChipwareSocket, CyberwarePainEditor, CyberwareInterfacePlugs, CyberwareCybereye, CyberwareCybereye, CyberwareVirtuality);
             companyNetrunner.AddCyberdeckPrograms(ProgramSword, ProgramSword, BlackIceKiller, ProgramWorm, ProgramWorm, ProgramArmor);
+            companyNetrunner.InitializeNewCombatant();
             Combatants.Add(companyNetrunner);
             #endregion
             #region Company Technician
@@ -1127,6 +1155,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             companyTechnician.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
             companyTechnician.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
             companyTechnician.AddCyberwareSet(CyberwareToolHand, CyberwareCyberaudioSuite, CyberwareInternalAgent, CyberwareBugDetector, CyberwareAudioRecorder);
+            companyTechnician.InitializeNewCombatant();
             Combatants.Add(companyTechnician);
             #endregion
 

@@ -1,5 +1,6 @@
 ﻿using CyberpunkGameplayAssistant.Models;
 using CyberpunkGameplayAssistant.Toolbox;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -40,6 +41,12 @@ namespace CyberpunkGameplayAssistant.ViewModels
             get => _CampaignView;
             set => SetAndNotify(ref _CampaignView, value);
         }
+        private Uri _SfxSource;
+        public Uri SfxSource
+        {
+            get => _SfxSource;
+            set => SetAndNotify(ref _SfxSource, value);
+        }
 
         // Dropdown Sources
         public List<string> NetArchitectureDifficultyOptions 
@@ -72,6 +79,8 @@ namespace CyberpunkGameplayAssistant.ViewModels
                     break;
             }
         }
+
+        
 
 
     }

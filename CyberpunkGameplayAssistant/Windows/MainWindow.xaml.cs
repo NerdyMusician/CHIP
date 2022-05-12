@@ -21,6 +21,9 @@ namespace CyberpunkGameplayAssistant.Windows
             ReferenceData.PopulateData();
             InitializeComponent();
             DataContext = new MainViewModel();
+            SfxPlayer.Volume = 1;
+            SfxPlayer.Play();
+            ReferenceData.WindowRef = this;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -129,5 +132,16 @@ namespace CyberpunkGameplayAssistant.Windows
             }
         }
 
+        private void MusicPlayer_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            //SfxPlayer.Pause();
+            //SfxPlayer.Position = TimeSpan.FromMilliseconds(1);
+        }
+        public void PlaySound(string filepath)
+        {
+            SfxPlayer.Position = TimeSpan.FromMilliseconds(1);
+            SfxPlayer.Source = new Uri(filepath, UriKind.Absolute);
+            SfxPlayer.Play();
+        }
     }
 }

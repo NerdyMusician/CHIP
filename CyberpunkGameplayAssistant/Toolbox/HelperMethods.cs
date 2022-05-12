@@ -109,6 +109,21 @@ namespace CyberpunkGameplayAssistant.Toolbox
                 Directory.CreateDirectory(directory);
             }
         }
+        public static void PlayWeaponSound(string weaponType)
+        {
+            if (ReferenceData.WeaponSounds.ContainsKey(weaponType))
+            {
+                ReferenceData.WindowRef.PlaySound(ReferenceData.WeaponSounds[weaponType]);
+            }
+        }
+        public static void PlayAutofireSound()
+        {
+            ReferenceData.WindowRef.PlaySound(ReferenceData.AudioAutofire);
+        }
+        public static void PlayReloadSound()
+        {
+            ReferenceData.WindowRef.PlaySound(ReferenceData.AudioReload);
+        }
         public static string RollNetFloor(int level, string difficulty)
         {
             if (level <= 0) { NotifyUser($"Invalid floor level {level} passed to HelperMethods.RollNetFloor"); return string.Empty; }

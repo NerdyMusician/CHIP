@@ -135,6 +135,7 @@
         <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="CtrlS" />
     </Window.InputBindings>
     <StackPanel>
+        <MediaElement x:Name="SfxPlayer" Visibility="Collapsed" Source="{Binding SfxSource, UpdateSourceTrigger=PropertyChanged}" LoadedBehavior="Manual" MediaEnded="MusicPlayer_MediaEnded" />
         <DockPanel x:Name="TitleBar" Width="1280" MouseDown="Window_MouseDown" Background="Transparent" HorizontalAlignment="Stretch" Margin="0 4">
             <StackPanel Orientation="Horizontal" Margin="8">
                 <Separator />
