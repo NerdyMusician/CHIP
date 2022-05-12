@@ -1,5 +1,7 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CyberpunkGameplayAssistant.Models
 {
@@ -8,26 +10,24 @@ namespace CyberpunkGameplayAssistant.Models
         // Constructors
         public Combatant(string name, string type, string portrait, string armor)
         {
+            InitializeLists();
             Name = name;
             Type = type;
             PortraitFilePath = portrait;
             ArmorType = armor;
-            if (Type == ReferenceData.ExecTeamMember) { InitializeExecTeamCollections(); }
         }
 
         // Properties
-        public Dictionary<int, List<int>> StatTable { get; set; }
-        public List<string> SkillsAtPlus2 { get; set; }
-        public List<string> SkillsAtPlus4 { get; set; }
-        public List<string> SkillsAtPlus6 { get; set; }
 
         // Public Methods
-        public void InitializeExecTeamCollections()
+        public void SetSkillLevels(int level, params string[] skills)
         {
-            StatTable = new();
-            SkillsAtPlus2 = new();
-            SkillsAtPlus4 = new();
-            SkillsAtPlus6 = new();
+            foreach (string skill in skills)
+            {
+                Skill matchedSkill = Skills.FirstOrDefault(s => s.Name == skill);
+                if (matchedSkill != null) { matchedSkill.Level = level; }
+                else { Skills.Add(new(skill, string.Empty, level)); }
+            }
         }
 
 

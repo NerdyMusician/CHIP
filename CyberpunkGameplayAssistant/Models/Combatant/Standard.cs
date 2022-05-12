@@ -641,7 +641,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private void AddCyberdeckProgram(string name)
         {
-            if (CyberdeckPrograms.FirstOrDefault(p => p.Name == name) != null) { return; }
+            if (ReferenceData.CyberdeckPrograms.FirstOrDefault(p => p.Name == name) != null) { return; }
             CyberdeckPrograms.Add(ReferenceData.CyberdeckPrograms.FirstOrDefault(p => p.Name == name).DeepClone());
         }
         private void AddCyberware(string name)
@@ -688,6 +688,8 @@ namespace CyberpunkGameplayAssistant.Models
         {
             foreach (Skill skill in Skills)
             {
+                if (skill.Name == ReferenceData.SkillInterface) { continue; }
+                if (skill.Name == ReferenceData.SkillCombatNumber) { continue; }
                 switch (ReferenceData.SkillLinks.GetCategory(skill.Name))
                 {
                     case ReferenceData.SkillCategoryAwareness:

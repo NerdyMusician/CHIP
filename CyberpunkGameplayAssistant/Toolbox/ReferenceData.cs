@@ -81,36 +81,18 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         // Image Locations
         private const string ImageBase = "/Resources/Combatants/";
-        public const string PortraitAssassin = $"{ImageBase}Assassin.png";
-        public const string PortraitBodyguard = $"{ImageBase}Bodyguard.png";
-        public const string PortraitBoosterganger = $"{ImageBase}Boosterganger.png";
-        public const string PortraitCanineDrone = $"{ImageBase}Canine Drone.png";
-        public const string PortraitCyberpsycho = $"{ImageBase}Cyberpsycho.png";
-        public const string PortraitEdgerunner = $"{ImageBase}Edgerunner.png";
-        public const string PortraitExecNetrunner = $"{ImageBase}Exec Netrunner.png";
-        public const string PortraitExec = $"{ImageBase}Exec.png";
-        public const string PortraitFixer = $"{ImageBase}Fixer.png";
-        public const string PortraitMaxTacRiot = $"{ImageBase}MaxTac Riot.png";
-        public const string PortraitMaxTac = $"{ImageBase}MaxTac.png";
-        public const string PortraitMedia = $"{ImageBase}Media.png";
-        public const string PortraitMonk = $"{ImageBase}Monk.png";
-        public const string PortraitNeko = $"{ImageBase}Neko.png";
-        public const string PortraitNetrunner = $"{ImageBase}Netrunner.png";
-        public const string PortraitNomad = $"{ImageBase}Nomad.png";
-        public const string PortraitOutrider = $"{ImageBase}Outrider.png";
-        public const string PortraitPyro = $"{ImageBase}Pyro.png";
-        public const string PortraitRacer = $"{ImageBase}Racer.png";
-        public const string PortraitReclaimerChief = $"{ImageBase}Reclaimer Chief.png";
-        public const string PortraitRoadGanger = $"{ImageBase}Road Ganger.png";
-        public const string PortraitRoadWarrior = $"{ImageBase}Road Warrior.png";
-        public const string PortraitRockergirl = $"{ImageBase}Rockergirl.png";
-        public const string PortraitSecurityOfficer = $"{ImageBase}Security Officer.png";
-        public const string PortraitSecurityOperative = $"{ImageBase}Security Operative.png";
-        public const string PortraitSolo = $"{ImageBase}Solo.png";
-        public const string PortraitTech = $"{ImageBase}Tech.png";
-        public const string PortraitTraumaTeamDoctor = $"{ImageBase}TT Doc.png";
-        public const string PortraitTraumaTeamMedic = $"{ImageBase}TT Medic.png";
-        public const string PortraitTraumaTeamOfficer = $"{ImageBase}TT Officer.png";
+        private const string PortraitDefault = $"{ImageBase}TokenLogo.png";
+        private const string PortraitBodyguard = $"{ImageBase}TokenBodyguard.png";
+        private const string PortraitBoosterganger = $"{ImageBase}TokenBoosterganger.png";
+        private const string PortraitCovertOperative = $"{ImageBase}TokenCovertOperative.png";
+        private const string PortraitLawman = $"{ImageBase}TokenLawman.png";
+        private const string PortraitNetrunner = $"{ImageBase}TokenNetrunner.png";
+        private const string PortraitOutrider = $"{ImageBase}TokenOutrider.png";
+        private const string PortraitReclaimerChief = $"{ImageBase}TokenReclaimerChief.png";
+        private const string PortraitRoadGanger = $"{ImageBase}TokenRoadGanger.png";
+        private const string PortraitSecurityOfficer = $"{ImageBase}TokenSecurityOfficer.png";
+        private const string PortraitSecurityOperative = $"{ImageBase}TokenSecurityOperative.png";
+        private const string PortraitTech = $"{ImageBase}TokenTech.png";
 
         // Wound States
         public const string WoundStateUnharmed = "Unharmed";
@@ -259,7 +241,6 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string SkillCategoryRangedWeapon = "Ranged Weapon";
         public const string SkillCategorySocial = "Social";
         public const string SkillCategoryTechnique = "Technique";
-
         // Skills
         public const string SkillInterface = "Interface"; // Netrunners and Demons
         public const string SkillCombatNumber = "Combat Number"; // Demons
@@ -975,23 +956,23 @@ namespace CyberpunkGameplayAssistant.Toolbox
         // TODO - program portraits
         public static readonly List<CyberdeckProgram> CyberdeckPrograms = new()
         {
-            new(ProgramEraser, PortraitAssassin, ProgramClassBooster, 0, 0, 7, "Increases all CLoak Checks you make by +2 as long as this Program remains Rezzed."),
-            new(ProgramSeeYa, PortraitAssassin, ProgramClassBooster, 0, 0, 7, "Increases all Pathfinder Checks you make by +2 as long as this Program remains Rezzed"),
-            new(ProgramSpeedyGonzalvez, PortraitAssassin, ProgramClassBooster, 0, 0, 7, "Increases you Speed by +2 as long as this Program remains rezzed"),
-            new(ProgramWorm, PortraitAssassin, ProgramClassBooster, 0, 0, 7, "Increases all Backdoor Checks you make by +2 as long as this Program remains Rezzed"),
+            new(ProgramEraser, PortraitDefault, ProgramClassBooster, 0, 0, 7, "Increases all CLoak Checks you make by +2 as long as this Program remains Rezzed."),
+            new(ProgramSeeYa, PortraitDefault, ProgramClassBooster, 0, 0, 7, "Increases all Pathfinder Checks you make by +2 as long as this Program remains Rezzed"),
+            new(ProgramSpeedyGonzalvez, PortraitDefault, ProgramClassBooster, 0, 0, 7, "Increases you Speed by +2 as long as this Program remains rezzed"),
+            new(ProgramWorm, PortraitDefault, ProgramClassBooster, 0, 0, 7, "Increases all Backdoor Checks you make by +2 as long as this Program remains Rezzed"),
 
-            new(ProgramArmor, PortraitAssassin, ProgramClassDefender, 0, 0, 7, "Lowers all brain damage you would receive by 4, as long as this Program remains Rezzed. Only 1 copy of this Program can be running at a time. Each copy of this Program can only be used once per Netrun."),
-            new(ProgramFlak, PortraitAssassin, ProgramClassDefender, 0, 0, 7, "Reduces the ATK of all Non-Black ICE Attacker Programs run against you to 0 as long as this Program remains Rezzed. Only 1 copy of this Program can be running at a time. Each copy of this Program can only be used once per Netrun."),
-            new(ProgramShield, PortraitAssassin, ProgramClassDefender, 0, 0, 7, "Stops the first successful Non-Black ICE Program Effect from dealing brain damage. After stopping this damage, the Shield Derezzes itself. Only 1 copy of this Program can be running at a time. Each copy of this Program can only be used once per Netrun."),
+            new(ProgramArmor, PortraitDefault, ProgramClassDefender, 0, 0, 7, "Lowers all brain damage you would receive by 4, as long as this Program remains Rezzed. Only 1 copy of this Program can be running at a time. Each copy of this Program can only be used once per Netrun."),
+            new(ProgramFlak, PortraitDefault, ProgramClassDefender, 0, 0, 7, "Reduces the ATK of all Non-Black ICE Attacker Programs run against you to 0 as long as this Program remains Rezzed. Only 1 copy of this Program can be running at a time. Each copy of this Program can only be used once per Netrun."),
+            new(ProgramShield, PortraitDefault, ProgramClassDefender, 0, 0, 7, "Stops the first successful Non-Black ICE Program Effect from dealing brain damage. After stopping this damage, the Shield Derezzes itself. Only 1 copy of this Program can be running at a time. Each copy of this Program can only be used once per Netrun."),
 
-            new(ProgramBanhammer, PortraitAssassin, ProgramClassAntiProgramAttacker, 1, 0, 0, "Does 3d6 REZ to a Non-Black ICE Program, or 2d6 REZ to a Black ICE Program."),
-            new(ProgramSword, PortraitAssassin, ProgramClassAntiProgramAttacker, 1, 0, 0, "Does 3d6 REZ to a Black ICE Program, or 2d6 REZ to a Non-Black ICE Program."),
-            new(ProgramDeckKrash, PortraitAssassin, ProgramClassAntiPersonnelAttacker, 0, 0, 0, "Enemy Netrunner is forcibly and unsafely Jacked Out of the Architecture, suffering the effect of all Rezzed enemy Black ICE they've encountered in the Architecture as they leave."),
-            new(ProgramHellbolt, PortraitAssassin, ProgramClassAntiPersonnelAttacker, 2, 0, 0, "Does 2d6 Damage direct to the enemy Netrunner's brain. Unless insulated, their Cyberdeck catches fire along with their clothing. Until they spend a Meat Action to put themselves out, they take 2 damage to their HP whenever they end their Turn. Multiple instances of this effect cannot stack."),
-            new(ProgramNervescrub, PortraitAssassin, ProgramClassAntiPersonnelAttacker, 0, 0, 0, "Enemy Netrunner's INT, REF, and DEX are each lowered by 1d6 for the next hour (minimum 1). The effects are largely psychosomatic and leave no permanent effects."),
-            new(ProgramPoisonFlatline, PortraitAssassin, ProgramClassAntiPersonnelAttacker, 0, 0, 0, "Destroys a single Non-Black ICE Program installed on the Netrunner target's Cyberdeck at random."),
-            new(ProgramSuperglue, PortraitAssassin, ProgramClassAntiPersonnelAttacker, 2, 0, 0, "Enemy Netrunner cannot progress deeper into the Architecture or Jack Out safely for 1d6 Rounds (enemy Netrunner can still perform an unsafe Jack Out, though). Each copy of this Program can only be used once per Netrun."),
-            new(ProgramVrizzbolt, PortraitAssassin, ProgramClassAntiPersonnelAttacker, 1, 0, 0, "Does 1d6 Damage direct to a Netrunner's brain and lowers the amount of total NET Actions the Netrunner can accomplish on their next Turn by 1 (minimum 2).")
+            new(ProgramBanhammer, PortraitDefault, ProgramClassAntiProgramAttacker, 1, 0, 0, "Does 3d6 REZ to a Non-Black ICE Program, or 2d6 REZ to a Black ICE Program."),
+            new(ProgramSword, PortraitDefault, ProgramClassAntiProgramAttacker, 1, 0, 0, "Does 3d6 REZ to a Black ICE Program, or 2d6 REZ to a Non-Black ICE Program."),
+            new(ProgramDeckKrash, PortraitDefault, ProgramClassAntiPersonnelAttacker, 0, 0, 0, "Enemy Netrunner is forcibly and unsafely Jacked Out of the Architecture, suffering the effect of all Rezzed enemy Black ICE they've encountered in the Architecture as they leave."),
+            new(ProgramHellbolt, PortraitDefault, ProgramClassAntiPersonnelAttacker, 2, 0, 0, "Does 2d6 Damage direct to the enemy Netrunner's brain. Unless insulated, their Cyberdeck catches fire along with their clothing. Until they spend a Meat Action to put themselves out, they take 2 damage to their HP whenever they end their Turn. Multiple instances of this effect cannot stack."),
+            new(ProgramNervescrub, PortraitDefault, ProgramClassAntiPersonnelAttacker, 0, 0, 0, "Enemy Netrunner's INT, REF, and DEX are each lowered by 1d6 for the next hour (minimum 1). The effects are largely psychosomatic and leave no permanent effects."),
+            new(ProgramPoisonFlatline, PortraitDefault, ProgramClassAntiPersonnelAttacker, 0, 0, 0, "Destroys a single Non-Black ICE Program installed on the Netrunner target's Cyberdeck at random."),
+            new(ProgramSuperglue, PortraitDefault, ProgramClassAntiPersonnelAttacker, 2, 0, 0, "Enemy Netrunner cannot progress deeper into the Architecture or Jack Out safely for 1d6 Rounds (enemy Netrunner can still perform an unsafe Jack Out, though). Each copy of this Program can only be used once per Netrun."),
+            new(ProgramVrizzbolt, PortraitDefault, ProgramClassAntiPersonnelAttacker, 1, 0, 0, "Does 1d6 Damage direct to a Netrunner's brain and lowers the amount of total NET Actions the Netrunner can accomplish on their next Turn by 1 (minimum 2).")
         };
         #endregion
 
@@ -1085,6 +1066,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
             PopulateEmplacedDefenses();
         }
 
+
+
         // Private Methods
         private static void PopulateCombatants()
         {
@@ -1092,16 +1075,13 @@ namespace CyberpunkGameplayAssistant.Toolbox
             // TODO - loyalty stat
             // TODO - exec team portraits
             #region Company Bodyguard
-            Combatant companyBodyguard = new("Company Bodyguard", ExecTeamMember, PortraitAssassin, ArmorTypeSubdermal);
-            companyBodyguard.StatTable.Add(1, new() { 3, 7, 7, 4, 7, 6, 4, 8, 4 });
-            companyBodyguard.StatTable.Add(2, new() { 5, 8, 6, 2, 7, 8, 4, 8, 2 });
-            companyBodyguard.StatTable.Add(3, new() { 4, 8, 5, 3, 7, 8, 6, 6, 3 });
-            companyBodyguard.StatTable.Add(4, new() { 4, 7, 8, 4, 7, 7, 4, 7, 2 });
-            companyBodyguard.StatTable.Add(5, new() { 3, 8, 5, 2, 8, 7, 4, 6, 7 });
-            companyBodyguard.StatTable.Add(6, new() { 5, 7, 7, 2, 7, 6, 5, 7, 4 });
-            companyBodyguard.SkillsAtPlus2 = new() { SkillConcentration, SkillConversation, SkillEducation, SkillFirstAid, SkillHumanPerception, SkillLanguage, SkillLocalExpert, SkillPersuasion, SkillStealth };
-            companyBodyguard.SkillsAtPlus4 = new() { SkillAthletics, SkillEvasion, SkillInterrogation, SkillPerception, SkillResistTortureDrugs, SkillTactics };
-            companyBodyguard.SkillsAtPlus6 = new() { SkillHandgun, SkillBrawling };
+            Combatant companyBodyguard = new("Company Bodyguard", ExecTeamMember, PortraitDefault, ArmorTypeSubdermal);
+            companyBodyguard.SetStats(4, 8, 5, 3, 7, 8, 0, 6, 6, 3);
+            companyBodyguard.SetCalculatedStats();
+            companyBodyguard.SetBaseSkills();
+            companyBodyguard.SetSkillLevels(2, SkillConcentration, SkillConversation, SkillEducation, SkillFirstAid, SkillHumanPerception, SkillLanguage, SkillLocalExpert, SkillPersuasion, SkillStealth);
+            companyBodyguard.SetSkillLevels(4, SkillAthletics, SkillEvasion, SkillInterrogation, SkillPerception, SkillResistTortureDrugs, SkillTactics);
+            companyBodyguard.SetSkillLevels(6, SkillHandgun, SkillBrawling);
             companyBodyguard.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
             companyBodyguard.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
             companyBodyguard.AddGearSet(GearAgent);
@@ -1109,16 +1089,13 @@ namespace CyberpunkGameplayAssistant.Toolbox
             Combatants.Add(companyBodyguard);
             #endregion
             #region Company Driver
-            Combatant companyDriver = new("Company Driver", ExecTeamMember, PortraitAssassin, ArmorTypeLightArmorjack);
-            companyDriver.StatTable.Add(1, new() { 5, 8, 6, 4, 6, 5, 6, 5, 5 });
-            companyDriver.StatTable.Add(2, new() { 5, 7, 7, 5, 5, 7, 4, 7, 3 });
-            companyDriver.StatTable.Add(3, new() { 6, 8, 8, 4, 7, 4, 5, 6, 2 });
-            companyDriver.StatTable.Add(4, new() { 8, 7, 4, 5, 4, 7, 5, 6, 4 });
-            companyDriver.StatTable.Add(5, new() { 7, 8, 3, 5, 7, 6, 4, 6, 4 });
-            companyDriver.StatTable.Add(6, new() { 6, 8, 6, 6, 8, 5, 3, 5, 3 });
-            companyDriver.SkillsAtPlus2 = new() { SkillAthletics, SkillConcentration, SkillConversation, SkillEducation, SkillFirstAid, SkillHumanPerception, SkillLanguage, SkillLocalExpert, SkillPerception, SkillPersuasion };
-            companyDriver.SkillsAtPlus4 = new() { SkillBrawling, SkillEndurance, SkillEvasion, SkillLandVehicleTech, SkillPilotAirVehicle, SkillPilotSeaVehicle, SkillSeaVehicleTech, SkillStealth, SkillTracking };
-            companyDriver.SkillsAtPlus6 = new() { SkillDriveLandVehicle, SkillHandgun };
+            Combatant companyDriver = new("Company Driver", ExecTeamMember, PortraitDefault, ArmorTypeLightArmorjack);
+            companyDriver.SetStats(6, 8, 8, 4, 7, 4, 0, 5, 6, 2);
+            companyDriver.SetCalculatedStats();
+            companyDriver.SetBaseSkills();
+            companyDriver.SetSkillLevels(2, SkillAthletics, SkillConcentration, SkillConversation, SkillEducation, SkillFirstAid, SkillHumanPerception, SkillLanguage, SkillLocalExpert, SkillPerception, SkillPersuasion);
+            companyDriver.SetSkillLevels(4, SkillBrawling, SkillEndurance, SkillEvasion, SkillLandVehicleTech, SkillPilotAirVehicle, SkillPilotSeaVehicle, SkillSeaVehicleTech, SkillStealth, SkillTracking);
+            companyDriver.SetSkillLevels(6, SkillDriveLandVehicle, SkillHandgun);
             companyDriver.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
             companyDriver.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
             // TODO - vehicles
@@ -1126,15 +1103,12 @@ namespace CyberpunkGameplayAssistant.Toolbox
             Combatants.Add(companyDriver);
             #endregion
             #region Company Netrunner
-            Combatant companyNetrunner = new("Company Netrunner", ExecTeamMember, PortraitAssassin, ArmorTypeLightArmorjack);
-            companyNetrunner.StatTable.Add(1, new() { 6, 7, 8, 7, 5, 4, 5, 5, 3 });
-            companyNetrunner.StatTable.Add(2, new() { 7, 8, 4, 6, 8, 3, 4, 6, 4 });
-            companyNetrunner.StatTable.Add(3, new() { 5, 6, 8, 8, 6, 6, 4, 4, 3 });
-            companyNetrunner.StatTable.Add(4, new() { 7, 8, 5, 6, 4, 4, 6, 5, 5 });
-            companyNetrunner.StatTable.Add(5, new() { 5, 8, 8, 5, 5, 3, 6, 4, 6 });
-            companyNetrunner.StatTable.Add(6, new() { 8, 7, 6, 6, 4, 7, 4, 4, 4 });
-            companyNetrunner.SkillsAtPlus2 = new() { SkillInterface, SkillAthletics, SkillBrawling, SkillConcentration, SkillConversation, SkillEvasion, SkillFirstAid, SkillHumanPerception, SkillLanguage, SkillLocalExpert, SkillPerception, SkillPersuasion };
-            companyNetrunner.SkillsAtPlus4 = new() { SkillBasicTech, SkillCryptography, SkillCybertech, SkillEducation, SkillElectronicsSecurityTech, SkillForgery, SkillLibrarySearch, SkillHandgun, SkillStealth };
+            Combatant companyNetrunner = new("Company Netrunner", ExecTeamMember, PortraitDefault, ArmorTypeLightArmorjack);
+            companyNetrunner.SetStats(5, 6, 8, 8, 6, 6, 0, 4, 4, 3);
+            companyNetrunner.SetCalculatedStats();
+            companyNetrunner.SetBaseSkills();
+            companyNetrunner.SetSkillLevels(2, SkillInterface, SkillAthletics, SkillBrawling, SkillConcentration, SkillConversation, SkillEvasion, SkillFirstAid, SkillHumanPerception, SkillLanguage, SkillLocalExpert, SkillPerception, SkillPersuasion);
+            companyNetrunner.SetSkillLevels(4, SkillBasicTech, SkillCryptography, SkillCybertech, SkillEducation, SkillElectronicsSecurityTech, SkillForgery, SkillLibrarySearch, SkillHandgun, SkillStealth);
             companyNetrunner.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
             companyNetrunner.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
             companyNetrunner.AddGearSet(GearAgent);
@@ -1143,20 +1117,17 @@ namespace CyberpunkGameplayAssistant.Toolbox
             Combatants.Add(companyNetrunner);
             #endregion
             #region Company Technician
-            Combatant companyTechnician = new("Company Technician", ExecTeamMember, PortraitAssassin, ArmorTypeLightArmorjack);
-            companyTechnician.StatTable.Add(1, new() { 8, 8, 5, 7, 3, 4, 4, 5, 6 });
-            companyTechnician.StatTable.Add(2, new() { 8, 7, 6, 8, 3, 5, 5, 4, 4 });
-            companyTechnician.StatTable.Add(3, new() { 8, 6, 5, 8, 4, 3, 3, 7, 6 });
-            companyTechnician.StatTable.Add(4, new() { 8, 8, 5, 7, 4, 4, 4, 5, 5 });
-            companyTechnician.StatTable.Add(5, new() { 7, 7, 3, 7, 5, 3, 6, 6, 3 });
-            companyTechnician.StatTable.Add(6, new() { 7, 8, 5, 8, 6, 3, 3, 5, 5 });
-            companyTechnician.SkillsAtPlus2 = new() { SkillAthletics, SkillBrawling, SkillConcentration, SkillConversation, SkillEvasion, SkillFirstAid, SkillHumanPerception, SkillLanguage, SkillLocalExpert, SkillPerception, SkillPersuasion, SkillStealth };
-            companyTechnician.SkillsAtPlus4 = new() { SkillEducation, SkillHandgun, SkillWeaponstech };
-            companyTechnician.SkillsAtPlus6 = new() { SkillBasicTech, SkillCybertech, SkillElectronicsSecurityTech };
+            Combatant companyTechnician = new("Company Technician", ExecTeamMember, PortraitDefault, ArmorTypeLightArmorjack);
+            companyTechnician.SetStats(8, 6, 5, 8, 4, 3, 0, 3, 7, 6);
+            companyTechnician.SetCalculatedStats();
+            companyTechnician.SetBaseSkills();
+            companyTechnician.SetSkillLevels(2, SkillAthletics, SkillBrawling, SkillConcentration, SkillConversation, SkillEvasion, SkillFirstAid, SkillHumanPerception, SkillLanguage, SkillLocalExpert, SkillPerception, SkillPersuasion, SkillStealth);
+            companyTechnician.SetSkillLevels(4, SkillEducation, SkillHandgun, SkillWeaponstech);
+            companyTechnician.SetSkillLevels(6, SkillBasicTech, SkillCybertech, SkillElectronicsSecurityTech);
             companyTechnician.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
             companyTechnician.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
             companyTechnician.AddCyberwareSet(CyberwareToolHand, CyberwareCyberaudioSuite, CyberwareInternalAgent, CyberwareBugDetector, CyberwareAudioRecorder);
-            Combatants.Add(companyNetrunner);
+            Combatants.Add(companyTechnician);
             #endregion
 
             // pg 158 - Lawman Backup
@@ -1465,7 +1436,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             Combatants.Add(outrider);
             #endregion
             #region Pyro
-            Combatant pyro = new("Pyro", PortraitPyro, ArmorTypeLightArmorjack);
+            Combatant pyro = new("Pyro", PortraitDefault, ArmorTypeLightArmorjack);
             pyro.SetStats(5, 8, 6, 7, 4, 4, 0, 6, 5, 3);
             pyro.SetCalculatedStats();
             pyro.SetBaseSkills();
@@ -1505,7 +1476,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             Combatants.Add(pyro);
             #endregion
             #region Cyberpsycho
-            Combatant cyberpsycho = new("Cyberpsycho", PortraitCyberpsycho, ArmorTypeSubdermal);
+            Combatant cyberpsycho = new("Cyberpsycho", PortraitDefault, ArmorTypeSubdermal);
             cyberpsycho.SetStats(5, 8, 8, 5, 4, 7, 0, 8, 10, 0);
             cyberpsycho.SetCalculatedStats();
             cyberpsycho.SetBaseSkills();
@@ -1611,7 +1582,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             imp.SetDemonStats(15, 3, 2, 14);
             Demons.Add(imp);
 
-            Combatant efreet = new("Efreet", PortraitAssassin);
+            Combatant efreet = new("Efreet", PortraitDefault);
             efreet.SetDemonStats(25, 3, 2, 14);
             Demons.Add(efreet);
 
