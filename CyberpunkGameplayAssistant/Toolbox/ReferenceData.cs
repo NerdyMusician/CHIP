@@ -970,6 +970,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string ProgramSuperglue = "Superglue";
         public const string ProgramVrizzbolt = "Vrizzbolt";
 
+        public const string BlackIceKiller = "Killer";
+
         // TODO - program portraits
         public static readonly List<CyberdeckProgram> CyberdeckPrograms = new()
         {
@@ -1089,11 +1091,76 @@ namespace CyberpunkGameplayAssistant.Toolbox
             // pg 155 - Exec Company Aides
             // TODO - loyalty stat
             // TODO - exec team portraits
-            Combatant companyBodyguard = new Combatant("Company Bodyguard", ExecTeamMember, PortraitAssassin, ArmorTypeLightArmorjack);
+            #region Company Bodyguard
+            Combatant companyBodyguard = new("Company Bodyguard", ExecTeamMember, PortraitAssassin, ArmorTypeSubdermal);
             companyBodyguard.StatTable.Add(1, new() { 3, 7, 7, 4, 7, 6, 4, 8, 4 });
             companyBodyguard.StatTable.Add(2, new() { 5, 8, 6, 2, 7, 8, 4, 8, 2 });
             companyBodyguard.StatTable.Add(3, new() { 4, 8, 5, 3, 7, 8, 6, 6, 3 });
-            // TODO - continue here
+            companyBodyguard.StatTable.Add(4, new() { 4, 7, 8, 4, 7, 7, 4, 7, 2 });
+            companyBodyguard.StatTable.Add(5, new() { 3, 8, 5, 2, 8, 7, 4, 6, 7 });
+            companyBodyguard.StatTable.Add(6, new() { 5, 7, 7, 2, 7, 6, 5, 7, 4 });
+            companyBodyguard.SkillsAtPlus2 = new() { SkillConcentration, SkillConversation, SkillEducation, SkillFirstAid, SkillHumanPerception, SkillLanguage, SkillLocalExpert, SkillPersuasion, SkillStealth };
+            companyBodyguard.SkillsAtPlus4 = new() { SkillAthletics, SkillEvasion, SkillInterrogation, SkillPerception, SkillResistTortureDrugs, SkillTactics };
+            companyBodyguard.SkillsAtPlus6 = new() { SkillHandgun, SkillBrawling };
+            companyBodyguard.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
+            companyBodyguard.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
+            companyBodyguard.AddGearSet(GearAgent);
+            companyBodyguard.AddCyberwareSet(CyberwareCybereye, CyberwareLowLightInfraredUv, CyberwareCyberarm, CyberwareGrappleHand, CyberwarePopupRangedWeapon, CyberwareRealskinnCovering);
+            Combatants.Add(companyBodyguard);
+            #endregion
+            #region Company Driver
+            Combatant companyDriver = new("Company Driver", ExecTeamMember, PortraitAssassin, ArmorTypeLightArmorjack);
+            companyDriver.StatTable.Add(1, new() { 5, 8, 6, 4, 6, 5, 6, 5, 5 });
+            companyDriver.StatTable.Add(2, new() { 5, 7, 7, 5, 5, 7, 4, 7, 3 });
+            companyDriver.StatTable.Add(3, new() { 6, 8, 8, 4, 7, 4, 5, 6, 2 });
+            companyDriver.StatTable.Add(4, new() { 8, 7, 4, 5, 4, 7, 5, 6, 4 });
+            companyDriver.StatTable.Add(5, new() { 7, 8, 3, 5, 7, 6, 4, 6, 4 });
+            companyDriver.StatTable.Add(6, new() { 6, 8, 6, 6, 8, 5, 3, 5, 3 });
+            companyDriver.SkillsAtPlus2 = new() { SkillAthletics, SkillConcentration, SkillConversation, SkillEducation, SkillFirstAid, SkillHumanPerception, SkillLanguage, SkillLocalExpert, SkillPerception, SkillPersuasion };
+            companyDriver.SkillsAtPlus4 = new() { SkillBrawling, SkillEndurance, SkillEvasion, SkillLandVehicleTech, SkillPilotAirVehicle, SkillPilotSeaVehicle, SkillSeaVehicleTech, SkillStealth, SkillTracking };
+            companyDriver.SkillsAtPlus6 = new() { SkillDriveLandVehicle, SkillHandgun };
+            companyDriver.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
+            companyDriver.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
+            // TODO - vehicles
+            companyDriver.AddCyberwareSet(CyberwareRadarSonarImplant, CyberwareCyberaudioSuite, CyberwareInternalAgent, CyberwareHomingtracer, CyberwareRadarDetector);
+            Combatants.Add(companyDriver);
+            #endregion
+            #region Company Netrunner
+            Combatant companyNetrunner = new("Company Netrunner", ExecTeamMember, PortraitAssassin, ArmorTypeLightArmorjack);
+            companyNetrunner.StatTable.Add(1, new() { 6, 7, 8, 7, 5, 4, 5, 5, 3 });
+            companyNetrunner.StatTable.Add(2, new() { 7, 8, 4, 6, 8, 3, 4, 6, 4 });
+            companyNetrunner.StatTable.Add(3, new() { 5, 6, 8, 8, 6, 6, 4, 4, 3 });
+            companyNetrunner.StatTable.Add(4, new() { 7, 8, 5, 6, 4, 4, 6, 5, 5 });
+            companyNetrunner.StatTable.Add(5, new() { 5, 8, 8, 5, 5, 3, 6, 4, 6 });
+            companyNetrunner.StatTable.Add(6, new() { 8, 7, 6, 6, 4, 7, 4, 4, 4 });
+            companyNetrunner.SkillsAtPlus2 = new() { SkillInterface, SkillAthletics, SkillBrawling, SkillConcentration, SkillConversation, SkillEvasion, SkillFirstAid, SkillHumanPerception, SkillLanguage, SkillLocalExpert, SkillPerception, SkillPersuasion };
+            companyNetrunner.SkillsAtPlus4 = new() { SkillBasicTech, SkillCryptography, SkillCybertech, SkillEducation, SkillElectronicsSecurityTech, SkillForgery, SkillLibrarySearch, SkillHandgun, SkillStealth };
+            companyNetrunner.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
+            companyNetrunner.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
+            companyNetrunner.AddGearSet(GearAgent);
+            companyNetrunner.AddCyberwareSet(CyberwareNeuralLink, CyberwareChipwareSocket, CyberwarePainEditor, CyberwareInterfacePlugs, CyberwareCybereye, CyberwareCybereye, CyberwareVirtuality);
+            companyNetrunner.AddCyberdeckPrograms(ProgramSword, ProgramSword, BlackIceKiller, ProgramWorm, ProgramWorm, ProgramArmor);
+            Combatants.Add(companyNetrunner);
+            #endregion
+            #region Company Technician
+            Combatant companyTechnician = new("Company Technician", ExecTeamMember, PortraitAssassin, ArmorTypeLightArmorjack);
+            companyTechnician.StatTable.Add(1, new() { 8, 8, 5, 7, 3, 4, 4, 5, 6 });
+            companyTechnician.StatTable.Add(2, new() { 8, 7, 6, 8, 3, 5, 5, 4, 4 });
+            companyTechnician.StatTable.Add(3, new() { 8, 6, 5, 8, 4, 3, 3, 7, 6 });
+            companyTechnician.StatTable.Add(4, new() { 8, 8, 5, 7, 4, 4, 4, 5, 5 });
+            companyTechnician.StatTable.Add(5, new() { 7, 7, 3, 7, 5, 3, 6, 6, 3 });
+            companyTechnician.StatTable.Add(6, new() { 7, 8, 5, 8, 6, 3, 3, 5, 5 });
+            companyTechnician.SkillsAtPlus2 = new() { SkillAthletics, SkillBrawling, SkillConcentration, SkillConversation, SkillEvasion, SkillFirstAid, SkillHumanPerception, SkillLanguage, SkillLocalExpert, SkillPerception, SkillPersuasion, SkillStealth };
+            companyTechnician.SkillsAtPlus4 = new() { SkillEducation, SkillHandgun, SkillWeaponstech };
+            companyTechnician.SkillsAtPlus6 = new() { SkillBasicTech, SkillCybertech, SkillElectronicsSecurityTech };
+            companyTechnician.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
+            companyTechnician.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
+            companyTechnician.AddCyberwareSet(CyberwareToolHand, CyberwareCyberaudioSuite, CyberwareInternalAgent, CyberwareBugDetector, CyberwareAudioRecorder);
+            Combatants.Add(companyNetrunner);
+            #endregion
+
+            // pg 158 - Lawman Backup
+
 
             // pg 412 - Mooks and Grunts
             #region Bodyguard

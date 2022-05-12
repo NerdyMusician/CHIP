@@ -17,11 +17,17 @@ namespace CyberpunkGameplayAssistant.Models
 
         // Properties
         public Dictionary<int, List<int>> StatTable { get; set; }
+        public List<string> SkillsAtPlus2 { get; set; }
+        public List<string> SkillsAtPlus4 { get; set; }
+        public List<string> SkillsAtPlus6 { get; set; }
 
         // Public Methods
         public void InitializeExecTeamCollections()
         {
             StatTable = new();
+            SkillsAtPlus2 = new();
+            SkillsAtPlus4 = new();
+            SkillsAtPlus6 = new();
         }
 
 
