@@ -67,19 +67,13 @@ namespace CyberpunkGameplayAssistant.Models
         {
             Combatant combatant = (Combatant)param;
             int attackRoll = HelperMethods.RollD10(true);
-            if (Quality == ReferenceData.WeaponQualityPoor && attackRoll <= 1) { HelperMethods.AddToGameplayLog($"{combatant.DisplayName}'s {Name} malfunctioned!", ReferenceData.MessageWeaponAttack); return; }
-            if (UsesAmmo)
-            {
-                if (!HasEnoughAmmo(1)) { return; }
-                CurrentClipQuantity--;
-            }
+            if (DidWeaponMalfunction(attackRoll, combatant.Name)) { return; }
+            if (!CheckAndUseAmmo(1)) { return; }
             int damageDice = ReferenceData.WeaponRepository.GetDamage(Type);
-            string relevantSkill = ReferenceData.WeaponRepository.GetSkill(Type);
-            int attackBonus = combatant.GetSkillTotal(relevantSkill);
-            int attackResult = attackRoll + attackBonus;
+            int attackBonus = combatant.GetSkillTotal(ReferenceData.WeaponRepository.GetSkill(Type));
+            int attackPenalty = combatant.GetAttackInjuryPenalty(Type);
             int damage = HelperMethods.RollDamage(damageDice, out bool criticalInjury);
-            string output = $"{combatant.DisplayName} attacks with {Name}\nAttack: {attackResult}\nDamage: {damage} {(criticalInjury ? "CRIT" : "")}";
-            if (ReferenceData.DebugMode) { output += $"\nATK DBG: ROLL:{attackRoll}, SKILL+STAT:{attackBonus}"; }
+            string output = GenerateWeaponOutput(combatant, attackRoll, attackBonus, attackPenalty, damage, criticalInjury);
             HelperMethods.AddToGameplayLog(output, ReferenceData.MessageWeaponAttack);
             HelperMethods.PlayWeaponSound(Type);
         }
@@ -89,14 +83,12 @@ namespace CyberpunkGameplayAssistant.Models
             if (!ReferenceData.AutofireTable.ContainsKey(Type)) { HelperMethods.NotifyUser("This weapon does not have Autofire"); return; }
             Combatant combatant = (Combatant)param;
             int attackRoll = HelperMethods.RollD10(true);
-            if (Quality == ReferenceData.WeaponQualityPoor && attackRoll <= 1) { HelperMethods.AddToGameplayLog($"{combatant.DisplayName}'s {Name} malfunctioned!", ReferenceData.MessageWeaponAttack); return; }
-            if (!HasEnoughAmmo(10)) { return; }
-            CurrentClipQuantity -= 10;
+            if (DidWeaponMalfunction(attackRoll, combatant.Name)) { return; }
+            if (!CheckAndUseAmmo(10)) { return; }
             int attackBonus = combatant.GetSkillTotal(ReferenceData.SkillAutofire);
-            int attackResult = attackRoll + attackBonus;
+            int attackPenalty = combatant.GetAttackInjuryPenalty(Type);
             int damage = HelperMethods.RollDamage(2, out bool criticalInjury);
-            string output = $"{combatant.DisplayName} uses {Name}\nAttack: {attackResult}";
-            if (ReferenceData.DebugMode) { output += $"\nATK DBG: ROLL:{attackRoll}, SKILL+STAT:{attackBonus}"; }
+            string output = GenerateWeaponOutput(combatant, attackRoll, attackBonus, attackPenalty, damage, criticalInjury);
             for (int i = 0; i < ReferenceData.AutofireTable[Type]; i++)
             {
                 output += $"\nDamage x{(i + 1)}: {(damage * (i + 1))}";
@@ -110,20 +102,13 @@ namespace CyberpunkGameplayAssistant.Models
         {
             Combatant combatant = (Combatant)param;
             int attackRoll = HelperMethods.RollD10(true);
-            if (Quality == ReferenceData.WeaponQualityPoor && attackRoll <= 1) { HelperMethods.AddToGameplayLog($"{combatant.DisplayName}'s {Name} malfunctioned!", ReferenceData.MessageWeaponAttack); return; }
-            if (UsesAmmo)
-            {
-                if (!HasEnoughAmmo(1)) { return; }
-                CurrentClipQuantity--;
-            }
+            if (DidWeaponMalfunction(attackRoll, combatant.Name)) { return; }
+            if (!CheckAndUseAmmo(1)) { return; }
             int damageDice = ReferenceData.WeaponRepository.GetDamage(Type);
-            string relevantSkill = ReferenceData.WeaponRepository.GetSkill(Type);
-            int attackBonus = combatant.GetSkillTotal(relevantSkill);
-            
-            int attackResult = attackRoll + attackBonus - 8; //pg170
+            int attackBonus = combatant.GetSkillTotal(ReferenceData.WeaponRepository.GetSkill(Type));
+            int attackPenalty = combatant.GetAttackInjuryPenalty(Type) + 8; // pg 170
             int damage = HelperMethods.RollDamage(damageDice, out bool criticalInjury);
-            string output = $"{combatant.DisplayName} aims {Name}\nAttack: {attackResult}\nDamage: {damage} {(criticalInjury ? "CRIT" : "")}";
-            if (ReferenceData.DebugMode) { output += $"\nATK DBG: ROLL:{attackRoll}, SKILL+STAT:{attackBonus}"; }
+            string output = GenerateWeaponOutput(combatant, attackRoll, attackBonus, attackPenalty, damage, criticalInjury);
             HelperMethods.AddToGameplayLog(output, ReferenceData.MessageWeaponAttack);
             HelperMethods.PlayWeaponSound(Type);
         }
@@ -143,11 +128,34 @@ namespace CyberpunkGameplayAssistant.Models
         }
 
         // Private Methods
+        private bool CheckAndUseAmmo(int ammoRequired)
+        {
+            if (!UsesAmmo) { return true; }
+            if (!HasEnoughAmmo(ammoRequired)) { return false; }
+            CurrentClipQuantity -= ammoRequired;
+            return true;
+        }
         private bool HasEnoughAmmo(int ammoRequired)
         {
             bool hasEnoughAmmo = ammoRequired <= CurrentClipQuantity;
             if (!hasEnoughAmmo) { ThrowError("Not enough ammo in clip"); }
             return hasEnoughAmmo;
+        }
+        private bool DidWeaponMalfunction(int attackRoll, string combatantName)
+        {
+            if (Quality == ReferenceData.WeaponQualityPoor && attackRoll <= 1) 
+            { 
+                HelperMethods.AddToGameplayLog($"{combatantName}'s {Name} malfunctioned!", ReferenceData.MessageWeaponAttack); 
+                return true; 
+            }
+            return false;
+        }
+        private string GenerateWeaponOutput(Combatant combatant, int attackRoll, int attackBonus, int attackPenalty, int damage, bool criticalInjury)
+        {
+            int attackResult = attackRoll + attackBonus - combatant.GetAttackInjuryPenalty(Type);
+            string output = $"{combatant.DisplayName} attacks with {Name}\nAttack: {attackResult}\nDamage: {damage} {(criticalInjury ? "CRIT" : "")}";
+            if (ReferenceData.DebugMode) { output += $"\nATK DBG: ROLL:{attackRoll}, SKILL+STAT:{attackBonus}, PENALTY:{attackPenalty}"; }
+            return output;
         }
 
     }

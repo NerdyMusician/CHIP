@@ -83,7 +83,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         // Image Locations
         private const string ImageBase = "/Resources/Combatants/";
-        private const string PortraitDefault = $"{ImageBase}TokenLogo.png";
+        public const string PortraitDefault = $"{ImageBase}TokenLogo.png";
         private const string PortraitBodyguard = $"{ImageBase}TokenBodyguard.png";
         private const string PortraitBoosterganger = $"{ImageBase}TokenBoosterganger.png";
         private const string PortraitCovertOperative = $"{ImageBase}TokenCovertOperative.png";

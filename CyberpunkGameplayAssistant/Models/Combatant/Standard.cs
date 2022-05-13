@@ -606,6 +606,33 @@ namespace CyberpunkGameplayAssistant.Models
             UpdateWoundState();
             ReloadAllWeapons();
         }
+        public int GetAttackInjuryPenalty(string weaponType)
+        {
+            int penalty = GetAllActionInjuryPenalty();
+            if (weaponType.Contains("Melee")) { penalty += GetMeleeWeaponInjuryPenalty(); }
+            else { penalty += GetRangedWeaponInjuryPenalty(); }
+            return penalty;
+        }
+        private int GetMeleeWeaponInjuryPenalty()
+        {
+            int penalty = 0;
+            if (CriticalInjuries.Contains(ReferenceData.CriticalInjuryTornMuscle)) { penalty += 2; }
+            return penalty;
+        }
+        private int GetRangedWeaponInjuryPenalty()
+        {
+            int penalty = 0;
+            if (CriticalInjuries.Contains(ReferenceData.CriticalInjuryLostEye)) { penalty += 4; }
+            if (CriticalInjuries.Contains(ReferenceData.CriticalInjuryDamagedEye)) { penalty += 2; }
+            return penalty;
+        }
+        private int GetAllActionInjuryPenalty()
+        {
+            int penalty = 0; 
+            if (CriticalInjuries.Contains(ReferenceData.CriticalInjuryBrainInjury)) { penalty += 2; }
+            if (CriticalInjuries.Contains(ReferenceData.CriticalInjuryConcussion)) { penalty += 2; }
+            return penalty;
+        }
 
         // Private Methods
         private void InitializeLists()

@@ -491,7 +491,7 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand AddPlayer => new RelayCommand(param => DoAddPlayer());
         private void DoAddPlayer()
         {
-            Players.Add(new() { Name = "New Player", Type = ReferenceData.Player });
+            Players.Add(new() { Name = "New Player", Type = ReferenceData.Player, PortraitFilePath = ReferenceData.PortraitDefault });
             ActivePlayer = Players.Last();
         }
         public ICommand SortPlayers => new RelayCommand(param => DoSortPlayers());

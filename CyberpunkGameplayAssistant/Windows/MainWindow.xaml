@@ -643,7 +643,7 @@
                                                                                                     <Border Style="{StaticResource SegmentTile}">
                                                                                                         <StackPanel Orientation="Horizontal">
                                                                                                             <Separator />
-                                                                                                            <TextBlock Text="{Binding Name, FallbackValue=Dismembered Hand}" Width="128" VerticalAlignment="Center" />
+                                                                                                            <TextBlock Text="{Binding Name, FallbackValue=Dismembered Hand}" Width="128" VerticalAlignment="Center" ToolTip="{Binding Description}" />
                                                                                                             <Separator />
                                                                                                             <cc:IconButton ImageResource="{StaticResource Icon_X}" Command="{Binding RemoveInjury}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
                                                                                                         </StackPanel>

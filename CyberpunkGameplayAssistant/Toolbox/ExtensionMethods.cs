@@ -162,6 +162,10 @@ namespace CyberpunkGameplayAssistant.Toolbox
             }
             return output;
         }
+        public static bool Contains(this ObservableCollection<CriticalInjury> injuries, string injuryName)
+        {
+            return injuries.FirstOrDefault(i => i.Name == injuryName) != null;
+        }
     }
 }
 #pragma warning restore CS8602 // Dereference of a possibly null reference.

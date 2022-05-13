@@ -1,5 +1,6 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
 using System;
+using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
 {
@@ -30,6 +31,13 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get => _Description;
             set => SetAndNotify(ref _Description, value);
+        }
+
+        // Commands
+        public ICommand RemoveInjury => new RelayCommand(DoRemoveInjury);
+        private void DoRemoveInjury(object param)
+        {
+            (param as Combatant)!.CriticalInjuries.Remove(this);
         }
 
     }
