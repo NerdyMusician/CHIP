@@ -80,6 +80,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         // Error Messages
         public const string ErrorNoDemonAvailableForActiveDefense = "No Demon available to run this Active Defense.";
+        public const string ErrorNotEnoughWeaponOptions = "Not enough weapon options for this combatant to fulfill the number of options allowed";
 
         // Image Locations
         private const string ImageBase = "/Resources/Combatants/";
@@ -98,11 +99,14 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         // Audio Locations
         private static readonly string AudioBase = $"{CurrentDirectory}Resources/Audio/";
-        public static readonly string AudioAutofire = $"{AudioBase}Autofire.mp3";
-        public static readonly string AudioDeepGunshot = $"{AudioBase}DeepGunshot.mp3";
-        public static readonly string AudioExplosion = $"{AudioBase}Explosion.mp3";
-        public static readonly string AudioGunshot = $"{AudioBase}Gunshot.mp3";
-        public static readonly string AudioReload = $"{AudioBase}Reload.mp3";
+        public static readonly string AudioAutofire = $"{AudioBase}Autofire.mp3"; //https://freesound.org/people/EFlexMusic/sounds/393671/
+        public static readonly string AudioBow = $"{AudioBase}Bow.mp3"; //https://freesound.org/people/Erdie/sounds/65733/
+        public static readonly string AudioDeepGunshot = $"{AudioBase}DeepGunshot.mp3"; //https://freesound.org/people/FilmmakersManual/sounds/522282/
+        public static readonly string AudioExplosion = $"{AudioBase}Explosion.mp3"; //https://freesound.org/people/newlocknew/sounds/588386/
+        public static readonly string AudioGunshot = $"{AudioBase}Gunshot.mp3"; //https://freesound.org/people/michorvath/sounds/427595/
+        public static readonly string AudioMalfunction = $"{AudioBase}Malfunction.mp3"; //https://freesound.org/people/gristi/sounds/562198/
+        public static readonly string AudioMelee = $"{AudioBase}Melee.mp3"; //https://freesound.org/people/Kreastricon62/sounds/550378/
+        public static readonly string AudioReload = $"{AudioBase}Reload.mp3"; //https://freesound.org/people/nioczkus/sounds/396331/
 
         // Wound States
         public const string WoundStateUnharmed = "Unharmed";
@@ -464,10 +468,10 @@ namespace CyberpunkGameplayAssistant.Toolbox
             new(ArmorTypeKevlar, 7, 0),
             new(ArmorTypeLightArmorjack, 11, 0),
             new(ArmorTypeBodyweightSuit, 11, 0),
-            new(ArmorTypeMediumArmorjack, 12, -2),
-            new(ArmorTypeHeavyArmorjack, 13, -2),
-            new(ArmorTypeFlak, 15, -4),
-            new(ArmorTypeMetalgear, 18, -4),
+            new(ArmorTypeMediumArmorjack, 12, 2),
+            new(ArmorTypeHeavyArmorjack, 13, 2),
+            new(ArmorTypeFlak, 15, 4),
+            new(ArmorTypeMetalgear, 18, 4),
             new(ArmorTypeSubdermal, 11, 0)
         };
 
@@ -509,6 +513,10 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         public static Dictionary<string, string> WeaponSounds = new()
         {
+            { WeaponTypeLightMelee, AudioMelee },
+            { WeaponTypeMediumMelee, AudioMelee },
+            { WeaponTypeHeavyMelee, AudioMelee },
+            { WeaponTypeVeryHeavyMelee, AudioMelee },
             { WeaponTypeMediumPistol, AudioGunshot },
             { WeaponTypeHeavyPistol, AudioGunshot },
             { WeaponTypeVeryHeavyPistol, AudioDeepGunshot },
@@ -1674,16 +1682,13 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
             Combatant turret = new("Automated Turret", PortraitNetrunner);
             turret.SetEmplacedDefenseStats(14, 25, 17);
-            turret.AddWeapon(WeaponTypeAssaultRifle, WeaponQualityStandard);
-            turret.AddWeapon(WeaponTypeFlamethrower, WeaponQualityStandard);
-            turret.AddWeapon(WeaponTypeDartgun, WeaponQualityStandard);
-            turret.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
-            turret.AddWeapon(WeaponTypeHeavySmg, WeaponQualityStandard);
-            turret.AddAmmo(AmmoTypeRifle, 25);
-            turret.AddAmmo(AmmoTypeIncendiaryShell, 4);
-            turret.AddAmmo(AmmoTypeDart, 8);
-            turret.AddAmmo(AmmoTypeVeryHeavyPistol, 8); // armor piercing
-            turret.AddAmmo(AmmoTypeHeavyPistol, 40);
+            turret.WeaponOptionsAllowed = 1;
+            turret.ManualWeaponOptionSelection = true;
+            turret.AddWeaponOption(WeaponTypeAssaultRifle, WeaponQualityStandard, AmmoTypeRifle, 25);
+            turret.AddWeaponOption(WeaponTypeFlamethrower, WeaponQualityStandard, AmmoTypeIncendiaryShell, 4);
+            turret.AddWeaponOption(WeaponTypeDartgun, WeaponQualityStandard, AmmoTypeDart, 8);
+            turret.AddWeaponOption(WeaponTypeVeryHeavyPistol, WeaponQualityStandard, AmmoTypeVeryHeavyPistol, 8);
+            turret.AddWeaponOption(WeaponTypeHeavySmg, WeaponQualityStandard, AmmoTypeHeavyPistol, 40);
             EmplacedDefenses.Add(turret);
 
         }

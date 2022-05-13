@@ -327,6 +327,7 @@ namespace CyberpunkGameplayAssistant.Models
                         if (existingCreatureCount > 25) { break; }
                         newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCreatureCount));
                         newCombatant.Initiative = 60; // Top(er) of the order force
+                        newCombatant.AddWeaponOptionsToWeapons();
                         newCombatant.UpdateWoundState();
                         AllCombatants.Add(newCombatant);
                     }
@@ -544,7 +545,7 @@ namespace CyberpunkGameplayAssistant.Models
                             string ammoType = ReferenceData.WeaponRepository.First(w => w.Type == weapon.Type).AmmoType;
                             ammoLoot.AddPlus(ammoType, weapon.CurrentClipQuantity);
                         }
-                        weaponLoot.AddPlus(weapon.Name, 1);
+                        weaponLoot.AddPlus($"{weapon.Name} ({weapon.Quality})", 1);
                     }
                     foreach (Gear gear in combatant.GearInventory)
                     {

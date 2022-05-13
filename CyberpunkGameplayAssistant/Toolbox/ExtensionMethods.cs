@@ -142,6 +142,19 @@ namespace CyberpunkGameplayAssistant.Toolbox
             }
             return records;
         }
+        public static List<NamedRecord> ToNamedRecordList(this List<WeaponOption> weaponOptions)
+        {
+            List<NamedRecord> records = new();
+            foreach (WeaponOption weapon in weaponOptions)
+            {
+                records.Add(new(weapon.WeaponType, string.Empty));
+            }
+            return records;
+        }
+        public static string AOrAn(this string word)
+        {
+            return ReferenceData.Vowels.ToList().Contains(word[0].ToString()) ? $"an {word}" : $"a {word}";
+        }
         public static CriticalInjury ToCriticalInjury(this NamedRecord record)
         {
             return new(record.Name, record.Description);

@@ -55,24 +55,11 @@ namespace CyberpunkGameplayAssistant.Models
         private void DoRollStat(object param)
         {
             Combatant combatant = param as Combatant;
-            string output = $"{combatant.DisplayName} made a {Name} check\n";
-            int result = HelperMethods.RollD10();
-            int stat = combatant.CalculatedStats.GetValue(Name);
-            if (new List<string> { ReferenceData.StatReflexes, ReferenceData.StatDexterity, ReferenceData.StatMovement }.Contains(Name))
-            {
-                stat -= ReferenceData.ArmorTable.GetPenalty(combatant.ArmorType);
-            }
-            output += $"Result: {result + stat}\n";
-            HelperMethods.AddToGameplayLog(output, ReferenceData.MessageStatCheck);
-        }
-        public ICommand RollBlackIceStat => new RelayCommand(DoRollBlackIceStat);
-        private void DoRollBlackIceStat(object param)
-        {
-            Combatant combatant = param as Combatant;
-            string output = $"{combatant.DisplayName} made {HelperMethods.AorAn(Name)} {Name} roll\n";
-            int result = HelperMethods.RollD10();
-            output += $"Result: {result + Value}\n";
-            if (ReferenceData.DebugMode) { output += $"DBG: [{result}] + {Value}"; }
+            int diceRoll = HelperMethods.RollD10();
+            int penalty = 0; // TODO - critical injuries
+            string output = $"{combatant.DisplayName} made {Name.AOrAn()} roll";
+            output += $"\nResult: {diceRoll + Value + penalty}";
+            if (ReferenceData.DebugMode) { output += $"\nDEBUG: ROLL: {diceRoll}, STAT: {Value}, PENALTY: {penalty}"; }
             HelperMethods.AddToGameplayLog(output, ReferenceData.MessageBlackIceStat);
         }
 

@@ -596,7 +596,7 @@ namespace CyberpunkGameplayAssistant.Models
         public void UpdateDefenseWoundState()
         {
             string woundState = ReferenceData.DefenseStateOperational;
-            if (CurrentHitPoints == 0) { woundState = ReferenceData.DefenseStateDestroyed; }
+            if (CurrentHitPoints == 0) { woundState = ReferenceData.DefenseStateDestroyed; IsDead = true; }
             WoundState = woundState;
         }
         public void ReadyUpActiveDefense(int count)
@@ -656,6 +656,7 @@ namespace CyberpunkGameplayAssistant.Models
             StandardActions = new();
             CriticalInjuries = new();
             CyberdeckPrograms = new();
+            WeaponOptions = new();
         }
         private void AddGear(string name)
         {

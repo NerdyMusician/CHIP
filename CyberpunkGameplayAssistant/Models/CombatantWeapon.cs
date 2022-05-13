@@ -145,7 +145,8 @@ namespace CyberpunkGameplayAssistant.Models
         {
             if (Quality == ReferenceData.WeaponQualityPoor && attackRoll <= 1) 
             { 
-                HelperMethods.AddToGameplayLog($"{combatantName}'s {Name} malfunctioned!", ReferenceData.MessageWeaponAttack); 
+                HelperMethods.AddToGameplayLog($"{combatantName}'s {Name} malfunctioned!", ReferenceData.MessageWeaponAttack);
+                HelperMethods.PlayMalfunctionSound();
                 return true; 
             }
             return false;
@@ -154,7 +155,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             int attackResult = attackRoll + attackBonus - combatant.GetAttackInjuryPenalty(Type);
             string output = $"{combatant.DisplayName} attacks with {Name}\nAttack: {attackResult}\nDamage: {damage} {(criticalInjury ? "CRIT" : "")}";
-            if (ReferenceData.DebugMode) { output += $"\nATK DBG: ROLL:{attackRoll}, SKILL+STAT:{attackBonus}, PENALTY:{attackPenalty}"; }
+            if (ReferenceData.DebugMode) { output += $"\nDEBUG: ROLL:{attackRoll}, SKILL+STAT:{attackBonus}, PENALTY:{attackPenalty}"; }
             return output;
         }
 
