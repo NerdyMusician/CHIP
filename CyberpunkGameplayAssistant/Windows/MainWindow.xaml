@@ -849,7 +849,7 @@
                                                                                 <ItemsControl ItemsSource="{Binding BaseStats}">
                                                                                     <ItemsControl.ItemTemplate>
                                                                                         <DataTemplate>
-                                                                                            <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnStat}}" Text="{Binding Name}" Width="92" Command="{Binding RollBlackIceStat}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
+                                                                                            <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnStat}}" Text="{Binding Name}" Width="92" Command="{Binding RollStat}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
                                                                                         </DataTemplate>
                                                                                     </ItemsControl.ItemTemplate>
                                                                                 </ItemsControl>

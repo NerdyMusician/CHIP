@@ -179,6 +179,10 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             return injuries.FirstOrDefault(i => i.Name == injuryName) != null;
         }
+        public static bool Contains(this ObservableCollection<Cyberware> cyberwareSet, string cyberwareName)
+        {
+            return cyberwareSet.FirstOrDefault(c => c.Name == cyberwareName) != null;
+        }
     }
 }
 #pragma warning restore CS8602 // Dereference of a possibly null reference.

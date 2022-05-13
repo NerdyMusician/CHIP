@@ -62,17 +62,35 @@ namespace CyberpunkGameplayAssistant.Models
         private void DoRollSkill(object param)
         {
             Combatant combatant = param as Combatant;
-            string output = $"{combatant.DisplayName} made a {Name} check\n";
+            string output = $"{combatant.DisplayName} made a {Name} check";
             int result = HelperMethods.RollD10();
+            // TODO penalty for critical injuries
             string statName = ReferenceData.SkillLinks.GetStat(Name);
             int stat = combatant.CalculatedStats.GetValue(statName);
-            if (new List<string> { ReferenceData.StatReflexes, ReferenceData.StatDexterity, ReferenceData.StatMovement}.Contains(statName))
-            {
-                stat -= ReferenceData.ArmorTable.GetPenalty(combatant.ArmorType);
-            }
-            output += $"Result: {result + stat + Level}\n";
-            output += $"Roll: {result} + {stat} + {Level}";
+            output += $"\nResult: {result + stat + Level}";
+            if (Name == ReferenceData.SkillBrawling) { output += GetBrawlingDamage(combatant); }
+            if (ReferenceData.DebugMode) { output += $"\nDEBUG: {result} + {stat} + {Level}"; }
             HelperMethods.AddToGameplayLog(output, ReferenceData.MessageSkillCheck);
+        }
+
+        // Private Methods
+        private string GetBrawlingDamage(Combatant combatant)
+        {
+            int body = combatant.CalculatedStats.GetValue(ReferenceData.StatBody);
+            bool hasCyberarm = combatant.InstalledCyberware.Contains(ReferenceData.CyberwareCyberarm);
+            int damage = body switch
+            {
+                <= 4 => 1,
+                5 => 2,
+                6 => 3,
+                7 => 3,
+                8 => 3,
+                9 => 3,
+                10 => 3,
+                _ => 4
+            };
+            if (hasCyberarm && damage < 2) { damage = 2; }
+            return $"\nDamage: {HelperMethods.RollDamage(damage, out bool criticalInjury)} {(criticalInjury ? "CRIT" : "")}";
         }
 
     }

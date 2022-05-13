@@ -28,6 +28,7 @@ namespace CyberpunkGameplayAssistant.Models
                 AddAmmo(weaponOption.AmmoType, weaponOption.AmmoQuantity);
                 options.Remove(weaponOption);
             }
+            ReloadAllWeapons();
         }
         private WeaponOption SelectManualWeaponOption(List<WeaponOption> options)
         {

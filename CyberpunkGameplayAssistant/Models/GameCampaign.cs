@@ -503,7 +503,7 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand AddNpc => new RelayCommand(param => DoAddNpc());
         private void DoAddNpc()
         {
-            Npcs.Add(new NPC());
+            Npcs.Add(new() { Name = "New NPC", PortraitFilePath = ReferenceData.PortraitDefault });
             ActiveNpc = Npcs.Last();
         }
         public ICommand SortNpcs => new RelayCommand(param => DoSortNpcs());
