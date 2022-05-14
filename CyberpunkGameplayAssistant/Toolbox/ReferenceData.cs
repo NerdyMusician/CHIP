@@ -334,24 +334,18 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string SkillSeaVehicleTech = "Sea Vehicle Tech";
         public const string SkillWeaponstech = "Weaponstech";
 
-        // Complete Package Calculated Skills - pg90
-        public const int CompletePackageSkillPoints = 86;
-        public const int CompletePackageSkillLevelLimit = 6;
-        public static readonly List<Skill> CompletePackageRequiredSkills = new()
+        public static List<string> SkillsToSkipForCombatants = new()
         {
-            new(SkillAthletics),
-            new(SkillBrawling),
-            new(SkillConcentration),
-            new(SkillConversation),
-            new(SkillEducation),
-            new(SkillEvasion),
-            new(SkillFirstAid),
-            new(SkillHumanPerception),
-            new(SkillLanguage, LanguageStreetslang),
-            new(SkillLocalExpert, LocalExpertYourHome),
-            new(SkillPerception),
-            new(SkillPersuasion),
-            new(SkillStealth)
+            SkillInterface, SkillCombatNumber,
+            SkillConcentration, SkillLipReading, SkillTracking,
+            SkillDance,
+            SkillRiding,
+            SkillActing,
+            SkillAccounting, SkillAnimalHandling, SkillBureaucracy, SkillBusiness, SkillComposition, SkillCriminology,
+            SkillCryptography, SkillDeduction, SkillEducation, SkillLibrarySearch, SkillWildernessSurvival, SkillLanguage, SkillLocalExpert,
+            SkillArchery, SkillAutofire, SkillHandgun, SkillHeavyWeapons, SkillShoulderArms,
+            SkillBribery, SkillConversation, SkillHumanPerception, SkillPersonalGrooming, SkillStreetwise, SkillWardrobeStyle,
+            SkillCybertech, SkillForgery, SkillPaintDrawSculpt, SkillPhotographyFilm,
         };
 
         // Stat Reference Table

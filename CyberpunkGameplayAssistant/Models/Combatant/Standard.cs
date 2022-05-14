@@ -716,8 +716,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             foreach (Skill skill in Skills)
             {
-                if (skill.Name == ReferenceData.SkillInterface) { continue; }
-                if (skill.Name == ReferenceData.SkillCombatNumber) { continue; }
+                if (ReferenceData.SkillsToSkipForCombatants.Contains(skill.Name)) { continue; }
                 switch (ReferenceData.SkillLinks.GetCategory(skill.Name))
                 {
                     case ReferenceData.SkillCategoryAwareness:

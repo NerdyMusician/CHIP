@@ -581,43 +581,28 @@
                                                                                             </StackPanel.Resources>
                                                                                             <StackPanel>
                                                                                                 <TextBlock Text="Awareness Skills" />
-                                                                                                <Rectangle />
                                                                                                 <ItemsControl ItemsSource="{Binding AwarenessSkills}" ItemTemplate="{StaticResource SkillButton}" />
                                                                                                 <Separator />
                                                                                                 <TextBlock Text="Body Skills" />
-                                                                                                <Rectangle />
                                                                                                 <ItemsControl ItemsSource="{Binding BodySkills}" ItemTemplate="{StaticResource SkillButton}" />
                                                                                                 <Separator />
                                                                                                 <TextBlock Text="Control Skills" />
-                                                                                                <Rectangle />
                                                                                                 <ItemsControl ItemsSource="{Binding ControlSkills}" ItemTemplate="{StaticResource SkillButton}" />
-                                                                                                <Separator />
-                                                                                                <TextBlock Text="Performance Skills" />
-                                                                                                <Rectangle />
-                                                                                                <ItemsControl ItemsSource="{Binding PerformanceSkills}" ItemTemplate="{StaticResource SkillButton}" />
                                                                                             </StackPanel>
                                                                                             <Separator />
                                                                                             <StackPanel>
                                                                                                 <TextBlock Text="Education Skills" />
-                                                                                                <Rectangle />
                                                                                                 <ItemsControl ItemsSource="{Binding EducationSkills}" ItemTemplate="{StaticResource SkillButton}" />
                                                                                                 <Separator />
                                                                                                 <TextBlock Text="Fighting Skills" />
-                                                                                                <Rectangle />
                                                                                                 <ItemsControl ItemsSource="{Binding FightingSkills}" ItemTemplate="{StaticResource SkillButton}" />
                                                                                                 <Separator />
-                                                                                                <TextBlock Text="Ranged Weapon Skills" />
-                                                                                                <Rectangle />
-                                                                                                <ItemsControl ItemsSource="{Binding RangedWeaponSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                                                                                                <TextBlock Text="Social Skills" />
+                                                                                                <ItemsControl ItemsSource="{Binding SocialSkills}" ItemTemplate="{StaticResource SkillButton}" />
                                                                                             </StackPanel>
                                                                                             <Separator />
                                                                                             <StackPanel>
-                                                                                                <TextBlock Text="Social Skills" />
-                                                                                                <Rectangle />
-                                                                                                <ItemsControl ItemsSource="{Binding SocialSkills}" ItemTemplate="{StaticResource SkillButton}" />
-                                                                                                <Separator />
                                                                                                 <TextBlock Text="Technique Skills" />
-                                                                                                <Rectangle />
                                                                                                 <ItemsControl ItemsSource="{Binding TechniqueSkills}" ItemTemplate="{StaticResource SkillButton}" />
                                                                                             </StackPanel>
                                                                                         </StackPanel>
