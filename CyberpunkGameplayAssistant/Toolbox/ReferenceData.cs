@@ -477,18 +477,29 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         // Corporation Names
         public const string CorpoArasaka = "Arasaka";
+        public const string CorpoBiotechnica = "Biotechnica";
+        public const string CorpoBudgetArms = "BudgetArms";
         public const string CorpoChadranArms = "Chadran Arms";
+        public const string CorpoConstitutionalArms = "Constitutional Arms";
         public const string CorpoDaiLung = "Dai Lung";
         public const string CorpoEagletech = "Eagletech";
         public const string CorpoFederatedArms = "Federated Arms";
         public const string CorpoGunMart = "GunMart";
+        public const string CorpoIMI = "IMI";
+        public const string CorpoKendachi = "Kendachi";
+        public const string CorpoMagnumOpus = "Magnum Opus";
+        public const string CorpoMalorianArms = "Malorian Arms";
+        public const string CorpoMidnightArms = "Midnight Arms";
         public const string CorpoMilitech = "Militech";
         public const string CorpoMustangArms = "Mustang Arms";
         public const string CorpoNomad = "Nomad";
         public const string CorpoNova = "Nova";
+        public const string CorpoPursuitSecurityIncorporated = "Pursuit Security Incorporated";
         public const string CorpoSternmeyer = "Sternmeyer";
+        public const string CorpoStolbovoy = "Stolvoboy";
         public const string CorpoTowaManufacturing = "Towa Manufacturing";
         public const string CorpoTsunamiArms = "Tsunami Arms";
+        public const string CorpoUrbanTech = "UrbanTech";
 
         #region WEAPONS
         // Weapon Categories - pg340
@@ -607,6 +618,46 @@ namespace CyberpunkGameplayAssistant.Toolbox
             { WeaponTypeSmg, 3 },
             { WeaponTypeHeavySmg, 3 },
             { WeaponTypeAssaultRifle, 4 }
+        };
+        public static readonly List<NamedWeaponList> NamedWeaponLists = new()
+        {
+            new(WeaponTypeLightMelee, WeaponQualityStandard, "Combat Knife", "Tomahawk"),
+            new(WeaponTypeMediumMelee, WeaponQualityStandard, "Baseball Bat", "Crowbar", "Machete"),
+            new(WeaponTypeHeavyMelee, WeaponQualityStandard, "Lead Pipe", "Sword", "Spiked Bat"),
+            new(WeaponTypeVeryHeavyMelee, WeaponQualityStandard, "Chainsaw", "Sledgehammer", "Helicopter Blade", "Naginata"),
+            new(WeaponTypeMediumPistol, WeaponQualityPoor, $"{CorpoDaiLung} Streetmaster"),
+            new(WeaponTypeMediumPistol, WeaponQualityStandard, $"{CorpoFederatedArms} X-9mm"),
+            new(WeaponTypeMediumPistol, WeaponQualityExcellent, $"{CorpoMilitech} Avenger"),
+            new(WeaponTypeHeavyPistol, WeaponQualityPoor, $"{CorpoDaiLung} Magnum"),
+            new(WeaponTypeHeavyPistol, WeaponQualityStandard, $"{CorpoMustangArms} Mark III"),
+            new(WeaponTypeHeavyPistol, WeaponQualityExcellent, $"{CorpoNova} Cityhunter"),
+            new(WeaponTypeVeryHeavyPistol, WeaponQualityPoor, $"{CorpoFederatedArms} Super Chief"),
+            new(WeaponTypeVeryHeavyPistol, WeaponQualityStandard, $"{CorpoSternmeyer} P-35"),
+            new(WeaponTypeVeryHeavyPistol, WeaponQualityExcellent, $"{CorpoMilitech} Boomer Buster"),
+            new(WeaponTypeBowsAndCrossbows, WeaponQualityPoor, $"{CorpoGunMart} Sherwood", $"{CorpoGunMart} Hunter"),
+            new(WeaponTypeBowsAndCrossbows, WeaponQualityStandard, $"{CorpoEagletech} Tomcat", $"{CorpoEagletech} Striker"),
+            new(WeaponTypeBowsAndCrossbows, WeaponQualityExcellent, $"{CorpoEagletech} Bearcat", $"{CorpoEagletech} Scorpion"),
+            new(WeaponTypeSmg, WeaponQualityPoor, $"{CorpoFederatedArms} Tech-Assault III"),
+            new(WeaponTypeSmg, WeaponQualityStandard, $"{CorpoMilitech} Mini-Gat"),
+            new(WeaponTypeSmg, WeaponQualityExcellent, $"{CorpoArasaka} Minami 10"),
+            new(WeaponTypeHeavySmg, WeaponQualityPoor, $"{CorpoChadranArms} City Reaper"),
+            new(WeaponTypeHeavySmg, WeaponQualityStandard, $"{CorpoSternmeyer} SMG-21"),
+            new(WeaponTypeHeavySmg, WeaponQualityExcellent, $"{CorpoMilitech} Viper"),
+            new(WeaponTypeShotgun, WeaponQualityPoor, $"{CorpoGunMart} Home Defender"),
+            new(WeaponTypeShotgun, WeaponQualityStandard, $"{CorpoArasaka} Rapid Assault"),
+            new(WeaponTypeShotgun, WeaponQualityExcellent, $"{CorpoMilitech} Bulldog"),
+            new(WeaponTypeAssaultRifle, WeaponQualityPoor, $"{CorpoChadranArms} Jungle Reaper"),
+            new(WeaponTypeAssaultRifle, WeaponQualityStandard, $"{CorpoMilitech} Ronin"),
+            new(WeaponTypeAssaultRifle, WeaponQualityExcellent, $"{CorpoMilitech} Dragon"),
+            new(WeaponTypeSniperRifle, WeaponQualityPoor, $"{CorpoGunMart} Snipe-Star"),
+            new(WeaponTypeSniperRifle, WeaponQualityStandard, $"{CorpoNomad} Long Rifle"),
+            new(WeaponTypeSniperRifle, WeaponQualityExcellent, $"{CorpoArasaka} WSSA Sniper System"),
+            new(WeaponTypeGrenadeLauncher, WeaponQualityPoor, $"{CorpoTowaManufacturing} Type-G"),
+            new(WeaponTypeGrenadeLauncher, WeaponQualityStandard, $"{CorpoMilitech} Mini-Grenade"),
+            new(WeaponTypeGrenadeLauncher, WeaponQualityExcellent, $"{CorpoTsunamiArms} Type-18"),
+            new(WeaponTypeRocketLauncher, WeaponQualityPoor, $"{CorpoTowaManufacturing} Type-R"),
+            new(WeaponTypeRocketLauncher, WeaponQualityStandard, $"{CorpoMilitech} Urban"),
+            new(WeaponTypeRocketLauncher, WeaponQualityPoor, $"{CorpoMilitech} Hotshot"),
         };
         #endregion
 
