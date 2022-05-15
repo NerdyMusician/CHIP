@@ -193,6 +193,7 @@ namespace CyberpunkGameplayAssistant.Models
 
             if (selectionDialog.ShowDialog() == true)
             {
+                int startingCount = AllCombatants.Count;
                 foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel).SelectedCombatants)
                 {
                     for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
@@ -206,6 +207,7 @@ namespace CyberpunkGameplayAssistant.Models
                     }
                 }
                 SortCombatantsToLists();
+                RaiseAlert($"{AllCombatants.Count - startingCount} combatant(s) added");
             }
         }
         public ICommand AddPlayers => new RelayCommand(DoAddPlayers);
@@ -346,7 +348,7 @@ namespace CyberpunkGameplayAssistant.Models
             }
             catch (Exception e)
             {
-                HelperMethods.NotifyUser(e.Message);
+                RaiseError(e.Message);
             }
         }
         public ICommand ChangeCurrentTime => new RelayCommand(DoChangeCurrentTime);
@@ -360,7 +362,7 @@ namespace CyberpunkGameplayAssistant.Models
             }
             catch (Exception e)
             {
-                HelperMethods.NotifyUser(e.Message);
+                RaiseError(e.Message);
             }
         }
         public ICommand RemoveCampaign => new RelayCommand(DoRemoveCampaign);

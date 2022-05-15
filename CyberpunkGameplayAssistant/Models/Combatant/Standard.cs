@@ -508,9 +508,10 @@ namespace CyberpunkGameplayAssistant.Models
         {
             Weapons.Add(new(type, quality, name));
         }
-        public void AddAmmo(string type, int quantity)
+        public void AddAmmo(string type, int quantity, string variant = "")
         {
-            AmmoInventory.Add(new(type, quantity));
+            if (string.IsNullOrEmpty(variant)) { variant = ReferenceData.AmmoVarBasic; }
+            AmmoInventory.Add(new(type, quantity, variant));
         }
         public void AddGearSet(params string[] names)
         {
@@ -690,16 +691,17 @@ namespace CyberpunkGameplayAssistant.Models
         {
             foreach (CombatantWeapon weapon in Weapons)
             {
-                string ammoTypeNeededForThisWeapon = ReferenceData.WeaponRepository.FirstOrDefault(w => w.Type == weapon.Type).AmmoType;
-                Ammo ammoInInventory = AmmoInventory.FirstOrDefault(a => a.Type == ammoTypeNeededForThisWeapon);
-                if (ammoInInventory != null)
-                {
-                    int clipSize = ReferenceData.ClipChart.GetStandardClipSize(weapon.Type);
-                    int quantityNeededToFillClip = clipSize - weapon.CurrentClipQuantity;
-                    int ammoToAddToClip = ammoInInventory.Quantity < quantityNeededToFillClip ? ammoInInventory.Quantity : quantityNeededToFillClip;
-                    ammoInInventory.Quantity -= ammoToAddToClip;
-                    weapon.CurrentClipQuantity += ammoToAddToClip;
-                }
+                weapon.DoReloadWeapon(this);
+                //string ammoTypeNeededForThisWeapon = ReferenceData.WeaponRepository.FirstOrDefault(w => w.Type == weapon.Type).AmmoType;
+                //Ammo ammoInInventory = AmmoInventory.FirstOrDefault(a => a.Type == ammoTypeNeededForThisWeapon);
+                //if (ammoInInventory != null)
+                //{
+                //    int clipSize = ReferenceData.ClipChart.GetStandardClipSize(weapon.Type);
+                //    int quantityNeededToFillClip = clipSize - weapon.CurrentClipQuantity;
+                //    int ammoToAddToClip = ammoInInventory.Quantity < quantityNeededToFillClip ? ammoInInventory.Quantity : quantityNeededToFillClip;
+                //    ammoInInventory.Quantity -= ammoToAddToClip;
+                //    weapon.CurrentClipQuantity += ammoToAddToClip;
+                //}
             }
         }
         private void SetHitPoints(bool setCurrentToMax)
@@ -775,7 +777,7 @@ namespace CyberpunkGameplayAssistant.Models
         private int GetDemonCombatNumber()
         {
             Combatant demon = ReferenceData.MainModelRef.CampaignView.ActiveCampaign.AllCombatants.FirstOrDefault(c => c.Type == ReferenceData.Demon);
-            if (demon == null) { HelperMethods.NotifyUser(ReferenceData.ErrorNoDemonAvailableForActiveDefense); return 0; }
+            if (demon == null) { RaiseError(ReferenceData.ErrorNoDemonAvailableForActiveDefense); return 0; }
             else
             {
                 return demon.BaseStats.GetValue(ReferenceData.SkillCombatNumber);

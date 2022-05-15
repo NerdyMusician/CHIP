@@ -46,7 +46,7 @@ namespace CyberpunkGameplayAssistant.Models
             };
             if (string.IsNullOrEmpty(result))
             {
-                HelperMethods.NotifyUser($"Unhandled standard action: {action}");
+                RaiseError($"Unhandled standard action: {action}");
                 return;
             }
             else

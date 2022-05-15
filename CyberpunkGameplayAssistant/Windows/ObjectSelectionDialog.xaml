@@ -27,6 +27,9 @@
                     <TextBlock Text="{Binding Name, Mode=OneWay}" 
                                FontWeight="Bold"
                                Width="180" />
+                    <TextBlock Text="{Binding Description, Mode=OneWay}" 
+                               FontWeight="Normal"
+                               Width="180" TextWrapping="Wrap" />
                 </StackPanel>
             </DataTemplate>
             <tool:ObjectTypeTemplateSelector x:Key="TemplateSelector"

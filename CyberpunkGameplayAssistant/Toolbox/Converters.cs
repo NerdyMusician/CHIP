@@ -242,6 +242,17 @@ namespace CyberpunkGameplayAssistant.Toolbox
             return (visibility != Visibility.Visible);
         }
     }
+    public class FalseIfZero : ConverterMarkupExtension<FalseIfZero>
+    {
+        public override object Convert(
+            object value,
+            Type targetType,
+            object parameter,
+            CultureInfo culture)
+        {
+            return !((int)value == 0);
+        }
+    }
     public class CollapsedIfZero : ConverterMarkupExtension<CollapsedIfZero>
     {
         public override object Convert(
@@ -442,6 +453,23 @@ namespace CyberpunkGameplayAssistant.Toolbox
             {
                 return "";
             }
+        }
+    }
+    public class ColorBasedOnAlertType : ConverterMarkupExtension<ColorBasedOnAlertType>
+    {
+        public ColorBasedOnAlertType()
+        {
+
+        }
+
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null) { return null; }
+            return value.ToString() switch
+            {
+                ReferenceData.AlertError => System.Windows.Media.Brushes.DarkRed,
+                _ => System.Windows.Media.Brushes.DarkSlateBlue
+            };
         }
     }
     public class EnemyAlly : ConverterMarkupExtension<EnemyAlly>

@@ -1,5 +1,7 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
+using CyberpunkGameplayAssistant.Windows;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 
@@ -43,6 +45,18 @@ namespace CyberpunkGameplayAssistant.Models
             get => _CurrentClipQuantity;
             set => SetAndNotify(ref _CurrentClipQuantity, value);
         }
+        private string _AmmoType;
+        public string AmmoType
+        {
+            get => _AmmoType;
+            set => SetAndNotify(ref _AmmoType, value);
+        }
+        private string _AmmoVariant;
+        public string AmmoVariant
+        {
+            get => _AmmoVariant;
+            set => SetAndNotify(ref _AmmoVariant, value);
+        }
 
         // Properties
         public bool UsesAmmo
@@ -80,7 +94,7 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand RollAutofire => new RelayCommand(DoRollAutofire);
         private void DoRollAutofire(object param)
         {
-            if (!ReferenceData.AutofireTable.ContainsKey(Type)) { HelperMethods.NotifyUser("This weapon does not have Autofire"); return; }
+            if (!ReferenceData.AutofireTable.ContainsKey(Type)) { RaiseError(ReferenceData.ErrorNotAnAutofireWeapon); return; }
             Combatant combatant = (Combatant)param;
             int attackRoll = HelperMethods.RollD10(true);
             if (DidWeaponMalfunction(attackRoll, combatant.Name)) { return; }
@@ -113,21 +127,58 @@ namespace CyberpunkGameplayAssistant.Models
             HelperMethods.PlayWeaponSound(Type);
         }
         public ICommand ReloadWeapon => new RelayCommand(DoReloadWeapon);
-        private void DoReloadWeapon(object param)
+        public void DoReloadWeapon(object param)
         {
+            if (!UsesAmmo) { return; }
             Combatant combatant = (Combatant)param;
             int clipCapacity = ReferenceData.ClipChart.GetStandardClipSize(Type);
-            int ammoNeeded = clipCapacity - CurrentClipQuantity;
-            Ammo matchedAmmo = combatant.AmmoInventory.FirstOrDefault(a => a.Type == ReferenceData.WeaponRepository.FirstOrDefault(w => w.Type == Type).AmmoType);
-            int ammoTaken = (matchedAmmo.Quantity <= ammoNeeded) ? matchedAmmo.Quantity : ammoNeeded;
+            Ammo ammoTypeNeeded = GetAmmoTypeNeeded(combatant);
+            Ammo ammoTypeInUse = GetAmmoTypeInUse(combatant);
+            if (ammoTypeNeeded == null) { return; }
+            bool isSameAmmo = AreSameAmmo(ammoTypeNeeded, ammoTypeInUse);
+            int ammoNeeded = isSameAmmo ? clipCapacity - CurrentClipQuantity : clipCapacity;
+            if (ammoNeeded == 0) { RaiseError("Gun clip is already full of that ammo type"); return; }
+            int ammoReturned = isSameAmmo ? 0 : CurrentClipQuantity;
+            int ammoTaken = (ammoTypeNeeded.Quantity <= ammoNeeded) ? ammoTypeNeeded.Quantity : ammoNeeded;
+            CurrentClipQuantity -= ammoReturned;
             CurrentClipQuantity += ammoTaken;
-            matchedAmmo.Quantity -= ammoTaken;
-            if (ammoTaken == 0) { ThrowError("Not enough ammo to reload"); return; }
+            ammoTypeNeeded.Quantity -= ammoTaken;
+            if (ammoTypeInUse != null) { ammoTypeInUse.Quantity += ammoReturned; }
+            AmmoType = ammoTypeNeeded.Type;
+            AmmoVariant = ammoTypeNeeded.Variant;
+            if (ammoTaken == 0) { RaiseError("Not enough ammo to reload"); return; }
             HelperMethods.AddToGameplayLog($"{combatant.DisplayName}{(ammoNeeded > ammoTaken ? "partially" : "")} reloaded their {Name}.", ReferenceData.MessageReload);
             HelperMethods.PlayReloadSound();
         }
 
         // Private Methods
+        private bool AreSameAmmo(Ammo ammoTypeNeeded, Ammo ammoTypeInUse)
+        {
+            if (ammoTypeInUse == null) { return false; } // unloaded gun
+            return ammoTypeNeeded.Type == ammoTypeInUse.Type && ammoTypeNeeded.Variant == ammoTypeInUse.Variant;
+        }
+        private Ammo GetAmmoTypeNeeded(Combatant combatant)
+        {
+            List<string> acceptableAmmoTypes = ReferenceData.RangedWeaponAmmoCompatibilities.FirstOrDefault(w => w.WeaponType == Type).AmmoTypes;
+            List<Ammo> matchedAmmoListings = combatant.AmmoInventory.Where(a => acceptableAmmoTypes.Contains(a.Type) && a.Quantity > 0).ToList();
+            if (matchedAmmoListings.Count == 0) { RaiseError($"{combatant.Name}:{Name}:{ReferenceData.ErrorNoAcceptableAmmoTypeInInventory}"); return null; }
+            if (matchedAmmoListings.Count == 1) { return matchedAmmoListings[0]; }
+            else
+            {
+                if (!ReferenceData.IsLoaded) { return matchedAmmoListings[0]; }
+                ObjectSelectionDialog objectSelectionDialog = new(matchedAmmoListings.ToNamedRecordList(), "Ammo Types");
+                if (objectSelectionDialog.ShowDialog() == true)
+                {
+                    NamedRecord selectedRecord = objectSelectionDialog.SelectedObject as NamedRecord;
+                    return matchedAmmoListings.First(a => a.Type == selectedRecord.Name && a.Variant == selectedRecord.Description);
+                }
+                else { return null; }
+            }
+        }
+        private Ammo GetAmmoTypeInUse(Combatant combatant)
+        {
+            return combatant.AmmoInventory.FirstOrDefault(a => a.Type == AmmoType && a.Variant == AmmoVariant);
+        }
         private bool CheckAndUseAmmo(int ammoRequired)
         {
             if (!UsesAmmo) { return true; }
@@ -138,7 +189,7 @@ namespace CyberpunkGameplayAssistant.Models
         private bool HasEnoughAmmo(int ammoRequired)
         {
             bool hasEnoughAmmo = ammoRequired <= CurrentClipQuantity;
-            if (!hasEnoughAmmo) { ThrowError("Not enough ammo in clip"); }
+            if (!hasEnoughAmmo) { RaiseError("Not enough ammo in clip"); }
             return hasEnoughAmmo;
         }
         private bool DidWeaponMalfunction(int attackRoll, string combatantName)

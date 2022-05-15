@@ -10,13 +10,13 @@ namespace CyberpunkGameplayAssistant.Toolbox
 {
     public static class HelperMethods
     {
-        public static void NotifyUser(string message)
+        public static void NotifyUser(string type, string message)
         {
-            new NotificationDialog(message).ShowDialog();
+            ReferenceData.MainModelRef.AddUserAlert(type, message);
         }
         public static void WriteToLogFile(string message, bool notifyUser = false)
         {
-            if (notifyUser) { NotifyUser(message); }
+            if (notifyUser) { NotifyUser(ReferenceData.AlertError, message); }
             File.AppendAllText(ReferenceData.File_Log, $"{DateTime.Now}: {message}\n");
         }
         public static int[] RollDice(int numberOfDice, int sidesOnDice)
@@ -67,6 +67,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         }
         public static void AddToGameplayLog(string message, string type = "", bool copyToWeb = false)
         {
+            if (!ReferenceData.IsLoaded) { return; }
             if (ReferenceData.MainModelRef.CampaignView == null) { return; }
             GameCampaign campaign = ReferenceData.MainModelRef.CampaignView.ActiveCampaign;
             campaign.EventHistory.Insert(0, new(type, message));
@@ -130,7 +131,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         }
         public static string RollNetFloor(int level, string difficulty)
         {
-            if (level <= 0) { NotifyUser($"Invalid floor level {level} passed to HelperMethods.RollNetFloor"); return string.Empty; }
+            if (level <= 0) { NotifyUser(ReferenceData.AlertError, $"Invalid floor level {level} passed to HelperMethods.RollNetFloor"); return string.Empty; }
             bool isLobby = (level == 1 || level == 2);
             Dictionary<int, string> lobbyTable = new()
             {

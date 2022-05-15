@@ -136,6 +136,19 @@
     </Window.InputBindings>
     <StackPanel>
         <MediaElement x:Name="SfxPlayer" Visibility="Collapsed" Source="{Binding SfxSource, UpdateSourceTrigger=PropertyChanged}" LoadedBehavior="Manual" MediaEnded="MusicPlayer_MediaEnded" />
+        <StackPanel HorizontalAlignment="Right">
+            <Popup IsOpen="{Binding UserAlerts.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={tool:FalseIfZero}}" AllowsTransparency="True" PopupAnimation="Slide" Placement="Left">
+                <ItemsControl ItemsSource="{Binding UserAlerts}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource SegmentTile}" Background="{Binding Type, Converter={tool:ColorBasedOnAlertType}}" BorderBrush="{Binding Type, Converter={tool:ColorBasedOnAlertType}}">
+                                <TextBlock Text="{Binding Message}" Foreground="White" FontWeight="Bold" Margin="2" Width="240" TextWrapping="Wrap" />
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Popup>
+        </StackPanel>
         <DockPanel x:Name="TitleBar" Width="1280" MouseDown="Window_MouseDown" Background="Transparent" HorizontalAlignment="Stretch" Margin="0 4">
             <StackPanel Orientation="Horizontal" Margin="8">
                 <Separator />
@@ -487,10 +500,11 @@
                                                                                                 <StackPanel Orientation="Horizontal" Margin="2">
                                                                                                     <Image Style="{StaticResource Icon_BulletStack}" />
                                                                                                     <Separator />
-                                                                                                    <TextBlock VerticalAlignment="Center">
-                                                                                                    <Run Text="{Binding Type}" />
-                                                                                                    <Run Text="x" />
-                                                                                                    <Run Text="{Binding Quantity}" />
+                                                                                                    <TextBlock>
+                                                                                                        <Run Text="{Binding Quantity}" />
+                                                                                                        <Run Text="x" />
+                                                                                                        <Run Text="{Binding Type}" />
+                                                                                                        <Run Text="(" /><Run Text="{Binding Variant}"/><Run Text=")"/>
                                                                                                     </TextBlock>
                                                                                                 </StackPanel>
                                                                                             </DataTemplate>
@@ -516,6 +530,10 @@
                                                                                                         <Run Text="{Binding CurrentClipQuantity, FallbackValue=24}" />
                                                                                                         <Run Text="/" />
                                                                                                         <Run Text="{Binding MaxClipQuantity, FallbackValue=40, Mode=OneWay}" />
+                                                                                                        </TextBlock>
+                                                                                                        <TextBlock VerticalAlignment="Center">
+                                                                                                        <Run Text="{Binding AmmoType}" />
+                                                                                                        <Run Text="(" /><Run Text="{Binding AmmoVariant}"/><Run Text=")" />
                                                                                                         </TextBlock>
                                                                                                     </StackPanel>
                                                                                                 </StackPanel>

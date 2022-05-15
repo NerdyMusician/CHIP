@@ -55,7 +55,7 @@ namespace CyberpunkGameplayAssistant.Models
                     Floors.Add(new(Floors.Count + 1, HelperMethods.RollNetFloor(Floors.Count + 1, Difficulty)));
                     break;
                 default:
-                    ThrowError($"Unhandled parameter {param.ToString()} in NetArchitecture.DoAddFloor");
+                    RaiseError($"Unhandled parameter {param.ToString()} in NetArchitecture.DoAddFloor");
                     return;
             }
 

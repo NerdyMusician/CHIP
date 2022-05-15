@@ -10,6 +10,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
     public static class ReferenceData
     {
         // Utility
+        public static bool IsLoaded = false;
         public const bool DebugMode = true;
         public static MainViewModel MainModelRef;
         public static MainWindow WindowRef;
@@ -78,8 +79,24 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string MessageStatCheck = "Stat Check";
         public const string MessageWeaponAttack = "Weapon Attack";
 
+        // Price Categories
+        public const int PriceCheap = 10;
+        public const int PriceEveryday = 20;
+        public const int PriceCostly = 50;
+        public const int PricePremium = 100;
+        public const int PriceExpensive = 500;
+        public const int PriceVeryExpensive = 1000;
+        public const int PriceLuxury = 5000;
+        public const int PriceSuperLuxury = 10000;
+
+        // Alert Types
+        public const string AlertError = "ERROR";
+        public const string AlertInfo = "INFO";
+
         // Error Messages
+        public const string ErrorNoAcceptableAmmoTypeInInventory = "Acceptable ammo type not found in combatant's inventory";
         public const string ErrorNoDemonAvailableForActiveDefense = "No Demon available to run this Active Defense.";
+        public const string ErrorNotAnAutofireWeapon = "This weapon does not have Autofire";
         public const string ErrorNotEnoughWeaponOptions = "Not enough weapon options for this combatant to fulfill the number of options allowed";
 
         // Image Locations
@@ -537,17 +554,32 @@ namespace CyberpunkGameplayAssistant.Toolbox
         };
 
         // Ammunition Types
-        public static readonly string AmmoTypeNone = "None";
-        public static readonly string AmmoTypeMediumPistol = "Medium Pistol";
-        public static readonly string AmmoTypeHeavyPistol = "Heavy Pistol";
-        public static readonly string AmmoTypeVeryHeavyPistol = "Very Heavy Pistol";
-        public static readonly string AmmoTypeSlug = "Slug";
-        public static readonly string AmmoTypeRifle = "Rifle";
-        public static readonly string AmmoTypeArrow = "Arrow";
-        public static readonly string AmmoTypeGrenade = "Grenade";
-        public static readonly string AmmoTypeRocket = "Rocket";
-        public static readonly string AmmoTypeDart = "Dart";
-        public static readonly string AmmoTypeIncendiaryShell = "Incendiary Shotgun Shell";
+        public const string AmmoTypeNone = "None";
+        public const string AmmoTypeMediumPistol = "Medium Pistol";
+        public const string AmmoTypeHeavyPistol = "Heavy Pistol";
+        public const string AmmoTypeVeryHeavyPistol = "Very Heavy Pistol";
+        public const string AmmoTypeShell = "Shell";
+        public const string AmmoTypeSlug = "Slug";
+        public const string AmmoTypeRifle = "Rifle";
+        public const string AmmoTypeArrow = "Arrow";
+        public const string AmmoTypeGrenade = "Grenade";
+        public const string AmmoTypeRocket = "Rocket";
+        public const string AmmoTypeDart = "Dart";
+
+        // Ammunition Variants
+        public const string AmmoVarBasic = "Basic";
+        public const string AmmoVarArmorPiercing = "Armor-Piercing";
+        public const string AmmoVarBiotoxin = "Biotoxin";
+        public const string AmmoVarEMP = "EMP";
+        public const string AmmoVarExpansive = "Expansive";
+        public const string AmmoVarFlashbang = "Flashbang";
+        public const string AmmoVarIncendiary = "Incendiary";
+        public const string AmmoVarPoison = "Poison";
+        public const string AmmoVarRubber = "Rubber";
+        public const string AmmoVarSleep = "Sleep";
+        public const string AmmoVarSmart = "Smart";
+        public const string AmmoVarSmoke = "Smoke";
+        public const string AmmoVarTeargas = "Teargas";
 
         // Weapon Quality Tier
         public static readonly string WeaponQualityPoor = "Poor";
@@ -585,6 +617,23 @@ namespace CyberpunkGameplayAssistant.Toolbox
             new(WeaponTypePopupGrenadeLauncher, 1, 1, 1),
             new(WeaponTypeRocketLauncher, 1, 2, 3)
         };
+        public static readonly List<RangedWeaponAmmoCompatibility> RangedWeaponAmmoCompatibilities = new()
+        {
+            new(WeaponTypeMediumPistol, AmmoTypeMediumPistol),
+            new(WeaponTypeHeavyPistol, AmmoTypeHeavyPistol),
+            new(WeaponTypeVeryHeavyPistol, AmmoTypeVeryHeavyPistol),
+            new(WeaponTypeSmg, AmmoTypeMediumPistol),
+            new(WeaponTypeHeavySmg, AmmoTypeHeavyPistol),
+            new(WeaponTypeShotgun, AmmoTypeSlug, AmmoTypeShell),
+            new(WeaponTypeAssaultRifle, AmmoTypeRifle),
+            new(WeaponTypeSniperRifle, AmmoTypeRifle),
+            new(WeaponTypeBowsAndCrossbows, AmmoTypeArrow),
+            new(WeaponTypeGrenadeLauncher, AmmoTypeGrenade),
+            new(WeaponTypeRocketLauncher, AmmoTypeRocket),
+            new(WeaponTypePopupGrenadeLauncher, AmmoTypeGrenade),
+            new(WeaponTypeDartgun, AmmoTypeDart),
+            new(WeaponTypeFlamethrower, AmmoTypeShell)
+        };
 
         public static readonly List<Weapon> WeaponRepository = new()
         {
@@ -605,7 +654,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             new(WeaponTypePopupGrenadeLauncher, SkillHeavyWeapons, 6, 1, AmmoTypeGrenade, 1, true, WeaponCostTierHigh),
             new(WeaponTypeRocketLauncher, SkillHeavyWeapons, 8, 2, AmmoTypeRocket, 1, false, WeaponCostTierHigh),
             new(WeaponTypeDartgun, SkillHandgun, 2, 1, AmmoTypeDart, 1, true, WeaponCostTierMedium),
-            new(WeaponTypeFlamethrower, SkillHeavyWeapons, 1, 2, AmmoTypeIncendiaryShell, 1, false, WeaponCostTierHigh)
+            new(WeaponTypeFlamethrower, SkillHeavyWeapons, 1, 2, AmmoTypeShell, 1, false, WeaponCostTierHigh)
         };
         public static readonly Dictionary<string, int> AutofireTable = new()
         {
@@ -1246,6 +1295,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             bodyguard.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
             bodyguard.AddAmmo(AmmoTypeSlug, 25);
             bodyguard.AddAmmo(AmmoTypeVeryHeavyPistol, 25);
+            bodyguard.AddAmmo(AmmoTypeShell, 4); // TODO - REMOVE
             bodyguard.AddGearSet(GearRadioCommunicator);
             bodyguard.InitializeNewCombatant();
             Combatants.Add(bodyguard);
@@ -1551,8 +1601,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
             pyro.AddWeapon(WeaponTypeFlamethrower, WeaponQualityStandard);
             pyro.AddWeapon(WeaponTypeHeavyPistol, WeaponQualityStandard);
             pyro.AddWeapon(WeaponTypeHeavyMelee, WeaponQualityStandard);
-            pyro.AddAmmo(AmmoTypeIncendiaryShell, 8);
-            pyro.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
+            pyro.AddAmmo(AmmoTypeShell, 8, AmmoVarIncendiary);
+            pyro.AddAmmo(AmmoTypeHeavyPistol, 50);
             // TODO - add consumable weapons (grenades)
             pyro.AddCyberwareSet(CyberwareCyberaudioSuite, CyberwareLevelDamper, CyberwareCybereye, CyberwareCybereye, CyberwareAntiDazzle, CyberwareAntiDazzle, CyberwareNasalFilters);
             pyro.InitializeNewCombatant();
@@ -1731,7 +1781,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             turret.WeaponOptionsAllowed = 1;
             turret.ManualWeaponOptionSelection = true;
             turret.AddWeaponOption(WeaponTypeAssaultRifle, WeaponQualityStandard, AmmoTypeRifle, 25);
-            turret.AddWeaponOption(WeaponTypeFlamethrower, WeaponQualityStandard, AmmoTypeIncendiaryShell, 4);
+            turret.AddWeaponOption(WeaponTypeFlamethrower, WeaponQualityStandard, AmmoTypeShell, 4, AmmoVarIncendiary);
             turret.AddWeaponOption(WeaponTypeDartgun, WeaponQualityStandard, AmmoTypeDart, 8);
             turret.AddWeaponOption(WeaponTypeVeryHeavyPistol, WeaponQualityStandard, AmmoTypeVeryHeavyPistol, 8);
             turret.AddWeaponOption(WeaponTypeHeavySmg, WeaponQualityStandard, AmmoTypeHeavyPistol, 40);

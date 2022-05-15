@@ -151,6 +151,15 @@ namespace CyberpunkGameplayAssistant.Toolbox
             }
             return records;
         }
+        public static List<NamedRecord> ToNamedRecordList(this List<Ammo> ammoTypes)
+        {
+            List<NamedRecord> records = new();
+            foreach (Ammo ammo in ammoTypes)
+            {
+                records.Add(new(ammo.Type, ammo.Variant));
+            }
+            return records;
+        }
         public static string AOrAn(this string word)
         {
             return ReferenceData.Vowels.ToList().Contains(word[0].ToString()) ? $"an {word}" : $"a {word}";
