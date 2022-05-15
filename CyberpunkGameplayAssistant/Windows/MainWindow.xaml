@@ -549,21 +549,43 @@
                                                                         <cc:MiniToggleButton ImageResource="{StaticResource Icon_Action}" IsChecked="{Binding ActionMenuOpen}" Margin="0 2" />
                                                                         <Popup IsOpen="{Binding ActionMenuOpen}">
                                                                             <Border Style="{StaticResource BRDR_PopupBorder}">
-                                                                                <StackPanel Margin="2">
-                                                                                    <ItemsControl ItemsSource="{Binding StandardActions}">
-                                                                                        <ItemsControl.ItemTemplate>
-                                                                                            <DataTemplate>
-                                                                                                <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnAction}}" Text="{Binding Name}" Command="{Binding PerformStandardAction}">
-                                                                                                    <cc:ImageButton.CommandParameter>
-                                                                                                        <MultiBinding Converter="{StaticResource MultiValueConverter}">
-                                                                                                            <Binding Path="DataContext" RelativeSource="{RelativeSource AncestorType=ItemsControl}" />
-                                                                                                            <Binding Path="Name" />
-                                                                                                        </MultiBinding>
-                                                                                                    </cc:ImageButton.CommandParameter>
-                                                                                                </cc:ImageButton>
-                                                                                            </DataTemplate>
-                                                                                        </ItemsControl.ItemTemplate>
-                                                                                    </ItemsControl>
+                                                                                <StackPanel Orientation="Horizontal" Margin="2">
+                                                                                    <StackPanel>
+                                                                                        <TextBlock Text="Standard Actions" />
+                                                                                        <Rectangle />
+                                                                                        <ItemsControl ItemsSource="{Binding StandardActions}">
+                                                                                            <ItemsControl.ItemTemplate>
+                                                                                                <DataTemplate>
+                                                                                                    <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnAction}}" Text="{Binding Name}" Command="{Binding PerformStandardAction}">
+                                                                                                        <cc:ImageButton.CommandParameter>
+                                                                                                            <MultiBinding Converter="{StaticResource MultiValueConverter}">
+                                                                                                                <Binding Path="DataContext" RelativeSource="{RelativeSource AncestorType=ItemsControl}" />
+                                                                                                                <Binding Path="Name" />
+                                                                                                            </MultiBinding>
+                                                                                                        </cc:ImageButton.CommandParameter>
+                                                                                                    </cc:ImageButton>
+                                                                                                </DataTemplate>
+                                                                                            </ItemsControl.ItemTemplate>
+                                                                                        </ItemsControl>
+                                                                                    </StackPanel>
+                                                                                    <StackPanel Visibility="{Binding NetActions, Converter={tool:CollapsedIfZero}}">
+                                                                                        <TextBlock Text="Standard Actions" />
+                                                                                        <Rectangle />
+                                                                                        <ItemsControl ItemsSource="{Binding NetActions}">
+                                                                                            <ItemsControl.ItemTemplate>
+                                                                                                <DataTemplate>
+                                                                                                    <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnAction}}" Text="{Binding Name}" Command="{Binding PerformStandardAction}">
+                                                                                                        <cc:ImageButton.CommandParameter>
+                                                                                                            <MultiBinding Converter="{StaticResource MultiValueConverter}">
+                                                                                                                <Binding Path="DataContext" RelativeSource="{RelativeSource AncestorType=ItemsControl}" />
+                                                                                                                <Binding Path="Name" />
+                                                                                                            </MultiBinding>
+                                                                                                        </cc:ImageButton.CommandParameter>
+                                                                                                    </cc:ImageButton>
+                                                                                                </DataTemplate>
+                                                                                            </ItemsControl.ItemTemplate>
+                                                                                        </ItemsControl>
+                                                                                    </StackPanel>
                                                                                 </StackPanel>
                                                                             </Border>
                                                                         </Popup>

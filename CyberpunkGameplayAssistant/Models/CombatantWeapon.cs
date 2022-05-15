@@ -161,7 +161,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             List<string> acceptableAmmoTypes = ReferenceData.RangedWeaponAmmoCompatibilities.FirstOrDefault(w => w.WeaponType == Type).AmmoTypes;
             List<Ammo> matchedAmmoListings = combatant.AmmoInventory.Where(a => acceptableAmmoTypes.Contains(a.Type) && a.Quantity > 0).ToList();
-            if (matchedAmmoListings.Count == 0) { RaiseError($"{combatant.Name}:{Name}:{ReferenceData.ErrorNoAcceptableAmmoTypeInInventory}"); return null; }
+            if (matchedAmmoListings.Count == 0) { RaiseError(ReferenceData.ErrorNoAcceptableAmmoTypeInInventory); return null; }
             if (matchedAmmoListings.Count == 1) { return matchedAmmoListings[0]; }
             else
             {

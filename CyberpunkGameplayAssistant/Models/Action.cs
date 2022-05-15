@@ -55,6 +55,26 @@ namespace CyberpunkGameplayAssistant.Models
             }
 
         }
+        public ICommand PerformNetAction => new RelayCommand(DoPerformNetAction);
+        private void DoPerformNetAction(object param)
+        {
+            Combatant combatant = (Combatant)(param as object[])![0];
+            string action = (param as object[])![1].ToString()!;
+            string result = action switch
+            {
+                // TODO - RESOLVE NET ACTIONS
+                _ => ""
+            };
+            if (string.IsNullOrEmpty(result))
+            {
+                RaiseError($"Unhandled NET action: {action}");
+                return;
+            }
+            else
+            {
+                HelperMethods.AddToGameplayLog(result, ReferenceData.MessageStandardAction);
+            }
+        }
 
         // Private Methods
         private static string PerformActionBrawl(Combatant combatant)

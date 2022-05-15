@@ -280,6 +280,12 @@ namespace CyberpunkGameplayAssistant.Models
             get => _StandardActions;
             set => SetAndNotify(ref _StandardActions, value);
         }
+        private ObservableCollection<Action> _NetActions;
+        public ObservableCollection<Action> NetActions
+        {
+            get => _NetActions;
+            set => SetAndNotify(ref _NetActions, value);
+        }
         private ObservableCollection<CriticalInjury> _CriticalInjuries;
         public ObservableCollection<CriticalInjury> CriticalInjuries
         {
@@ -634,6 +640,11 @@ namespace CyberpunkGameplayAssistant.Models
             if (CriticalInjuries.Contains(ReferenceData.CriticalInjuryConcussion)) { penalty += 2; }
             return penalty;
         }
+        public void SetNetActions()
+        {
+            NetActions.Clear();
+            // TODO set the net actions
+        }
 
         // Private Methods
         private void InitializeLists()
@@ -655,6 +666,7 @@ namespace CyberpunkGameplayAssistant.Models
             GearInventory = new();
             InstalledCyberware = new();
             StandardActions = new();
+            NetActions = new();
             CriticalInjuries = new();
             CyberdeckPrograms = new();
             WeaponOptions = new();

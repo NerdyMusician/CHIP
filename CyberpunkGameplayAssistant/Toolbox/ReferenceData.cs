@@ -148,6 +148,21 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string ActionThrowGrapple = "Throw (Grapple)";
         public const string ActionThrowObject = "Throw (Object)";
 
+        // Net Actions
+        public const string NetActionInterface = "Interface";
+        public const string NetActionJackIn = "Jack In";
+        public const string NetActionJackOut = "Jack Out";
+        public const string NetActionActivateProgram = "Activate Program";
+        public const string NetActionDeactivateProgram = "Deactivate Program";
+        public const string NetActionScanner = "Scanner";
+        public const string NetActionBackdoor = "Backdoor";
+        public const string NetActionCloak = "Cloak";
+        public const string NetActionControl = "Control";
+        public const string NetActionEyeDee = "Eye-Dee";
+        public const string NetActionSlide = "Slide";
+        public const string NetActionVirus = "Virus";
+        public const string NetActionZap = "Zap";
+
         // Stat Categories
         public const string StatCategoryMental = "Mental";
         public const string StatCategoryCombat = "Combat";
@@ -1441,6 +1456,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             netrunner.AddGearSet(GearFlashlight, GearVirtualityGoggles);
             netrunner.AddCyberdeckPrograms(ProgramBanhammer, ProgramDeckKrash, ProgramEraser, ProgramHellbolt, ProgramShield, ProgramSword, ProgramWorm);
             netrunner.InitializeNewCombatant(); // TODO - add NET actions to standard actions, or to new collection
+            netrunner.SetNetActions();
             Combatants.Add(netrunner);
             #endregion
             #region Reclaimer Chief
