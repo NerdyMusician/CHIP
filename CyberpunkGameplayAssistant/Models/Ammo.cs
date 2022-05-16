@@ -1,10 +1,13 @@
-﻿using System;
+﻿using CyberpunkGameplayAssistant.Toolbox;
+using System;
+using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
 {
     [Serializable]
     public class Ammo : BaseModel
     {
+        // Constructors
         public Ammo()
         {
 
@@ -21,6 +24,7 @@ namespace CyberpunkGameplayAssistant.Models
             Variant = variant;
         }
 
+        // Properties
         private string _Type;
         public string Type
         {
@@ -38,6 +42,15 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get => _Variant;
             set => SetAndNotify(ref _Variant, value);
+        }
+
+        // Commands
+        public ICommand RestockAmmo => new RelayCommand(DoRestockAmmo);
+        private void DoRestockAmmo(object param)
+        {
+            if (Type == ReferenceData.AmmoTypeGrenade || Type == ReferenceData.AmmoTypeRocket) { Quantity += 1; }
+            else { Quantity += 10; }
+            HelperMethods.PlayReloadSound();
         }
 
     }

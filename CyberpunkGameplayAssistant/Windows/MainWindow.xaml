@@ -500,15 +500,17 @@
                                                                                     <ItemsControl ItemsSource="{Binding AmmoInventory}">
                                                                                         <ItemsControl.ItemTemplate>
                                                                                             <DataTemplate>
-                                                                                                <StackPanel Orientation="Horizontal" Margin="2">
+                                                                                                <StackPanel Orientation="Horizontal">
                                                                                                     <Image Style="{StaticResource Icon_BulletStack}" />
                                                                                                     <Separator />
-                                                                                                    <TextBlock>
+                                                                                                    <TextBlock Width="240" VerticalAlignment="Center">
                                                                                                         <Run Text="{Binding Quantity}" />
                                                                                                         <Run Text="x" />
                                                                                                         <Run Text="{Binding Type}" />
                                                                                                         <Run Text="(" /><Run Text="{Binding Variant}"/><Run Text=")"/>
                                                                                                     </TextBlock>
+                                                                                                    <Separator />
+                                                                                                    <cc:MiniButton ImageResource="{StaticResource Icon_Reload}" Command="{Binding RestockAmmo}" />
                                                                                                 </StackPanel>
                                                                                             </DataTemplate>
                                                                                         </ItemsControl.ItemTemplate>
