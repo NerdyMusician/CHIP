@@ -153,7 +153,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string NetActionJackIn = "Jack In";
         public const string NetActionJackOut = "Jack Out";
         public const string NetActionActivateProgram = "Activate Program";
-        public const string NetActionDeactivateProgram = "Deactivate Program";
+        //public const string NetActionDeactivateProgram = "Deactivate Program";//TODO just an X for programs in list
         public const string NetActionScanner = "Scanner";
         public const string NetActionBackdoor = "Backdoor";
         public const string NetActionCloak = "Cloak";
@@ -1455,7 +1455,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             netrunner.AddCyberwareSet(CyberwareNeuralLink, CyberwareInterfacePlugs);
             netrunner.AddGearSet(GearFlashlight, GearVirtualityGoggles);
             netrunner.AddCyberdeckPrograms(ProgramBanhammer, ProgramDeckKrash, ProgramEraser, ProgramHellbolt, ProgramShield, ProgramSword, ProgramWorm);
-            netrunner.InitializeNewCombatant(); // TODO - add NET actions to standard actions, or to new collection
+            netrunner.InitializeNewCombatant();
             netrunner.SetNetActions();
             Combatants.Add(netrunner);
             #endregion

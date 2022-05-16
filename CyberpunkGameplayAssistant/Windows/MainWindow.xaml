@@ -568,7 +568,7 @@
                                                                                             </ItemsControl.ItemTemplate>
                                                                                         </ItemsControl>
                                                                                     </StackPanel>
-                                                                                    <StackPanel Visibility="{Binding NetActions, Converter={tool:CollapsedIfZero}}">
+                                                                                    <StackPanel Visibility="{Binding NetActions.Count, Converter={tool:CollapsedIfZero}}">
                                                                                         <TextBlock Text="Standard Actions" />
                                                                                         <Rectangle />
                                                                                         <ItemsControl ItemsSource="{Binding NetActions}">

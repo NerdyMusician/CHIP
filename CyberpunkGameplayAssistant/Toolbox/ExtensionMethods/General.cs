@@ -1,14 +1,16 @@
 ﻿using CyberpunkGameplayAssistant.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-namespace CyberpunkGameplayAssistant.Toolbox
+namespace CyberpunkGameplayAssistant.Toolbox.ExtensionMethods
 {
-    public static class ExtensionMethods
+    public static class General
     {
         public static T DeepClone<T>(this T obj)
         {
@@ -34,7 +36,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
         }
         public static int GetLevel(this ObservableCollection<Skill> skills, string skillName)
         {
-            return skills.FirstOrDefault(s => s.Name == skillName).Level;
+            Skill matchedSkill = skills.FirstOrDefault(s => s.Name == skillName)!;
+            return (matchedSkill != null) ? (matchedSkill.Level) : 0;
         }
         public static bool IsNullOrEmpty(this string text)
         {
@@ -115,51 +118,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             }
             return output;
         }
-        public static List<NamedRecord> ToNamedRecordList(this List<CriticalInjury> injuries)
-        {
-            List<NamedRecord> records = new();
-            foreach (CriticalInjury injury in injuries)
-            {
-                records.Add(new(injury.Name, injury.Description));
-            }
-            return records;
-        }
-        public static List<NamedRecord> ToNamedRecordList(this List<Combatant> combatants)
-        {
-            List<NamedRecord> records = new();
-            foreach (Combatant combatant in combatants)
-            {
-                records.Add(new(combatant.Name, string.Empty));
-            }
-            return records;
-        }
-        public static List<NamedRecord> ToNamedRecordList(this List<NPC> npcs)
-        {
-            List<NamedRecord> records = new();
-            foreach (NPC npc in npcs)
-            {
-                records.Add(new(npc.Name, npc.BaseCombatant));
-            }
-            return records;
-        }
-        public static List<NamedRecord> ToNamedRecordList(this List<WeaponOption> weaponOptions)
-        {
-            List<NamedRecord> records = new();
-            foreach (WeaponOption weapon in weaponOptions)
-            {
-                records.Add(new(weapon.WeaponType, string.Empty));
-            }
-            return records;
-        }
-        public static List<NamedRecord> ToNamedRecordList(this List<Ammo> ammoTypes)
-        {
-            List<NamedRecord> records = new();
-            foreach (Ammo ammo in ammoTypes)
-            {
-                records.Add(new(ammo.Type, ammo.Variant));
-            }
-            return records;
-        }
+        
         public static string AOrAn(this string word)
         {
             return ReferenceData.Vowels.ToList().Contains(word[0].ToString()) ? $"an {word}" : $"a {word}";
@@ -194,4 +153,3 @@ namespace CyberpunkGameplayAssistant.Toolbox
         }
     }
 }
-#pragma warning restore CS8602 // Dereference of a possibly null reference.

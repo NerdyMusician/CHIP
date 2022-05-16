@@ -1,4 +1,5 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
+using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
 using CyberpunkGameplayAssistant.Windows;
 using System;
 using System.Linq;

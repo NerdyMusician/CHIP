@@ -1,4 +1,6 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
+using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
+using CyberpunkGameplayAssistant.Windows;
 using System;
 using System.Linq;
 using System.Windows.Input;
@@ -62,8 +64,19 @@ namespace CyberpunkGameplayAssistant.Models
             string action = (param as object[])![1].ToString()!;
             string result = action switch
             {
-                // TODO - RESOLVE NET ACTIONS
-                _ => ""
+                ReferenceData.NetActionInterface => PerformNetActionInterface(combatant),
+                ReferenceData.NetActionJackIn => PerformNetActionJackIn(combatant),
+                ReferenceData.NetActionJackOut => PerformNetActionJackOut(combatant),
+                ReferenceData.NetActionActivateProgram => PerformNetActionActivateProgram(combatant),
+                ReferenceData.NetActionScanner => PerformNetActionScanner(combatant),
+                ReferenceData.NetActionBackdoor => PerformNetActionBackdoor(combatant),
+                ReferenceData.NetActionCloak => PerformNetActionCloak(combatant),
+                ReferenceData.NetActionControl => PerformNetActionControl(combatant),
+                ReferenceData.NetActionEyeDee => PerformNetActionEyeDee(combatant),
+                ReferenceData.NetActionSlide => PerformNetActionSlide(combatant),
+                ReferenceData.NetActionVirus => PerformNetActionVirus(combatant),
+                ReferenceData.NetActionZap => PerformNetActionZap(combatant),
+                _ => string.Empty
             };
             if (string.IsNullOrEmpty(result))
             {
@@ -77,6 +90,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
 
         // Private Methods
+        #region Standard Actions
         private static string PerformActionBrawl(Combatant combatant)
         {
             int attack = HelperMethods.RollSkillCheck(combatant, ReferenceData.StatDexterity, ReferenceData.SkillBrawling);
@@ -87,7 +101,7 @@ namespace CyberpunkGameplayAssistant.Models
             }
             int damage = body switch
             {
-                <=4 => 1,
+                <= 4 => 1,
                 5 => 2,
                 6 => 2,
                 7 => 3,
@@ -138,6 +152,120 @@ namespace CyberpunkGameplayAssistant.Models
             int result = HelperMethods.RollSkillCheck(combatant, ReferenceData.StatDexterity, ReferenceData.SkillAthletics);
             return $"{combatant.DisplayName} threw an object\nResult: {result}";
         }
+        #endregion
+
+        #region NET Actions
+        private static string PerformNetActionInterface(Combatant combatant)
+        {
+            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
+            string output = $"{combatant.DisplayName} made an Interface check\nResult: {roll + interfaceLevel}";
+            output += GetInterfaceDebugText(roll, interfaceLevel);
+            return output;
+        }
+        private static string PerformNetActionJackIn(Combatant combatant)
+        {
+            return $"{combatant.DisplayName} has jacked in to a NET Architecture";
+        }
+        private static string PerformNetActionJackOut(Combatant combatant)
+        {
+            return $"{combatant.DisplayName} has safely jacked out from a NET Architecture";
+        }
+        private static string PerformNetActionActivateProgram(Combatant combatant)
+        {
+            ObjectSelectionDialog selectionDialog = new(combatant.CyberdeckPrograms.ToList().ToNamedRecordList(), "Programs");
+            if (selectionDialog.ShowDialog() == true)
+            {
+                NamedRecord selectedRecord = selectionDialog.SelectedObject as NamedRecord;
+                CyberdeckProgram program = combatant.CyberdeckPrograms.FirstOrDefault(p => p.Name == selectedRecord.Name);
+                if (program == null) { RaiseError($"Program {selectedRecord.Name} not found"); return string.Empty; }
+                CyberdeckProgram duplicateProgram = combatant.ActivePrograms.FirstOrDefault(p => p.Name == program.Name);
+                if (duplicateProgram != null) { RaiseError($"Program {program.Name} already active for {combatant.DisplayName}"); return string.Empty; }
+                combatant.ActivePrograms.Add(program);
+                return $"{program.Name} added to Active Programs for {combatant.DisplayName}";
+            }
+            return string.Empty;
+        }
+        private static string PerformNetActionBasic(Combatant combatant, string insert)
+        {
+            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
+            string output = $"{combatant.DisplayName} {insert}\nResult: {roll + interfaceLevel}";
+            output += GetInterfaceDebugText(roll, interfaceLevel);
+            return output;
+        }
+        private static string PerformNetActionScanner(Combatant combatant)
+        {
+            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
+            string output = $"{combatant.DisplayName} scanned for NET access points\nResult: {roll + interfaceLevel}";
+            output += GetInterfaceDebugText(roll, interfaceLevel);
+            return output;
+        }
+        private static string PerformNetActionBackdoor(Combatant combatant)
+        {
+            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
+            string output = $"{combatant.DisplayName} attempts to break through a password\nResult: {roll + interfaceLevel}";
+            output += GetInterfaceDebugText(roll, interfaceLevel);
+            return output;
+        }
+        private static string PerformNetActionCloak(Combatant combatant)
+        {
+            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
+            string output = $"{combatant.DisplayName} attempts to hide traces of their presence in the NET\nResult: {roll + interfaceLevel}";
+            output += GetInterfaceDebugText(roll, interfaceLevel);
+            return output;
+        }
+        private static string PerformNetActionControl(Combatant combatant)
+        {
+            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
+            string output = $"{combatant.DisplayName} attempts to take over a control node\nResult: {roll + interfaceLevel}";
+            output += GetInterfaceDebugText(roll, interfaceLevel);
+            return output;
+        }
+        private static string PerformNetActionEyeDee(Combatant combatant)
+        {
+            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
+            string output = $"{combatant.DisplayName} attempts to identify a file\nResult: {roll + interfaceLevel}";
+            output += GetInterfaceDebugText(roll, interfaceLevel);
+            return output;
+        }
+        private static string PerformNetActionPathfinder(Combatant combatant)
+        {
+            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
+            string output = $"{combatant.DisplayName} attempts to reveal the NET architecture\nResult: {roll + interfaceLevel}";
+            output += GetInterfaceDebugText(roll, interfaceLevel);
+            return output;
+        }
+        private static string PerformNetActionSlide(Combatant combatant)
+        {
+            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
+            string output = $"{combatant.DisplayName} attempts to flee from Black ICE's PER\nResult: {roll + interfaceLevel}";
+            output += GetInterfaceDebugText(roll, interfaceLevel);
+            return output;
+        }
+        private static string PerformNetActionVirus(Combatant combatant)
+        {
+            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
+            string output = $"{combatant.DisplayName} attempts to create a virus\nResult: {roll + interfaceLevel}";
+            output += GetInterfaceDebugText(roll, interfaceLevel);
+            return output;
+        }
+        private static string PerformNetActionZap(Combatant combatant)
+        {
+            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
+            int damage = HelperMethods.RollDice(1, 6).Sum();
+            string output = $"{combatant.DisplayName} attempts to create a virus\nResult: {roll + interfaceLevel}\nDamage: {damage}";
+            output += GetInterfaceDebugText(roll, interfaceLevel);
+            return output;
+        }
+        private static void GetInterfaceCheck(Combatant combatant, out int roll, out int interfaceLevel)
+        {
+            roll = HelperMethods.RollD10();
+            interfaceLevel = combatant.Skills.GetLevel(ReferenceData.SkillInterface);
+        }
+        private static string GetInterfaceDebugText(int roll, int interfaceLevel)
+        {
+            return ReferenceData.DebugMode ? $"\nDEBUG: ROLL: {roll} INTERFACE: {interfaceLevel}" : "";
+        }
+        #endregion
 
     }
 }

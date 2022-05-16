@@ -1,5 +1,6 @@
 ﻿using CyberpunkGameplayAssistant.Models;
 using CyberpunkGameplayAssistant.Toolbox;
+using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
 using CyberpunkGameplayAssistant.ViewModels;
 using System;
 using System.Collections.Generic;

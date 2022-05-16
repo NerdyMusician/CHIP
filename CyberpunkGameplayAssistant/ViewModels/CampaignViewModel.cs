@@ -1,5 +1,6 @@
 ﻿using CyberpunkGameplayAssistant.Models;
 using CyberpunkGameplayAssistant.Toolbox;
+using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
 using CyberpunkGameplayAssistant.Windows;
 using Microsoft.Win32;
 using System;

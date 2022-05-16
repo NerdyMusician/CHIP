@@ -1,4 +1,5 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
+using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
 using CyberpunkGameplayAssistant.ViewModels;
 using CyberpunkGameplayAssistant.Windows;
 using System;
@@ -261,12 +262,6 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get => _InstalledCyberware;
             set => SetAndNotify(ref _InstalledCyberware, value);
-        }
-        private ObservableCollection<CyberdeckProgram> _CyberdeckPrograms;
-        public ObservableCollection<CyberdeckProgram> CyberdeckPrograms
-        {
-            get => _CyberdeckPrograms;
-            set => SetAndNotify(ref _CyberdeckPrograms, value);
         }
         private bool _IsDead;
         public bool IsDead
@@ -643,7 +638,19 @@ namespace CyberpunkGameplayAssistant.Models
         public void SetNetActions()
         {
             NetActions.Clear();
-            // TODO set the net actions
+            StandardActions.Add(new(ReferenceData.NetActionInterface));
+            StandardActions.Add(new(ReferenceData.NetActionJackIn));
+            StandardActions.Add(new(ReferenceData.NetActionJackOut));
+            StandardActions.Add(new(ReferenceData.NetActionActivateProgram));
+            //StandardActions.Add(new(ReferenceData.NetActionDeactivateProgram)); // TODO remove this
+            StandardActions.Add(new(ReferenceData.NetActionScanner));
+            StandardActions.Add(new(ReferenceData.NetActionBackdoor));
+            StandardActions.Add(new(ReferenceData.NetActionCloak));
+            StandardActions.Add(new(ReferenceData.NetActionControl));
+            StandardActions.Add(new(ReferenceData.NetActionEyeDee));
+            StandardActions.Add(new(ReferenceData.NetActionSlide));
+            StandardActions.Add(new(ReferenceData.NetActionVirus));
+            StandardActions.Add(new(ReferenceData.NetActionZap));
         }
 
         // Private Methods
@@ -668,8 +675,9 @@ namespace CyberpunkGameplayAssistant.Models
             StandardActions = new();
             NetActions = new();
             CriticalInjuries = new();
-            CyberdeckPrograms = new();
             WeaponOptions = new();
+            CyberdeckPrograms = new();
+            ActivePrograms = new();
         }
         private void AddGear(string name)
         {

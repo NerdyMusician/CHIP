@@ -33,11 +33,11 @@ namespace CyberpunkGameplayAssistant.Models
             return true;
         }
 
-        protected void RaiseError(string message)
+        protected static void RaiseError(string message)
         {
             HelperMethods.NotifyUser(ReferenceData.AlertError, message);
         }
-        protected void RaiseAlert(string message)
+        protected static void RaiseAlert(string message)
         {
             HelperMethods.NotifyUser(ReferenceData.AlertInfo, message);
         }
