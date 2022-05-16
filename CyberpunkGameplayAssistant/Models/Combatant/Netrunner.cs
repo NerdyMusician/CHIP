@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace CyberpunkGameplayAssistant.Models
 {
@@ -11,6 +6,12 @@ namespace CyberpunkGameplayAssistant.Models
     {
 
         // Databound Properties
+        private ObservableCollection<Action> _NetActions;
+        public ObservableCollection<Action> NetActions
+        {
+            get => _NetActions;
+            set => SetAndNotify(ref _NetActions, value);
+        }
         private ObservableCollection<CyberdeckProgram> _CyberdeckPrograms;
         public ObservableCollection<CyberdeckProgram> CyberdeckPrograms
         {

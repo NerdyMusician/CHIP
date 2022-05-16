@@ -568,13 +568,13 @@
                                                                                             </ItemsControl.ItemTemplate>
                                                                                         </ItemsControl>
                                                                                     </StackPanel>
-                                                                                    <StackPanel Visibility="{Binding NetActions.Count, Converter={tool:CollapsedIfZero}}">
-                                                                                        <TextBlock Text="Standard Actions" />
+                                                                                    <StackPanel Visibility="{Binding NetActions.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={tool:CollapsedIfZero}}">
+                                                                                        <TextBlock Text="NET Actions" />
                                                                                         <Rectangle />
                                                                                         <ItemsControl ItemsSource="{Binding NetActions}">
                                                                                             <ItemsControl.ItemTemplate>
                                                                                                 <DataTemplate>
-                                                                                                    <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnAction}}" Text="{Binding Name}" Command="{Binding PerformStandardAction}">
+                                                                                                    <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnAction}}" Text="{Binding Name}" Command="{Binding PerformNetAction}">
                                                                                                         <cc:ImageButton.CommandParameter>
                                                                                                             <MultiBinding Converter="{StaticResource MultiValueConverter}">
                                                                                                                 <Binding Path="DataContext" RelativeSource="{RelativeSource AncestorType=ItemsControl}" />

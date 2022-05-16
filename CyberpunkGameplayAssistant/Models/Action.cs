@@ -65,16 +65,17 @@ namespace CyberpunkGameplayAssistant.Models
             string result = action switch
             {
                 ReferenceData.NetActionInterface => PerformNetActionInterface(combatant),
-                ReferenceData.NetActionJackIn => PerformNetActionJackIn(combatant),
-                ReferenceData.NetActionJackOut => PerformNetActionJackOut(combatant),
+                ReferenceData.NetActionJackIn => $"{combatant.DisplayName} has jacked in to a NET Architecture",
+                ReferenceData.NetActionJackOut => $"{combatant.DisplayName} has safely jacked out from a NET Architecture",
                 ReferenceData.NetActionActivateProgram => PerformNetActionActivateProgram(combatant),
-                ReferenceData.NetActionScanner => PerformNetActionScanner(combatant),
-                ReferenceData.NetActionBackdoor => PerformNetActionBackdoor(combatant),
-                ReferenceData.NetActionCloak => PerformNetActionCloak(combatant),
-                ReferenceData.NetActionControl => PerformNetActionControl(combatant),
-                ReferenceData.NetActionEyeDee => PerformNetActionEyeDee(combatant),
-                ReferenceData.NetActionSlide => PerformNetActionSlide(combatant),
-                ReferenceData.NetActionVirus => PerformNetActionVirus(combatant),
+                ReferenceData.NetActionScanner => PerformNetActionBasic(combatant, "scanned for NET access points"),
+                ReferenceData.NetActionBackdoor => PerformNetActionBasic(combatant, "attempts to break through a password"),
+                ReferenceData.NetActionCloak => PerformNetActionBasic(combatant, "attempts to hide traces of their presence in the NET"),
+                ReferenceData.NetActionControl => PerformNetActionBasic(combatant, "attempts to take over a control node"),
+                ReferenceData.NetActionEyeDee => PerformNetActionBasic(combatant, "attempts to identify a file"),
+                ReferenceData.NetActionPathfinder => PerformNetActionBasic(combatant, "attempts to reveal the NET architecture"),
+                ReferenceData.NetActionSlide => PerformNetActionBasic(combatant, "attempts to flee from Black ICE's PER"),
+                ReferenceData.NetActionVirus => PerformNetActionBasic(combatant, "attempts to create a virus"),
                 ReferenceData.NetActionZap => PerformNetActionZap(combatant),
                 _ => string.Empty
             };
@@ -162,14 +163,6 @@ namespace CyberpunkGameplayAssistant.Models
             output += GetInterfaceDebugText(roll, interfaceLevel);
             return output;
         }
-        private static string PerformNetActionJackIn(Combatant combatant)
-        {
-            return $"{combatant.DisplayName} has jacked in to a NET Architecture";
-        }
-        private static string PerformNetActionJackOut(Combatant combatant)
-        {
-            return $"{combatant.DisplayName} has safely jacked out from a NET Architecture";
-        }
         private static string PerformNetActionActivateProgram(Combatant combatant)
         {
             ObjectSelectionDialog selectionDialog = new(combatant.CyberdeckPrograms.ToList().ToNamedRecordList(), "Programs");
@@ -189,62 +182,6 @@ namespace CyberpunkGameplayAssistant.Models
         {
             GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
             string output = $"{combatant.DisplayName} {insert}\nResult: {roll + interfaceLevel}";
-            output += GetInterfaceDebugText(roll, interfaceLevel);
-            return output;
-        }
-        private static string PerformNetActionScanner(Combatant combatant)
-        {
-            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
-            string output = $"{combatant.DisplayName} scanned for NET access points\nResult: {roll + interfaceLevel}";
-            output += GetInterfaceDebugText(roll, interfaceLevel);
-            return output;
-        }
-        private static string PerformNetActionBackdoor(Combatant combatant)
-        {
-            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
-            string output = $"{combatant.DisplayName} attempts to break through a password\nResult: {roll + interfaceLevel}";
-            output += GetInterfaceDebugText(roll, interfaceLevel);
-            return output;
-        }
-        private static string PerformNetActionCloak(Combatant combatant)
-        {
-            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
-            string output = $"{combatant.DisplayName} attempts to hide traces of their presence in the NET\nResult: {roll + interfaceLevel}";
-            output += GetInterfaceDebugText(roll, interfaceLevel);
-            return output;
-        }
-        private static string PerformNetActionControl(Combatant combatant)
-        {
-            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
-            string output = $"{combatant.DisplayName} attempts to take over a control node\nResult: {roll + interfaceLevel}";
-            output += GetInterfaceDebugText(roll, interfaceLevel);
-            return output;
-        }
-        private static string PerformNetActionEyeDee(Combatant combatant)
-        {
-            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
-            string output = $"{combatant.DisplayName} attempts to identify a file\nResult: {roll + interfaceLevel}";
-            output += GetInterfaceDebugText(roll, interfaceLevel);
-            return output;
-        }
-        private static string PerformNetActionPathfinder(Combatant combatant)
-        {
-            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
-            string output = $"{combatant.DisplayName} attempts to reveal the NET architecture\nResult: {roll + interfaceLevel}";
-            output += GetInterfaceDebugText(roll, interfaceLevel);
-            return output;
-        }
-        private static string PerformNetActionSlide(Combatant combatant)
-        {
-            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
-            string output = $"{combatant.DisplayName} attempts to flee from Black ICE's PER\nResult: {roll + interfaceLevel}";
-            output += GetInterfaceDebugText(roll, interfaceLevel);
-            return output;
-        }
-        private static string PerformNetActionVirus(Combatant combatant)
-        {
-            GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
-            string output = $"{combatant.DisplayName} attempts to create a virus\nResult: {roll + interfaceLevel}";
             output += GetInterfaceDebugText(roll, interfaceLevel);
             return output;
         }

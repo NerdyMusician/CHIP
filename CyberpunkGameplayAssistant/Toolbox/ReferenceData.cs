@@ -159,6 +159,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string NetActionCloak = "Cloak";
         public const string NetActionControl = "Control";
         public const string NetActionEyeDee = "Eye-Dee";
+        public const string NetActionPathfinder = "Pathfinder";
         public const string NetActionSlide = "Slide";
         public const string NetActionVirus = "Virus";
         public const string NetActionZap = "Zap";

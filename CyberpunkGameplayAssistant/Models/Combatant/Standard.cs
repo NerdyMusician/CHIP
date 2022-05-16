@@ -275,12 +275,7 @@ namespace CyberpunkGameplayAssistant.Models
             get => _StandardActions;
             set => SetAndNotify(ref _StandardActions, value);
         }
-        private ObservableCollection<Action> _NetActions;
-        public ObservableCollection<Action> NetActions
-        {
-            get => _NetActions;
-            set => SetAndNotify(ref _NetActions, value);
-        }
+        
         private ObservableCollection<CriticalInjury> _CriticalInjuries;
         public ObservableCollection<CriticalInjury> CriticalInjuries
         {
@@ -496,7 +491,7 @@ namespace CyberpunkGameplayAssistant.Models
             Skill skill = Skills.FirstOrDefault(s => s.Name == name && s.Variant == variant);
             if (skill == null)
             {
-                if (name == ReferenceData.SkillInterface) { return; } // This will be handled elsewhere
+                if (name == ReferenceData.SkillInterface) { Skills.Add(new(name, variant, value)); return; }
                 int level = value - CalculatedStats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName == name).StatName);
                 Skills.Add(new(name, variant, level));
             }
@@ -638,19 +633,19 @@ namespace CyberpunkGameplayAssistant.Models
         public void SetNetActions()
         {
             NetActions.Clear();
-            StandardActions.Add(new(ReferenceData.NetActionInterface));
-            StandardActions.Add(new(ReferenceData.NetActionJackIn));
-            StandardActions.Add(new(ReferenceData.NetActionJackOut));
-            StandardActions.Add(new(ReferenceData.NetActionActivateProgram));
+            NetActions.Add(new(ReferenceData.NetActionInterface));
+            NetActions.Add(new(ReferenceData.NetActionJackIn));
+            NetActions.Add(new(ReferenceData.NetActionJackOut));
+            NetActions.Add(new(ReferenceData.NetActionActivateProgram));
             //StandardActions.Add(new(ReferenceData.NetActionDeactivateProgram)); // TODO remove this
-            StandardActions.Add(new(ReferenceData.NetActionScanner));
-            StandardActions.Add(new(ReferenceData.NetActionBackdoor));
-            StandardActions.Add(new(ReferenceData.NetActionCloak));
-            StandardActions.Add(new(ReferenceData.NetActionControl));
-            StandardActions.Add(new(ReferenceData.NetActionEyeDee));
-            StandardActions.Add(new(ReferenceData.NetActionSlide));
-            StandardActions.Add(new(ReferenceData.NetActionVirus));
-            StandardActions.Add(new(ReferenceData.NetActionZap));
+            NetActions.Add(new(ReferenceData.NetActionScanner));
+            NetActions.Add(new(ReferenceData.NetActionBackdoor));
+            NetActions.Add(new(ReferenceData.NetActionCloak));
+            NetActions.Add(new(ReferenceData.NetActionControl));
+            NetActions.Add(new(ReferenceData.NetActionEyeDee));
+            NetActions.Add(new(ReferenceData.NetActionSlide));
+            NetActions.Add(new(ReferenceData.NetActionVirus));
+            NetActions.Add(new(ReferenceData.NetActionZap));
         }
 
         // Private Methods
@@ -690,8 +685,9 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private void AddCyberdeckProgram(string name)
         {
-            if (ReferenceData.CyberdeckPrograms.FirstOrDefault(p => p.Name == name) != null) { return; }
-            CyberdeckPrograms.Add(ReferenceData.CyberdeckPrograms.FirstOrDefault(p => p.Name == name).DeepClone());
+            CyberdeckProgram matchedProgram = ReferenceData.CyberdeckPrograms.FirstOrDefault(p => p.Name == name);
+            if (matchedProgram == null) { return; }
+            CyberdeckPrograms.Add(matchedProgram.DeepClone());
         }
         private void AddCyberware(string name)
         {
