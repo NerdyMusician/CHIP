@@ -10,6 +10,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\BlackIce\Asp.png" />
+    <None Remove="Resources\BlackIce\Dragon.png" />
+    <None Remove="Resources\BlackIce\Giant.png" />
+    <None Remove="Resources\BlackIce\Hellhound.png" />
+    <None Remove="Resources\BlackIce\Killer.png" />
+    <None Remove="Resources\BlackIce\Kraken.png" />
+    <None Remove="Resources\BlackIce\Liche.png" />
+    <None Remove="Resources\BlackIce\Raven.png" />
+    <None Remove="Resources\BlackIce\Sabertooth.png" />
+    <None Remove="Resources\BlackIce\Scorpion.png" />
+    <None Remove="Resources\BlackIce\Skunk.png" />
+    <None Remove="Resources\BlackIce\Wisp.png" />
     <None Remove="Resources\Combatants\TokenBodyguard.png" />
     <None Remove="Resources\Combatants\TokenBoosterganger.png" />
     <None Remove="Resources\Combatants\TokenCovertOperative.png" />
@@ -22,6 +34,9 @@
     <None Remove="Resources\Combatants\TokenSecurityOfficer.png" />
     <None Remove="Resources\Combatants\TokenSecurityOperative.png" />
     <None Remove="Resources\Combatants\TokenTech.png" />
+    <None Remove="Resources\Demons\Balron.png" />
+    <None Remove="Resources\Demons\Efreet.png" />
+    <None Remove="Resources\Demons\Imp.png" />
     <None Remove="Resources\Icons\aberration.png" />
     <None Remove="Resources\Icons\abjuration.png" />
     <None Remove="Resources\Icons\action.png" />
@@ -149,6 +164,7 @@
     <None Remove="Resources\Icons\health_plus_one.png" />
     <None Remove="Resources\Icons\health_plus_ten.png" />
     <None Remove="Resources\Icons\heart.png" />
+    <None Remove="Resources\Icons\hearttag.png" />
     <None Remove="Resources\Icons\heart_pink.png" />
     <None Remove="Resources\Icons\hex.png" />
     <None Remove="Resources\Icons\hex_a.png" />
@@ -221,6 +237,7 @@
     <None Remove="Resources\Icons\poison_b.png" />
     <None Remove="Resources\Icons\potion.png" />
     <None Remove="Resources\Icons\potion_b.png" />
+    <None Remove="Resources\Icons\program.png" />
     <None Remove="Resources\Icons\puzzle.png" />
     <None Remove="Resources\Icons\quantity.png" />
     <None Remove="Resources\Icons\reddit.png" />
@@ -325,6 +342,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\BlackIce\Asp.png" />
+    <Resource Include="Resources\BlackIce\Dragon.png" />
+    <Resource Include="Resources\BlackIce\Giant.png" />
+    <Resource Include="Resources\BlackIce\Hellhound.png" />
+    <Resource Include="Resources\BlackIce\Killer.png" />
+    <Resource Include="Resources\BlackIce\Kraken.png" />
+    <Resource Include="Resources\BlackIce\Liche.png" />
+    <Resource Include="Resources\BlackIce\Raven.png" />
+    <Resource Include="Resources\BlackIce\Sabertooth.png" />
+    <Resource Include="Resources\BlackIce\Scorpion.png" />
+    <Resource Include="Resources\BlackIce\Skunk.png" />
+    <Resource Include="Resources\BlackIce\Wisp.png" />
     <Resource Include="Resources\Combatants\TokenBodyguard.png" />
     <Resource Include="Resources\Combatants\TokenBoosterganger.png" />
     <Resource Include="Resources\Combatants\TokenCovertOperative.png" />
@@ -337,6 +366,9 @@
     <Resource Include="Resources\Combatants\TokenSecurityOfficer.png" />
     <Resource Include="Resources\Combatants\TokenSecurityOperative.png" />
     <Resource Include="Resources\Combatants\TokenTech.png" />
+    <Resource Include="Resources\Demons\Balron.png" />
+    <Resource Include="Resources\Demons\Efreet.png" />
+    <Resource Include="Resources\Demons\Imp.png" />
     <Resource Include="Resources\Icons\aberration.png" />
     <Resource Include="Resources\Icons\abjuration.png" />
     <Resource Include="Resources\Icons\action.png" />
@@ -464,6 +496,7 @@
     <Resource Include="Resources\Icons\health_plus_one.png" />
     <Resource Include="Resources\Icons\health_plus_ten.png" />
     <Resource Include="Resources\Icons\heart.png" />
+    <Resource Include="Resources\Icons\hearttag.png" />
     <Resource Include="Resources\Icons\heart_pink.png" />
     <Resource Include="Resources\Icons\hex.png" />
     <Resource Include="Resources\Icons\hex_a.png" />
@@ -536,6 +569,7 @@
     <Resource Include="Resources\Icons\poison_b.png" />
     <Resource Include="Resources\Icons\potion.png" />
     <Resource Include="Resources\Icons\potion_b.png" />
+    <Resource Include="Resources\Icons\program.png" />
     <Resource Include="Resources\Icons\puzzle.png" />
     <Resource Include="Resources\Icons\quantity.png" />
     <Resource Include="Resources\Icons\reddit.png" />

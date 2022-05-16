@@ -173,8 +173,16 @@ namespace CyberpunkGameplayAssistant.Models
                 if (program == null) { RaiseError($"Program {selectedRecord.Name} not found"); return string.Empty; }
                 CyberdeckProgram duplicateProgram = combatant.ActivePrograms.FirstOrDefault(p => p.Name == program.Name);
                 if (duplicateProgram != null) { RaiseError($"Program {program.Name} already active for {combatant.DisplayName}"); return string.Empty; }
-                combatant.ActivePrograms.Add(program);
-                return $"{program.Name} added to Active Programs for {combatant.DisplayName}";
+                if (program.Class != ReferenceData.ProgramClassAntiPersonnelAttacker && program.Class != ReferenceData.ProgramClassAntiProgramAttacker)
+                {
+                    combatant.ActivePrograms.Add(program);
+                    return $"{program.Name} added to Active Programs for {combatant.DisplayName}";
+                }
+                else
+                {
+                    GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
+                    return $"{combatant.DisplayName} activates {program.Name}:\n{program.Effect}\nInterface Result: {roll + interfaceLevel}";
+                }
             }
             return string.Empty;
         }

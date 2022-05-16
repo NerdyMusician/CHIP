@@ -381,6 +381,12 @@
 
 
     <!-- Unsorted -->
+    <Style TargetType="Image" x:Key="Icon_HeartTag" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/hearttag.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_Program" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/program.png" />
+    </Style>
     <Style TargetType="Image" x:Key="Icon_BlueGear" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/bluegear.png" />
     </Style>

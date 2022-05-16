@@ -57,7 +57,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             Combatant combatant = param as Combatant;
             int diceRoll = HelperMethods.RollD10();
-            int penalty = 0; // TODO - critical injuries
+            int penalty = 0; // TODO - calculate critical injury penalty for stat checks
             string output = $"{combatant.DisplayName} made {Name.AOrAn()} roll";
             output += $"\nResult: {diceRoll + Value + penalty}";
             if (ReferenceData.DebugMode) { output += $"\nDEBUG: ROLL: {diceRoll}, STAT: {Value}, PENALTY: {penalty}"; }

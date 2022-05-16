@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
 {
@@ -18,6 +19,34 @@ namespace CyberpunkGameplayAssistant.Models
         }
 
         // Properties
+        private bool _UsesLoyalty;
+        public bool UsesLoyalty
+        {
+            get => _UsesLoyalty;
+            set => SetAndNotify(ref _UsesLoyalty, value);
+        }
+        private int _Loyalty;
+        public int Loyalty
+        {
+            get => _Loyalty;
+            set => SetAndNotify(ref _Loyalty, value);
+        }
+
+        // Commands
+        public ICommand ToggleLoyalty => new RelayCommand(DoToggleLoyalty);
+        private void DoToggleLoyalty(object param)
+        {
+            UsesLoyalty = !UsesLoyalty;
+            if (UsesLoyalty) { RaiseAlert($"Loyalty controls enabled for {DisplayName}"); }
+            else { RaiseAlert($"Loyal controls disabled for {DisplayName}"); }
+        }
+        public ICommand MakeLoyaltySave => new RelayCommand(DoMakeLoyaltySave);
+        private void DoMakeLoyaltySave(object param)
+        {
+            int roll = HelperMethods.RollD6();
+            if (roll < Loyalty) { HelperMethods.AddToGameplayLog($"{DisplayName} passed their Loyalty check"); }
+            else { HelperMethods.AddToGameplayLog($"{DisplayName} failed their Loyalty check"); }
+        }
 
         // Public Methods
         public void SetSkillLevels(int level, params string[] skills)

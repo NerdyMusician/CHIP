@@ -62,7 +62,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
             {
                 serializer.Serialize(writer, this.DeepClone());
             }
-            HelperMethods.WriteToLogFile("Campaigns Saved", notifyUser);
+            RaiseAlert($"{Campaigns.Count} Campaign(s) Saved");
         }
 
         // Public Methods

@@ -603,6 +603,18 @@ namespace CyberpunkGameplayAssistant.Models
             UpdateWoundState();
             ReloadAllWeapons();
         }
+        public int GetSkillPenalty(string skillName)
+        {
+            int penalty = GetAllActionInjuryPenalty();
+            if (skillName == ReferenceData.SkillPerception && CriticalInjuries.Contains(ReferenceData.CriticalInjuryLostEye)) { penalty += 4; }
+            if (skillName == ReferenceData.SkillPerception && CriticalInjuries.Contains(ReferenceData.CriticalInjuryDamagedEye)) { penalty += 2; }
+            if (skillName == ReferenceData.SkillPersuasion && CriticalInjuries.Contains(ReferenceData.CriticalInjuryBrokenJaw)) { penalty += 4; }
+            if (skillName == ReferenceData.SkillBribery && CriticalInjuries.Contains(ReferenceData.CriticalInjuryBrokenJaw)) { penalty += 4; }
+            if (skillName == ReferenceData.SkillConversation && CriticalInjuries.Contains(ReferenceData.CriticalInjuryBrokenJaw)) { penalty += 4; }
+            if (skillName == ReferenceData.SkillPerception && CriticalInjuries.Contains(ReferenceData.CriticalInjuryLostEar)) { penalty += 4; }
+            // TODO - add question for if perception involves sight, smell, or sound
+            return penalty;
+        }
         public int GetAttackInjuryPenalty(string weaponType)
         {
             int penalty = GetAllActionInjuryPenalty();

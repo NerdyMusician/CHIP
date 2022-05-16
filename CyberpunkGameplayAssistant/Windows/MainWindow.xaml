@@ -479,6 +479,7 @@
                                                                     <ContextMenu>
                                                                         <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
                                                                         <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
+                                                                        <MenuItem Header="Toggle Loyalty" Command="{Binding ToggleLoyalty}" />
                                                                         <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
                                                                     </ContextMenu>
                                                                 </Image.ContextMenu>
@@ -494,6 +495,8 @@
                                                                         <Popup IsOpen="{Binding WeaponMenuOpen}">
                                                                             <Border Style="{StaticResource BRDR_PopupBorder}">
                                                                                 <StackPanel Margin="2">
+                                                                                    <TextBlock Text="Ammunition" />
+                                                                                    <Rectangle Style="{StaticResource HorizontalDivider}" />
                                                                                     <ItemsControl ItemsSource="{Binding AmmoInventory}">
                                                                                         <ItemsControl.ItemTemplate>
                                                                                             <DataTemplate>
@@ -510,6 +513,9 @@
                                                                                             </DataTemplate>
                                                                                         </ItemsControl.ItemTemplate>
                                                                                     </ItemsControl>
+                                                                                    <Separator />
+                                                                                    <TextBlock Text="Weapons" />
+                                                                                    <Rectangle Style="{StaticResource HorizontalDivider}" />
                                                                                     <ItemsControl ItemsSource="{Binding Weapons}">
                                                                                         <ItemsControl.ItemTemplate>
                                                                                             <DataTemplate>
@@ -540,6 +546,27 @@
                                                                                             </DataTemplate>
                                                                                         </ItemsControl.ItemTemplate>
                                                                                     </ItemsControl>
+                                                                                    <StackPanel Margin="0 6 0 0" Visibility="{Binding ActivePrograms.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={tool:CollapsedIfZero}}">
+                                                                                        <TextBlock Text="Active Programs" />
+                                                                                        <Rectangle Style="{StaticResource HorizontalDivider}" />
+                                                                                        <ItemsControl ItemsSource="{Binding ActivePrograms}">
+                                                                                            <ItemsControl.ItemTemplate>
+                                                                                                <DataTemplate>
+                                                                                                    <Border Style="{StaticResource SegmentTile}">
+                                                                                                        <DockPanel>
+                                                                                                            <Image Style="{StaticResource Icon_Program}" VerticalAlignment="Top" />
+                                                                                                            <Separator />
+                                                                                                            <TextBlock Width="280" TextWrapping="Wrap" VerticalAlignment="Center">
+                                                                                                                <Run Text="{Binding Name}" />
+                                                                                                                <Run Text="{Binding Effect}" FontWeight="Normal" />
+                                                                                                            </TextBlock>
+                                                                                                            <cc:IconButton ImageResource="{StaticResource Icon_X}" Command="{Binding RemoveActiveProgram}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type Popup}, Mode=FindAncestor}}" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                                                                                                        </DockPanel>
+                                                                                                    </Border>
+                                                                                                </DataTemplate>
+                                                                                            </ItemsControl.ItemTemplate>
+                                                                                        </ItemsControl>
+                                                                                    </StackPanel>
                                                                                 </StackPanel>
                                                                             </Border>
                                                                         </Popup>
@@ -599,6 +626,15 @@
                                                                                 <ScrollViewer Height="420" Width="560">
                                                                                     <StackPanel Margin="4">
                                                                                         <TextBlock Text="Stats" />
+                                                                                        <StackPanel Orientation="Horizontal" Visibility="{Binding UsesLoyalty, Converter={tool:CollapsedIfFalseOtherwiseVisible}}">
+                                                                                            <Image Style="{StaticResource Icon_HeartTag}" />
+                                                                                            <Separator />
+                                                                                            <TextBlock Text="Loyalty" VerticalAlignment="Center" />
+                                                                                            <Separator />
+                                                                                            <TextBox Text="{Binding Loyalty}" Width="32" />
+                                                                                            <Separator />
+                                                                                            <cc:IconButton ImageResource="{StaticResource Icon_Dice}" Command="{Binding MakeLoyaltySave}" />
+                                                                                        </StackPanel>
                                                                                         <ItemsControl ItemsSource="{Binding CalculatedStats}">
                                                                                             <ItemsControl.ItemsPanel>
                                                                                                 <ItemsPanelTemplate>

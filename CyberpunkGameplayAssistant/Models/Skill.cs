@@ -65,12 +65,12 @@ namespace CyberpunkGameplayAssistant.Models
             Combatant combatant = param as Combatant;
             string output = $"{combatant.DisplayName} made a {Name} check";
             int result = HelperMethods.RollD10();
-            // TODO penalty for critical injuries
+            int penalty = combatant.GetSkillPenalty(Name);
             string statName = ReferenceData.SkillLinks.GetStat(Name);
             int stat = combatant.CalculatedStats.GetValue(statName);
-            output += $"\nResult: {result + stat + Level}";
+            output += $"\nResult: {result + stat + Level - penalty}";
             if (Name == ReferenceData.SkillBrawling) { output += GetBrawlingDamage(combatant); }
-            if (ReferenceData.DebugMode) { output += $"\nDEBUG: {result} + {stat} + {Level}"; }
+            if (ReferenceData.DebugMode) { output += $"\nDEBUG: {result} + {stat} + {Level} - {penalty}"; }
             HelperMethods.AddToGameplayLog(output, ReferenceData.MessageSkillCheck);
         }
 

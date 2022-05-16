@@ -99,7 +99,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string ErrorNotAnAutofireWeapon = "This weapon does not have Autofire";
         public const string ErrorNotEnoughWeaponOptions = "Not enough weapon options for this combatant to fulfill the number of options allowed";
 
-        // Image Locations
+        // Image Locations - Combatants
         private const string ImageBase = "/Resources/Combatants/";
         public const string PortraitDefault = $"{ImageBase}TokenLogo.png";
         private const string PortraitBodyguard = $"{ImageBase}TokenBodyguard.png";
@@ -113,6 +113,25 @@ namespace CyberpunkGameplayAssistant.Toolbox
         private const string PortraitSecurityOfficer = $"{ImageBase}TokenSecurityOfficer.png";
         private const string PortraitSecurityOperative = $"{ImageBase}TokenSecurityOperative.png";
         private const string PortraitTech = $"{ImageBase}TokenTech.png";
+        // Image Locations - Black ICE
+        private const string BlackIceBase = "/Resources/BlackIce/";
+        private const string PortraitAsp = $"{BlackIceBase}Asp.png";
+        private const string PortraitDragon = $"{BlackIceBase}Dragon.png";
+        private const string PortraitGiant = $"{BlackIceBase}Giant.png";
+        private const string PortraitHellhound = $"{BlackIceBase}Hellhound.png";
+        private const string PortraitKiller = $"{BlackIceBase}Killer.png";
+        private const string PortraitKraken = $"{BlackIceBase}Kraken.png";
+        private const string PortraitLiche = $"{BlackIceBase}Liche.png";
+        private const string PortraitRaven = $"{BlackIceBase}Raven.png";
+        private const string PortraitSabertooth = $"{BlackIceBase}Sabertooth.png";
+        private const string PortraitScorpion = $"{BlackIceBase}Scorpion.png";
+        private const string PortraitSkunk = $"{BlackIceBase}Skunk.png";
+        private const string PortraitWisp = $"{BlackIceBase}Wisp.png";
+        // Image Locations - Demons
+        private const string DemonBase = "/Resources/Demons/";
+        private const string PortraitImp = $"{DemonBase}Imp.png";
+        private const string PortraitEfreet = $"{DemonBase}Efreet.png";
+        private const string PortraitBalron = $"{DemonBase}Balron.png";
 
         // Audio Locations
         private static readonly string AudioBase = $"{CurrentDirectory}Resources/Audio/";
@@ -1097,7 +1116,6 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         public const string BlackIceKiller = "Killer";
 
-        // TODO - program portraits
         public static readonly List<CyberdeckProgram> CyberdeckPrograms = new()
         {
             new(ProgramEraser, PortraitDefault, ProgramClassBooster, 0, 0, 7, "Increases all CLoak Checks you make by +2 as long as this Program remains Rezzed."),
@@ -1216,8 +1234,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         private static void PopulateCombatants()
         {
             // pg 155 - Exec Company Aides
-            // TODO - loyalty stat
-            // TODO - exec team portraits
+            // TODO - Portraits for executive team member combatants
             #region Company Bodyguard
             Combatant companyBodyguard = new("Company Bodyguard", ExecTeamMember, PortraitDefault, ArmorTypeSubdermal);
             companyBodyguard.SetStats(4, 8, 5, 3, 7, 8, 0, 6, 6, 3);
@@ -1243,7 +1260,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             companyDriver.SetSkillLevels(6, SkillDriveLandVehicle, SkillHandgun);
             companyDriver.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
             companyDriver.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
-            // TODO - vehicles
+            // TODO - Vehicle stat block style with UI card component
             companyDriver.AddCyberwareSet(CyberwareRadarSonarImplant, CyberwareCyberaudioSuite, CyberwareInternalAgent, CyberwareHomingtracer, CyberwareRadarDetector);
             companyDriver.InitializeNewCombatant();
             Combatants.Add(companyDriver);
@@ -1311,7 +1328,6 @@ namespace CyberpunkGameplayAssistant.Toolbox
             bodyguard.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
             bodyguard.AddAmmo(AmmoTypeSlug, 25);
             bodyguard.AddAmmo(AmmoTypeVeryHeavyPistol, 25);
-            bodyguard.AddAmmo(AmmoTypeShell, 4); // TODO - REMOVE
             bodyguard.AddGearSet(GearRadioCommunicator);
             bodyguard.InitializeNewCombatant();
             Combatants.Add(bodyguard);
@@ -1422,7 +1438,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             Combatants.Add(securityOperative);
             #endregion
             #region Netrunner
-            Combatant netrunner = new("Netrunner", PortraitNetrunner, ArmorTypeBodyweightSuit); // todo - functionality for netrunner combatants
+            Combatant netrunner = new("Netrunner", PortraitNetrunner, ArmorTypeBodyweightSuit);
             netrunner.SetStats(7, 5, 4, 7, 4, 5, 0, 5, 3, 4);
             netrunner.SetCalculatedStats();
             netrunner.SetBaseSkills();
@@ -1675,75 +1691,73 @@ namespace CyberpunkGameplayAssistant.Toolbox
         }
         private static void PopulateBlackIcePrograms()
         {
-            // TODO - proper portraits for the Black ICE programs
-            Combatant asp = new("Asp", PortraitNetrunner);
+            Combatant asp = new("Asp", PortraitAsp);
             asp.SetBlackIceStats(AntiPersonnelBlackIce, 4, 6, 2, 2, 15, "Destroys a single Program installed on the enemy Netrunner's Cyberdeck at random.");
             BlackIcePrograms.Add(asp);
 
-            Combatant giant = new("Giant", PortraitNetrunner);
+            Combatant giant = new("Giant", PortraitGiant);
             giant.SetBlackIceStats(AntiPersonnelBlackIce, 2, 2, 8, 4, 25, "Does 3d6 damage direct to an enemy Netrunner's brain. The Netrunner is forcibly and unsafely Jacked Out of their current Netrun. They suffer the effect of all Rezzed enemy Black ICE they've encountered in the Architecture as they leave, not including the Giant.");
             BlackIcePrograms.Add(giant);
 
-            Combatant hellhound = new("Hellhound", PortraitNetrunner);
+            Combatant hellhound = new("Hellhound", PortraitHellhound);
             hellhound.SetBlackIceStats(AntiPersonnelBlackIce, 6, 6, 6, 2, 20, "Does 2d6 damage direct to the Netrunner's brain. Unless insulated, their Cyberdeck catches fire along with their clothing. Until they spend a Meat Action to put themselves out, they take 2 damage to their HP whenever they end their Turn. Multiple instances of this effect cannot stack.");
             BlackIcePrograms.Add(hellhound);
 
-            Combatant kraken = new("Kraken", PortraitNetrunner);
+            Combatant kraken = new("Kraken", PortraitKraken);
             kraken.SetBlackIceStats(AntiPersonnelBlackIce, 6, 2, 8, 4, 30, "Does 3d6 damage direct to an enemy Netrunner's brain. Until the end of the Netrunner's next Turn, the Netrunner cannot progress deeper into the Architecture or Jack Out safely (The Netrunner can still perform an unsafe Jack Out).");
             BlackIcePrograms.Add(kraken);
 
-            Combatant liche = new("Liche", PortraitNetrunner);
+            Combatant liche = new("Liche", PortraitLiche);
             liche.SetBlackIceStats(AntiPersonnelBlackIce, 8, 2, 6, 2, 25, "Enemy Netrunner's INT, REF, and DEX are each lowered by 1d6 for the next hour (minimum 1). The effects are largely psychosomatic and leave no permanent effects.");
             BlackIcePrograms.Add(liche);
 
-            Combatant raven = new("Raven", PortraitNetrunner);
+            Combatant raven = new("Raven", PortraitRaven);
             raven.SetBlackIceStats(AntiPersonnelBlackIce, 6, 4, 4, 2, 15, "Derezzes a single Defender Program the enemy Netrunner has Rezzed at random, then deals 1d6 damage direct to the Netrunner's brain.");
             BlackIcePrograms.Add(raven);
 
-            Combatant scorpion = new("Scorpion", PortraitNetrunner);
+            Combatant scorpion = new("Scorpion", PortraitScorpion);
             scorpion.SetBlackIceStats(AntiPersonnelBlackIce, 2, 6, 2, 2, 15, "Enemy Netrunner's MOVE is lowered by 1d6 for the next hour (minimum 1). The effects are largely psychosomatic and leave no permanent effects.");
             BlackIcePrograms.Add(scorpion);
 
-            Combatant skunk = new("Skunk", PortraitNetrunner);
+            Combatant skunk = new("Skunk", PortraitSkunk);
             skunk.SetBlackIceStats(AntiPersonnelBlackIce, 2, 4, 4, 2, 10, "Until this Program is Derezzed, an enemy Netrunner hit by this Effect makes all Slide Checks at a -2. Each Skunk Black ICE can only affect a single Netrunner at a time, but the effects of multiple Skunks can stack.");
             BlackIcePrograms.Add(skunk);
 
-            Combatant wisp = new("Wisp", PortraitNetrunner);
+            Combatant wisp = new("Wisp", PortraitWisp);
             wisp.SetBlackIceStats(AntiPersonnelBlackIce, 4, 4, 4, 2, 15, "Does 1d6 damage direct to the enemy Netrunner's brain and lowers the amount of total NET Actions the Netrunner can accomplish on their next Turn by 1 (minimum 2).");
             BlackIcePrograms.Add(wisp);
 
-            Combatant dragon = new("Dragon", PortraitNetrunner);
+            Combatant dragon = new("Dragon", PortraitDragon);
             dragon.SetBlackIceStats(AntiProgramBlackIce, 6, 4, 6, 6, 30, "Deals 6d6 damage to a Program. If this damage would be enough to Derezz the Program, it is instead Destroyed.");
             BlackIcePrograms.Add(dragon);
 
-            Combatant killer = new("Killer", PortraitNetrunner);
+            Combatant killer = new("Killer", PortraitKiller);
             killer.SetBlackIceStats(AntiProgramBlackIce, 4, 8, 6, 2, 20, "Deals 4d6 damage to a Program. If this damage would be enough to Derezz the Program, it is instead Destroyed.");
             BlackIcePrograms.Add(killer);
 
-            Combatant sabertooth = new("Sabertooth", PortraitNetrunner);
+            Combatant sabertooth = new("Sabertooth", PortraitSabertooth);
             sabertooth.SetBlackIceStats(AntiProgramBlackIce, 8, 6, 6, 2, 25, "Deals 6d6 damage to a Program. If this damage would be enough to Derezz the Program, it is instead Destroyed.");
             BlackIcePrograms.Add(sabertooth);
 
         }
         private static void PopulateDemons()
         {
-            // TODO - proper Demon portraits
-            Combatant imp = new("Imp", PortraitNetrunner);
+            Combatant imp = new("Imp", PortraitImp);
             imp.SetDemonStats(15, 3, 2, 14);
             Demons.Add(imp);
 
-            Combatant efreet = new("Efreet", PortraitDefault);
+            Combatant efreet = new("Efreet", PortraitEfreet);
             efreet.SetDemonStats(25, 3, 2, 14);
             Demons.Add(efreet);
 
-            Combatant balron = new("Balron", PortraitBodyguard);
+            Combatant balron = new("Balron", PortraitBalron);
             balron.SetDemonStats(30, 7, 4, 14);
             Demons.Add(balron);
 
         }
         private static void PopulateActiveDefenses()
         {
-            // TODO - portraits
+            // TODO - Defense combatant portraits
             Combatant airSwarm = new("Air Swarm Drone Cloud", PortraitNetrunner);
             airSwarm.SetActiveDefenseStats(8, 15, 17);
             airSwarm.AddWeapon(WeaponTypeVeryHeavyMelee, WeaponQualityStandard);
@@ -1753,7 +1767,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             groundDrone.SetActiveDefenseStats(4, 30, 21);
             groundDrone.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
             groundDrone.AddWeapon(WeaponTypeSmg, WeaponQualityStandard);
-            groundDrone.AddAmmo(AmmoTypeVeryHeavyPistol, 8); // TODO - ammo variants
+            groundDrone.AddAmmo(AmmoTypeVeryHeavyPistol, 8, AmmoVarArmorPiercing);
             groundDrone.AddAmmo(AmmoTypeMediumPistol, 30);
             ActiveDefenses.Add(groundDrone);
 
@@ -1762,7 +1776,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             largeAirDrone.AddWeapon(WeaponTypeDartgun, WeaponQualityStandard);
             largeAirDrone.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
             largeAirDrone.AddAmmo(AmmoTypeDart, 8);
-            largeAirDrone.AddAmmo(AmmoTypeVeryHeavyPistol, 8);
+            largeAirDrone.AddAmmo(AmmoTypeVeryHeavyPistol, 8, AmmoVarArmorPiercing);
             ActiveDefenses.Add(largeAirDrone);
 
             Combatant miniAirDrone = new("Mini Air Drone", PortraitNetrunner);
@@ -1770,7 +1784,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             miniAirDrone.AddWeapon(WeaponTypeDartgun, WeaponQualityStandard);
             miniAirDrone.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
             miniAirDrone.AddAmmo(AmmoTypeDart, 8);
-            miniAirDrone.AddAmmo(AmmoTypeVeryHeavyPistol, 8);
+            miniAirDrone.AddAmmo(AmmoTypeVeryHeavyPistol, 8, AmmoVarArmorPiercing);
             ActiveDefenses.Add(miniAirDrone);
 
             Combatant spiderDrone = new("Spider Walking Drone", PortraitNetrunner);
@@ -1778,7 +1792,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             spiderDrone.AddWeapon(WeaponTypeGrenadeLauncher, WeaponQualityStandard);
             spiderDrone.AddWeapon(WeaponTypeVeryHeavyMelee, WeaponQualityStandard);
             spiderDrone.AddWeapon(WeaponTypeHeavySmg, WeaponQualityStandard);
-            spiderDrone.AddAmmo(AmmoTypeGrenade, 2); // TODO - teargas grenades lol, no need to have office security destroying whole cubicles
+            spiderDrone.AddAmmo(AmmoTypeGrenade, 2, AmmoVarTeargas);
             spiderDrone.AddAmmo(AmmoTypeHeavyPistol, 40);
 
         }

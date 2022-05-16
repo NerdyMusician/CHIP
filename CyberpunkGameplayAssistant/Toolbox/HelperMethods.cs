@@ -58,6 +58,10 @@ namespace CyberpunkGameplayAssistant.Toolbox
             }
             return result;
         }
+        public static int RollD6()
+        {
+            return ReferenceData.RNG.Next(1, 7);
+        }
         public static bool FlipCoin()
         {
             return ReferenceData.RNG.Next(0,2) == 0 ? true : false;

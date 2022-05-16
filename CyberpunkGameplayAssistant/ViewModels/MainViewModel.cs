@@ -91,7 +91,6 @@ namespace CyberpunkGameplayAssistant.ViewModels
         // Public Methods
         public void AddUserAlert(string type, string message)
         {
-            // TODO - user alert types
             UserAlerts.Add(new(type, message));
         }
 

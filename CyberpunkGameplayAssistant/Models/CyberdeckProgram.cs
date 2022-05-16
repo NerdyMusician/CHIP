@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CyberpunkGameplayAssistant.Toolbox;
+using System;
+using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
 {
@@ -65,6 +67,12 @@ namespace CyberpunkGameplayAssistant.Models
             set => SetAndNotify(ref _Effect, value);
         }
 
+        // Commands
+        public ICommand RemoveActiveProgram => new RelayCommand(DoRemoveActiveProgram);
+        private void DoRemoveActiveProgram(object param)
+        {
+            (param as Combatant).ActivePrograms.Remove(this);
+        }
 
     }
 }

@@ -234,6 +234,7 @@ namespace CyberpunkGameplayAssistant.Models
             MultiObjectSelectionDialog selectionDialog = new(Npcs.Where(npc => !string.IsNullOrEmpty(npc.BaseCombatant)).ToList().ToNamedRecordList(), "NPCs");
             if (selectionDialog.ShowDialog() == true)
             {
+                int startingCount = AllCombatants.Count;
                 foreach (NamedRecord selectedRecord in (selectionDialog.DataContext as MultiObjectSelectionViewModel).SelectedRecords)
                 {
                     NPC npc = Npcs.First(n => n.Name == selectedRecord.Name);
@@ -245,6 +246,7 @@ namespace CyberpunkGameplayAssistant.Models
                     AllCombatants.Add(npcToAdd);
                 }
                 SortCombatantsToLists();
+                RaiseAlert($"{AllCombatants.Count - startingCount} NPC(s) added");
             }
         }
         public ICommand AddBlackIce => new RelayCommand(DoAddBlackIce);
@@ -254,6 +256,7 @@ namespace CyberpunkGameplayAssistant.Models
 
             if (selectionDialog.ShowDialog() == true)
             {
+                int startingCount = AllCombatants.Count;
                 foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel).SelectedCombatants)
                 {
                     for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
@@ -268,6 +271,7 @@ namespace CyberpunkGameplayAssistant.Models
                     }
                 }
                 SortCombatantsToLists();
+                RaiseAlert($"{AllCombatants.Count - startingCount} Black ICE(s) added");
             }
         }
         public ICommand AddDemons => new RelayCommand(DoAddDemons);
