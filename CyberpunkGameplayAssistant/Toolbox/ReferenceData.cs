@@ -521,31 +521,42 @@ namespace CyberpunkGameplayAssistant.Toolbox
             new(ArmorTypeSubdermal, 11, 0)
         };
 
-        // Corporation Names
+        // Corporation Names pg267
         public const string CorpoArasaka = "Arasaka";
         public const string CorpoBiotechnica = "Biotechnica";
         public const string CorpoBudgetArms = "BudgetArms";
         public const string CorpoChadranArms = "Chadran Arms";
         public const string CorpoConstitutionalArms = "Constitutional Arms";
+        public const string CorpoContitentalBrands = "Continental Brands";
         public const string CorpoDaiLung = "Dai Lung";
+        public const string CorpoDangerGirl = "Danger Girl";
         public const string CorpoEagletech = "Eagletech";
         public const string CorpoFederatedArms = "Federated Arms";
         public const string CorpoGunMart = "GunMart";
         public const string CorpoIMI = "IMI";
         public const string CorpoKendachi = "Kendachi";
+        public const string CorpoKiroshi = "Kiroshi";
         public const string CorpoMagnumOpus = "Magnum Opus";
         public const string CorpoMalorianArms = "Malorian Arms";
         public const string CorpoMidnightArms = "Midnight Arms";
         public const string CorpoMilitech = "Militech";
         public const string CorpoMustangArms = "Mustang Arms";
+        public const string CorpoNetwork54 = "Network 54";
         public const string CorpoNomad = "Nomad";
         public const string CorpoNova = "Nova";
+        public const string CorpoPetrochem = "Petrochem";
         public const string CorpoPursuitSecurityIncorporated = "Pursuit Security Incorporated";
+        public const string CorpoRavenMicrocyb = "Raven Microcyb";
+        public const string CorpoRocklinAugmentics = "Rocklin Augmentics";
+        public const string CorpoSovOil = "SovOil";
         public const string CorpoSternmeyer = "Sternmeyer";
         public const string CorpoStolbovoy = "Stolvoboy";
         public const string CorpoTowaManufacturing = "Towa Manufacturing";
+        public const string CorpoTraumaTeam = "Trauma Team";
         public const string CorpoTsunamiArms = "Tsunami Arms";
         public const string CorpoUrbanTech = "UrbanTech";
+        public const string CorpoZiggurat = "Ziggurat";
+        public const string CorpoZhirafaTechnical = "Zhirafa Technical Manufacturing";
 
         #region WEAPONS
         // Weapon Categories - pg340
@@ -1517,6 +1528,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             reclaimerChief.AddAmmo(AmmoTypeHeavyPistol, 25);
             reclaimerChief.AddGearSet(GearAgent, GearGrappleGun, GearRadioCommunicator, GearTentAndCampingEquipment);
             reclaimerChief.AddCyberwareSet(CyberwareNasalFilters, CyberwareNeuralLink, CyberwareChipwareSocket, CyberwareTactileBoost);
+            reclaimerChief.InitializeNewCombatant();
             Combatants.Add(reclaimerChief);
             #endregion
             #region Security Officer
