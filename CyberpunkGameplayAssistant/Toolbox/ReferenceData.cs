@@ -1310,6 +1310,25 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
 
             // pg 412 - Mooks and Grunts
+            #region Scavver
+            Combatant scavver = new("Scavver", PortraitDefault, string.Empty);
+            scavver.SetStats(3, 5, 4, 2, 2, 3, 0, 3, 5, 3);
+            scavver.SetCalculatedStats();
+            scavver.SetBaseSkills();
+            scavver.AddSkill(SkillConcealRevealObject, 7);
+            scavver.AddSkill(SkillPerception, 6);
+            scavver.AddSkill(SkillResistTortureDrugs, 6);
+            scavver.AddSkill(SkillStealth, 6);
+            scavver.AddSkill(SkillBrawling, 8);
+            scavver.AddSkill(SkillMeleeWeapon, 9);
+            scavver.AddSkill(SkillHandgun, 7);
+            scavver.AddSkill(SkillStreetwise, 5);
+            scavver.AddWeapon(WeaponTypeMediumPistol, WeaponQualityPoor);
+            scavver.AddWeapon(WeaponTypeLightMelee, WeaponQualityStandard, "Knife");
+            scavver.AddAmmo(AmmoTypeMediumPistol, 6);
+            scavver.InitializeNewCombatant();
+            Combatants.Add(scavver);
+            #endregion
             #region Bodyguard
             Combatant bodyguard = new("Bodyguard", PortraitBodyguard, ArmorTypeKevlar);
             bodyguard.SetStats(3, 6, 5, 2, 4, 4, 0, 4, 6, 3);

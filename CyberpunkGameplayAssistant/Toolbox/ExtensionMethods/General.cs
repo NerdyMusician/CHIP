@@ -57,7 +57,8 @@ namespace CyberpunkGameplayAssistant.Toolbox.ExtensionMethods
         }
         public static int GetStoppingPower(this List<Armor> armorList, string armorType)
         {
-            return armorList.FirstOrDefault(a => a.Name == armorType).StoppingPower;
+            Armor? armor = armorList.FirstOrDefault(a => a.Name == armorType);
+            return (armor != null) ? armor.StoppingPower : 0;
         }
         public static int GetPenalty(this List<Armor> armorList, string armorType)
         {
