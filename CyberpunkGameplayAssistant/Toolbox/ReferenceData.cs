@@ -51,6 +51,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string ActiveDefense = "Active Defense";
         public const string EmplacedDefense = "Emplaced Defense";
         public const string ExecTeamMember = "Exec Team Member";
+        public const string LawmanBackup = "Lawman Backup";
 
         // Program Types
         public const string AntiPersonnelBlackIce = "Anti-Personnel Black ICE";
@@ -1307,7 +1308,63 @@ namespace CyberpunkGameplayAssistant.Toolbox
             #endregion
 
             // pg 158 - Lawman Backup
-
+            #region Corporate Security
+            Combatant corporateSecurity = new("Corporate Security", LawmanBackup, PortraitDefault, ArmorTypeKevlar);
+            corporateSecurity.SetBackupStats(8, 20, 4);
+            corporateSecurity.AddWeapon(WeaponTypeHeavyPistol);
+            corporateSecurity.AddAmmo(AmmoTypeHeavyPistol, 24);
+            corporateSecurity.InitializeBackupCombatant();
+            Combatants.Add(corporateSecurity);
+            #endregion
+            #region Beat Cop
+            Combatant beatCop = new("Beat Cop", LawmanBackup, PortraitDefault, ArmorTypeKevlar);
+            beatCop.SetBackupStats(10, 25, 5);
+            beatCop.AddWeapon(WeaponTypeHeavyPistol);
+            beatCop.AddAmmo(AmmoTypeHeavyPistol, 24);
+            beatCop.InitializeBackupCombatant();
+            Combatants.Add(beatCop);
+            #endregion
+            #region County Mounty
+            Combatant countyMounty = new("County Mounty", LawmanBackup, PortraitDefault, ArmorTypeHeavyArmorjack);
+            countyMounty.SetBackupStats(14, 35, 4);
+            countyMounty.AddWeapon(WeaponTypeHeavyPistol);
+            countyMounty.AddWeapon(WeaponTypeAssaultRifle);
+            countyMounty.AddAmmo(AmmoTypeHeavyPistol, 24);
+            countyMounty.AddAmmo(AmmoTypeRifle, 75);
+            countyMounty.InitializeBackupCombatant();
+            Combatants.Add(countyMounty);
+            #endregion
+            #region Marshall
+            Combatant marshall = new("Marshall", LawmanBackup, PortraitDefault, ArmorTypeFlak);
+            marshall.SetBackupStats(16, 50, 6);
+            marshall.AddWeapon(WeaponTypeVeryHeavyPistol);
+            marshall.AddWeapon(WeaponTypeAssaultRifle);
+            marshall.AddWeapon(WeaponTypeGrenadeLauncher);
+            marshall.AddAmmo(AmmoTypeVeryHeavyPistol, 24);
+            marshall.AddAmmo(AmmoTypeRifle, 75);
+            marshall.AddAmmo(AmmoTypeGrenade, 6, AmmoVarArmorPiercing);
+            marshall.InitializeBackupCombatant();
+            Combatants.Add(marshall);
+            #endregion
+            #region C-SWAT
+            Combatant cSwat = new("C-SWAT", LawmanBackup, PortraitDefault, ArmorTypeMetalgear);
+            cSwat.SetBackupStats(15, 35, 4);
+            cSwat.AddWeapon(WeaponTypeAssaultRifle);
+            cSwat.AddWeapon(WeaponTypeRocketLauncher);
+            cSwat.AddAmmo(AmmoTypeRifle, 75);
+            cSwat.AddAmmo(AmmoTypeRocket, 3, AmmoVarArmorPiercing);
+            cSwat.InitializeBackupCombatant();
+            #endregion
+            #region Federal Agent
+            Combatant fed = new("Federal Agent", LawmanBackup, PortraitDefault, ArmorTypeLightArmorjack);
+            fed.SetBackupStats(14, 35, 6);
+            fed.AddWeapon(WeaponTypeVeryHeavyPistol);
+            fed.AddWeapon(WeaponTypeAssaultRifle);
+            fed.AddAmmo(AmmoTypeVeryHeavyPistol, 24);
+            fed.AddAmmo(WeaponTypeAssaultRifle, 75);
+            fed.InitializeBackupCombatant();
+            Combatants.Add(fed);
+            #endregion
 
             // pg 412 - Mooks and Grunts
             #region Scavver

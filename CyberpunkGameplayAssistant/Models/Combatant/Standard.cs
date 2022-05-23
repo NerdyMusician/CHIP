@@ -407,6 +407,12 @@ namespace CyberpunkGameplayAssistant.Models
             ReloadAllWeapons();
             SetStandardActions();
         }
+        public void InitializeBackupCombatant()
+        {
+            SetStoppingPower(true);
+            ReloadAllWeapons();
+            SetStandardActions();
+        }
         public void SetStats(int INT, int REF, int DEX, int TECH, int COOL, int WILL, int LUCK, int MOVE, int BODY, int EMP)
         {
             BaseStats = new();
@@ -473,7 +479,18 @@ namespace CyberpunkGameplayAssistant.Models
                 CalculatedStats.Add(statToAdd);
             }
         }
-        
+        public void SetBackupStats(int combatNumber, int hp, int moveAndBody)
+        {
+            BaseStats = new();
+            BaseStats.Add(new(ReferenceData.SkillCombatNumber, combatNumber));
+            BaseStats.Add(new(ReferenceData.StatMovement, moveAndBody));
+            BaseStats.Add(new(ReferenceData.StatBody, moveAndBody));
+
+            MaximumHitPoints = hp;
+            CurrentHitPoints = hp;
+
+        }
+
         public void SetBaseSkills()
         {
             Skills = new();
@@ -500,8 +517,9 @@ namespace CyberpunkGameplayAssistant.Models
                 skill.Level = value - CalculatedStats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName== name).StatName);
             }
         }
-        public void AddWeapon(string type, string quality, string name = "")
+        public void AddWeapon(string type, string quality = "", string name = "")
         {
+            if (string.IsNullOrEmpty(quality)) { quality = ReferenceData.WeaponQualityStandard; }
             Weapons.Add(new(type, quality, name));
         }
         public void AddAmmo(string type, int quantity, string variant = "")
@@ -548,6 +566,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             if (Type == ReferenceData.ActiveDefense) { return GetDemonCombatNumber(); }
             if (Type == ReferenceData.EmplacedDefense) { return GetDemonCombatNumber(); }
+            if (Type == ReferenceData.LawmanBackup) { return CalculatedStats.GetValue(ReferenceData.SkillCombatNumber); }
             int skillLevel = Skills.FirstOrDefault(s => s.Name == skill).Level;
             int statLevel = CalculatedStats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName == skill).StatName);
             return skillLevel + statLevel;

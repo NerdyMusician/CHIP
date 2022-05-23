@@ -47,7 +47,9 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get
             {
-                return ReferenceData.StatLinks.FirstOrDefault(s => s.StatName == Name)!.Abbreviation;
+                StatLinkReference statLink = ReferenceData.StatLinks.FirstOrDefault(s => s.StatName == Name);
+                if (statLink != null) { return statLink.Abbreviation; }
+                else { return Name; }
             }
         }
 
