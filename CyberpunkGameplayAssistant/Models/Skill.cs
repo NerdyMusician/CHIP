@@ -66,7 +66,8 @@ namespace CyberpunkGameplayAssistant.Models
             string output = $"{combatant.DisplayName} made a {Name} check";
             int result = HelperMethods.RollD10();
             int penalty = combatant.GetSkillPenalty(Name);
-            string statName = ReferenceData.SkillLinks.GetStat(Name);
+            string statName = (combatant.Type == ReferenceData.LawmanBackup || combatant.Type == ReferenceData.TraumaTeam) 
+                ? ReferenceData.SkillCombatNumber : ReferenceData.SkillLinks.GetStat(Name);
             int stat = combatant.CalculatedStats.GetValue(statName);
             output += $"\nResult: {result + stat + Level - penalty}";
             if (Name == ReferenceData.SkillBrawling) { output += GetBrawlingDamage(combatant); }

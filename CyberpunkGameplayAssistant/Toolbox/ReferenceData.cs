@@ -52,6 +52,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string EmplacedDefense = "Emplaced Defense";
         public const string ExecTeamMember = "Exec Team Member";
         public const string LawmanBackup = "Lawman Backup";
+        public const string TraumaTeam = "Trauma Team";
 
         // Program Types
         public const string AntiPersonnelBlackIce = "Anti-Personnel Black ICE";
@@ -311,6 +312,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
         // Skills
         public const string SkillInterface = "Interface"; // Netrunners and Demons
         public const string SkillCombatNumber = "Combat Number"; // Demons
+        public const string SkillSurgery = "Surgery"; // Trauma Team / Medtech
+        public const string SkillMedicalTech = "Medical Tech"; // Trauma Team / Medtech
         // Awareness Skills
         public const string SkillConcentration = "Concentration";
         public const string SkillConcealRevealObject = "Conceal / Reveal Object";
@@ -1354,6 +1357,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             cSwat.AddAmmo(AmmoTypeRifle, 75);
             cSwat.AddAmmo(AmmoTypeRocket, 3, AmmoVarArmorPiercing);
             cSwat.InitializeBackupCombatant();
+            Combatants.Add(cSwat);
             #endregion
             #region Federal Agent
             Combatant fed = new("Federal Agent", LawmanBackup, PortraitDefault, ArmorTypeLightArmorjack);
@@ -1361,10 +1365,25 @@ namespace CyberpunkGameplayAssistant.Toolbox
             fed.AddWeapon(WeaponTypeVeryHeavyPistol);
             fed.AddWeapon(WeaponTypeAssaultRifle);
             fed.AddAmmo(AmmoTypeVeryHeavyPistol, 24);
-            fed.AddAmmo(WeaponTypeAssaultRifle, 75);
+            fed.AddAmmo(AmmoTypeRifle, 75);
+            // TODO - combat skills
             fed.InitializeBackupCombatant();
             Combatants.Add(fed);
             #endregion
+
+            // pg 224 - Trauma Team
+            #region Trauma Team Doctor
+            Combatant ttDoctor = new("TT Doctor", TraumaTeam, PortraitDefault, ArmorTypeLightArmorjack);
+            ttDoctor.SetBackupStats(10, 20, 4);
+            ttDoctor.AddWeapon(WeaponTypeHeavyPistol);
+            ttDoctor.AddAmmo(AmmoTypeHeavyPistol, 16);
+            ttDoctor.AddGearSet(GearCryopump, GearAirhypo, GearAirhypo);
+            // TODO - drugs (Rapidetox)
+            ttDoctor.SetCombatSkills(SkillFirstAid, SkillParamedic, SkillSurgery, SkillMedicalTech);
+            ttDoctor.InitializeBackupCombatant();
+            Combatants.Add(ttDoctor);
+            #endregion
+            // TODO remaining Trauma Team
 
             // pg 412 - Mooks and Grunts
             #region Scavver

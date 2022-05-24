@@ -490,6 +490,13 @@ namespace CyberpunkGameplayAssistant.Models
             CurrentHitPoints = hp;
 
         }
+        public void SetCombatSkills(params string[] skills)
+        {
+            foreach (string skill in skills)
+            {
+                Skills.Add(new(skill));
+            }
+        }
 
         public void SetBaseSkills()
         {
@@ -668,7 +675,6 @@ namespace CyberpunkGameplayAssistant.Models
             NetActions.Add(new(ReferenceData.NetActionJackIn));
             NetActions.Add(new(ReferenceData.NetActionJackOut));
             NetActions.Add(new(ReferenceData.NetActionActivateProgram));
-            //StandardActions.Add(new(ReferenceData.NetActionDeactivateProgram)); // TODO remove this
             NetActions.Add(new(ReferenceData.NetActionScanner));
             NetActions.Add(new(ReferenceData.NetActionBackdoor));
             NetActions.Add(new(ReferenceData.NetActionCloak));
@@ -739,16 +745,6 @@ namespace CyberpunkGameplayAssistant.Models
             foreach (CombatantWeapon weapon in Weapons)
             {
                 weapon.DoReloadWeapon(this);
-                //string ammoTypeNeededForThisWeapon = ReferenceData.WeaponRepository.FirstOrDefault(w => w.Type == weapon.Type).AmmoType;
-                //Ammo ammoInInventory = AmmoInventory.FirstOrDefault(a => a.Type == ammoTypeNeededForThisWeapon);
-                //if (ammoInInventory != null)
-                //{
-                //    int clipSize = ReferenceData.ClipChart.GetStandardClipSize(weapon.Type);
-                //    int quantityNeededToFillClip = clipSize - weapon.CurrentClipQuantity;
-                //    int ammoToAddToClip = ammoInInventory.Quantity < quantityNeededToFillClip ? ammoInInventory.Quantity : quantityNeededToFillClip;
-                //    ammoInInventory.Quantity -= ammoToAddToClip;
-                //    weapon.CurrentClipQuantity += ammoToAddToClip;
-                //}
             }
         }
         private void SetHitPoints(bool setCurrentToMax)
@@ -766,6 +762,8 @@ namespace CyberpunkGameplayAssistant.Models
             foreach (Skill skill in Skills)
             {
                 if (ReferenceData.SkillsToSkipForCombatants.Contains(skill.Name)) { continue; }
+                if (skill.Name == ReferenceData.SkillSurgery) { TechniqueSkills.Add(skill); continue; }
+                if (skill.Name == ReferenceData.SkillMedicalTech) { TechniqueSkills.Add(skill); continue; }
                 switch (ReferenceData.SkillLinks.GetCategory(skill.Name))
                 {
                     case ReferenceData.SkillCategoryAwareness:

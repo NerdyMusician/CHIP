@@ -45,7 +45,8 @@ namespace CyberpunkGameplayAssistant.Toolbox.ExtensionMethods
         }
         public static int GetCost(this List<SkillLinkReference> skills, string skillName)
         {
-            return skills.FirstOrDefault(s => s.SkillName == skillName).CostPerLevel;
+            SkillLinkReference? skillLink = skills.FirstOrDefault(s => s.SkillName == skillName);
+            return (skillLink != null) ? skillLink.CostPerLevel : 1;
         }
         public static string GetCategory(this List<SkillLinkReference> skills, string skillName)
         {
