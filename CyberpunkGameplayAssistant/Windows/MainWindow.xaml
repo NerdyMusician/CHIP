@@ -115,6 +115,13 @@
             <Setter Property="BorderThickness" Value="2" />
             <Setter Property="CornerRadius" Value="2" />
         </Style>
+        <Style TargetType="TextBlock" x:Key="MidNum">
+            <Setter Property="Width" Value="37" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontFamily" Value="Century Gothic" />
+        </Style>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="F1" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="F1" />
@@ -511,6 +518,8 @@
                                                                                                     </TextBlock>
                                                                                                     <Separator />
                                                                                                     <cc:MiniButton ImageResource="{StaticResource Icon_Reload}" Command="{Binding RestockAmmo}" />
+                                                                                                    <Separator />
+                                                                                                    <cc:MiniButton Visibility="{Binding IsThrowable, Converter={tool:CollapsedIfFalseOtherwiseVisible}}" ImageResource="{StaticResource Icon_Throw}" Command="{Binding ThrowGrenade}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
                                                                                                 </StackPanel>
                                                                                             </DataTemplate>
                                                                                         </ItemsControl.ItemTemplate>
@@ -527,6 +536,7 @@
                                                                                                             <ContextMenu>
                                                                                                                 <MenuItem Header="Aimed Shot" Command="{Binding RollAimedShot}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.Tag.DataContext}" />
                                                                                                                 <MenuItem Header="Autofire" Command="{Binding RollAutofire}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.Tag.DataContext}" />
+                                                                                                                <MenuItem Header="Suppresive Fire" Command="{Binding UseSuppressiveFire}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.Tag.DataContext}" />
                                                                                                             </ContextMenu>
                                                                                                         </cc:ImageButton.ContextMenu>
                                                                                                     </cc:ImageButton>
@@ -548,6 +558,26 @@
                                                                                             </DataTemplate>
                                                                                         </ItemsControl.ItemTemplate>
                                                                                     </ItemsControl>
+                                                                                    <Separator />
+                                                                                    <TextBlock Text="Shield" />
+                                                                                    <Rectangle Style="{StaticResource HorizontalDivider}" />
+                                                                                    <StackPanel Orientation="Horizontal">
+                                                                                        <StackPanel.Resources>
+                                                                                            <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
+                                                                                                <Setter Property="Width" Value="auto" />
+                                                                                            </Style>
+                                                                                        </StackPanel.Resources>
+                                                                                        <Image Style="{StaticResource Icon_Shield}" />
+                                                                                        <Separator />
+                                                                                        <cc:GammaComboBox ItemsSource="{Binding ShieldTypes}" SelectedValue="{Binding ShieldType}" Width="140" />
+                                                                                        <Separator />
+                                                                                        <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" Command="{Binding AdjustShieldHp}" CommandParameter="-5" />
+                                                                                        <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustShieldHp}" CommandParameter="-1" />
+                                                                                        <TextBlock Text="{Binding ShieldHp, FallbackValue=10}" Style="{StaticResource MidNum}" />
+                                                                                        <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustShieldHp}" CommandParameter="1" />
+                                                                                        <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" Command="{Binding AdjustShieldHp}" CommandParameter="5" />
+                                                                                        <Separator />
+                                                                                    </StackPanel>
                                                                                     <StackPanel Margin="0 6 0 0" Visibility="{Binding ActivePrograms.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={tool:CollapsedIfZero}}">
                                                                                         <TextBlock Text="Active Programs" />
                                                                                         <Rectangle Style="{StaticResource HorizontalDivider}" />
@@ -727,13 +757,6 @@
                                                                 <StackPanel.Resources>
                                                                     <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
                                                                         <Setter Property="Width" Value="auto" />
-                                                                    </Style>
-                                                                    <Style TargetType="TextBlock" x:Key="MidNum">
-                                                                        <Setter Property="Width" Value="37" />
-                                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                                        <Setter Property="TextAlignment" Value="Center" />
-                                                                        <Setter Property="FontSize" Value="20" />
-                                                                        <Setter Property="FontFamily" Value="Century Gothic" />
                                                                     </Style>
                                                                 </StackPanel.Resources>
                                                                 <StackPanel Orientation="Horizontal">

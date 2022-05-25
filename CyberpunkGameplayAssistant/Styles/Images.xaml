@@ -381,6 +381,21 @@
 
 
     <!-- Unsorted -->
+    <Style TargetType="Image" x:Key="Icon_Briefcase" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/briefcase.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_Badge" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/badge.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_Medical" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/medical.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_Fist" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/fist.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_Throw" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/throw.png" />
+    </Style>
     <Style TargetType="Image" x:Key="Icon_HeartTag" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/hearttag.png" />
     </Style>

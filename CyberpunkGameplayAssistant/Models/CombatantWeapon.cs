@@ -151,6 +151,23 @@ namespace CyberpunkGameplayAssistant.Models
             HelperMethods.AddToGameplayLog($"{combatant.DisplayName}{(ammoNeeded > ammoTaken ? "partially" : "")} reloaded their {Name}.", ReferenceData.MessageReload);
             HelperMethods.PlayReloadSound();
         }
+        public ICommand UseSuppressiveFire => new RelayCommand(DoUseSuppressiveFire);
+        private void DoUseSuppressiveFire(object param)
+        {
+            if (!ReferenceData.AutofireTable.ContainsKey(Type)) { RaiseError(ReferenceData.ErrorNotAnAutofireWeapon); return; }
+            Combatant combatant = (Combatant)param;
+            int attackRoll = HelperMethods.RollD10(true);
+            if (DidWeaponMalfunction(attackRoll, combatant.Name)) { return; }
+            if (!CheckAndUseAmmo(10)) { return; }
+            int reflex = combatant.CalculatedStats.GetValue(ReferenceData.StatReflexes);
+            int autofire = combatant.GetSkillTotal(ReferenceData.SkillAutofire);
+            int roll = HelperMethods.RollD10(true);
+            string output = $"{combatant.DisplayName} uses suppressive fire.\nEveryone on foot within 25m/yds out of cover, and in your line of sight must " +
+                $"roll WILL + Concentration + 1d10 against {(reflex + autofire + roll)}, or use their next Move Action to get into cover.";
+            if (ReferenceData.DebugMode) { output += $"\nDEBUG: REF:{reflex} AUTOFIRE:{autofire} ROLL:{roll}"; }
+            HelperMethods.AddToGameplayLog(output, ReferenceData.MessageWeaponAttack);
+            HelperMethods.PlayAutofireSound();
+        }
 
         // Private Methods
         private bool AreSameAmmo(Ammo ammoTypeNeeded, Ammo ammoTypeInUse)

@@ -403,6 +403,27 @@ namespace CyberpunkGameplayAssistant.Toolbox
             return ReferenceData.Framework.FindResource(iconName) as Style;
         }
     }
+    public class ImageBasedOnCombatantType : ConverterMarkupExtension<ImageBasedOnCombatantType>
+    {
+        public ImageBasedOnCombatantType()
+        {
+
+        }
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string iconName = value switch
+            {
+                // TODO - turret / defense icon
+                ReferenceData.BlackIce => "Icon_Chip",
+                ReferenceData.Demon => "Icon_Chip",
+                ReferenceData.ExecTeamMember => "Icon_Briefcase",
+                ReferenceData.LawmanBackup => "Icon_Badge",
+                ReferenceData.TraumaTeam => "Icon_Medical",
+                _ => "Icon_Fist"
+            };
+            return ReferenceData.Framework.FindResource(iconName) as Style;
+        }
+    }
     public class HiddenIfNull : ConverterMarkupExtension<HiddenIfNull>
     {
         public override object Convert(

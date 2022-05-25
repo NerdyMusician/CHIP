@@ -167,6 +167,19 @@ namespace CyberpunkGameplayAssistant.Models
             set => SetAndNotify(ref _Weapons, value);
         }
 
+        private string _ShieldType;
+        public string ShieldType
+        {
+            get => _ShieldType;
+            set => SetAndNotify(ref _ShieldType, value);
+        }
+        private int _ShieldHp;
+        public int ShieldHp
+        {
+            get => _ShieldHp;
+            set => SetAndNotify(ref _ShieldHp, value);
+        }
+
         private int _MaximumHitPoints;
         public int MaximumHitPoints
         {
@@ -310,6 +323,21 @@ namespace CyberpunkGameplayAssistant.Models
             set => SetAndNotify(ref _DeathSavePasses, value);
         }
 
+        // Dropdown Sources
+        public List<string> ShieldTypes
+        {
+            get
+            {
+                return new()
+                {
+                    ReferenceData.ShieldTypeNone,
+                    ReferenceData.ShieldTypeBulletproofShield,
+                    ReferenceData.ShieldTypeCorpse,
+                    ReferenceData.ShieldTypeHumanShield
+                };
+            }
+        }
+
         // Commands
         public ICommand AdjustHitPoints => new RelayCommand(DoAdjustHitPoints);
         private void DoAdjustHitPoints(object param)
@@ -319,6 +347,13 @@ namespace CyberpunkGameplayAssistant.Models
             if (CurrentHitPoints < 0) { CurrentHitPoints = 0; }
             if (CurrentHitPoints > MaximumHitPoints) { CurrentHitPoints = MaximumHitPoints; }
             UpdateWoundState();
+        }
+        public ICommand AdjustShieldHp => new RelayCommand(DoAdjustShieldHp);
+        private void DoAdjustShieldHp(object param)
+        {
+            int hitPointChange = Convert.ToInt32(param);
+            ShieldHp += hitPointChange;
+            if (ShieldHp < 0) { ShieldHp = 0; ShieldType = ReferenceData.ShieldTypeNone; }
         }
         public ICommand AdjustStoppingPower => new RelayCommand(DoAdjustStoppingPower);
         private void DoAdjustStoppingPower(object param)
@@ -561,6 +596,12 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 weapon.CurrentClipQuantity = ReferenceData.ClipChart.GetStandardClipSize(weapon.Type);
             }
+        }
+
+        public void AddShield()
+        {
+            ShieldType = ReferenceData.ShieldTypeBulletproofShield;
+            ShieldHp = 10;
         }
         
         public void SetDisplayName(string letter = "")

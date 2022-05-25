@@ -500,7 +500,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         };
 
-        // ArmorTypes
+        // Armor Types
         public const string ArmorTypeLeather = "Leather";
         public const string ArmorTypeKevlar = "Kevlar";
         public const string ArmorTypeLightArmorjack = "Light Armorjack";
@@ -511,6 +511,12 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string ArmorTypeMetalgear = "Metalgear";
         public const string ArmorTypeBulletproofShield = "Bulletproof Shield";
         public const string ArmorTypeSubdermal = "Subdermal";
+
+        // Shield Types
+        public const string ShieldTypeNone = "None";
+        public const string ShieldTypeBulletproofShield = "Bulletproof Shield";
+        public const string ShieldTypeCorpse = "Corpse";
+        public const string ShieldTypeHumanShield = "Human Shield";
 
         public static readonly List<Armor> ArmorTable = new()
         {
@@ -1366,7 +1372,9 @@ namespace CyberpunkGameplayAssistant.Toolbox
             fed.AddWeapon(WeaponTypeAssaultRifle);
             fed.AddAmmo(AmmoTypeVeryHeavyPistol, 24);
             fed.AddAmmo(AmmoTypeRifle, 75);
-            // TODO - combat skills
+            fed.SetCombatSkills(SkillAccounting, SkillActing, SkillConcealRevealObject, SkillCriminology, 
+                SkillCryptography, SkillDeduction, SkillEducation, SkillForgery, SkillInterrogation, SkillParamedic, 
+                SkillPerception, SkillPersonalGrooming, SkillResistTortureDrugs, SkillStealth, SkillTracking);
             fed.InitializeBackupCombatant();
             Combatants.Add(fed);
             #endregion
@@ -1378,33 +1386,39 @@ namespace CyberpunkGameplayAssistant.Toolbox
             ttDoctor.AddWeapon(WeaponTypeHeavyPistol);
             ttDoctor.AddAmmo(AmmoTypeHeavyPistol, 16);
             ttDoctor.AddGearSet(GearCryopump, GearAirhypo, GearAirhypo);
-            // TODO - drugs (Rapidetox)
+            // TODO - drugs (Rapidetox - pg150)
             ttDoctor.SetCombatSkills(SkillFirstAid, SkillParamedic, SkillSurgery, SkillMedicalTech);
             ttDoctor.InitializeBackupCombatant();
             Combatants.Add(ttDoctor);
             #endregion
-            // TODO remaining Trauma Team
+            #region Trauma Team Medical Assistant
+            Combatant ttMed = new("TT Med. Asst.", TraumaTeam, PortraitDefault, ArmorTypeKevlar);
+            ttMed.SetBackupStats(10, 25, 6);
+            ttMed.AddGearSet(GearCryopump);
+            ttMed.AddShield();
+            ttMed.SetCombatSkills(SkillPilotAirVehicle, SkillFirstAid, SkillParamedic, SkillMedicalTech);
+            ttMed.InitializeBackupCombatant();
+            Combatants.Add(ttMed);
+            #endregion
+            #region Trauma Team Pilot
+            Combatant ttPilot = new("TT Pilot", TraumaTeam, PortraitDefault, ArmorTypeKevlar);
+            ttPilot.SetBackupStats(10, 25, 6);
+            ttPilot.AddWeapon(WeaponTypeVeryHeavyPistol);
+            ttPilot.AddAmmo(AmmoTypeVeryHeavyPistol, 24);
+            ttPilot.SetCombatSkills(SkillAirVehicleTech, SkillFirstAid, SkillPilotAirVehicle);
+            ttPilot.InitializeBackupCombatant();
+            Combatants.Add(ttPilot);
+            #endregion
+            #region Trauma Team Security Officer
+            Combatant ttSecOff = new("TT Security", TraumaTeam, PortraitDefault, ArmorTypeHeavyArmorjack);
+            ttSecOff.SetBackupStats(10, 30, 4);
+            ttSecOff.AddWeapon(WeaponTypeAssaultRifle);
+            ttSecOff.AddAmmo(AmmoTypeRifle, 75);
+            ttSecOff.InitializeBackupCombatant();
+            Combatants.Add(ttSecOff);
+            #endregion
 
             // pg 412 - Mooks and Grunts
-            #region Scavver
-            Combatant scavver = new("Scavver", PortraitDefault, string.Empty);
-            scavver.SetStats(3, 5, 4, 2, 2, 3, 0, 3, 5, 3);
-            scavver.SetCalculatedStats();
-            scavver.SetBaseSkills();
-            scavver.AddSkill(SkillConcealRevealObject, 7);
-            scavver.AddSkill(SkillPerception, 6);
-            scavver.AddSkill(SkillResistTortureDrugs, 6);
-            scavver.AddSkill(SkillStealth, 6);
-            scavver.AddSkill(SkillBrawling, 8);
-            scavver.AddSkill(SkillMeleeWeapon, 9);
-            scavver.AddSkill(SkillHandgun, 7);
-            scavver.AddSkill(SkillStreetwise, 5);
-            scavver.AddWeapon(WeaponTypeMediumPistol, WeaponQualityPoor);
-            scavver.AddWeapon(WeaponTypeLightMelee, WeaponQualityStandard, "Knife");
-            scavver.AddAmmo(AmmoTypeMediumPistol, 6);
-            scavver.InitializeNewCombatant();
-            Combatants.Add(scavver);
-            #endregion
             #region Bodyguard
             Combatant bodyguard = new("Bodyguard", PortraitBodyguard, ArmorTypeKevlar);
             bodyguard.SetStats(3, 6, 5, 2, 4, 4, 0, 4, 6, 3);
@@ -1659,7 +1673,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             securityOfficer.AddWeapon(WeaponTypeMediumMelee, WeaponQualityStandard);
             securityOfficer.AddAmmo(AmmoTypeRifle, 50);
             securityOfficer.AddAmmo(AmmoTypeVeryHeavyPistol, 30);
-            // TODO - Bulletproof shield SP / HP
+            securityOfficer.AddShield();
             securityOfficer.AddGearSet(GearBinoculars, GearDisposableCellPhone, GearFlashlight, GearHandcuffs, GearHandcuffs, GearRadioCommunicator, GearRadioScannerMusicPlayer);
             securityOfficer.AddCyberwareSet(CyberwareNeuralLink, CyberwareKerenzikov);
             securityOfficer.InitializeNewCombatant();
@@ -1743,7 +1757,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
             pyro.AddWeapon(WeaponTypeHeavyMelee, WeaponQualityStandard);
             pyro.AddAmmo(AmmoTypeShell, 8, AmmoVarIncendiary);
             pyro.AddAmmo(AmmoTypeHeavyPistol, 50);
-            // TODO - add consumable weapons (grenades)
+            pyro.AddAmmo(AmmoTypeGrenade, 1, AmmoVarIncendiary);
+            pyro.AddAmmo(AmmoTypeGrenade, 1, AmmoVarFlashbang);
             pyro.AddCyberwareSet(CyberwareCyberaudioSuite, CyberwareLevelDamper, CyberwareCybereye, CyberwareCybereye, CyberwareAntiDazzle, CyberwareAntiDazzle, CyberwareNasalFilters);
             pyro.InitializeNewCombatant();
             Combatants.Add(pyro);
@@ -1789,6 +1804,28 @@ namespace CyberpunkGameplayAssistant.Toolbox
             cyberpsycho.InitializeNewCombatant();
             Combatants.Add(cyberpsycho);
             #endregion
+
+            // Custom and Homebrew Combatants
+            #region Scavver
+            Combatant scavver = new("Scavver", PortraitDefault, string.Empty);
+            scavver.SetStats(3, 5, 4, 2, 2, 3, 0, 3, 5, 3);
+            scavver.SetCalculatedStats();
+            scavver.SetBaseSkills();
+            scavver.AddSkill(SkillConcealRevealObject, 7);
+            scavver.AddSkill(SkillPerception, 6);
+            scavver.AddSkill(SkillResistTortureDrugs, 6);
+            scavver.AddSkill(SkillStealth, 6);
+            scavver.AddSkill(SkillBrawling, 8);
+            scavver.AddSkill(SkillMeleeWeapon, 9);
+            scavver.AddSkill(SkillHandgun, 7);
+            scavver.AddSkill(SkillStreetwise, 5);
+            scavver.AddWeapon(WeaponTypeMediumPistol, WeaponQualityPoor);
+            scavver.AddWeapon(WeaponTypeLightMelee, WeaponQualityStandard, "Knife");
+            scavver.AddAmmo(AmmoTypeMediumPistol, 6);
+            scavver.InitializeNewCombatant();
+            Combatants.Add(scavver);
+            #endregion
+
         }
         private static void PopulateCriticalInjuries()
         {

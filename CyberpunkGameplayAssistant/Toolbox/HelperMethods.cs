@@ -134,6 +134,10 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             ReferenceData.WindowRef.PlaySound(ReferenceData.AudioMalfunction);
         }
+        public static void PlayExplosionSound()
+        {
+            ReferenceData.WindowRef.PlaySound(ReferenceData.AudioExplosion);
+        }
         public static string RollNetFloor(int level, string difficulty)
         {
             if (level <= 0) { NotifyUser(ReferenceData.AlertError, $"Invalid floor level {level} passed to HelperMethods.RollNetFloor"); return string.Empty; }

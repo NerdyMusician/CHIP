@@ -28,6 +28,8 @@
         <DataTemplate x:Key="SourceCombatantTemplate">
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
+                    <Image Style="{Binding Type, Converter={tool:ImageBasedOnCombatantType}}" />
+                    <Separator />
                     <TextBlock Text="{Binding Name, Mode=OneWay}" Foreground="{StaticResource PrimaryFontColor}" FontWeight="Bold" Width="280" VerticalAlignment="Center" />
                     <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Click="AddItem_Clicked" />
                 </StackPanel>

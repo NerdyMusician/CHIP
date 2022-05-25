@@ -55,6 +55,7 @@
     <None Remove="Resources\Icons\arrow_up.png" />
     <None Remove="Resources\Icons\arrow_up_blue.png" />
     <None Remove="Resources\Icons\art.png" />
+    <None Remove="Resources\Icons\badge.png" />
     <None Remove="Resources\Icons\bag.png" />
     <None Remove="Resources\Icons\bandage.png" />
     <None Remove="Resources\Icons\beast.png" />
@@ -63,6 +64,7 @@
     <None Remove="Resources\Icons\book.png" />
     <None Remove="Resources\Icons\booze.png" />
     <None Remove="Resources\Icons\bow.png" />
+    <None Remove="Resources\Icons\briefcase.png" />
     <None Remove="Resources\Icons\buff.png" />
     <None Remove="Resources\Icons\bullet.png" />
     <None Remove="Resources\Icons\bulletstack.png" />
@@ -145,6 +147,7 @@
     <None Remove="Resources\Icons\filter.png" />
     <None Remove="Resources\Icons\fish.png" />
     <None Remove="Resources\Icons\fishing.png" />
+    <None Remove="Resources\Icons\fist.png" />
     <None Remove="Resources\Icons\food.png" />
     <None Remove="Resources\Icons\foodstuff.png" />
     <None Remove="Resources\Icons\gamepad.png" />
@@ -185,6 +188,7 @@
     <None Remove="Resources\Icons\magicweapon.png" />
     <None Remove="Resources\Icons\map.png" />
     <None Remove="Resources\Icons\matchround.png" />
+    <None Remove="Resources\Icons\medical.png" />
     <None Remove="Resources\Icons\miniature.png" />
     <None Remove="Resources\Icons\minimize.png" />
     <None Remove="Resources\Icons\minus.png" />
@@ -311,6 +315,7 @@
     <None Remove="Resources\Icons\tag_s.png" />
     <None Remove="Resources\Icons\tag_v.png" />
     <None Remove="Resources\Icons\tag_x.png" />
+    <None Remove="Resources\Icons\throw.png" />
     <None Remove="Resources\Icons\time.png" />
     <None Remove="Resources\Icons\trajectory.png" />
     <None Remove="Resources\Icons\transfer.png" />
@@ -387,6 +392,7 @@
     <Resource Include="Resources\Icons\arrow_up.png" />
     <Resource Include="Resources\Icons\arrow_up_blue.png" />
     <Resource Include="Resources\Icons\art.png" />
+    <Resource Include="Resources\Icons\badge.png" />
     <Resource Include="Resources\Icons\bag.png" />
     <Resource Include="Resources\Icons\bandage.png" />
     <Resource Include="Resources\Icons\beast.png" />
@@ -395,6 +401,7 @@
     <Resource Include="Resources\Icons\book.png" />
     <Resource Include="Resources\Icons\booze.png" />
     <Resource Include="Resources\Icons\bow.png" />
+    <Resource Include="Resources\Icons\briefcase.png" />
     <Resource Include="Resources\Icons\buff.png" />
     <Resource Include="Resources\Icons\bullet.png" />
     <Resource Include="Resources\Icons\bulletstack.png" />
@@ -477,6 +484,7 @@
     <Resource Include="Resources\Icons\filter.png" />
     <Resource Include="Resources\Icons\fish.png" />
     <Resource Include="Resources\Icons\fishing.png" />
+    <Resource Include="Resources\Icons\fist.png" />
     <Resource Include="Resources\Icons\food.png" />
     <Resource Include="Resources\Icons\foodstuff.png" />
     <Resource Include="Resources\Icons\gamepad.png" />
@@ -517,6 +525,7 @@
     <Resource Include="Resources\Icons\magicweapon.png" />
     <Resource Include="Resources\Icons\map.png" />
     <Resource Include="Resources\Icons\matchround.png" />
+    <Resource Include="Resources\Icons\medical.png" />
     <Resource Include="Resources\Icons\miniature.png" />
     <Resource Include="Resources\Icons\minimize.png" />
     <Resource Include="Resources\Icons\minus.png" />
@@ -643,6 +652,7 @@
     <Resource Include="Resources\Icons\tag_s.png" />
     <Resource Include="Resources\Icons\tag_v.png" />
     <Resource Include="Resources\Icons\tag_x.png" />
+    <Resource Include="Resources\Icons\throw.png" />
     <Resource Include="Resources\Icons\time.png" />
     <Resource Include="Resources\Icons\trajectory.png" />
     <Resource Include="Resources\Icons\transfer.png" />
