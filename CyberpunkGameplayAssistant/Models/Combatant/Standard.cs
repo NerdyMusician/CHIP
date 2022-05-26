@@ -300,9 +300,8 @@ namespace CyberpunkGameplayAssistant.Models
             get
             {
                 int move = CalculatedStats.GetValue(ReferenceData.StatMovement);
-                int penalty = ReferenceData.ArmorTable.GetPenalty(ArmorType);
+                int penalty = 0; //ReferenceData.ArmorTable.GetPenalty(ArmorType); - already taken into account in CalculatedStats
                 penalty += CriticalInjuries.GetMovePenaltyTotal();
-                penalty += ReferenceData.ArmorTable.GetPenalty(ArmorType);
                 move -= penalty;
                 if (move < 1) { move = 1; }
                 return move;

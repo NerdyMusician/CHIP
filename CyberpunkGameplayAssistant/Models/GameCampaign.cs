@@ -532,6 +532,7 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand LootTheFallen => new RelayCommand(DoLootTheFallen);
         private void DoLootTheFallen(object param)
         {
+            int cash = 0;
             Dictionary<string, int> ammoLoot = new();
             Dictionary<string, int> weaponLoot = new();
             Dictionary<string, int> armorLoot = new();
@@ -541,6 +542,7 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 if (combatant.IsDead)
                 {
+                    cash += ReferenceData.RNG.Next(10, 80);
                     foreach (Ammo ammo in combatant.AmmoInventory)
                     {
                         ammoLoot.AddPlus(ammo.Type, ammo.Quantity);
@@ -574,6 +576,7 @@ namespace CyberpunkGameplayAssistant.Models
             }
             string output =
                 $"Bodies were looted:\n" +
+                $"**CASH**\n{cash.RoundUp()}eb\n" +
                 $"**AMMO**\n{ammoLoot.ToFormattedString()}\n" +
                 $"**WEAPONS**\n{weaponLoot.ToFormattedString()}\n" +
                 $"**GEAR**\n{gearLoot.ToFormattedString()}\n" +

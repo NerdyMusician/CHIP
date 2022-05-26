@@ -58,6 +58,12 @@ namespace CyberpunkGameplayAssistant.Models
             get => _AmmoVariant;
             set => SetAndNotify(ref _AmmoVariant, value);
         }
+        private bool _IsJammed;
+        public bool IsJammed
+        {
+            get => _IsJammed;
+            set => SetAndNotify(ref _IsJammed, value);
+        }
 
         // Properties
         public bool UsesAmmo
@@ -81,6 +87,7 @@ namespace CyberpunkGameplayAssistant.Models
         private void DoRollBasicAttack(object param)
         {
             Combatant combatant = (Combatant)param;
+            if (WasJamCleared(combatant)) { return; }
             int attackRoll = HelperMethods.RollD10(true);
             if (DidWeaponMalfunction(attackRoll, combatant.Name)) { return; }
             if (!CheckAndUseAmmo(1)) { return; }
@@ -97,6 +104,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             if (!ReferenceData.AutofireTable.ContainsKey(Type)) { RaiseError(ReferenceData.ErrorNotAnAutofireWeapon); return; }
             Combatant combatant = (Combatant)param;
+            if (WasJamCleared(combatant)) { return; }
             int attackRoll = HelperMethods.RollD10(true);
             if (DidWeaponMalfunction(attackRoll, combatant.Name)) { return; }
             if (!CheckAndUseAmmo(10)) { return; }
@@ -116,6 +124,7 @@ namespace CyberpunkGameplayAssistant.Models
         private void DoRollAimedShot(object param)
         {
             Combatant combatant = (Combatant)param;
+            if (WasJamCleared(combatant)) { return; }
             int attackRoll = HelperMethods.RollD10(true);
             if (DidWeaponMalfunction(attackRoll, combatant.Name)) { return; }
             if (!CheckAndUseAmmo(1)) { return; }
@@ -156,6 +165,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             if (!ReferenceData.AutofireTable.ContainsKey(Type)) { RaiseError(ReferenceData.ErrorNotAnAutofireWeapon); return; }
             Combatant combatant = (Combatant)param;
+            if (WasJamCleared(combatant)) { return; }
             int attackRoll = HelperMethods.RollD10(true);
             if (DidWeaponMalfunction(attackRoll, combatant.Name)) { return; }
             if (!CheckAndUseAmmo(10)) { return; }
@@ -216,6 +226,7 @@ namespace CyberpunkGameplayAssistant.Models
             { 
                 HelperMethods.AddToGameplayLog($"{combatantName}'s {Name} malfunctioned!", ReferenceData.MessageWeaponAttack);
                 HelperMethods.PlayMalfunctionSound();
+                IsJammed = true;
                 return true; 
             }
             return false;
@@ -223,9 +234,25 @@ namespace CyberpunkGameplayAssistant.Models
         private string GenerateWeaponOutput(Combatant combatant, int attackRoll, int attackBonus, int attackPenalty, int damage, bool criticalInjury)
         {
             int attackResult = attackRoll + attackBonus - combatant.GetAttackInjuryPenalty(Type);
-            string output = $"{combatant.DisplayName} attacks with {Name}\nAttack: {attackResult}\nDamage: {damage} {(criticalInjury ? "CRIT" : "")}";
-            if (ReferenceData.DebugMode) { output += $"\nDEBUG: ROLL:{attackRoll}, SKILL+STAT:{attackBonus}, PENALTY:{attackPenalty}"; }
+            string output = $"{combatant.DisplayName} attacks with {Name}\nAttack: {attackResult}";
+            output += HelperMethods.ProcessAmmoEffect(damage, criticalInjury, AmmoVariant);
+            if (ReferenceData.DebugMode) 
+            { 
+                output += $"\nDEBUG: ROLL:{attackRoll}, SKILL+STAT:{attackBonus}, PENALTY:{attackPenalty}";
+                output += $"\nDEBUG: BASEDMG:{damage} AMMOVAR:{AmmoVariant}";
+            }
             return output;
+        }
+        private bool WasJamCleared(Combatant combatant)
+        {
+            if (IsJammed) 
+            { 
+                HelperMethods.AddToGameplayLog($"{combatant.DisplayName} cleared the jam for {Name}.");
+                HelperMethods.PlayReloadSound();
+                IsJammed = false;
+                return true;
+            }
+            return false;
         }
 
     }

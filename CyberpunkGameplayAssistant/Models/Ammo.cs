@@ -72,21 +72,9 @@ namespace CyberpunkGameplayAssistant.Models
             int damage = HelperMethods.RollDamage(6, out bool crit);
             string output = $"{combatant.DisplayName} threw a grenade up to 25m/yds\nResult: {(roll + dex + athletics)}";
             if (ReferenceData.DebugMode) { output += $"\nDEBUG: ROLL:{roll} DEX:{dex} ATHL:{athletics}"; }
-            if (Variant.IsIn(ReferenceData.AmmoVarArmorPiercing, ReferenceData.AmmoVarIncendiary))
-            {
-                output += $"\nDamage: {damage}{(crit ? " CRIT" : "")}";
-            }
-            if (Variant == ReferenceData.AmmoVarBiotoxin)
-            {
-                output += $"Target must pass a DV15 Resist Drugs Check or take {HelperMethods.RollDamage(3, out _)} direct damage";
-            }
-            if (Variant == ReferenceData.AmmoVarEMP)
-            {
-                output += $"Target must pass a DV15 Cybertech Check, or up to two pieces of their Cyberware or carried electronics become inoperable for 1 minute.";
-            }
+            output += HelperMethods.ProcessAmmoEffect(damage, crit, Variant);
             HelperMethods.AddToGameplayLog(output, ReferenceData.MessageWeaponAttack);
             HelperMethods.PlayExplosionSound();
         }
-
     }
 }

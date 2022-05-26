@@ -607,6 +607,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
             { WeaponTypeRocketLauncher, AudioExplosion },
             { WeaponTypePopupGrenadeLauncher, AudioExplosion },
             { WeaponTypeBowsAndCrossbows, AudioBow },
+            { WeaponTypeFlamethrower, AudioDeepGunshot },
+            { WeaponTypeDartgun, AudioBow },
         };
 
         // Ammunition Types

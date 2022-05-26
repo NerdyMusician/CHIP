@@ -157,5 +157,9 @@ namespace CyberpunkGameplayAssistant.Toolbox.ExtensionMethods
         {
             return list.Contains(source);
         }
+        public static int RoundUp(this int number)
+        {
+            return number + (10 - Convert.ToInt32(number.ToString().Last().ToString()));
+        }
     }
 }

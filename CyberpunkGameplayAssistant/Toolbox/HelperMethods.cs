@@ -239,5 +239,61 @@ namespace CyberpunkGameplayAssistant.Toolbox
             return (level == 1 || level == 2) ? lobbyTable[diceResult] : otherTable[diceResult];
 
         }
+        public static string ProcessAmmoEffect(int damage, bool isCrit, string variant)
+        {
+            string output = "";
+            if (variant.IsIn(ReferenceData.AmmoVarBasic, ReferenceData.AmmoVarArmorPiercing, ReferenceData.AmmoVarExpansive,
+                ReferenceData.AmmoVarIncendiary, ReferenceData.AmmoVarRubber))
+            {
+                output += $"\nDamage: {damage + (isCrit && variant != ReferenceData.AmmoVarRubber ? 5 : 0)}"; // pg 187 Critical Injury Bonus Damage
+                if (variant != ReferenceData.AmmoVarRubber && isCrit) { output += " CRIT"; }
+                if (variant == ReferenceData.AmmoVarArmorPiercing) { output += " AP"; }
+            }
+            if (variant == ReferenceData.AmmoVarBiotoxin)
+            {
+                output += $"\nTarget must pass a DV15 Resist Drugs Check or take {HelperMethods.RollDamage(3, out _)} direct damage.";
+            }
+            if (variant == ReferenceData.AmmoVarEMP)
+            {
+                output += $"\nTarget must pass a DV15 Cybertech Check, or up to two pieces of their Cyberware or carried electronics become inoperable for 1 minute.";
+            }
+            if (variant == ReferenceData.AmmoVarExpansive)
+            {
+                if (isCrit) { output += "\nIf you cause the Foreign Object injury, roll another injury. This second injury deals no bonus damage."; }
+            }
+            if (variant == ReferenceData.AmmoVarFlashbang)
+            {
+                output += $"\nTarget must pass a DV15 Resist Torture Check or suffer the Damaged Eye and Damaged Ear injuries for the next minute. This does not cause bonus damage.";
+            }
+            if (variant == ReferenceData.AmmoVarIncendiary)
+            {
+                output += $"\nIf a target takes damage, they are ignited, and take two direct damage to their HP at the end of their turn until they take an action to put themselves out.";
+            }
+            if (variant == ReferenceData.AmmoVarPoison)
+            {
+                output += $"\nTarget must pass a DV13 Resist Drugs Check or take {HelperMethods.RollDamage(3, out _)} direct damage.";
+            }
+            if (variant == ReferenceData.AmmoVarRubber)
+            {
+                output += $"\nTargets reduced to 0 HP are instead left at 1 HP.";
+            }
+            if (variant == ReferenceData.AmmoVarSleep)
+            {
+                output += $"\nTarget must pass a DV13 Resist Drugs Check or falls Prone and Unconscious for 1 minute until awoken by taking damage or my someone using an Action to touch them.";
+            }
+            if (variant == ReferenceData.AmmoVarSmart)
+            {
+                output += $"\nSee Page 346.";
+            }
+            if (variant == ReferenceData.AmmoVarSmoke)
+            {
+                output += $"\nObscures a 5x5 tile area with smoke for 1 minute.";
+            }
+            if (variant == ReferenceData.AmmoVarTeargas)
+            {
+                output += $"\nTargets with meat eyes must pass a DV13 Resist Torture Check or suffer the Damaged Eye injury for the next minute. This does not cause bonus damage.";
+            }
+            return output;
+        }
     }
 }
