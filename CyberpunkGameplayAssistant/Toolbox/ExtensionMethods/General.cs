@@ -153,5 +153,9 @@ namespace CyberpunkGameplayAssistant.Toolbox.ExtensionMethods
         {
             return cyberwareSet.FirstOrDefault(c => c.Name == cyberwareName) != null;
         }
+        public static bool IsIn(this string source, params string[] list)
+        {
+            return list.Contains(source);
+        }
     }
 }

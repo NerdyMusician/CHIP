@@ -381,6 +381,9 @@
 
 
     <!-- Unsorted -->
+    <Style TargetType="Image" x:Key="Icon_Turret" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/turret.png" />
+    </Style>
     <Style TargetType="Image" x:Key="Icon_Briefcase" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/briefcase.png" />
     </Style>

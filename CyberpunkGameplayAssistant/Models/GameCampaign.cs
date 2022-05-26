@@ -579,7 +579,8 @@ namespace CyberpunkGameplayAssistant.Models
                 $"**GEAR**\n{gearLoot.ToFormattedString()}\n" +
                 $"**ARMOR**\n{armorLoot.ToFormattedString()}\n" +
                 $"**CYBERWARE**\n{cyberwareLoot.ToFormattedString()}\n";
-            HelperMethods.AddToGameplayLog(output, ReferenceData.MessageLoot);
+            if (AreAllEmpty(ammoLoot, weaponLoot, gearLoot, armorLoot, cyberwareLoot)) { HelperMethods.AddToGameplayLog("No loot found."); }
+            else { HelperMethods.AddToGameplayLog(output, ReferenceData.MessageLoot); }
             RemoveTheFallen();
         }
         public ICommand RemoveCombatants => new RelayCommand(DoRemoveCombatants);
@@ -717,6 +718,15 @@ namespace CyberpunkGameplayAssistant.Models
         {
             if (minutes < 10) { return $"0{minutes}"; }
             else { return $"{minutes}"; }
+        }
+
+        private bool AreAllEmpty(params Dictionary<string,int>[] collections)
+        {
+            foreach (Dictionary<string,int> collection in collections)
+            {
+                if (collection.Count > 0) { return false; }
+            }
+            return true;
         }
 
     }

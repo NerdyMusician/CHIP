@@ -413,9 +413,10 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             string iconName = value switch
             {
-                // TODO - turret / defense icon
-                ReferenceData.BlackIce => "Icon_Chip",
-                ReferenceData.Demon => "Icon_Chip",
+                ReferenceData.ActiveDefense => "Icon_Turret",
+                ReferenceData.BlackIce => "Icon_Program",
+                ReferenceData.Demon => "Icon_Program",
+                ReferenceData.EmplacedDefense => "Icon_Turret",
                 ReferenceData.ExecTeamMember => "Icon_Briefcase",
                 ReferenceData.LawmanBackup => "Icon_Badge",
                 ReferenceData.TraumaTeam => "Icon_Medical",

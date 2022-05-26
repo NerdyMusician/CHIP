@@ -323,6 +323,7 @@
     <None Remove="Resources\Icons\trap.png" />
     <None Remove="Resources\Icons\treasure.png" />
     <None Remove="Resources\Icons\tree.png" />
+    <None Remove="Resources\Icons\turret.png" />
     <None Remove="Resources\Icons\unlinked.png" />
     <None Remove="Resources\Icons\upload.png" />
     <None Remove="Resources\Icons\users.png" />
@@ -660,6 +661,7 @@
     <Resource Include="Resources\Icons\trap.png" />
     <Resource Include="Resources\Icons\treasure.png" />
     <Resource Include="Resources\Icons\tree.png" />
+    <Resource Include="Resources\Icons\turret.png" />
     <Resource Include="Resources\Icons\unlinked.png" />
     <Resource Include="Resources\Icons\upload.png" />
     <Resource Include="Resources\Icons\users.png" />

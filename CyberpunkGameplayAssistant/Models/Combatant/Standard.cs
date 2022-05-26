@@ -682,6 +682,14 @@ namespace CyberpunkGameplayAssistant.Models
             // TODO - add question for if perception involves sight, smell, or sound
             return penalty;
         }
+        public int GetStatPenalty(string statName)
+        {
+            int penalty = GetAllActionInjuryPenalty();
+            if (statName == ReferenceData.StatMovement && CriticalInjuries.Contains(ReferenceData.CriticalInjuryCollapsedLung)) { penalty += 2; }
+            if (statName == ReferenceData.StatMovement && CriticalInjuries.Contains(ReferenceData.CriticalInjuryBrokenLeg)) { penalty += 4; }
+            if (statName == ReferenceData.StatMovement && CriticalInjuries.Contains(ReferenceData.CriticalInjuryDismemberedLeg)) { penalty += 6; }
+            return penalty;
+        }
         public int GetAttackInjuryPenalty(string weaponType)
         {
             int penalty = GetAllActionInjuryPenalty();
