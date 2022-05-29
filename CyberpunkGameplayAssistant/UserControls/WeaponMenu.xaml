@@ -27,7 +27,7 @@
                             <Separator />
                             <cc:MiniButton ImageResource="{StaticResource Icon_Reload}" Command="{Binding RestockAmmo}" />
                             <Separator />
-                            <cc:MiniButton Visibility="{Binding IsThrowable, Converter={tool:CollapsedIfFalseOtherwiseVisible}}" ImageResource="{StaticResource Icon_Throw}" Command="{Binding ThrowGrenade}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
+                            <cc:MiniButton Visibility="{Binding IsThrowable, Converter={tool:CollapsedIfFalse}}" ImageResource="{StaticResource Icon_Throw}" Command="{Binding ThrowGrenade}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
                         </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -48,7 +48,7 @@
                                     </ContextMenu>
                                 </cc:ImageButton.ContextMenu>
                             </cc:ImageButton>
-                            <StackPanel Orientation="Horizontal" Visibility="{Binding UsesAmmo, Converter={tool:CollapsedIfFalseOtherwiseVisible}}">
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding UsesAmmo, Converter={tool:CollapsedIfFalse}}">
                                 <cc:MiniButton ImageResource="{StaticResource Icon_Reload}" Command="{Binding ReloadWeapon}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
                                 <Image Style="{StaticResource Icon_BulletStack}" Margin="4 0" />
                                 <TextBlock VerticalAlignment="Center" Width="72" FontFamily="Century Gothic" FontSize="15" FontWeight="Normal">

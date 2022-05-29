@@ -143,6 +143,7 @@ namespace CyberpunkGameplayAssistant.Windows
             if (!ReferenceData.IsLoaded) { return; }
             SfxPlayer.Position = TimeSpan.FromMilliseconds(1);
             SfxPlayer.Source = new Uri(filepath, UriKind.Absolute);
+            SfxPlayer.Volume = ReferenceData.AudioVolume[filepath];
             SfxPlayer.Play();
         }
 

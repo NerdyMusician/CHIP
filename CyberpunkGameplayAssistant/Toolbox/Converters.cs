@@ -6,9 +6,9 @@ using System.Windows.Markup;
 
 namespace CyberpunkGameplayAssistant.Toolbox
 {
-    public class CollapsedIfTrueOtherwiseVisible : ConverterMarkupExtension<CollapsedIfTrueOtherwiseVisible>
+    public class CollapsedIfTrue : ConverterMarkupExtension<CollapsedIfTrue>
     {
-        public CollapsedIfTrueOtherwiseVisible()
+        public CollapsedIfTrue()
         {
         }
 
@@ -33,11 +33,9 @@ namespace CyberpunkGameplayAssistant.Toolbox
         }
 
     }
-
-
-    public class CollapsedIfFalseOtherwiseVisible : ConverterMarkupExtension<CollapsedIfFalseOtherwiseVisible>
+    public class CollapsedIfFalse : ConverterMarkupExtension<CollapsedIfFalse>
     {
-        public CollapsedIfFalseOtherwiseVisible()
+        public CollapsedIfFalse()
         {
         }
 
@@ -295,136 +293,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             return (visibility != Visibility.Collapsed);
         }
     }
-    public class ImageBasedOnMessageType : ConverterMarkupExtension<ImageBasedOnMessageType>
-    {
-        public ImageBasedOnMessageType()
-        {
-
-        }
-
-        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            string iconName = value switch
-            {
-                ReferenceData.MessageInitiative => "Icon_Runner",
-                ReferenceData.MessageCoinFllip => "Icon_SilverCoin",
-                ReferenceData.MessageGmRoll => "Icon_Dice",
-                ReferenceData.MessageLoot => "Icon_Pack",
-                ReferenceData.MessageReload => "Icon_Reload",
-                ReferenceData.MessageSkillCheck => "Icon_Hand",
-                ReferenceData.MessageStandardAction => "Icon_Action",
-                ReferenceData.MessageStatCheck => "Icon_Hex_A",
-                ReferenceData.MessageWeaponAttack => "Icon_Reticle",
-                _ => "Icon_Rpg_Note"
-            };
-            return ReferenceData.Framework.FindResource(iconName) as Style;
-        }
-    }
-    public class ImageBasedOnStat : ConverterMarkupExtension<ImageBasedOnStat>
-    {
-        public ImageBasedOnStat()
-        {
-
-        }
-
-        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            string iconName = value switch
-            {
-                "Ability Check" => "Icon_Hex_A",
-                "Attack" => "Icon_Crossed_Swords",
-                "Coin Flip" => "Icon_CopperCoin",
-                "DM Roll" => "Icon_Dice",
-                "Fall Damage" => "Icon_Fall",
-                "Initiative" => "Icon_Initiative",
-                "Loot" => "Icon_Pack",
-                "Rest" => "Icon_Sleep",
-                "Saving Throw" => "Icon_Letter_S",
-                "Skill Check" => "Icon_Hand",
-                "Spell" => "Icon_Rpg_Staff",
-                "Weather Change" => "Icon_Weather_PartlyCloudy",
-                _ => "Icon_Rpg_Note"
-            };
-            return ReferenceData.Framework.FindResource(iconName) as Style;
-        }
-    }
-    public class ImageBasedOnSkill : ConverterMarkupExtension<ImageBasedOnSkill>
-    {
-        public ImageBasedOnSkill()
-        {
-
-        }
-
-        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            string iconName = value switch
-            {
-                "Ability Check" => "Icon_Hex_A",
-                "Attack" => "Icon_Crossed_Swords",
-                "Coin Flip" => "Icon_CopperCoin",
-                "DM Roll" => "Icon_Dice",
-                "Fall Damage" => "Icon_Fall",
-                "Initiative" => "Icon_Initiative",
-                "Loot" => "Icon_Pack",
-                "Rest" => "Icon_Sleep",
-                "Saving Throw" => "Icon_Letter_S",
-                "Skill Check" => "Icon_Hand",
-                "Spell" => "Icon_Rpg_Staff",
-                "Weather Change" => "Icon_Weather_PartlyCloudy",
-                _ => "Icon_Rpg_Note"
-            };
-            return ReferenceData.Framework.FindResource(iconName) as Style;
-        }
-    }
-    public class ImageBasedOnAction : ConverterMarkupExtension<ImageBasedOnAction>
-    {
-        public ImageBasedOnAction()
-        {
-
-        }
-        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            string iconName = value switch
-            {
-                "Ability Check" => "Icon_Hex_A",
-                "Attack" => "Icon_Crossed_Swords",
-                "Coin Flip" => "Icon_CopperCoin",
-                "DM Roll" => "Icon_Dice",
-                "Fall Damage" => "Icon_Fall",
-                "Initiative" => "Icon_Initiative",
-                "Loot" => "Icon_Pack",
-                "Rest" => "Icon_Sleep",
-                "Saving Throw" => "Icon_Letter_S",
-                "Skill Check" => "Icon_Hand",
-                "Spell" => "Icon_Rpg_Staff",
-                "Weather Change" => "Icon_Weather_PartlyCloudy",
-                _ => "Icon_Rpg_Note"
-            };
-            return ReferenceData.Framework.FindResource(iconName) as Style;
-        }
-    }
-    public class ImageBasedOnCombatantType : ConverterMarkupExtension<ImageBasedOnCombatantType>
-    {
-        public ImageBasedOnCombatantType()
-        {
-
-        }
-        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            string iconName = value switch
-            {
-                ReferenceData.ActiveDefense => "Icon_Turret",
-                ReferenceData.BlackIce => "Icon_Program",
-                ReferenceData.Demon => "Icon_Program",
-                ReferenceData.EmplacedDefense => "Icon_Turret",
-                ReferenceData.ExecTeamMember => "Icon_Briefcase",
-                ReferenceData.LawmanBackup => "Icon_Badge",
-                ReferenceData.TraumaTeam => "Icon_Medical",
-                _ => "Icon_Fist"
-            };
-            return ReferenceData.Framework.FindResource(iconName) as Style;
-        }
-    }
+    
     public class HiddenIfNull : ConverterMarkupExtension<HiddenIfNull>
     {
         public override object Convert(
@@ -494,44 +363,6 @@ namespace CyberpunkGameplayAssistant.Toolbox
             };
         }
     }
-    public class EnemyAlly : ConverterMarkupExtension<EnemyAlly>
-    {
-        public EnemyAlly()
-        {
-
-        }
-
-        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if ((bool)value)
-            {
-                return "Ally";
-            }
-            else
-            {
-                return "Enemy";
-            }
-        }
-    }
-    public class ColorBasedOnStatus : ConverterMarkupExtension<ColorBasedOnStatus>
-    {
-        public ColorBasedOnStatus()
-        {
-
-        }
-
-        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value == null) { return null; }
-            return value.ToString() switch
-            {
-                "Fine" => System.Windows.Media.Brushes.OliveDrab,
-                "Bruised" => System.Windows.Media.Brushes.YellowGreen,
-                "Bloodied" => System.Windows.Media.Brushes.DarkOrange,
-                _ => System.Windows.Media.Brushes.Red
-            };
-        }
-    }
     public class ValidationFontColor : ConverterMarkupExtension<ValidationFontColor>
     {
         public ValidationFontColor()
@@ -553,10 +384,9 @@ namespace CyberpunkGameplayAssistant.Toolbox
         }
 
     }
-
-    public class HiddenIfFalseOtherwiseVisible : ConverterMarkupExtension<HiddenIfFalseOtherwiseVisible>
+    public class HiddenIfFalse : ConverterMarkupExtension<HiddenIfFalse>
     {
-        public HiddenIfFalseOtherwiseVisible()
+        public HiddenIfFalse()
         {
         }
 

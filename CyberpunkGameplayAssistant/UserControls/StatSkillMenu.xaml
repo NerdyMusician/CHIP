@@ -12,7 +12,7 @@
         <ScrollViewer Height="420" Width="560">
             <StackPanel Margin="4">
                 <TextBlock Text="Stats" />
-                <StackPanel Orientation="Horizontal" Visibility="{Binding UsesLoyalty, Converter={tool:CollapsedIfFalseOtherwiseVisible}}">
+                <StackPanel Orientation="Horizontal" Visibility="{Binding UsesLoyalty, Converter={tool:CollapsedIfFalse}}">
                     <StackPanel.Resources>
                         <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
                             <Setter Property="Width" Value="auto" />
