@@ -197,7 +197,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             GetInterfaceCheck(combatant, out int roll, out int interfaceLevel);
             int damage = HelperMethods.RollDice(1, 6).Sum();
-            string output = $"{combatant.DisplayName} attempts to create a virus\nResult: {roll + interfaceLevel}\nDamage: {damage}";
+            string output = $"{combatant.DisplayName} zaps a target\nResult: {roll + interfaceLevel}\nDamage: {damage}";
             output += GetInterfaceDebugText(roll, interfaceLevel);
             return output;
         }

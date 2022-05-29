@@ -1,0 +1,112 @@
+﻿<UserControl x:Class="CyberpunkGameplayAssistant.UserControls.WeaponMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CyberpunkGameplayAssistant.UserControls"
+        xmlns:cc="clr-namespace:CyberpunkGameplayAssistant.CustomControls"
+        xmlns:tool="clr-namespace:CyberpunkGameplayAssistant.Toolbox"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Border Style="{StaticResource BRDR_PopupBorder}">
+        <StackPanel Margin="2">
+            <TextBlock Text="Ammunition" />
+            <Rectangle Style="{StaticResource HorizontalDivider}" />
+            <ItemsControl ItemsSource="{Binding AmmoInventory}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Style="{StaticResource Icon_BulletStack}" />
+                            <Separator />
+                            <TextBlock Width="240" VerticalAlignment="Center">
+                                                                                                        <Run Text="{Binding Quantity}" />
+                                                                                                        <Run Text="x" />
+                                                                                                        <Run Text="{Binding Type}" />
+                                                                                                        <Run Text="(" /><Run Text="{Binding Variant}"/><Run Text=")"/>
+                            </TextBlock>
+                            <Separator />
+                            <cc:MiniButton ImageResource="{StaticResource Icon_Reload}" Command="{Binding RestockAmmo}" />
+                            <Separator />
+                            <cc:MiniButton Visibility="{Binding IsThrowable, Converter={tool:CollapsedIfFalse}}" ImageResource="{StaticResource Icon_Throw}" Command="{Binding ThrowGrenade}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Separator />
+            <TextBlock Text="Weapons" />
+            <Rectangle Style="{StaticResource HorizontalDivider}" />
+            <ItemsControl ItemsSource="{Binding Weapons}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <cc:ImageButton ImageResource="{StaticResource Icon_Reticle}" Text="{Binding Name, FallbackValue=Very Heavy Pistol}" Command="{Binding RollBasicAttack}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type Popup}, Mode=FindAncestor}}">
+                                <cc:ImageButton.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Aimed Shot" Command="{Binding RollAimedShot}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.Tag.DataContext}" />
+                                        <MenuItem Header="Autofire" Command="{Binding RollAutofire}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.Tag.DataContext}" />
+                                        <MenuItem Header="Suppresive Fire" Command="{Binding UseSuppressiveFire}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.Tag.DataContext}" />
+                                    </ContextMenu>
+                                </cc:ImageButton.ContextMenu>
+                            </cc:ImageButton>
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding UsesAmmo, Converter={tool:CollapsedIfFalse}}">
+                                <cc:MiniButton ImageResource="{StaticResource Icon_Reload}" Command="{Binding ReloadWeapon}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
+                                <Image Style="{StaticResource Icon_BulletStack}" Margin="4 0" />
+                                <TextBlock VerticalAlignment="Center" Width="72" FontFamily="Century Gothic" FontSize="15" FontWeight="Normal">
+                                                                                                        <Run Text="x" />
+                                                                                                        <Run Text="{Binding CurrentClipQuantity, FallbackValue=24}" />
+                                                                                                        <Run Text="/" />
+                                                                                                        <Run Text="{Binding MaxClipQuantity, FallbackValue=40, Mode=OneWay}" />
+                                </TextBlock>
+                                <TextBlock VerticalAlignment="Center">
+                                                                                                        <Run Text="{Binding AmmoType}" />
+                                                                                                        <Run Text="(" /><Run Text="{Binding AmmoVariant}"/><Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Separator />
+            <TextBlock Text="Shield" />
+            <Rectangle Style="{StaticResource HorizontalDivider}" />
+            <StackPanel Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
+                        <Setter Property="Width" Value="auto" />
+                    </Style>
+                </StackPanel.Resources>
+                <Image Style="{StaticResource Icon_Shield}" />
+                <Separator />
+                <cc:GammaComboBox ItemsSource="{Binding ShieldTypes}" SelectedValue="{Binding ShieldType}" Width="140" />
+                <Separator />
+                <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" Command="{Binding AdjustShieldHp}" CommandParameter="-5" />
+                <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustShieldHp}" CommandParameter="-1" />
+                <TextBlock Text="{Binding ShieldHp, FallbackValue=10}" Style="{StaticResource MidNum}" />
+                <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustShieldHp}" CommandParameter="1" />
+                <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" Command="{Binding AdjustShieldHp}" CommandParameter="5" />
+                <Separator />
+            </StackPanel>
+            <StackPanel Margin="0 6 0 0" Visibility="{Binding ActivePrograms.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={tool:CollapsedIfZero}}">
+                <TextBlock Text="Active Programs" />
+                <Rectangle Style="{StaticResource HorizontalDivider}" />
+                <ItemsControl ItemsSource="{Binding ActivePrograms}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource SegmentTile}">
+                                <DockPanel>
+                                    <Image Style="{StaticResource Icon_Program}" VerticalAlignment="Top" />
+                                    <Separator />
+                                    <TextBlock Width="280" TextWrapping="Wrap" VerticalAlignment="Center">
+                                                                                                                <Run Text="{Binding Name}" />
+                                                                                                                <Run Text="{Binding Effect}" FontWeight="Normal" />
+                                    </TextBlock>
+                                    <cc:IconButton ImageResource="{StaticResource Icon_X}" Command="{Binding RemoveActiveProgram}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type Popup}, Mode=FindAncestor}}" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                                </DockPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</UserControl>

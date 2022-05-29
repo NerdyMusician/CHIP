@@ -20,4 +20,12 @@
         <Setter Property="Margin" Value="2" />
     </Style>
     
+    <Style TargetType="Border" x:Key="BRDR_PopupBorder">
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonBorder}" />
+        <Setter Property="Background" Value="{StaticResource PrimaryBackground}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="CornerRadius" Value="2" />
+    </Style>
+
 </ResourceDictionary>

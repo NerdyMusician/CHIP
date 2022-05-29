@@ -34,9 +34,11 @@
     <None Remove="Resources\Combatants\TokenSecurityOfficer.png" />
     <None Remove="Resources\Combatants\TokenSecurityOperative.png" />
     <None Remove="Resources\Combatants\TokenTech.png" />
+    <None Remove="Resources\connected.png" />
     <None Remove="Resources\Demons\Balron.png" />
     <None Remove="Resources\Demons\Efreet.png" />
     <None Remove="Resources\Demons\Imp.png" />
+    <None Remove="Resources\disconnected.png" />
     <None Remove="Resources\Icons\aberration.png" />
     <None Remove="Resources\Icons\abjuration.png" />
     <None Remove="Resources\Icons\action.png" />
@@ -341,6 +343,9 @@
     <None Remove="Resources\Icons\window.png" />
     <None Remove="Resources\Icons\workflow.png" />
     <None Remove="Resources\Icons\wrench.png" />
+    <None Remove="Resources\network.png" />
+    <None Remove="Resources\radar.png" />
+    <None Remove="Resources\zap.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -372,9 +377,11 @@
     <Resource Include="Resources\Combatants\TokenSecurityOfficer.png" />
     <Resource Include="Resources\Combatants\TokenSecurityOperative.png" />
     <Resource Include="Resources\Combatants\TokenTech.png" />
+    <Resource Include="Resources\Icons\connected.png" />
     <Resource Include="Resources\Demons\Balron.png" />
     <Resource Include="Resources\Demons\Efreet.png" />
     <Resource Include="Resources\Demons\Imp.png" />
+    <Resource Include="Resources\Icons\disconnected.png" />
     <Resource Include="Resources\Icons\aberration.png" />
     <Resource Include="Resources\Icons\abjuration.png" />
     <Resource Include="Resources\Icons\action.png" />
@@ -679,6 +686,9 @@
     <Resource Include="Resources\Icons\window.png" />
     <Resource Include="Resources\Icons\workflow.png" />
     <Resource Include="Resources\Icons\wrench.png" />
+    <Resource Include="Resources\Icons\network.png" />
+    <Resource Include="Resources\Icons\radar.png" />
+    <Resource Include="Resources\Icons\zap.png" />
   </ItemGroup>
 
   <ItemGroup>

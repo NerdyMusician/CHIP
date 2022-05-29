@@ -258,6 +258,30 @@ namespace CyberpunkGameplayAssistant.Models
             get => _InjuryMenuOpen;
             set => SetAndNotify(ref _InjuryMenuOpen, value);
         }
+        private bool _ActiveWeaponMenuOpen;
+        public bool ActiveWeaponMenuOpen
+        {
+            get => _ActiveWeaponMenuOpen;
+            set => SetAndNotify(ref _ActiveWeaponMenuOpen, value);
+        }
+        private bool _ActiveStatSkillMenuOpen;
+        public bool ActiveStatSkillMenuOpen
+        {
+            get => _ActiveStatSkillMenuOpen;
+            set => SetAndNotify(ref _ActiveStatSkillMenuOpen, value);
+        }
+        private bool _ActiveActionMenuOpen;
+        public bool ActiveActionMenuOpen
+        {
+            get => _ActiveActionMenuOpen;
+            set => SetAndNotify(ref _ActiveActionMenuOpen, value);
+        }
+        private bool _ActiveInjuryMenuOpen;
+        public bool ActiveInjuryMenuOpen
+        {
+            get => _ActiveInjuryMenuOpen;
+            set => SetAndNotify(ref _ActiveInjuryMenuOpen, value);
+        }
         private ObservableCollection<Ammo> _AmmoInventory;
         public ObservableCollection<Ammo> AmmoInventory
         {
@@ -301,6 +325,7 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 int move = CalculatedStats.GetValue(ReferenceData.StatMovement);
                 int penalty = 0; //ReferenceData.ArmorTable.GetPenalty(ArmorType); - already taken into account in CalculatedStats
+                if (WoundState == ReferenceData.WoundStateMortallyWounded) { penalty += 6; }
                 penalty += CriticalInjuries.GetMovePenaltyTotal();
                 move -= penalty;
                 if (move < 1) { move = 1; }
@@ -612,7 +637,7 @@ namespace CyberpunkGameplayAssistant.Models
         public int GetSkillTotal(string skill)
         {
             if (Type == ReferenceData.ActiveDefense) { return GetDemonCombatNumber(); }
-            if (Type == ReferenceData.EmplacedDefense) { return GetDemonCombatNumber(); }
+            if (Type == ReferenceData.EmplacedDefense) { return BaseStats.GetValue(ReferenceData.SkillCombatNumber); }
             if (Type == ReferenceData.LawmanBackup) { return CalculatedStats.GetValue(ReferenceData.SkillCombatNumber); }
             int skillLevel = Skills.FirstOrDefault(s => s.Name == skill).Level;
             int statLevel = CalculatedStats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName == skill).StatName);
@@ -649,6 +674,7 @@ namespace CyberpunkGameplayAssistant.Models
             if (CurrentHitPoints < 1) { woundState = ReferenceData.WoundStateMortallyWounded; }
             if (IsDead) { woundState = ReferenceData.WoundStateDead; }
             WoundState = woundState;
+            NotifyPropertyChanged(nameof(MoveSpeed));
         }
         public void UpdateBlackIceWoundState()
         {
@@ -671,7 +697,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         public int GetSkillPenalty(string skillName)
         {
-            int penalty = GetAllActionInjuryPenalty();
+            int penalty = GetAllActionInjuryAndWoundStatePenalty();
             if (skillName == ReferenceData.SkillPerception && CriticalInjuries.Contains(ReferenceData.CriticalInjuryLostEye)) { penalty += 4; }
             if (skillName == ReferenceData.SkillPerception && CriticalInjuries.Contains(ReferenceData.CriticalInjuryDamagedEye)) { penalty += 2; }
             if (skillName == ReferenceData.SkillPersuasion && CriticalInjuries.Contains(ReferenceData.CriticalInjuryBrokenJaw)) { penalty += 4; }
@@ -683,7 +709,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         public int GetStatPenalty(string statName)
         {
-            int penalty = GetAllActionInjuryPenalty();
+            int penalty = GetAllActionInjuryAndWoundStatePenalty();
             if (statName == ReferenceData.StatMovement && CriticalInjuries.Contains(ReferenceData.CriticalInjuryCollapsedLung)) { penalty += 2; }
             if (statName == ReferenceData.StatMovement && CriticalInjuries.Contains(ReferenceData.CriticalInjuryBrokenLeg)) { penalty += 4; }
             if (statName == ReferenceData.StatMovement && CriticalInjuries.Contains(ReferenceData.CriticalInjuryDismemberedLeg)) { penalty += 6; }
@@ -691,7 +717,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         public int GetAttackInjuryPenalty(string weaponType)
         {
-            int penalty = GetAllActionInjuryPenalty();
+            int penalty = GetAllActionInjuryAndWoundStatePenalty();
             if (weaponType.Contains("Melee")) { penalty += GetMeleeWeaponInjuryPenalty(); }
             else { penalty += GetRangedWeaponInjuryPenalty(); }
             return penalty;
@@ -709,11 +735,13 @@ namespace CyberpunkGameplayAssistant.Models
             if (CriticalInjuries.Contains(ReferenceData.CriticalInjuryDamagedEye)) { penalty += 2; }
             return penalty;
         }
-        private int GetAllActionInjuryPenalty()
+        private int GetAllActionInjuryAndWoundStatePenalty()
         {
             int penalty = 0; 
             if (CriticalInjuries.Contains(ReferenceData.CriticalInjuryBrainInjury)) { penalty += 2; }
             if (CriticalInjuries.Contains(ReferenceData.CriticalInjuryConcussion)) { penalty += 2; }
+            if (WoundState == ReferenceData.WoundStateSeriouslyWounded) { penalty += 2; }
+            if (WoundState == ReferenceData.WoundStateMortallyWounded) { penalty += 4; }
             return penalty;
         }
         public void SetNetActions()

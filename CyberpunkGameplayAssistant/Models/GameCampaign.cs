@@ -549,6 +549,7 @@ namespace CyberpunkGameplayAssistant.Models
                     }
                     foreach (CombatantWeapon weapon in combatant.Weapons)
                     {
+                        if (combatant.Type.IsIn(ReferenceData.EmplacedDefense, ReferenceData.ActiveDefense)) { continue; }
                         if (weapon.UsesAmmo)
                         {
                             string ammoType = ReferenceData.WeaponRepository.First(w => w.Type == weapon.Type).AmmoType;
@@ -649,6 +650,7 @@ namespace CyberpunkGameplayAssistant.Models
         private bool IsEligibleCombatant(Combatant combatant)
         {
             if (combatant.Type == ReferenceData.ActiveDefense || combatant.Type == ReferenceData.EmplacedDefense) { return false; }
+            if (combatant.Type == ReferenceData.BlackIce && combatant.CurrentHitPoints == 0) { return false; }
             return !combatant.IsDead || combatant.Type == ReferenceData.Player;
         }
         private void InitializeLists()

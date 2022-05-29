@@ -381,6 +381,21 @@
 
 
     <!-- Unsorted -->
+    <Style TargetType="Image" x:Key="Icon_Zap" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/zap.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_Radar" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/radar.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_Disconnected" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/disconnected.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_Connected" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/connected.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_Network" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/network.png" />
+    </Style>
     <Style TargetType="Image" x:Key="Icon_Turret" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/turret.png" />
     </Style>

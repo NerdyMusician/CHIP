@@ -145,6 +145,17 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static readonly string AudioMalfunction = $"{AudioBase}Malfunction.mp3"; //https://freesound.org/people/gristi/sounds/562198/
         public static readonly string AudioMelee = $"{AudioBase}Melee.mp3"; //https://freesound.org/people/Kreastricon62/sounds/550378/
         public static readonly string AudioReload = $"{AudioBase}Reload.mp3"; //https://freesound.org/people/nioczkus/sounds/396331/
+        public static readonly Dictionary<string, double> AudioVolume = new()
+        {
+            { AudioAutofire, .6 },
+            { AudioBow, 1 },
+            { AudioDeepGunshot, .8 },
+            { AudioExplosion, 1 },
+            { AudioGunshot, .5 },
+            { AudioMalfunction, .7 },
+            { AudioMelee, .8 },
+            { AudioReload, .9 },
+        };
 
         // Wound States
         public const string WoundStateUnharmed = "Unharmed";
@@ -174,7 +185,6 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string NetActionJackIn = "Jack In";
         public const string NetActionJackOut = "Jack Out";
         public const string NetActionActivateProgram = "Activate Program";
-        //public const string NetActionDeactivateProgram = "Deactivate Program";//TODO just an X for programs in list
         public const string NetActionScanner = "Scanner";
         public const string NetActionBackdoor = "Backdoor";
         public const string NetActionCloak = "Cloak";

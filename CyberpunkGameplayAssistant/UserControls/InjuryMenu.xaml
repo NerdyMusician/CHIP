@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="CyberpunkGameplayAssistant.UserControls.InjuryMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CyberpunkGameplayAssistant.UserControls"
+        xmlns:cc="clr-namespace:CyberpunkGameplayAssistant.CustomControls"
+        xmlns:tool="clr-namespace:CyberpunkGameplayAssistant.Toolbox"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Border Style="{StaticResource BRDR_PopupBorder}">
+        <StackPanel Margin="4">
+            <DockPanel>
+                <TextBlock Text="Critical Injuries" />
+                <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding AddCriticalInjury}" HorizontalAlignment="Right" />
+            </DockPanel>
+            <Border Style="{StaticResource ListBorder}">
+                <ItemsControl ItemsSource="{Binding CriticalInjuries}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource SegmentTile}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Separator />
+                                    <TextBlock Text="{Binding Name, FallbackValue=Dismembered Hand}" Width="128" VerticalAlignment="Center" ToolTip="{Binding Description}" />
+                                    <Separator />
+                                    <cc:IconButton ImageResource="{StaticResource Icon_X}" Command="{Binding RemoveInjury}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
+        </StackPanel>
+    </Border>
+</UserControl>
