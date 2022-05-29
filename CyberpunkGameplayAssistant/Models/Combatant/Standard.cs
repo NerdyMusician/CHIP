@@ -258,6 +258,30 @@ namespace CyberpunkGameplayAssistant.Models
             get => _InjuryMenuOpen;
             set => SetAndNotify(ref _InjuryMenuOpen, value);
         }
+        private bool _ActiveWeaponMenuOpen;
+        public bool ActiveWeaponMenuOpen
+        {
+            get => _ActiveWeaponMenuOpen;
+            set => SetAndNotify(ref _ActiveWeaponMenuOpen, value);
+        }
+        private bool _ActiveStatSkillMenuOpen;
+        public bool ActiveStatSkillMenuOpen
+        {
+            get => _ActiveStatSkillMenuOpen;
+            set => SetAndNotify(ref _ActiveStatSkillMenuOpen, value);
+        }
+        private bool _ActiveActionMenuOpen;
+        public bool ActiveActionMenuOpen
+        {
+            get => _ActiveActionMenuOpen;
+            set => SetAndNotify(ref _ActiveActionMenuOpen, value);
+        }
+        private bool _ActiveInjuryMenuOpen;
+        public bool ActiveInjuryMenuOpen
+        {
+            get => _ActiveInjuryMenuOpen;
+            set => SetAndNotify(ref _ActiveInjuryMenuOpen, value);
+        }
         private ObservableCollection<Ammo> _AmmoInventory;
         public ObservableCollection<Ammo> AmmoInventory
         {
