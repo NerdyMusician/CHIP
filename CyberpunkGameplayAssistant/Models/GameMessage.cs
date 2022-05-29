@@ -43,6 +43,10 @@ namespace CyberpunkGameplayAssistant.Models
         private void DoRemoveMessage(object param)
         {
             if (param == null) { return; }
+            if (param.ToString() == "Campaign") 
+            {
+                ReferenceData.MainModelRef.CampaignView.ActiveCampaign.EventHistory.Remove(this);
+            }
         }
         #endregion
 

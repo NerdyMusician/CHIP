@@ -659,11 +659,18 @@
                                                                                     <StackPanel Margin="4">
                                                                                         <TextBlock Text="Stats" />
                                                                                         <StackPanel Orientation="Horizontal" Visibility="{Binding UsesLoyalty, Converter={tool:CollapsedIfFalseOtherwiseVisible}}">
+                                                                                            <StackPanel.Resources>
+                                                                                                <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
+                                                                                                    <Setter Property="Width" Value="auto" />
+                                                                                                </Style>
+                                                                                            </StackPanel.Resources>
                                                                                             <Image Style="{StaticResource Icon_HeartTag}" />
                                                                                             <Separator />
-                                                                                            <TextBlock Text="Loyalty" VerticalAlignment="Center" />
+                                                                                            <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustLoyalty}" CommandParameter="-1" />
                                                                                             <Separator />
-                                                                                            <TextBox Text="{Binding Loyalty}" Width="32" />
+                                                                                            <TextBlock Text="{Binding Loyalty, FallbackValue=20}" Style="{StaticResource MidNum}" />
+                                                                                            <Separator />
+                                                                                            <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustLoyalty}" CommandParameter="1" />
                                                                                             <Separator />
                                                                                             <cc:IconButton ImageResource="{StaticResource Icon_Dice}" Command="{Binding MakeLoyaltySave}" />
                                                                                         </StackPanel>
@@ -1300,7 +1307,10 @@
                                                         <DataTemplate>
                                                             <Border Style="{StaticResource SegmentTile}">
                                                                 <StackPanel Orientation="Horizontal" Margin="2">
-                                                                    <TextBlock Text="{Binding Level, FallbackValue=12}" Width="24" Height="24" TextAlignment="Center" FontSize="20" FontFamily="Consolas" />
+                                                                    <StackPanel>
+                                                                        <TextBlock Text="{Binding Level, FallbackValue=12}" Width="24" Height="24" TextAlignment="Center" FontSize="20" FontFamily="Consolas" />
+                                                                        <CheckBox IsChecked="{Binding HasNetrunner}" Command="{Binding ToggleHasNetrunner}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}, Path=ItemsSource}" />
+                                                                    </StackPanel>
                                                                     <Separator />
                                                                     <TextBox Text="{Binding Description}" Width="300" Height="48" AcceptsReturn="True" />
                                                                     <Separator />
@@ -1312,6 +1322,7 @@
                                                 </ItemsControl>
                                             </ScrollViewer>
                                         </Border>
+                                        
                                     </StackPanel>
                                 </StackPanel>
                             </TabItem>

@@ -45,6 +45,13 @@ namespace CyberpunkGameplayAssistant.Models
             if (roll < Loyalty) { HelperMethods.AddToGameplayLog($"{DisplayName} passed their Loyalty check"); }
             else { HelperMethods.AddToGameplayLog($"{DisplayName} failed their Loyalty check"); }
         }
+        public ICommand AdjustLoyalty => new RelayCommand(DoAdjustLoyalty);
+        private void DoAdjustLoyalty(object param)
+        {
+            if (param == null) { return; }
+            if (!int.TryParse(param.ToString(), out int loyaltyChange)) { return; }
+            Loyalty += loyaltyChange;
+        }
 
         // Public Methods
         public void SetSkillLevels(int level, params string[] skills)

@@ -1,5 +1,6 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
@@ -37,6 +38,12 @@ namespace CyberpunkGameplayAssistant.Models
             get => _Notes;
             set => SetAndNotify(ref _Notes, value);
         }
+        private bool _HasNetrunner;
+        public bool HasNetrunner
+        {
+            get => _HasNetrunner;
+            set => SetAndNotify(ref _HasNetrunner, value);
+        }
 
         // Commands
         public ICommand RemoveFloor => new RelayCommand(DoRemoveFloor);
@@ -44,6 +51,16 @@ namespace CyberpunkGameplayAssistant.Models
         {
             ReferenceData.MainModelRef.CampaignView.ActiveCampaign.ActiveNetArchitecture.Floors.Remove(this);
             ReferenceData.MainModelRef.CampaignView.ActiveCampaign.ActiveNetArchitecture.RenumberFloors();
+        }
+        public ICommand ToggleHasNetrunner => new RelayCommand(DoToggleHasNetrunner);
+        private void DoToggleHasNetrunner(object param)
+        {
+            if (!HasNetrunner) { return; }
+            ObservableCollection<NetFloor> netFloors = (param as ObservableCollection<NetFloor>)!;
+            foreach (NetFloor net in netFloors)
+            {
+                if (net != this) { net.HasNetrunner = false; }
+            }
         }
 
     }
