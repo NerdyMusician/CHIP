@@ -145,5 +145,8 @@ namespace CyberpunkGameplayAssistant.Windows
             SfxPlayer.Source = new Uri(filepath, UriKind.Absolute);
             SfxPlayer.Play();
         }
+
+
+
     }
 }

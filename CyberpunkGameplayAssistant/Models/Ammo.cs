@@ -65,6 +65,7 @@ namespace CyberpunkGameplayAssistant.Models
         private void DoThrowGrenade(object param)
         {
             // TODO - alternate grenade outcomes (pg345+)
+            if (!HasGrenades()) { return; }
             Combatant combatant = (param as Combatant)!;
             int roll = HelperMethods.RollD10(true);
             int dex = combatant.CalculatedStats.GetValue(ReferenceData.StatDexterity);
@@ -75,6 +76,19 @@ namespace CyberpunkGameplayAssistant.Models
             output += HelperMethods.ProcessAmmoEffect(damage, crit, Variant);
             HelperMethods.AddToGameplayLog(output, ReferenceData.MessageWeaponAttack);
             HelperMethods.PlayExplosionSound();
+            Quantity--;
         }
+
+        // Private Methods
+        private bool HasGrenades()
+        {
+            if (Quantity > 0) { return true; }
+            else
+            {
+                RaiseError("Grenade Quantity is Zero");
+                return false;
+            }
+        }
+
     }
 }
