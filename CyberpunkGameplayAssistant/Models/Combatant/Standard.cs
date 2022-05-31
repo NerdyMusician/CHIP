@@ -569,18 +569,25 @@ namespace CyberpunkGameplayAssistant.Models
                 Skills.Add(new(skill.SkillName));
             }
         }
-        public void AddSkill(string name, int value, string variant = "")
+        public void AddSkillsByBase(int skillBase, params string[] skillNames)
+        {
+            foreach (string name in skillNames)
+            {
+                AddSkillByBase(name, skillBase);
+            }
+        }
+        public void AddSkillByBase(string name, int skillBase, string variant = "")
         {
             Skill skill = Skills.FirstOrDefault(s => s.Name == name && s.Variant == variant);
             if (skill == null)
             {
-                if (name == ReferenceData.SkillInterface) { Skills.Add(new(name, variant, value)); return; }
-                int level = value - CalculatedStats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName == name).StatName);
+                if (name == ReferenceData.SkillInterface) { Skills.Add(new(name, variant, skillBase)); return; }
+                int level = skillBase - CalculatedStats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName == name).StatName);
                 Skills.Add(new(name, variant, level));
             }
             else
             {
-                skill.Level = value - CalculatedStats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName== name).StatName);
+                skill.Level = skillBase - CalculatedStats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName== name).StatName);
             }
         }
         public void AddWeapon(string type, string quality = "", string name = "")
