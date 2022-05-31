@@ -1297,6 +1297,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
             covOp.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
             covOp.AddGearSet(GearAgent);
             covOp.AddCyberwareSet(CyberwareCybereye, CyberwareCybereye, CyberwareLowLightInfraredUv, CyberwareColorShift, CyberwareCyberarm, CyberwareGrappleHand, CyberwarePopupRangedWeapon, CyberwareRealskinnCovering);
+            covOp.InitializeNewCombatant();
+            Combatants.Add(covOp);
             #endregion
             #region Company Driver
             Combatant companyDriver = new("Company Driver", ExecTeamMember, PortraitDefault, ArmorTypeLightArmorjack);
