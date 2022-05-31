@@ -14,7 +14,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         // Constructors
         public MainViewModel()
         {
-            ApplicationVersion = "CHIP 2.00.00 beta";
+            ApplicationVersion = "CHIP 1.00.00 beta";
             UserAlerts = new();
             HelperMethods.CreateDirectories(ReferenceData.Directories);
             LoadData();
