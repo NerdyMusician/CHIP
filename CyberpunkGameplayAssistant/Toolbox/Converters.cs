@@ -358,7 +358,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             if (value == null) { return null; }
             return value.ToString() switch
             {
-                ReferenceData.AlertError => System.Windows.Media.Brushes.DarkRed,
+                AppData.AlertError => System.Windows.Media.Brushes.DarkRed,
                 _ => System.Windows.Media.Brushes.DarkSlateBlue
             };
         }

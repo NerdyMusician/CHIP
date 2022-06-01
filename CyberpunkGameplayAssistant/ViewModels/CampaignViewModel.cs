@@ -58,7 +58,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         {
             LastSave = DateTime.Now.ToString();
             System.Xml.Serialization.XmlSerializer serializer = new(typeof(CampaignViewModel));
-            using (System.IO.StreamWriter writer = new(ReferenceData.File_CampaignData))
+            using (System.IO.StreamWriter writer = new(AppData.File_CampaignData))
             {
                 serializer.Serialize(writer, this.DeepClone());
             }

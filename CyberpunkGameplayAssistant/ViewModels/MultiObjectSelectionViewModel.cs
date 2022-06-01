@@ -110,7 +110,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         {
             switch (Mode)
             {
-                case ReferenceData.MultiModeEnemies:
+                case AppData.MultiModeEnemies:
                     FilteredSourceCombatants.Clear();
                     foreach (Combatant combatant in SourceCombatants)
                     {

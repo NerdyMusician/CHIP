@@ -28,9 +28,12 @@
         <DataTemplate x:Key="SourceCombatantTemplate">
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Image Style="{Binding Type, Converter={tool:ImageBasedOnCombatantType}}" />
+                    <Image Style="{Binding ComClass, Converter={tool:ImageBasedOnCombatantType}}" />
                     <Separator />
-                    <TextBlock Text="{Binding Name, Mode=OneWay}" Foreground="{StaticResource PrimaryFontColor}" FontWeight="Bold" Width="280" VerticalAlignment="Center" />
+                    <TextBlock Foreground="{StaticResource PrimaryFontColor}" FontWeight="Bold" Width="280" VerticalAlignment="Center">
+                        <Run Text="{Binding Name, Mode=OneWay}" />
+                        <Run Text="{Binding Variant, Mode=OneWay}" />
+                    </TextBlock>
                     <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Click="AddItem_Clicked" />
                 </StackPanel>
             </StackPanel>

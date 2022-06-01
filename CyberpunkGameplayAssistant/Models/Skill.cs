@@ -54,7 +54,7 @@ namespace CyberpunkGameplayAssistant.Models
             { 
                 return Name + 
                     (!Variant.IsNullOrEmpty() ? $" ({Variant})" : "") + 
-                    ((ReferenceData.SkillLinks.GetCost(Name) > 1) ? $" (x{ReferenceData.SkillLinks.GetCost(Name)})" : ""); 
+                    ((AppData.SkillLinks.GetCost(Name) > 1) ? $" (x{AppData.SkillLinks.GetCost(Name)})" : ""); 
             }
         }
 
@@ -66,20 +66,20 @@ namespace CyberpunkGameplayAssistant.Models
             string output = $"{combatant.DisplayName} made a {Name} check";
             int result = HelperMethods.RollD10();
             int penalty = combatant.GetSkillPenalty(Name);
-            string statName = (combatant.Type == ReferenceData.LawmanBackup || combatant.Type == ReferenceData.TraumaTeam) 
-                ? ReferenceData.SkillCombatNumber : ReferenceData.SkillLinks.GetStat(Name);
+            string statName = (combatant.Type == AppData.LawmanBackup || combatant.Type == AppData.TraumaTeam) 
+                ? AppData.SkillCombatNumber : AppData.SkillLinks.GetStat(Name);
             int stat = combatant.CalculatedStats.GetValue(statName);
             output += $"\nResult: {result + stat + Level - penalty}";
-            if (Name == ReferenceData.SkillBrawling) { output += GetBrawlingDamage(combatant); }
-            if (ReferenceData.DebugMode) { output += $"\nDEBUG: {result} + {stat} + {Level} - {penalty}"; }
-            HelperMethods.AddToGameplayLog(output, ReferenceData.MessageSkillCheck);
+            if (Name == AppData.SkillBrawling) { output += GetBrawlingDamage(combatant); }
+            if (AppData.DebugMode) { output += $"\nDEBUG: {result} + {stat} + {Level} - {penalty}"; }
+            HelperMethods.AddToGameplayLog(output, AppData.MessageSkillCheck);
         }
 
         // Private Methods
         private string GetBrawlingDamage(Combatant combatant)
         {
-            int body = combatant.CalculatedStats.GetValue(ReferenceData.StatBody);
-            bool hasCyberarm = combatant.InstalledCyberware.Contains(ReferenceData.CyberwareCyberarm);
+            int body = combatant.CalculatedStats.GetValue(AppData.StatBody);
+            bool hasCyberarm = combatant.InstalledCyberware.Contains(AppData.CyberwareCyberarm);
             int damage = body switch
             {
                 <= 4 => 1,

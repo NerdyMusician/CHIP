@@ -7,7 +7,7 @@
         {
 
         }
-        public Weapon(string type, string skill, int damage, int handsRequired, string ammoType, int rof, bool canBeConcealed, string costTier)
+        public Weapon(string type, string skill, int damage, int handsRequired, string ammoType, int rof, bool canBeConcealed)
         {
             Type = type;
             AssociatedSkill = skill;
@@ -16,7 +16,6 @@
             AmmoType = ammoType;
             RateOfFire = rof;
             CanBeConcealed = canBeConcealed;
-            CostTier = costTier;
         }
 
         // Databound Properties

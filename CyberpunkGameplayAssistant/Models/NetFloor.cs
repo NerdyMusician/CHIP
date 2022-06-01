@@ -49,8 +49,8 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand RemoveFloor => new RelayCommand(DoRemoveFloor);
         private void DoRemoveFloor(object param)
         {
-            ReferenceData.MainModelRef.CampaignView.ActiveCampaign.ActiveNetArchitecture.Floors.Remove(this);
-            ReferenceData.MainModelRef.CampaignView.ActiveCampaign.ActiveNetArchitecture.RenumberFloors();
+            AppData.MainModelRef.CampaignView.ActiveCampaign.ActiveNetArchitecture.Floors.Remove(this);
+            AppData.MainModelRef.CampaignView.ActiveCampaign.ActiveNetArchitecture.RenumberFloors();
         }
         public ICommand ToggleHasNetrunner => new RelayCommand(DoToggleHasNetrunner);
         private void DoToggleHasNetrunner(object param)

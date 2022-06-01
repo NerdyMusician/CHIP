@@ -35,11 +35,11 @@ namespace CyberpunkGameplayAssistant.Models
 
         protected static void RaiseError(string message)
         {
-            HelperMethods.NotifyUser(ReferenceData.AlertError, message);
+            HelperMethods.NotifyUser(AppData.AlertError, message);
         }
         protected static void RaiseAlert(string message)
         {
-            HelperMethods.NotifyUser(ReferenceData.AlertInfo, message);
+            HelperMethods.NotifyUser(AppData.AlertInfo, message);
         }
 
     }

@@ -36,14 +36,14 @@ namespace CyberpunkGameplayAssistant.Models
             string action = (param as object[])![1].ToString()!;
             string result = action switch
             {
-                ReferenceData.ActionBrawl => PerformActionBrawl(combatant),
-                ReferenceData.ActionChoke => PerformActionChoke(combatant),
-                ReferenceData.ActionDeathSave => PerformActionDeathSave(combatant),
-                ReferenceData.ActionEvade => PerformActionEvade(combatant),
-                ReferenceData.ActionGrab => PerformActionGrab(combatant),
-                ReferenceData.ActionInitiative => PerformActionInitiative(combatant),
-                ReferenceData.ActionThrowGrapple => PerformActionThrowGrapple(combatant),
-                ReferenceData.ActionThrowObject => PerformActionThrowObject(combatant),
+                AppData.ActionBrawl => PerformActionBrawl(combatant),
+                AppData.ActionChoke => PerformActionChoke(combatant),
+                AppData.ActionDeathSave => PerformActionDeathSave(combatant),
+                AppData.ActionEvade => PerformActionEvade(combatant),
+                AppData.ActionGrab => PerformActionGrab(combatant),
+                AppData.ActionInitiative => PerformActionInitiative(combatant),
+                AppData.ActionThrowGrapple => PerformActionThrowGrapple(combatant),
+                AppData.ActionThrowObject => PerformActionThrowObject(combatant),
                 _ => ""
             };
             if (string.IsNullOrEmpty(result))
@@ -53,7 +53,7 @@ namespace CyberpunkGameplayAssistant.Models
             }
             else
             {
-                HelperMethods.AddToGameplayLog(result, ReferenceData.MessageStandardAction);
+                HelperMethods.AddToGameplayLog(result, AppData.MessageStandardAction);
             }
 
         }
@@ -64,19 +64,19 @@ namespace CyberpunkGameplayAssistant.Models
             string action = (param as object[])![1].ToString()!;
             string result = action switch
             {
-                ReferenceData.NetActionInterface => PerformNetActionInterface(combatant),
-                ReferenceData.NetActionJackIn => $"{combatant.DisplayName} has jacked in to a NET Architecture",
-                ReferenceData.NetActionJackOut => $"{combatant.DisplayName} has safely jacked out from a NET Architecture",
-                ReferenceData.NetActionActivateProgram => PerformNetActionActivateProgram(combatant),
-                ReferenceData.NetActionScanner => PerformNetActionBasic(combatant, "scanned for NET access points"),
-                ReferenceData.NetActionBackdoor => PerformNetActionBasic(combatant, "attempts to break through a password"),
-                ReferenceData.NetActionCloak => PerformNetActionBasic(combatant, "attempts to hide traces of their presence in the NET"),
-                ReferenceData.NetActionControl => PerformNetActionBasic(combatant, "attempts to take over a control node"),
-                ReferenceData.NetActionEyeDee => PerformNetActionBasic(combatant, "attempts to identify a file"),
-                ReferenceData.NetActionPathfinder => PerformNetActionBasic(combatant, "attempts to reveal the NET architecture"),
-                ReferenceData.NetActionSlide => PerformNetActionBasic(combatant, "attempts to flee from Black ICE's PER"),
-                ReferenceData.NetActionVirus => PerformNetActionBasic(combatant, "attempts to create a virus"),
-                ReferenceData.NetActionZap => PerformNetActionZap(combatant),
+                AppData.NetActionInterface => PerformNetActionInterface(combatant),
+                AppData.NetActionJackIn => $"{combatant.DisplayName} has jacked in to a NET Architecture",
+                AppData.NetActionJackOut => $"{combatant.DisplayName} has safely jacked out from a NET Architecture",
+                AppData.NetActionActivateProgram => PerformNetActionActivateProgram(combatant),
+                AppData.NetActionScanner => PerformNetActionBasic(combatant, "scanned for NET access points"),
+                AppData.NetActionBackdoor => PerformNetActionBasic(combatant, "attempts to break through a password"),
+                AppData.NetActionCloak => PerformNetActionBasic(combatant, "attempts to hide traces of their presence in the NET"),
+                AppData.NetActionControl => PerformNetActionBasic(combatant, "attempts to take over a control node"),
+                AppData.NetActionEyeDee => PerformNetActionBasic(combatant, "attempts to identify a file"),
+                AppData.NetActionPathfinder => PerformNetActionBasic(combatant, "attempts to reveal the NET architecture"),
+                AppData.NetActionSlide => PerformNetActionBasic(combatant, "attempts to flee from Black ICE's PER"),
+                AppData.NetActionVirus => PerformNetActionBasic(combatant, "attempts to create a virus"),
+                AppData.NetActionZap => PerformNetActionZap(combatant),
                 _ => string.Empty
             };
             if (string.IsNullOrEmpty(result))
@@ -86,7 +86,7 @@ namespace CyberpunkGameplayAssistant.Models
             }
             else
             {
-                HelperMethods.AddToGameplayLog(result, ReferenceData.MessageStandardAction);
+                HelperMethods.AddToGameplayLog(result, AppData.MessageStandardAction);
             }
         }
 
@@ -94,9 +94,9 @@ namespace CyberpunkGameplayAssistant.Models
         #region Standard Actions
         private static string PerformActionBrawl(Combatant combatant)
         {
-            int attack = HelperMethods.RollSkillCheck(combatant, ReferenceData.StatDexterity, ReferenceData.SkillBrawling);
-            int body = combatant.CalculatedStats.GetValue(ReferenceData.StatBody);
-            if (combatant.InstalledCyberware.FirstOrDefault(c => c.Name == ReferenceData.CyberwareCyberarm) != null)
+            int attack = HelperMethods.RollSkillCheck(combatant, AppData.StatDexterity, AppData.SkillBrawling);
+            int body = combatant.CalculatedStats.GetValue(AppData.StatBody);
+            if (combatant.InstalledCyberware.FirstOrDefault(c => c.Name == AppData.CyberwareCyberarm) != null)
             {
                 body = (body > 5) ? body : 5;
             }
@@ -116,7 +116,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private static string PerformActionChoke(Combatant combatant)
         {
-            return $"{combatant.DisplayName} choked their target for {combatant.CalculatedStats.GetValue(ReferenceData.StatBody)} damage";
+            return $"{combatant.DisplayName} choked their target for {combatant.CalculatedStats.GetValue(AppData.StatBody)} damage";
         }
         private static string PerformActionDeathSave(Combatant combatant)
         {
@@ -130,12 +130,12 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private static string PerformActionEvade(Combatant combatant)
         {
-            int result = HelperMethods.RollSkillCheck(combatant, ReferenceData.StatDexterity, ReferenceData.SkillEvasion);
+            int result = HelperMethods.RollSkillCheck(combatant, AppData.StatDexterity, AppData.SkillEvasion);
             return $"{combatant.DisplayName} attempted to Evade\nResult: {result}";
         }
         private static string PerformActionGrab(Combatant combatant)
         {
-            int result = HelperMethods.RollSkillCheck(combatant, ReferenceData.StatDexterity, ReferenceData.SkillBrawling);
+            int result = HelperMethods.RollSkillCheck(combatant, AppData.StatDexterity, AppData.SkillBrawling);
             return $"{combatant.DisplayName} attempted to Grab/Resist\nResult: {result}";
         }
         private static string PerformActionInitiative(Combatant combatant)
@@ -146,11 +146,11 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private static string PerformActionThrowGrapple(Combatant combatant)
         {
-            return $"{combatant.DisplayName} threw their target prone for {combatant.CalculatedStats.GetValue(ReferenceData.StatBody)} damage";
+            return $"{combatant.DisplayName} threw their target prone for {combatant.CalculatedStats.GetValue(AppData.StatBody)} damage";
         }
         private static string PerformActionThrowObject(Combatant combatant)
         {
-            int result = HelperMethods.RollSkillCheck(combatant, ReferenceData.StatDexterity, ReferenceData.SkillAthletics);
+            int result = HelperMethods.RollSkillCheck(combatant, AppData.StatDexterity, AppData.SkillAthletics);
             return $"{combatant.DisplayName} threw an object\nResult: {result}";
         }
         #endregion
@@ -173,7 +173,7 @@ namespace CyberpunkGameplayAssistant.Models
                 if (program == null) { RaiseError($"Program {selectedRecord.Name} not found"); return string.Empty; }
                 CyberdeckProgram duplicateProgram = combatant.ActivePrograms.FirstOrDefault(p => p.Name == program.Name);
                 if (duplicateProgram != null) { RaiseError($"Program {program.Name} already active for {combatant.DisplayName}"); return string.Empty; }
-                if (program.Class != ReferenceData.ProgramClassAntiPersonnelAttacker && program.Class != ReferenceData.ProgramClassAntiProgramAttacker)
+                if (program.Class != AppData.ProgramClassAntiPersonnelAttacker && program.Class != AppData.ProgramClassAntiProgramAttacker)
                 {
                     combatant.ActivePrograms.Add(program);
                     return $"{program.Name} added to Active Programs for {combatant.DisplayName}";
@@ -204,11 +204,11 @@ namespace CyberpunkGameplayAssistant.Models
         private static void GetInterfaceCheck(Combatant combatant, out int roll, out int interfaceLevel)
         {
             roll = HelperMethods.RollD10();
-            interfaceLevel = combatant.Skills.GetLevel(ReferenceData.SkillInterface);
+            interfaceLevel = combatant.Skills.GetLevel(AppData.SkillInterface);
         }
         private static string GetInterfaceDebugText(int roll, int interfaceLevel)
         {
-            return ReferenceData.DebugMode ? $"\nDEBUG: ROLL: {roll} INTERFACE: {interfaceLevel}" : "";
+            return AppData.DebugMode ? $"\nDEBUG: ROLL: {roll} INTERFACE: {interfaceLevel}" : "";
         }
         #endregion
 

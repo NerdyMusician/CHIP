@@ -47,7 +47,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get
             {
-                StatLinkReference statLink = ReferenceData.StatLinks.FirstOrDefault(s => s.StatName == Name);
+                StatLinkReference statLink = AppData.StatLinks.FirstOrDefault(s => s.StatName == Name);
                 if (statLink != null) { return statLink.Abbreviation; }
                 else { return Name; }
             }
@@ -62,8 +62,8 @@ namespace CyberpunkGameplayAssistant.Models
             int penalty = combatant.GetStatPenalty(Name);
             string output = $"{combatant.DisplayName} made {Name.AOrAn()} roll";
             output += $"\nResult: {diceRoll + Value + penalty}";
-            if (ReferenceData.DebugMode) { output += $"\nDEBUG: ROLL: {diceRoll}, STAT: {Value}, PENALTY: {penalty}"; }
-            HelperMethods.AddToGameplayLog(output, ReferenceData.MessageBlackIceStat);
+            if (AppData.DebugMode) { output += $"\nDEBUG: ROLL: {diceRoll}, STAT: {Value}, PENALTY: {penalty}"; }
+            HelperMethods.AddToGameplayLog(output, AppData.MessageBlackIceStat);
         }
 
     }

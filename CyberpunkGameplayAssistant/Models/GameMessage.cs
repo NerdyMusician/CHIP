@@ -45,7 +45,7 @@ namespace CyberpunkGameplayAssistant.Models
             if (param == null) { return; }
             if (param.ToString() == "Campaign") 
             {
-                ReferenceData.MainModelRef.CampaignView.ActiveCampaign.EventHistory.Remove(this);
+                AppData.MainModelRef.CampaignView.ActiveCampaign.EventHistory.Remove(this);
             }
         }
         #endregion

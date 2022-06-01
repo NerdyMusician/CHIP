@@ -46,25 +46,25 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand SelectBaseCombatant => new RelayCommand(DoSelectBaseCombatant);
         private void DoSelectBaseCombatant(object param)
         {
-            ObjectSelectionDialog itemSelect = new(ReferenceData.Combatants.ToNamedRecordList(), "Select Base Combatant");
+            ObjectSelectionDialog itemSelect = new(AppData.Combatants.ToNamedRecordList(), "Select Base Combatant");
             if (itemSelect.ShowDialog() == true)
             {
                 if (itemSelect.SelectedObject == null) { return; }
                 BaseCombatant = (itemSelect.SelectedObject as NamedRecord).Name;
-                PortraitFilePath = ReferenceData.Combatants.First(c => c.Name == BaseCombatant).PortraitFilePath;
+                PortraitFilePath = AppData.Combatants.First(c => c.Name == BaseCombatant).PortraitFilePath;
             }
 
         }
         public ICommand SelectPortraitImage => new RelayCommand(DoSelectPortraitImage);
         private void DoSelectPortraitImage(object param)
         {
-            string newFile = HelperMethods.GetFile(ReferenceData.FilterImageFiles, ReferenceData.NpcImageDirectory);
+            string newFile = HelperMethods.GetFile(AppData.FilterImageFiles, AppData.NpcImageDirectory);
             if (!string.IsNullOrEmpty(newFile)) { PortraitFilePath = newFile; }
         }
         public ICommand RemoveNpcFromCampaign => new RelayCommand(param => DoRemoveNpcFromCampaign());
         private void DoRemoveNpcFromCampaign()
         {
-            ReferenceData.MainModelRef.CampaignView.ActiveCampaign.Npcs.Remove(this);
+            AppData.MainModelRef.CampaignView.ActiveCampaign.Npcs.Remove(this);
         }
 
 

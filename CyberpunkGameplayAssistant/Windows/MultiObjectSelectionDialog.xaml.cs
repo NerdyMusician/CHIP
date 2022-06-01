@@ -67,7 +67,7 @@ namespace CyberpunkGameplayAssistant.Windows
                 Combatant combatant = (sender as Button).DataContext as Combatant;
                 foreach (Combatant selectedCombatant in (DataContext as MultiObjectSelectionViewModel).SelectedCombatants)
                 {
-                    if (combatant.Name == selectedCombatant.Name)
+                    if (combatant.Name == selectedCombatant.Name && combatant.Variant == selectedCombatant.Variant)
                     {
                         selectedCombatant.QuantityToAdd++;
                         return;

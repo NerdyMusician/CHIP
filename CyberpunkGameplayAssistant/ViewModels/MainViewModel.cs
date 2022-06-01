@@ -16,12 +16,12 @@ namespace CyberpunkGameplayAssistant.ViewModels
         {
             ApplicationVersion = "CHIP 1.00.00 beta";
             UserAlerts = new();
-            HelperMethods.CreateDirectories(ReferenceData.Directories);
+            HelperMethods.CreateDirectories(AppData.Directories);
             LoadData();
             UserAlertTimer = new Timer(TimeSpan.FromSeconds(1).TotalMilliseconds);
             UserAlertTimer.Elapsed += UserAlertTimer_Elapsed;
             UserAlertTimer.Enabled = true;
-            ReferenceData.MainModelRef = this;
+            AppData.MainModelRef = this;
         }
 
        
@@ -63,10 +63,10 @@ namespace CyberpunkGameplayAssistant.ViewModels
             {
                 return new()
                 {
-                    ReferenceData.NetArchitectureDifficultyBasic,
-                    ReferenceData.NetArchitectureDifficultyStandard,
-                    ReferenceData.NetArchitectureDifficultyUncommon,
-                    ReferenceData.NetArchitectureDifficultyAdvanced
+                    AppData.NetArchitectureDifficultyBasic,
+                    AppData.NetArchitectureDifficultyStandard,
+                    AppData.NetArchitectureDifficultyUncommon,
+                    AppData.NetArchitectureDifficultyAdvanced
                 };
             } 
         }
@@ -100,7 +100,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
             try
             {
                 System.Xml.Serialization.XmlSerializer xmlSerializer = new(typeof(CampaignViewModel));
-                using System.IO.FileStream fs = new(ReferenceData.File_CampaignData, System.IO.FileMode.Open);
+                using System.IO.FileStream fs = new(AppData.File_CampaignData, System.IO.FileMode.Open);
                 CampaignView = (CampaignViewModel)xmlSerializer.Deserialize(fs);
                 CampaignView!.ResetActiveItems();
             }

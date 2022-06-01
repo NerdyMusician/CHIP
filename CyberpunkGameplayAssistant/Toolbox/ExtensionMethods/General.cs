@@ -92,7 +92,7 @@ namespace CyberpunkGameplayAssistant.Toolbox.ExtensionMethods
             int total = 0;
             foreach (CriticalInjury injury in injuries)
             {
-                if (ReferenceData.CriticalInjuriesThatIncreaseDeathSavePenalty.Contains(injury.Name)) { total++; }
+                if (AppData.CriticalInjuriesThatIncreaseDeathSavePenalty.Contains(injury.Name)) { total++; }
             }
             return total;
         }
@@ -101,9 +101,9 @@ namespace CyberpunkGameplayAssistant.Toolbox.ExtensionMethods
             int total = 0;
             foreach (CriticalInjury injury in injuries)
             {
-                if (ReferenceData.CriticalInjuryMovePenalties.ContainsKey(injury.Name))
+                if (AppData.CriticalInjuryMovePenalties.ContainsKey(injury.Name))
                 {
-                    total += ReferenceData.CriticalInjuryMovePenalties[injury.Name];
+                    total += AppData.CriticalInjuryMovePenalties[injury.Name];
                 }
             }
             return total;
@@ -121,7 +121,7 @@ namespace CyberpunkGameplayAssistant.Toolbox.ExtensionMethods
         
         public static string AOrAn(this string word)
         {
-            return ReferenceData.Vowels.ToList().Contains(word[0].ToString()) ? $"an {word}" : $"a {word}";
+            return AppData.Vowels.ToList().Contains(word[0].ToString()) ? $"an {word}" : $"a {word}";
         }
         public static CriticalInjury ToCriticalInjury(this NamedRecord record)
         {

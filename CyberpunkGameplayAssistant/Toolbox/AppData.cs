@@ -1,4 +1,5 @@
 ﻿using CyberpunkGameplayAssistant.Models;
+using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
 using CyberpunkGameplayAssistant.ViewModels;
 using CyberpunkGameplayAssistant.Windows;
 using System;
@@ -7,7 +8,7 @@ using System.Windows;
 
 namespace CyberpunkGameplayAssistant.Toolbox
 {
-    public static class ReferenceData
+    public static class AppData
     {
         // Utility
         public static bool IsLoaded = false;
@@ -44,6 +45,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static readonly string File_CampaignData = $"{DataDirectory}Campaigns.xml";
 
         // Combatant Types
+        public const string ComTypeStandard = "Standard";
         public const string Player = "Player";
         public const string NPC = "NPC";
         public const string BlackIce = "Black ICE";
@@ -53,6 +55,18 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string ExecTeamMember = "Exec Team Member";
         public const string LawmanBackup = "Lawman Backup";
         public const string TraumaTeam = "Trauma Team";
+
+        // Combatant Classifications
+        public const string ComClassCivilian = "Civilian";
+        public const string ComClassLightGanger = "Light Ganger";
+        public const string ComClassMediumGanger = "Medium Ganger";
+        public const string ComClassHeavyGanger = "Heavy Ganger";
+        public const string ComClassLightPolice = "Light Police";
+        public const string ComClassMediumPolice = "Medium Police";
+        public const string ComClassHeavyPolice = "Heavy Police";
+        public const string ComClassLightCorpo = "Light Corpo";
+        public const string ComClassMediumCorpo = "Medium Corpo";
+        public const string ComClassHeavyCorpo = "Heavy Corpo";
 
         // Program Types
         public const string AntiPersonnelBlackIce = "Anti-Personnel Black ICE";
@@ -513,6 +527,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         };
 
         // Armor Types
+        public const string ArmorTypeNone = "None";
         public const string ArmorTypeLeather = "Leather";
         public const string ArmorTypeKevlar = "Kevlar";
         public const string ArmorTypeLightArmorjack = "Light Armorjack";
@@ -532,6 +547,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         public static readonly List<Armor> ArmorTable = new()
         {
+            new(ArmorTypeNone, 0, 0),
             new(ArmorTypeLeather, 4, 0),
             new(ArmorTypeKevlar, 7, 0),
             new(ArmorTypeLightArmorjack, 11, 0),
@@ -656,22 +672,6 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static readonly string WeaponQualityStandard = "Standard";
         public static readonly string WeaponQualityExcellent = "Excellent";
 
-        // Weapon Cost Tier
-        public static readonly string WeaponCostTierLow = "Low";
-        public static readonly string WeaponCostTierMedium = "Medium";
-        public static readonly string WeaponCostTierHigh = "High";
-
-        // Weapon Costs
-        public static readonly int WeaponCostStandardQualityLow = 50;
-        public static readonly int WeaponCostStandardQualityMedium = 100;
-        public static readonly int WeaponCostStandardQualityHigh = 500;
-        public static readonly int WeaponCostPoorQualityLow = 20;
-        public static readonly int WeaponCostPoorQualityMedium = 50;
-        public static readonly int WeaponCostPoorQualityHigh = 100;
-        public static readonly int WeaponCostExcellentQualityLow = 100;
-        public static readonly int WeaponCostExcellentQualityMedium = 500;
-        public static readonly int WeaponCostExcellentQualityHigh = 1000;
-
         public static readonly List<RangedWeaponClip> ClipChart = new()
         {
             new(WeaponTypeMediumPistol, 12, 18, 36),
@@ -707,24 +707,24 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         public static readonly List<Weapon> WeaponRepository = new()
         {
-            new(WeaponTypeLightMelee, SkillMeleeWeapon, 1, 1, AmmoTypeNone, 2, true, WeaponCostTierLow),
-            new(WeaponTypeMediumMelee, SkillMeleeWeapon, 2, 1, AmmoTypeNone, 2, true, WeaponCostTierLow),
-            new(WeaponTypeHeavyMelee, SkillMeleeWeapon, 3, 2, AmmoTypeNone, 2, true, WeaponCostTierMedium),
-            new(WeaponTypeVeryHeavyMelee, SkillMeleeWeapon, 4, 2, AmmoTypeNone, 1, true, WeaponCostTierHigh),
-            new(WeaponTypeMediumPistol, SkillHandgun, 2, 1, AmmoTypeMediumPistol, 2, true, WeaponCostTierLow),
-            new(WeaponTypeHeavyPistol, SkillHandgun, 3, 1, AmmoTypeHeavyPistol, 2, true, WeaponCostTierMedium),
-            new(WeaponTypeVeryHeavyPistol, SkillHandgun, 4, 1, AmmoTypeVeryHeavyPistol, 1, false, WeaponCostTierMedium),
-            new(WeaponTypeSmg, SkillHandgun, 2, 1, AmmoTypeMediumPistol, 1, true, WeaponCostTierMedium),
-            new(WeaponTypeHeavySmg, SkillHandgun, 3, 1, AmmoTypeHeavyPistol, 1, false, WeaponCostTierMedium),
-            new(WeaponTypeShotgun, SkillShoulderArms, 5, 2, AmmoTypeSlug, 1, false, WeaponCostTierHigh),
-            new(WeaponTypeAssaultRifle, SkillShoulderArms, 5, 2, AmmoTypeRifle, 1, false, WeaponCostTierHigh),
-            new(WeaponTypeSniperRifle, SkillShoulderArms, 5, 2, AmmoTypeRifle, 1, false, WeaponCostTierHigh),
-            new(WeaponTypeBowsAndCrossbows, SkillArchery, 4, 2, AmmoTypeArrow, 1, false, WeaponCostTierMedium),
-            new(WeaponTypeGrenadeLauncher, SkillHeavyWeapons, 6, 2, AmmoTypeGrenade, 1, false, WeaponCostTierHigh),
-            new(WeaponTypePopupGrenadeLauncher, SkillHeavyWeapons, 6, 1, AmmoTypeGrenade, 1, true, WeaponCostTierHigh),
-            new(WeaponTypeRocketLauncher, SkillHeavyWeapons, 8, 2, AmmoTypeRocket, 1, false, WeaponCostTierHigh),
-            new(WeaponTypeDartgun, SkillHandgun, 2, 1, AmmoTypeDart, 1, true, WeaponCostTierMedium),
-            new(WeaponTypeFlamethrower, SkillHeavyWeapons, 1, 2, AmmoTypeShell, 1, false, WeaponCostTierHigh)
+            new(WeaponTypeLightMelee, SkillMeleeWeapon, 1, 1, AmmoTypeNone, 2, true),
+            new(WeaponTypeMediumMelee, SkillMeleeWeapon, 2, 1, AmmoTypeNone, 2, true),
+            new(WeaponTypeHeavyMelee, SkillMeleeWeapon, 3, 2, AmmoTypeNone, 2, true),
+            new(WeaponTypeVeryHeavyMelee, SkillMeleeWeapon, 4, 2, AmmoTypeNone, 1, true),
+            new(WeaponTypeMediumPistol, SkillHandgun, 2, 1, AmmoTypeMediumPistol, 2, true),
+            new(WeaponTypeHeavyPistol, SkillHandgun, 3, 1, AmmoTypeHeavyPistol, 2, true),
+            new(WeaponTypeVeryHeavyPistol, SkillHandgun, 4, 1, AmmoTypeVeryHeavyPistol, 1, false),
+            new(WeaponTypeSmg, SkillHandgun, 2, 1, AmmoTypeMediumPistol, 1, true),
+            new(WeaponTypeHeavySmg, SkillHandgun, 3, 1, AmmoTypeHeavyPistol, 1, false),
+            new(WeaponTypeShotgun, SkillShoulderArms, 5, 2, AmmoTypeSlug, 1, false),
+            new(WeaponTypeAssaultRifle, SkillShoulderArms, 5, 2, AmmoTypeRifle, 1, false),
+            new(WeaponTypeSniperRifle, SkillShoulderArms, 5, 2, AmmoTypeRifle, 1, false),
+            new(WeaponTypeBowsAndCrossbows, SkillArchery, 4, 2, AmmoTypeArrow, 1, false),
+            new(WeaponTypeGrenadeLauncher, SkillHeavyWeapons, 6, 2, AmmoTypeGrenade, 1, false),
+            new(WeaponTypePopupGrenadeLauncher, SkillHeavyWeapons, 6, 1, AmmoTypeGrenade, 1, true),
+            new(WeaponTypeRocketLauncher, SkillHeavyWeapons, 8, 2, AmmoTypeRocket, 1, false),
+            new(WeaponTypeDartgun, SkillHandgun, 2, 1, AmmoTypeDart, 1, true),
+            new(WeaponTypeFlamethrower, SkillHeavyWeapons, 1, 2, AmmoTypeShell, 1, false)
         };
         public static readonly Dictionary<string, int> AutofireTable = new()
         {
@@ -1269,579 +1269,189 @@ namespace CyberpunkGameplayAssistant.Toolbox
         private static void PopulateCombatants()
         {
             // pg 155 - Exec Company Aides
-            // TODO - Portraits for executive team member combatants
-            #region Company Bodyguard
-            Combatant companyBodyguard = new("Company Bodyguard", ExecTeamMember, PortraitDefault, ArmorTypeLightArmorjack);
-            companyBodyguard.SetStats(4, 8, 5, 3, 7, 8, 0, 6, 6, 3);
-            companyBodyguard.SetCalculatedStats();
-            companyBodyguard.SetBaseSkills();
-            companyBodyguard.SetSkillLevels(2, SkillConcentration, SkillConversation, SkillEducation, SkillFirstAid, SkillHumanPerception, SkillLanguage, SkillLocalExpert, SkillPersuasion, SkillStealth);
-            companyBodyguard.SetSkillLevels(4, SkillAthletics, SkillEvasion, SkillInterrogation, SkillPerception, SkillResistTortureDrugs, SkillTactics);
-            companyBodyguard.SetSkillLevels(6, SkillHandgun, SkillBrawling);
-            companyBodyguard.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
-            companyBodyguard.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
-            companyBodyguard.AddGearSet(GearAgent);
-            companyBodyguard.AddCyberwareSet(CyberwareEnhancedAntibodies, CyberwareCyberaudioSuite, CyberwareInternalAgent, CyberwareHomingtracer);
-            companyBodyguard.InitializeNewCombatant();
-            Combatants.Add(companyBodyguard);
-            #endregion
-            #region Company Covert Operative
-            Combatant covOp = new("Company Covert Operative", ExecTeamMember, PortraitDefault, ArmorTypeSubdermal);
-            covOp.SetStats(6, 7, 5, 5, 7, 6, 0, 3, 7, 4);
-            covOp.SetCalculatedStats();
-            covOp.SetBaseSkills();
-            covOp.SetSkillLevels(2, SkillAthletics, SkillBrawling, SkillConcentration, SkillConversation, SkillEducation, SkillFirstAid, SkillLanguage, SkillLocalExpert, SkillPerception, SkillPersuasion);
-            covOp.SetSkillLevels(4, SkillBribery, SkillBureaucracy, SkillBusiness, SkillEvasion, SkillHumanPerception, SkillPickLock, SkillStreetwise, SkillTrading, SkillWardrobeStyle);
-            covOp.SetSkillLevels(6, SkillHandgun, SkillStealth);
-            covOp.AddWeapon(WeaponTypeVeryHeavyPistol);
-            covOp.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
-            covOp.AddGearSet(GearAgent);
-            covOp.AddCyberwareSet(CyberwareCybereye, CyberwareCybereye, CyberwareLowLightInfraredUv, CyberwareColorShift, CyberwareCyberarm, CyberwareGrappleHand, CyberwarePopupRangedWeapon, CyberwareRealskinnCovering);
-            covOp.InitializeNewCombatant();
-            Combatants.Add(covOp);
-            #endregion
-            #region Company Driver
-            Combatant companyDriver = new("Company Driver", ExecTeamMember, PortraitDefault, ArmorTypeLightArmorjack);
-            companyDriver.SetStats(6, 8, 8, 4, 7, 4, 0, 5, 6, 2);
-            companyDriver.SetCalculatedStats();
-            companyDriver.SetBaseSkills();
-            companyDriver.SetSkillLevels(2, SkillAthletics, SkillConcentration, SkillConversation, SkillEducation, SkillFirstAid, SkillHumanPerception, SkillLanguage, SkillLocalExpert, SkillPerception, SkillPersuasion);
-            companyDriver.SetSkillLevels(4, SkillBrawling, SkillEndurance, SkillEvasion, SkillLandVehicleTech, SkillPilotAirVehicle, SkillPilotSeaVehicle, SkillSeaVehicleTech, SkillStealth, SkillTracking);
-            companyDriver.SetSkillLevels(6, SkillDriveLandVehicle, SkillHandgun);
-            companyDriver.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
-            companyDriver.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
-            // TODO - Vehicle stat block style with UI card component
-            companyDriver.AddCyberwareSet(CyberwareRadarSonarImplant, CyberwareCyberaudioSuite, CyberwareInternalAgent, CyberwareHomingtracer, CyberwareRadarDetector);
-            companyDriver.InitializeNewCombatant();
-            Combatants.Add(companyDriver);
-            #endregion
-            #region Company Netrunner
-            Combatant companyNetrunner = new("Company Netrunner", ExecTeamMember, PortraitDefault, ArmorTypeLightArmorjack);
-            companyNetrunner.SetStats(5, 6, 8, 8, 6, 6, 0, 4, 4, 3);
-            companyNetrunner.SetCalculatedStats();
-            companyNetrunner.SetBaseSkills();
-            companyNetrunner.SetSkillLevels(2, SkillInterface, SkillAthletics, SkillBrawling, SkillConcentration, SkillConversation, SkillEvasion, SkillFirstAid, SkillHumanPerception, SkillLanguage, SkillLocalExpert, SkillPerception, SkillPersuasion);
-            companyNetrunner.SetSkillLevels(4, SkillBasicTech, SkillCryptography, SkillCybertech, SkillEducation, SkillElectronicsSecurityTech, SkillForgery, SkillLibrarySearch, SkillHandgun, SkillStealth);
-            companyNetrunner.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
-            companyNetrunner.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
-            companyNetrunner.AddGearSet(GearAgent);
-            companyNetrunner.AddCyberwareSet(CyberwareNeuralLink, CyberwareChipwareSocket, CyberwarePainEditor, CyberwareInterfacePlugs, CyberwareCybereye, CyberwareCybereye, CyberwareVirtuality);
-            companyNetrunner.AddCyberdeckPrograms(ProgramSword, ProgramSword, BlackIceKiller, ProgramWorm, ProgramWorm, ProgramArmor);
-            companyNetrunner.InitializeNewCombatant();
-            Combatants.Add(companyNetrunner);
-            #endregion
-            #region Company Technician
-            Combatant companyTechnician = new("Company Technician", ExecTeamMember, PortraitDefault, ArmorTypeLightArmorjack);
-            companyTechnician.SetStats(8, 6, 5, 8, 4, 3, 0, 3, 7, 6);
-            companyTechnician.SetCalculatedStats();
-            companyTechnician.SetBaseSkills();
-            companyTechnician.SetSkillLevels(2, SkillAthletics, SkillBrawling, SkillConcentration, SkillConversation, SkillEvasion, SkillFirstAid, SkillHumanPerception, SkillLanguage, SkillLocalExpert, SkillPerception, SkillPersuasion, SkillStealth);
-            companyTechnician.SetSkillLevels(4, SkillEducation, SkillHandgun, SkillWeaponstech);
-            companyTechnician.SetSkillLevels(6, SkillBasicTech, SkillCybertech, SkillElectronicsSecurityTech);
-            companyTechnician.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
-            companyTechnician.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
-            companyTechnician.AddCyberwareSet(CyberwareToolHand, CyberwareCyberaudioSuite, CyberwareInternalAgent, CyberwareBugDetector, CyberwareAudioRecorder);
-            companyTechnician.InitializeNewCombatant();
-            Combatants.Add(companyTechnician);
-            #endregion
-
             // pg 158 - Lawman Backup
-            #region Corporate Security
-            Combatant corporateSecurity = new("Corporate Security", LawmanBackup, PortraitDefault, ArmorTypeKevlar);
-            corporateSecurity.SetBackupStats(8, 20, 4);
-            corporateSecurity.AddWeapon(WeaponTypeHeavyPistol);
-            corporateSecurity.AddAmmo(AmmoTypeHeavyPistol, 24);
-            corporateSecurity.InitializeBackupCombatant();
-            Combatants.Add(corporateSecurity);
-            #endregion
-            #region Beat Cop
-            Combatant beatCop = new("Beat Cop", LawmanBackup, PortraitDefault, ArmorTypeKevlar);
-            beatCop.SetBackupStats(10, 25, 5);
-            beatCop.AddWeapon(WeaponTypeHeavyPistol);
-            beatCop.AddAmmo(AmmoTypeHeavyPistol, 24);
-            beatCop.InitializeBackupCombatant();
-            Combatants.Add(beatCop);
-            #endregion
-            #region County Mounty
-            Combatant countyMounty = new("County Mounty", LawmanBackup, PortraitDefault, ArmorTypeHeavyArmorjack);
-            countyMounty.SetBackupStats(14, 35, 4);
-            countyMounty.AddWeapon(WeaponTypeHeavyPistol);
-            countyMounty.AddWeapon(WeaponTypeAssaultRifle);
-            countyMounty.AddAmmo(AmmoTypeHeavyPistol, 24);
-            countyMounty.AddAmmo(AmmoTypeRifle, 75);
-            countyMounty.InitializeBackupCombatant();
-            Combatants.Add(countyMounty);
-            #endregion
-            #region Marshall
-            Combatant marshall = new("Marshall", LawmanBackup, PortraitDefault, ArmorTypeFlak);
-            marshall.SetBackupStats(16, 50, 6);
-            marshall.AddWeapon(WeaponTypeVeryHeavyPistol);
-            marshall.AddWeapon(WeaponTypeAssaultRifle);
-            marshall.AddWeapon(WeaponTypeGrenadeLauncher);
-            marshall.AddAmmo(AmmoTypeVeryHeavyPistol, 24);
-            marshall.AddAmmo(AmmoTypeRifle, 75);
-            marshall.AddAmmo(AmmoTypeGrenade, 6, AmmoVarArmorPiercing);
-            marshall.InitializeBackupCombatant();
-            Combatants.Add(marshall);
-            #endregion
-            #region C-SWAT
-            Combatant cSwat = new("C-SWAT", LawmanBackup, PortraitDefault, ArmorTypeMetalgear);
-            cSwat.SetBackupStats(15, 35, 4);
-            cSwat.AddWeapon(WeaponTypeAssaultRifle);
-            cSwat.AddWeapon(WeaponTypeRocketLauncher);
-            cSwat.AddAmmo(AmmoTypeRifle, 75);
-            cSwat.AddAmmo(AmmoTypeRocket, 3, AmmoVarArmorPiercing);
-            cSwat.InitializeBackupCombatant();
-            Combatants.Add(cSwat);
-            #endregion
-            #region Federal Agent
-            Combatant fed = new("Federal Agent", LawmanBackup, PortraitDefault, ArmorTypeLightArmorjack);
-            fed.SetBackupStats(14, 35, 6);
-            fed.AddWeapon(WeaponTypeVeryHeavyPistol);
-            fed.AddWeapon(WeaponTypeAssaultRifle);
-            fed.AddAmmo(AmmoTypeVeryHeavyPistol, 24);
-            fed.AddAmmo(AmmoTypeRifle, 75);
-            fed.SetCombatSkills(SkillAccounting, SkillActing, SkillConcealRevealObject, SkillCriminology, 
-                SkillCryptography, SkillDeduction, SkillEducation, SkillForgery, SkillInterrogation, SkillParamedic, 
-                SkillPerception, SkillPersonalGrooming, SkillResistTortureDrugs, SkillStealth, SkillTracking);
-            fed.InitializeBackupCombatant();
-            Combatants.Add(fed);
-            #endregion
-
             // pg 224 - Trauma Team
-            #region Trauma Team Doctor
-            Combatant ttDoctor = new("TT Doctor", TraumaTeam, PortraitDefault, ArmorTypeLightArmorjack);
-            ttDoctor.SetBackupStats(10, 20, 4);
-            ttDoctor.AddWeapon(WeaponTypeHeavyPistol);
-            ttDoctor.AddAmmo(AmmoTypeHeavyPistol, 16);
-            ttDoctor.AddGearSet(GearCryopump, GearAirhypo, GearAirhypo);
-            // TODO - drugs (Rapidetox - pg150)
-            ttDoctor.SetCombatSkills(SkillFirstAid, SkillParamedic, SkillSurgery, SkillMedicalTech);
-            ttDoctor.InitializeBackupCombatant();
-            Combatants.Add(ttDoctor);
-            #endregion
-            #region Trauma Team Medical Assistant
-            Combatant ttMed = new("TT Med. Asst.", TraumaTeam, PortraitDefault, ArmorTypeKevlar);
-            ttMed.SetBackupStats(10, 25, 6);
-            ttMed.AddGearSet(GearCryopump);
-            ttMed.AddShield();
-            ttMed.SetCombatSkills(SkillPilotAirVehicle, SkillFirstAid, SkillParamedic, SkillMedicalTech);
-            ttMed.InitializeBackupCombatant();
-            Combatants.Add(ttMed);
-            #endregion
-            #region Trauma Team Pilot
-            Combatant ttPilot = new("TT Pilot", TraumaTeam, PortraitDefault, ArmorTypeKevlar);
-            ttPilot.SetBackupStats(10, 25, 6);
-            ttPilot.AddWeapon(WeaponTypeVeryHeavyPistol);
-            ttPilot.AddAmmo(AmmoTypeVeryHeavyPistol, 24);
-            ttPilot.SetCombatSkills(SkillAirVehicleTech, SkillFirstAid, SkillPilotAirVehicle);
-            ttPilot.InitializeBackupCombatant();
-            Combatants.Add(ttPilot);
-            #endregion
-            #region Trauma Team Security Officer
-            Combatant ttSecOff = new("TT Security", TraumaTeam, PortraitDefault, ArmorTypeHeavyArmorjack);
-            ttSecOff.SetBackupStats(10, 30, 4);
-            ttSecOff.AddWeapon(WeaponTypeAssaultRifle);
-            ttSecOff.AddAmmo(AmmoTypeRifle, 75);
-            ttSecOff.InitializeBackupCombatant();
-            Combatants.Add(ttSecOff);
-            #endregion
-
             // pg 412 - Mooks and Grunts
-            #region Bodyguard
-            Combatant bodyguard = new("Bodyguard", PortraitBodyguard, ArmorTypeKevlar);
-            bodyguard.SetStats(3, 6, 5, 2, 4, 4, 0, 4, 6, 3);
-            bodyguard.SetCalculatedStats();
-            bodyguard.SetBaseSkills();
-            bodyguard.AddSkillsByBase(4, SkillFirstAid);
-            bodyguard.AddSkillsByBase(5, SkillConversation, SkillEducation, SkillHumanPerception);
-            bodyguard.AddSkillsByBase(6, SkillConcentration, SkillInterrogation, SkillPersuasion);
-            bodyguard.AddSkillsByBase(7, SkillEvasion, SkillStealth);
-            bodyguard.AddSkillsByBase(8, SkillResistTortureDrugs);
-            bodyguard.AddSkillsByBase(9, SkillAthletics, SkillEndurance, SkillPerception);
-            bodyguard.AddSkillsByBase(10, SkillDriveLandVehicle, SkillHandgun, SkillShoulderArms);
-            bodyguard.AddSkillsByBase(11, SkillBrawling);
-            bodyguard.AddSkillByBase(SkillLanguage, 5, LanguageNative);
-            bodyguard.AddSkillByBase(SkillLanguage, 5, LanguageStreetslang);
-            bodyguard.AddSkillByBase(SkillLocalExpert, 5, LocalExpertYourHome);
-            bodyguard.AddWeapon(WeaponTypeShotgun, WeaponQualityPoor);
-            bodyguard.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
-            bodyguard.AddAmmo(AmmoTypeSlug, 25);
-            bodyguard.AddAmmo(AmmoTypeVeryHeavyPistol, 25);
-            bodyguard.AddGearSet(GearRadioCommunicator);
+            // pg 417 - Other Encounters
+
+            // CIVILIANS
+            Combatant scavenger = new("Scavenger", ComTypeStandard, ComClassCivilian, PortraitDefault, ArmorTypeNone);
+            scavenger.SetStats(3, 5, 4, 2, 2, 3, 0, 3, 5, 3);
+            scavenger.SetSkillLevels(2, SkillStreetwise);
+            scavenger.SetSkillLevels(3, SkillPerception, SkillResistTortureDrugs, SkillStealth);
+            scavenger.SetSkillLevels(4, SkillConcealRevealObject, SkillHandgun);
+            scavenger.SetSkillLevels(5, SkillBrawling, SkillMeleeWeapon);
+            scavenger.AddWeapon(WeaponTypeHeavyPistol, WeaponQualityPoor);
+            scavenger.AddWeapon(WeaponTypeLightMelee, WeaponQualityStandard, "Knife");
+            scavenger.AddAmmo(AmmoTypeHeavyPistol, 8);
+            scavenger.InitializeNewCombatant();
+            Combatants.Add(scavenger);
+
+            // GANGERS
+            Combatant thug = new("Thug", ComTypeStandard, ComClassLightGanger, PortraitDefault, ArmorTypeLeather);
+            thug.SetStats(2, 6, 5, 2, 4, 2, 0, 4, 4, 3);
+            thug.SetSkillLevels(2, SkillInterrogation, SkillStealth);
+            thug.SetSkillLevels(3, SkillEndurance);
+            thug.SetSkillLevels(4, SkillBrawling, SkillPerception, SkillResistTortureDrugs);
+            thug.SetSkillLevels(5, SkillEvasion, SkillHandgun, SkillMeleeWeapon);
+            thug.AddWeapon(WeaponTypeMediumMelee, WeaponQualityStandard, "Baseball Bat");
+            thug.InitializeNewCombatant();
+            Combatants.Add(thug);
+
+            Combatant thugPistol = thug.DeepClone();
+            thugPistol.Variant = "Pistol";
+            thugPistol.AddWeapon(WeaponTypeMediumPistol, WeaponQualityPoor);
+            thugPistol.AddBasicAmmoForAllWeapons(2);
+            thugPistol.InitializeNewCombatant();
+            Combatants.Add(thugPistol);
+
+            // CORPOS
+            List<string> CorpoBasicGear = new() { GearAgent };
+            // LIGHT CORPOS
+            Combatant guard = new("Guard", ComTypeStandard, ComClassLightCorpo, PortraitDefault, ArmorTypeKevlar);
+            guard.SetStats(3, 6, 5, 2, 4, 3, 0, 4, 4, 3);
+            guard.AddWeapon(WeaponTypeMediumPistol);
+            guard.AddWeapon(WeaponTypeMediumMelee, WeaponQualityStandard, "Baton");
+            guard.AddAmmo(AmmoTypeMediumPistol, 24);
+            guard.AddGearSet(GearDisposableCellPhone);
+            guard.InitializeNewCombatant();
+            Combatants.Add(guard);
+
+            Combatant guardSmg = guard.DeepClone();
+            guardSmg.Variant = "SMG";
+            guardSmg.SetSkillLevels(5, SkillAutofire);
+            guardSmg.ResetWeaponsAndAmmo();
+            guardSmg.AddWeapon(WeaponTypeSmg);
+            guardSmg.AddWeapon(WeaponTypeMediumMelee, WeaponQualityStandard, "Baton");
+            guardSmg.AddAmmo(AmmoTypeMediumPistol, 60);
+            guardSmg.InitializeNewCombatant();
+            Combatants.Add(guardSmg);
+
+            Combatant bodyguard = new("Bodyguard", ComTypeStandard, ComClassLightCorpo, PortraitDefault, ArmorTypeLightArmorjack);
+            bodyguard.SetStats(4, 8, 5, 3, 7, 8, 0, 6, 6, 3);
+            bodyguard.SetSkillLevels(2, SkillConcentration, SkillConversation, SkillEducation, SkillFirstAid, SkillHumanPerception, SkillPersuasion, SkillStealth);
+            bodyguard.SetSkillLevels(4, SkillAthletics, SkillEvasion, SkillInterrogation, SkillPerception, SkillResistTortureDrugs, SkillTactics);
+            bodyguard.SetSkillLevels(6, SkillHandgun, SkillBrawling);
+            bodyguard.AddWeapons(WeaponTypeVeryHeavyPistol);
+            bodyguard.AddBasicAmmoForAllWeapons(5);
+            bodyguard.AddGearSet(CorpoBasicGear);
+            bodyguard.AddCyberwareSet(CyberwareEnhancedAntibodies, CyberwareSubdermalArmor, CyberwareCyberaudioSuite, CyberwareInternalAgent, CyberwareHomingtracer);
             bodyguard.InitializeNewCombatant();
             Combatants.Add(bodyguard);
-            #endregion
-            #region Boosterganger
-            Combatant boosterganger = new("Boosterganger", PortraitBoosterganger, ArmorTypeLeather);
-            boosterganger.SetStats(2, 6, 5, 2, 4, 2, 0, 4, 4, 3);
-            boosterganger.SetCalculatedStats();
-            boosterganger.SetBaseSkills();
-            boosterganger.AddSkillByBase(SkillAthletics, 9);
-            boosterganger.AddSkillByBase(SkillBrawling, 9);
-            boosterganger.AddSkillByBase(SkillConcealRevealObject, 4);
-            boosterganger.AddSkillByBase(SkillConcentration, 4);
-            boosterganger.AddSkillByBase(SkillConversation, 5);
-            boosterganger.AddSkillByBase(SkillDriveLandVehicle, 10);
-            boosterganger.AddSkillByBase(SkillEducation, 4);
-            boosterganger.AddSkillByBase(SkillEndurance, 6);
-            boosterganger.AddSkillByBase(SkillEvasion, 7);
-            boosterganger.AddSkillByBase(SkillFirstAid, 4);
-            boosterganger.AddSkillByBase(SkillHandgun, 12);
-            boosterganger.AddSkillByBase(SkillHumanPerception, 5);
-            boosterganger.AddSkillByBase(SkillInterrogation, 6);
-            boosterganger.AddSkillByBase(SkillLanguage, 4, LanguageNative);
-            boosterganger.AddSkillByBase(SkillLanguage, 4, LanguageStreetslang);
-            boosterganger.AddSkillByBase(SkillLocalExpert, 4, LocalExpertYourHome);
-            boosterganger.AddSkillByBase(SkillMeleeWeapon, 11);
-            boosterganger.AddSkillByBase(SkillPerception, 6);
-            boosterganger.AddSkillByBase(SkillPersuasion, 6);
-            boosterganger.AddSkillByBase(SkillResistTortureDrugs, 4);
-            boosterganger.AddSkillByBase(SkillStealth, 7);
-            boosterganger.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityPoor);
-            boosterganger.AddWeapon(WeaponTypeMediumMelee, WeaponQualityStandard, "Rippers");
-            boosterganger.AddAmmo(AmmoTypeVeryHeavyPistol, 30);
-            boosterganger.AddGearSet(GearDisposableCellPhone);
-            boosterganger.AddCyberwareSet(CyberwareRippers, CyberwareTechhair);
-            boosterganger.InitializeNewCombatant();
-            Combatants.Add(boosterganger);
-            #endregion
-            #region Road Ganger
-            Combatant roadGanger = new("Road Ganger", PortraitRoadGanger, ArmorTypeLeather);
-            roadGanger.SetStats(4, 6, 4, 4, 3, 3, 0, 3, 3, 3);
-            roadGanger.SetCalculatedStats();
-            roadGanger.SetBaseSkills();
-            roadGanger.AddSkillByBase(SkillArchery, 10);
-            roadGanger.AddSkillByBase(SkillAthletics, 10);
-            roadGanger.AddSkillByBase(SkillBrawling, 6);
-            roadGanger.AddSkillByBase(SkillConcentration, 5);
-            roadGanger.AddSkillByBase(SkillConversation, 6);
-            roadGanger.AddSkillByBase(SkillDriveLandVehicle, 12);
-            roadGanger.AddSkillByBase(SkillEducation, 6);
-            roadGanger.AddSkillByBase(SkillEndurance, 5);
-            roadGanger.AddSkillByBase(SkillEvasion, 6);
-            roadGanger.AddSkillByBase(SkillFirstAid, 6);
-            roadGanger.AddSkillByBase(SkillHandgun, 10);
-            roadGanger.AddSkillByBase(SkillHumanPerception, 5);
-            roadGanger.AddSkillByBase(SkillLandVehicleTech, 10);
-            roadGanger.AddSkillByBase(SkillLanguage, 6, LanguageNative);
-            roadGanger.AddSkillByBase(SkillLanguage, 6, LanguageStreetslang);
-            roadGanger.AddSkillByBase(SkillLocalExpert, 6, LocalExpertYourHome);
-            roadGanger.AddSkillByBase(SkillMeleeWeapon, 8);
-            roadGanger.AddSkillByBase(SkillPerception, 6);
-            roadGanger.AddSkillByBase(SkillPersuasion, 5);
-            roadGanger.AddSkillByBase(SkillStealth, 8);
-            roadGanger.AddSkillByBase(SkillTracking, 8);
-            roadGanger.AddSkillByBase(SkillWildernessSurvival, 8);
-            roadGanger.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
-            roadGanger.AddWeapon(WeaponTypeBowsAndCrossbows, WeaponQualityStandard, "Crossbow");
-            roadGanger.AddWeapon(WeaponTypeLightMelee, WeaponQualityStandard, "Tomahawk");
-            roadGanger.AddAmmo(AmmoTypeVeryHeavyPistol, 20);
-            roadGanger.AddAmmo(AmmoTypeArrow, 20);
-            roadGanger.AddGearSet(GearRope, GearFlashlight);
-            roadGanger.AddCyberwareSet(CyberwareNeuralLink, CyberwareInterfacePlugs);
-            roadGanger.InitializeNewCombatant();
-            Combatants.Add(roadGanger);
-            #endregion
-            #region Security Operative
-            Combatant securityOperative = new("Security Operative", PortraitSecurityOperative, ArmorTypeKevlar);
-            securityOperative.SetStats(3, 7, 4, 2, 2, 3, 0, 3, 5, 3);
-            securityOperative.SetCalculatedStats();
-            securityOperative.SetBaseSkills();
-            securityOperative.AddSkillByBase(SkillAthletics, 8);
-            securityOperative.AddSkillByBase(SkillAutofire, 10);
-            securityOperative.AddSkillByBase(SkillBrawling, 6);
-            securityOperative.AddSkillByBase(SkillConcentration, 7);
-            securityOperative.AddSkillByBase(SkillConversation, 5);
-            securityOperative.AddSkillByBase(SkillEducation, 5);
-            securityOperative.AddSkillByBase(SkillEvasion, 6);
-            securityOperative.AddSkillByBase(SkillFirstAid, 4);
-            securityOperative.AddSkillByBase(SkillHandgun, 10);
-            securityOperative.AddSkillByBase(SkillHumanPerception, 5);
-            securityOperative.AddSkillByBase(SkillInterrogation, 6);
-            securityOperative.AddSkillByBase(SkillLanguage, 5, LanguageNative);
-            securityOperative.AddSkillByBase(SkillLanguage, 5, LanguageStreetslang);
-            securityOperative.AddSkillByBase(SkillLocalExpert, 5, LocalExpertYourHome);
-            securityOperative.AddSkillByBase(SkillMeleeWeapon, 6);
-            securityOperative.AddSkillByBase(SkillPerception, 5);
-            securityOperative.AddSkillByBase(SkillPersuasion, 4);
-            securityOperative.AddSkillByBase(SkillResistTortureDrugs, 5);
-            securityOperative.AddSkillByBase(SkillShoulderArms, 10);
-            securityOperative.AddSkillByBase(SkillStealth, 6);
-            securityOperative.AddWeapon(WeaponTypeAssaultRifle, WeaponQualityPoor);
-            securityOperative.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
-            securityOperative.AddWeapon(WeaponTypeMediumMelee, WeaponQualityStandard, "Baton");
-            securityOperative.AddAmmo(AmmoTypeRifle, 40);
-            securityOperative.AddAmmo(AmmoTypeVeryHeavyPistol, 20);
-            securityOperative.AddGearSet(GearRadioCommunicator);
-            securityOperative.InitializeNewCombatant();
-            Combatants.Add(securityOperative);
-            #endregion
-            #region Netrunner
-            Combatant netrunner = new("Netrunner", PortraitNetrunner, ArmorTypeBodyweightSuit);
-            netrunner.SetStats(7, 5, 4, 7, 4, 5, 0, 5, 3, 4);
-            netrunner.SetCalculatedStats();
-            netrunner.SetBaseSkills();
-            netrunner.AddSkillByBase(SkillInterface, 4);
-            netrunner.AddSkillByBase(SkillAthletics, 9);
-            netrunner.AddSkillByBase(SkillBasicTech, 13);
-            netrunner.AddSkillByBase(SkillBrawling, 6);
-            netrunner.AddSkillByBase(SkillConcealRevealObject, 11);
-            netrunner.AddSkillByBase(SkillConcentration, 9);
-            netrunner.AddSkillByBase(SkillConversation, 6);
-            netrunner.AddSkillByBase(SkillCryptography, 11);
-            netrunner.AddSkillByBase(SkillDeduction, 11);
-            netrunner.AddSkillByBase(SkillEducation, 11);
-            netrunner.AddSkillByBase(SkillElectronicsSecurityTech, 11);
-            netrunner.AddSkillByBase(SkillEvasion, 6);
-            netrunner.AddSkillByBase(SkillFirstAid, 9);
-            netrunner.AddSkillByBase(SkillForgery, 13);
-            netrunner.AddSkillByBase(SkillHandgun, 10);
-            netrunner.AddSkillByBase(SkillHumanPerception, 6);
-            netrunner.AddSkillByBase(SkillLanguage, 9, LanguageNative);
-            netrunner.AddSkillByBase(SkillLanguage, 9, LanguageStreetslang);
-            netrunner.AddSkillByBase(SkillLocalExpert, 13, LocalExpertYourHome);
-            netrunner.AddSkillByBase(SkillLibrarySearch, 9);
-            netrunner.AddSkillByBase(SkillPerception, 11);
-            netrunner.AddSkillByBase(SkillPersuasion, 6);
-            netrunner.AddSkillByBase(SkillPickLock, 11);
-            netrunner.AddSkillByBase(SkillResistTortureDrugs, 7);
-            netrunner.AddSkillByBase(SkillStealth, 8);
-            netrunner.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
-            netrunner.AddAmmo(AmmoTypeVeryHeavyPistol, 50);
-            netrunner.AddCyberwareSet(CyberwareNeuralLink, CyberwareInterfacePlugs);
-            netrunner.AddGearSet(GearFlashlight, GearVirtualityGoggles);
-            netrunner.AddCyberdeckPrograms(ProgramBanhammer, ProgramDeckKrash, ProgramEraser, ProgramHellbolt, ProgramShield, ProgramSword, ProgramWorm);
-            netrunner.InitializeNewCombatant();
-            netrunner.SetNetActions();
-            Combatants.Add(netrunner);
-            #endregion
-            #region Reclaimer Chief
-            Combatant reclaimerChief = new("Reclaimer Chief", PortraitReclaimerChief, ArmorTypeLightArmorjack);
-            reclaimerChief.SetStats(3, 6, 6, 5, 4, 5, 0, 4, 6, 4);
-            reclaimerChief.SetCalculatedStats();
-            reclaimerChief.SetBaseSkills();
-            reclaimerChief.AddSkillByBase(SkillAthletics, 12);
-            reclaimerChief.AddSkillByBase(SkillBasicTech, 9);
-            reclaimerChief.AddSkillByBase(SkillBrawling, 8);
-            reclaimerChief.AddSkillByBase(SkillConcentration, 7);
-            reclaimerChief.AddSkillByBase(SkillConversation, 6);
-            reclaimerChief.AddSkillByBase(SkillDeduction, 7);
-            reclaimerChief.AddSkillByBase(SkillDriveLandVehicle, 10);
-            reclaimerChief.AddSkillByBase(SkillEducation, 5);
-            reclaimerChief.AddSkillByBase(SkillElectronicsSecurityTech, 9);
-            reclaimerChief.AddSkillByBase(SkillEndurance, 11);
-            reclaimerChief.AddSkillByBase(SkillEvasion, 8);
-            reclaimerChief.AddSkillByBase(SkillFirstAid, 7);
-            reclaimerChief.AddSkillByBase(SkillHandgun, 10);
-            reclaimerChief.AddSkillByBase(SkillHumanPerception, 6);
-            reclaimerChief.AddSkillByBase(SkillLandVehicleTech, 7);
-            reclaimerChief.AddSkillByBase(SkillLanguage, 5, LanguageNative);
-            reclaimerChief.AddSkillByBase(SkillLanguage, 5, LanguageStreetslang);
-            reclaimerChief.AddSkillByBase(SkillLocalExpert, 5, LocalExpertYourHome);
-            reclaimerChief.AddSkillByBase(SkillMeleeWeapon, 10);
-            reclaimerChief.AddSkillByBase(SkillParamedic, 7);
-            reclaimerChief.AddSkillByBase(SkillPerception, 8);
-            reclaimerChief.AddSkillByBase(SkillPersuasion, 6);
-            reclaimerChief.AddSkillByBase(SkillPickLock, 7);
-            reclaimerChief.AddSkillByBase(SkillResistTortureDrugs, 10);
-            reclaimerChief.AddSkillByBase(SkillShoulderArms, 10);
-            reclaimerChief.AddSkillByBase(SkillStealth, 10);
-            reclaimerChief.AddSkillByBase(SkillWeaponstech, 9);
-            reclaimerChief.AddSkillByBase(SkillWildernessSurvival, 7);
-            reclaimerChief.AddWeapon(WeaponTypeShotgun, WeaponQualityStandard);
-            reclaimerChief.AddWeapon(WeaponTypeHeavyPistol, WeaponQualityStandard);
-            reclaimerChief.AddWeapon(WeaponTypeLightMelee, WeaponQualityStandard);
-            reclaimerChief.AddWeapon(WeaponTypeHeavyMelee, WeaponQualityStandard);
-            reclaimerChief.AddAmmo(AmmoTypeSlug, 25);
-            reclaimerChief.AddAmmo(AmmoTypeHeavyPistol, 25);
-            reclaimerChief.AddGearSet(GearAgent, GearGrappleGun, GearRadioCommunicator, GearTentAndCampingEquipment);
-            reclaimerChief.AddCyberwareSet(CyberwareNasalFilters, CyberwareNeuralLink, CyberwareChipwareSocket, CyberwareTactileBoost);
-            reclaimerChief.InitializeNewCombatant();
-            Combatants.Add(reclaimerChief);
-            #endregion
-            #region Security Officer
-            Combatant securityOfficer = new("Security Officer", PortraitSecurityOfficer, ArmorTypeMediumArmorjack);
-            securityOfficer.SetStats(4, 8, 6, 4, 6, 5, 0, 6, 7, 4);
-            securityOfficer.SetCalculatedStats();
-            securityOfficer.SetBaseSkills();
-            securityOfficer.AddSkillByBase(SkillAthletics, 10);
-            securityOfficer.AddSkillByBase(SkillAutofire, 12);
-            securityOfficer.AddSkillByBase(SkillBrawling, 10);
-            securityOfficer.AddSkillByBase(SkillConcentration, 7);
-            securityOfficer.AddSkillByBase(SkillConversation, 6);
-            securityOfficer.AddSkillByBase(SkillDeduction, 6);
-            securityOfficer.AddSkillByBase(SkillDriveLandVehicle, 12);
-            securityOfficer.AddSkillByBase(SkillEducation, 6);
-            securityOfficer.AddSkillByBase(SkillEvasion, 10);
-            securityOfficer.AddSkillByBase(SkillFirstAid, 6);
-            securityOfficer.AddSkillByBase(SkillHandgun, 10);
-            securityOfficer.AddSkillByBase(SkillHumanPerception, 6);
-            securityOfficer.AddSkillByBase(SkillInterrogation, 8);
-            securityOfficer.AddSkillByBase(SkillLanguage, 6, LanguageNative);
-            securityOfficer.AddSkillByBase(SkillLanguage, 6, LanguageStreetslang);
-            securityOfficer.AddSkillByBase(SkillLocalExpert, 6, LocalExpertYourHome);
-            securityOfficer.AddSkillByBase(SkillMeleeWeapon, 10);
-            securityOfficer.AddSkillByBase(SkillPerception, 6);
-            securityOfficer.AddSkillByBase(SkillPersuasion, 8);
-            securityOfficer.AddSkillByBase(SkillResistTortureDrugs, 10);
-            securityOfficer.AddSkillByBase(SkillShoulderArms, 10);
-            securityOfficer.AddSkillByBase(SkillStealth, 6);
-            securityOfficer.AddSkillByBase(SkillTactics, 8);
-            securityOfficer.AddWeapon(WeaponTypeAssaultRifle, WeaponQualityStandard);
-            securityOfficer.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
-            securityOfficer.AddWeapon(WeaponTypeMediumMelee, WeaponQualityStandard);
-            securityOfficer.AddAmmo(AmmoTypeRifle, 50);
-            securityOfficer.AddAmmo(AmmoTypeVeryHeavyPistol, 30);
-            securityOfficer.AddShield();
-            securityOfficer.AddGearSet(GearBinoculars, GearDisposableCellPhone, GearFlashlight, GearHandcuffs, GearHandcuffs, GearRadioCommunicator, GearRadioScannerMusicPlayer);
-            securityOfficer.AddCyberwareSet(CyberwareNeuralLink, CyberwareKerenzikov);
-            securityOfficer.InitializeNewCombatant();
-            Combatants.Add(securityOfficer);
-            #endregion
-            #region Outrider
-            Combatant outrider = new("Outrider", PortraitOutrider, ArmorTypeLightArmorjack);
-            outrider.SetStats(6, 8, 8, 3, 5, 6, 0, 6, 6, 6);
-            outrider.SetCalculatedStats();
-            outrider.SetBaseSkills();
-            outrider.AddSkillByBase(SkillAnimalHandling, 8);
-            outrider.AddSkillByBase(SkillAthletics, 14);
-            outrider.AddSkillByBase(SkillAutofire, 12);
-            outrider.AddSkillByBase(SkillBasicTech, 5);
-            outrider.AddSkillByBase(SkillBrawling, 14);
-            outrider.AddSkillByBase(SkillConcentration, 10);
-            outrider.AddSkillByBase(SkillConversation, 6);
-            outrider.AddSkillByBase(SkillCriminology, 10);
-            outrider.AddSkillByBase(SkillDriveLandVehicle, 14);
-            outrider.AddSkillByBase(SkillEducation, 8);
-            outrider.AddSkillByBase(SkillEndurance, 10);
-            outrider.AddSkillByBase(SkillEvasion, 14);
-            outrider.AddSkillByBase(SkillFirstAid, 5);
-            outrider.AddSkillByBase(SkillHandgun, 14);
-            outrider.AddSkillByBase(SkillHumanPerception, 8);
-            outrider.AddSkillByBase(SkillLandVehicleTech, 7);
-            outrider.AddSkillByBase(SkillLanguage, 8, LanguageNative);
-            outrider.AddSkillByBase(SkillLanguage, 8, LanguageStreetslang);
-            outrider.AddSkillByBase(SkillLocalExpert, 8, LocalExpertBadlands);
-            outrider.AddSkillByBase(SkillLocalExpert, 8, LocalExpertYourHome);
-            outrider.AddSkillByBase(SkillMeleeWeapon, 12);
-            outrider.AddSkillByBase(SkillPerception, 14);
-            outrider.AddSkillByBase(SkillPersuasion, 7);
-            outrider.AddSkillByBase(SkillResistTortureDrugs, 12);
-            outrider.AddSkillByBase(SkillShoulderArms, 14);
-            outrider.AddSkillByBase(SkillStealth, 12);
-            outrider.AddSkillByBase(SkillStreetwise, 9);
-            outrider.AddSkillByBase(SkillTracking, 10);
-            outrider.AddWeapon(WeaponTypeAssaultRifle, WeaponQualityStandard);
-            outrider.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
-            outrider.AddWeapon(WeaponTypeLightMelee, WeaponQualityStandard);
-            outrider.AddAmmo(AmmoTypeRifle, 60);
-            outrider.AddAmmo(AmmoTypeVeryHeavyPistol, 40);
-            outrider.AddGearSet(GearHandcuffs, GearHandcuffs, GearHomingTracer, GearRadioCommunicator);
-            outrider.AddCyberwareSet(CyberwareCyberaudioSuite, CyberwareAmplifiedHearing, CyberwareCybereye, CyberwareTargetingScope, CyberwareTeleOptics, CyberwareNeuralLink, CyberwareInterfacePlugs);
-            outrider.InitializeNewCombatant();
-            Combatants.Add(outrider);
-            #endregion
-            #region Pyro
-            Combatant pyro = new("Pyro", PortraitDefault, ArmorTypeLightArmorjack);
-            pyro.SetStats(5, 8, 6, 7, 4, 4, 0, 6, 5, 3);
-            pyro.SetCalculatedStats();
-            pyro.SetBaseSkills();
-            pyro.AddSkillByBase(SkillAthletics, 11);
-            pyro.AddSkillByBase(SkillBasicTech, 12);
-            pyro.AddSkillByBase(SkillBrawling, 10);
-            pyro.AddSkillByBase(SkillConcentration, 8);
-            pyro.AddSkillByBase(SkillConversation, 5);
-            pyro.AddSkillByBase(SkillDemolitions, 13);
-            pyro.AddSkillByBase(SkillDriveLandVehicle, 10);
-            pyro.AddSkillByBase(SkillEducation, 7);
-            pyro.AddSkillByBase(SkillEvasion, 13);
-            pyro.AddSkillByBase(SkillFirstAid, 9);
-            pyro.AddSkillByBase(SkillHandgun, 14);
-            pyro.AddSkillByBase(SkillHeavyWeapons, 14);
-            pyro.AddSkillByBase(SkillHumanPerception, 5);
-            pyro.AddSkillByBase(SkillInterrogation, 10);
-            pyro.AddSkillByBase(SkillLanguage, 7, LanguageNative);
-            pyro.AddSkillByBase(SkillLanguage, 7, LanguageStreetslang);
-            pyro.AddSkillByBase(SkillLocalExpert, 7, LocalExpertYourHome);
-            pyro.AddSkillByBase(SkillMeleeWeapon, 13);
-            pyro.AddSkillByBase(SkillPerception, 12);
-            pyro.AddSkillByBase(SkillPersuasion, 6);
-            pyro.AddSkillByBase(SkillResistTortureDrugs, 14);
-            pyro.AddSkillByBase(SkillScience, 10, ScienceChemistry);
-            pyro.AddSkillByBase(SkillStealth, 10);
-            pyro.AddSkillByBase(SkillStreetwise, 8);
-            pyro.AddSkillByBase(SkillTactics, 8);
-            pyro.AddWeapon(WeaponTypeFlamethrower, WeaponQualityStandard);
-            pyro.AddWeapon(WeaponTypeHeavyPistol, WeaponQualityStandard);
-            pyro.AddWeapon(WeaponTypeHeavyMelee, WeaponQualityStandard);
-            pyro.AddAmmo(AmmoTypeShell, 8, AmmoVarIncendiary);
-            pyro.AddAmmo(AmmoTypeHeavyPistol, 50);
-            pyro.AddAmmo(AmmoTypeGrenade, 1, AmmoVarIncendiary);
-            pyro.AddAmmo(AmmoTypeGrenade, 1, AmmoVarFlashbang);
-            pyro.AddCyberwareSet(CyberwareCyberaudioSuite, CyberwareLevelDamper, CyberwareCybereye, CyberwareCybereye, CyberwareAntiDazzle, CyberwareAntiDazzle, CyberwareNasalFilters);
-            pyro.InitializeNewCombatant();
-            Combatants.Add(pyro);
-            #endregion
-            #region Cyberpsycho
-            Combatant cyberpsycho = new("Cyberpsycho", PortraitDefault, ArmorTypeSubdermal);
-            cyberpsycho.SetStats(5, 8, 8, 5, 4, 7, 0, 8, 10, 0);
-            cyberpsycho.SetCalculatedStats();
-            cyberpsycho.SetBaseSkills();
-            cyberpsycho.AddSkillByBase(SkillAthletics, 16);
-            cyberpsycho.AddSkillByBase(SkillAutofire, 14);
-            cyberpsycho.AddSkillByBase(SkillBasicTech, 11);
-            cyberpsycho.AddSkillByBase(SkillBrawling, 15);
-            cyberpsycho.AddSkillByBase(SkillConcentration, 6);
-            cyberpsycho.AddSkillByBase(SkillConversation, 2);
-            cyberpsycho.AddSkillByBase(SkillDriveLandVehicle, 10);
-            cyberpsycho.AddSkillByBase(SkillEducation, 7);
-            cyberpsycho.AddSkillByBase(SkillEndurance, 10);
-            cyberpsycho.AddSkillByBase(SkillEvasion, 13);
-            cyberpsycho.AddSkillByBase(SkillFirstAid, 6);
-            cyberpsycho.AddSkillByBase(SkillHandgun, 12);
-            cyberpsycho.AddSkillByBase(SkillHeavyWeapons, 14);
-            cyberpsycho.AddSkillByBase(SkillHumanPerception, 2);
-            cyberpsycho.AddSkillByBase(SkillInterrogation, 13);
-            cyberpsycho.AddSkillByBase(SkillLanguage, 7, LanguageNative);
-            cyberpsycho.AddSkillByBase(SkillLanguage, 7, LanguageStreetslang);
-            cyberpsycho.AddSkillByBase(SkillLocalExpert, 7, LocalExpertYourHome);
-            cyberpsycho.AddSkillByBase(SkillMeleeWeapon, 17);
-            cyberpsycho.AddSkillByBase(SkillPerception, 9);
-            cyberpsycho.AddSkillByBase(SkillPersuasion, 6);
-            cyberpsycho.AddSkillByBase(SkillResistTortureDrugs, 15);
-            cyberpsycho.AddSkillByBase(SkillStealth, 10);
-            cyberpsycho.AddSkillByBase(SkillTracking, 10);
-            cyberpsycho.AddWeapon(WeaponTypePopupGrenadeLauncher, WeaponQualityStandard);
-            cyberpsycho.AddWeapon(WeaponTypeHeavySmg, WeaponQualityStandard, "Popup Heavy SMG");
-            cyberpsycho.AddWeapon(WeaponTypeVeryHeavyMelee, WeaponQualityStandard, "Cybersnake");
-            cyberpsycho.AddWeapon(WeaponTypeHeavyMelee, WeaponQualityStandard, "Wolvers");
-            cyberpsycho.AddAmmo(AmmoTypeGrenade, 2);
-            cyberpsycho.AddAmmo(AmmoTypeHeavyPistol, 100);
-            cyberpsycho.AddCyberwareSet(CyberwareCyberarm, CyberwareCyberarm, CyberwarePopupGrenadeLauncher, CyberwarePopupGrenadeLauncher,
-                CyberwarePopupRangedWeapon, CyberwareWolvers, CyberwareCyberleg, CyberwareCyberleg, CyberwareJumpBooster, CyberwareCybersnake,
-                CyberwareGraftedMuscleBoneLace, CyberwareNeuralLink, CyberwareChipwareSocket, CyberwarePainEditor, CyberwareSubdermalArmor);
-            cyberpsycho.InitializeNewCombatant();
-            Combatants.Add(cyberpsycho);
-            #endregion
 
-            // Custom and Homebrew Combatants
-            #region Scavver
-            Combatant scavver = new("Scavver", PortraitDefault, string.Empty);
-            scavver.SetStats(3, 5, 4, 2, 2, 3, 0, 3, 5, 3);
-            scavver.SetCalculatedStats();
-            scavver.SetBaseSkills();
-            scavver.AddSkillsByBase(5, SkillStreetwise);
-            scavver.AddSkillsByBase(6, SkillPerception, SkillResistTortureDrugs, SkillStealth);
-            scavver.AddSkillsByBase(7, SkillConcealRevealObject, SkillHandgun);
-            scavver.AddSkillsByBase(8, SkillBrawling);
-            scavver.AddSkillsByBase(9, SkillMeleeWeapon);
-            scavver.AddWeapon(WeaponTypeMediumPistol, WeaponQualityPoor);
-            scavver.AddWeapon(WeaponTypeLightMelee, WeaponQualityStandard, "Knife");
-            scavver.AddAmmo(AmmoTypeMediumPistol, 6);
-            scavver.InitializeNewCombatant();
-            Combatants.Add(scavver);
-            #endregion
+            Combatant covertOperative = new("Covert Operative", ComTypeStandard, ComClassLightCorpo, PortraitDefault, ArmorTypeLightArmorjack);
+            covertOperative.SetStats(6, 7, 5, 5, 7, 6, 0, 3, 7, 4);
+            covertOperative.SetSkillLevels(2, SkillAthletics, SkillBrawling, SkillConcentration, SkillConversation, SkillEducation, SkillFirstAid, SkillPerception, SkillPersuasion);
+            covertOperative.SetSkillLevels(4, SkillBribery, SkillBureaucracy, SkillBusiness, SkillEvasion, SkillHumanPerception, SkillPickLock, SkillStreetwise, SkillTrading, SkillWardrobeStyle);
+            covertOperative.SetSkillLevels(6, SkillHandgun, SkillStealth);
+            covertOperative.AddWeapons(WeaponTypeVeryHeavyPistol);
+            covertOperative.AddBasicAmmoForAllWeapons(5);
+            covertOperative.AddGearSet(CorpoBasicGear);
+            covertOperative.AddCyberwareSet(CyberwareCybereye, CyberwareCybereye, CyberwareLowLightInfraredUv, CyberwareColorShift, CyberwareGrappleHand, CyberwarePopupRangedWeapon, CyberwareRealskinnCovering);
+            covertOperative.InitializeNewCombatant();
+            Combatants.Add(covertOperative);
+
+            Combatant driver = new("Driver", ComTypeStandard, ComClassLightCorpo, PortraitDefault, ArmorTypeLightArmorjack);
+            driver.SetStats(6, 8, 8, 4, 7, 4, 0, 5, 6, 2);
+            driver.SetSkillLevels(2, SkillAthletics, SkillConcentration, SkillEducation, SkillFirstAid, SkillHumanPerception, SkillPerception, SkillPersuasion);
+            driver.SetSkillLevels(4, SkillBrawling, SkillEndurance, SkillEvasion, SkillLandVehicleTech, SkillPilotAirVehicle, SkillPilotSeaVehicle, SkillSeaVehicleTech, SkillStealth, SkillTracking);
+            driver.SetSkillLevels(6, SkillDriveLandVehicle, SkillHandgun);
+            driver.AddWeapons(WeaponTypeVeryHeavyPistol);
+            driver.AddBasicAmmoForAllWeapons(5);
+            driver.AddGearSet(CorpoBasicGear);
+            driver.AddCyberwareSet(CyberwareRadarSonarImplant, CyberwareCyberaudioSuite, CyberwareInternalAgent, CyberwareHomingtracer, CyberwareRadarDetector);
+            driver.InitializeNewCombatant();
+            Combatants.Add(driver);
+            
+            Combatant corpNet = new("Netrunner", ComTypeStandard, ComClassLightCorpo, PortraitDefault, ArmorTypeLightArmorjack);
+            corpNet.SetStats(5, 6, 8, 8, 6, 6, 0, 4, 4, 3);
+            corpNet.SetSkillLevels(2, SkillInterface, SkillAthletics, SkillBrawling, SkillConcentration, SkillConversation, SkillEvasion, SkillFirstAid, SkillHumanPerception, SkillPerception, SkillPersuasion);
+            corpNet.SetSkillLevels(4, SkillBasicTech, SkillCryptography, SkillCybertech, SkillEducation, SkillElectronicsSecurityTech, SkillForgery, SkillLibrarySearch, SkillHandgun, SkillStealth);
+            corpNet.AddWeapons(WeaponTypeVeryHeavyPistol);
+            corpNet.AddBasicAmmoForAllWeapons(5);
+            corpNet.AddGearSet(CorpoBasicGear);
+            corpNet.AddCyberwareSet(CyberwareNeuralLink, CyberwareChipwareSocket, CyberwarePainEditor, CyberwareInterfacePlugs, CyberwareCybereye, CyberwareCybereye, CyberwareVirtuality);
+            corpNet.SetNetActions();
+            corpNet.AddCyberdeckPrograms(ProgramSword, BlackIceKiller, ProgramWorm, ProgramArmor);
+            corpNet.InitializeNewCombatant();
+            Combatants.Add(corpNet);
+
+            Combatant corpTech = new("Technician", ComTypeStandard, ComClassLightCorpo, PortraitDefault, ArmorTypeLightArmorjack);
+            corpTech.SetStats(8, 6, 5, 8, 4, 3, 0, 3, 7, 6);
+            corpTech.SetSkillLevels(2, SkillAthletics, SkillBrawling, SkillConcentration, SkillConversation, SkillEvasion, SkillFirstAid, SkillHumanPerception, SkillPerception, SkillPersuasion, SkillStealth);
+            corpTech.SetSkillLevels(4, SkillEducation, SkillHandgun, SkillWeaponstech);
+            corpTech.SetSkillLevels(6, SkillBasicTech, SkillCybertech, SkillElectronicsSecurityTech);
+            corpTech.AddWeapons(WeaponTypeVeryHeavyPistol);
+            corpTech.AddBasicAmmoForAllWeapons(5);
+            corpTech.AddGearSet(CorpoBasicGear);
+            corpTech.AddCyberwareSet(CyberwareToolHand, CyberwareCyberaudioSuite, CyberwareInternalAgent, CyberwareBugDetector, CyberwareAudioRecorder);
+            corpTech.InitializeNewCombatant();
+            Combatants.Add(corpTech);
+
+            // POLICE
+            List<string> PoliceBasicGear = new() { GearAgent, GearCarryall, GearFlashlight, GearFoodStick, GearHandcuffs, GearRoadFlare };
+            List<string> PoliceExtraGear = new() { GearRadioCommunicator, GearRadioScannerMusicPlayer, GearHandcuffs };
+            // LIGHT POLICE
+            Combatant security = new("Security", ComTypeStandard, ComClassLightPolice, PortraitDefault, ArmorTypeKevlar);
+            security.SetStats(2, 4, 3, 3, 3, 2, 0, 4, 2, 3);
+            security.AddWeapon(WeaponTypeHeavyPistol);
+            security.AddBasicAmmoForAllWeapons(3);
+            security.AddGearSet(PoliceBasicGear);
+            security.InitializeNewCombatant();
+            Combatants.Add(security);
+
+            Combatant beatCop = new("Beat Cop", ComTypeStandard, ComClassLightPolice, PortraitDefault, ArmorTypeKevlar);
+            beatCop.SetStats(2, 4, 3, 3, 3, 2, 0, 4, 4, 3);
+            beatCop.AddWeapon(WeaponTypeHeavyPistol);
+            beatCop.AddBasicAmmoForAllWeapons(3);
+            beatCop.AddGearSet(PoliceBasicGear);
+            beatCop.InitializeNewCombatant();
+            Combatants.Add(beatCop);
+
+            // MEDIUM POLICE
+            Combatant deputy = new("Deputy", ComTypeStandard, ComClassMediumPolice, PortraitDefault, ArmorTypeHeavyArmorjack);
+            deputy.SetStats(3, 8, 4, 3, 4, 5, 0, 4, 5, 4);
+            deputy.SetSkillLevels(6, SkillHandgun, SkillShoulderArms, SkillAutofire, SkillEvasion);
+            deputy.AddWeapons(WeaponTypeHeavyPistol, WeaponTypeAssaultRifle);
+            deputy.AddBasicAmmoForAllWeapons(3);
+            deputy.AddGearSet(PoliceBasicGear);
+            deputy.AddGearSet(PoliceExtraGear);
+            deputy.InitializeNewCombatant();
+            Combatants.Add(deputy);
+
+            Combatant marshall = new("Marshall", ComTypeStandard, ComClassMediumPolice, PortraitDefault, ArmorTypeFlak);
+            marshall.SetStats(4, 8, 6, 5, 5, 10, 0, 6, 6, 5);
+            marshall.SetSkillLevels(6, SkillEvasion);
+            marshall.SetSkillLevels(8, SkillHandgun, SkillShoulderArms, SkillAutofire, SkillHeavyWeapons, SkillBrawling);
+            marshall.AddWeapons(WeaponTypeVeryHeavyPistol, WeaponTypeAssaultRifle, WeaponTypeGrenadeLauncher);
+            marshall.AddBasicAmmoForAllWeapons(3);
+            marshall.AddGearSet(PoliceBasicGear);
+            marshall.AddGearSet(PoliceExtraGear);
+            marshall.InitializeNewCombatant();
+            Combatants.Add(marshall);
+
+            // HEAVY POLICE
+            Combatant swat = new("SWAT", ComTypeStandard, ComClassHeavyPolice, PortraitDefault, ArmorTypeMetalgear);
+            swat.SetStats(3, 8, 5, 4, 4, 6, 0, 4, 4, 4);
+            swat.SetSkillLevels(7, SkillHandgun, SkillShoulderArms, SkillAutofire, SkillHeavyWeapons, SkillBrawling);
+            swat.AddWeapons(WeaponTypeAssaultRifle, WeaponTypeRocketLauncher);
+            swat.AddBasicAmmoForAllWeapons(3);
+            swat.AddGearSet(PoliceBasicGear);
+            swat.AddGearSet(PoliceExtraGear);
+            swat.InitializeNewCombatant();
+            Combatants.Add(swat);
+
+            Combatant fed = new("Federal Agent", ComTypeStandard, ComClassHeavyPolice, PortraitDefault, ArmorTypeLightArmorjack);
+            fed.SetStats(5, 8, 6, 5, 5, 5, 0, 6, 6, 4);
+            fed.SetSkillLevels(6, SkillHandgun, SkillShoulderArms, SkillAutofire, SkillBrawling, SkillEvasion);
+            fed.SetSkillLevels(4, SkillAccounting, SkillActing, SkillConcealRevealObject, SkillCriminology, SkillCryptography, SkillDeduction, SkillEducation);
+            fed.SetSkillLevels(4, SkillForgery, SkillInterrogation, SkillParamedic, SkillPerception, SkillPersonalGrooming, SkillResistTortureDrugs, SkillStealth, SkillTracking);
+            fed.AddWeapons(WeaponTypeVeryHeavyPistol, WeaponTypeAssaultRifle);
+            fed.AddBasicAmmoForAllWeapons(3);
+            fed.AddGearSet(PoliceBasicGear);
+            fed.AddGearSet(PoliceExtraGear);
+            fed.InitializeNewCombatant();
+            Combatants.Add(fed);
 
         }
         private static void PopulateCriticalInjuries()
