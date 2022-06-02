@@ -3,7 +3,6 @@ using CyberpunkGameplayAssistant.Toolbox;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Timers;
 using System.Windows.Input;
 
@@ -14,7 +13,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         // Constructors
         public MainViewModel()
         {
-            ApplicationVersion = "CHIP 1.00.00 beta";
+            ApplicationVersion = "CHIP 1.00.00";
             UserAlerts = new();
             HelperMethods.CreateDirectories(AppData.Directories);
             LoadData();
@@ -23,8 +22,6 @@ namespace CyberpunkGameplayAssistant.ViewModels
             UserAlertTimer.Enabled = true;
             AppData.MainModelRef = this;
         }
-
-       
 
         // Databound Properties
         private string _ApplicationVersion;
