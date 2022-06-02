@@ -63,8 +63,8 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand DeleteArchitecture => new RelayCommand(DoDeleteArchitecture);
         private void DoDeleteArchitecture(object param)
         {
-            ReferenceData.MainModelRef.CampaignView.ActiveCampaign.NetArchitectures.Remove(this);
-            ReferenceData.MainModelRef.CampaignView.ActiveCampaign.ActiveNetArchitecture = null;
+            AppData.MainModelRef.CampaignView.ActiveCampaign.NetArchitectures.Remove(this);
+            AppData.MainModelRef.CampaignView.ActiveCampaign.ActiveNetArchitecture = null;
         }
 
         // Public Methods

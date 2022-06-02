@@ -17,14 +17,14 @@ namespace CyberpunkGameplayAssistant.Models
         {
             Type = type;
             Quantity = quantity;
-            IsThrowable = type == ReferenceData.AmmoTypeGrenade;
+            IsThrowable = type == AppData.AmmoTypeGrenade;
         }
         public Ammo(string type, int quantity, string variant)
         {
             Type = type;
             Quantity = quantity;
             Variant = variant;
-            IsThrowable = type == ReferenceData.AmmoTypeGrenade;
+            IsThrowable = type == AppData.AmmoTypeGrenade;
         }
 
         // Properties
@@ -57,7 +57,7 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand RestockAmmo => new RelayCommand(DoRestockAmmo);
         private void DoRestockAmmo(object param)
         {
-            if (Type == ReferenceData.AmmoTypeGrenade || Type == ReferenceData.AmmoTypeRocket) { Quantity += 1; }
+            if (Type == AppData.AmmoTypeGrenade || Type == AppData.AmmoTypeRocket) { Quantity += 1; }
             else { Quantity += 10; }
             HelperMethods.PlayReloadSound();
         }
@@ -68,13 +68,13 @@ namespace CyberpunkGameplayAssistant.Models
             if (!HasGrenades()) { return; }
             Combatant combatant = (param as Combatant)!;
             int roll = HelperMethods.RollD10(true);
-            int dex = combatant.CalculatedStats.GetValue(ReferenceData.StatDexterity);
-            int athletics = combatant.Skills.GetLevel(ReferenceData.SkillAthletics);
+            int dex = combatant.CalculatedStats.GetValue(AppData.StatDexterity);
+            int athletics = combatant.Skills.GetLevel(AppData.SkillAthletics);
             int damage = HelperMethods.RollDamage(6, out bool crit);
             string output = $"{combatant.DisplayName} threw a grenade up to 25m/yds\nResult: {(roll + dex + athletics)}";
-            if (ReferenceData.DebugMode) { output += $"\nDEBUG: ROLL:{roll} DEX:{dex} ATHL:{athletics}"; }
+            if (AppData.DebugMode) { output += $"\nDEBUG: ROLL:{roll} DEX:{dex} ATHL:{athletics}"; }
             output += HelperMethods.ProcessAmmoEffect(damage, crit, Variant);
-            HelperMethods.AddToGameplayLog(output, ReferenceData.MessageWeaponAttack);
+            HelperMethods.AddToGameplayLog(output, AppData.MessageWeaponAttack);
             HelperMethods.PlayExplosionSound();
             Quantity--;
         }

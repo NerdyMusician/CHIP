@@ -18,8 +18,8 @@ namespace CyberpunkGameplayAssistant.Models
         {
             InitializeLists();
             Name = "New Campaign";
-            SetStartDateValues(ReferenceData.DefaultDate);
-            SetCurrentDateValues(ReferenceData.DefaultDate);
+            SetStartDateValues(AppData.DefaultDate);
+            SetCurrentDateValues(AppData.DefaultDate);
         }
 
         // Databound Properties
@@ -190,12 +190,12 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand AddCombatants => new RelayCommand(DoAddCombatants);
         private void DoAddCombatants(object param)
         {
-            MultiObjectSelectionDialog selectionDialog = new(ReferenceData.Combatants, ReferenceData.MultiModeEnemies);
+            MultiObjectSelectionDialog selectionDialog = new(AppData.Combatants, AppData.MultiModeEnemies);
 
             if (selectionDialog.ShowDialog() == true)
             {
                 int startingCount = AllCombatants.Count;
-                foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel).SelectedCombatants)
+                foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedCombatants)
                 {
                     for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
                     {
@@ -218,11 +218,11 @@ namespace CyberpunkGameplayAssistant.Models
 
             if (selectionDialog.ShowDialog() == true)
             {
-                foreach (NamedRecord selectedRecord in (selectionDialog.DataContext as MultiObjectSelectionViewModel).SelectedRecords)
+                foreach (NamedRecord selectedRecord in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedRecords)
                 {
                     Combatant playerToAdd = Players.First(c => c.Name == selectedRecord.Name).DeepClone();
                     if (AllCombatants.FirstOrDefault(p => p.Name == playerToAdd.Name) != null) { continue; }
-                    playerToAdd.Type = ReferenceData.Player;
+                    playerToAdd.Type = AppData.Player;
                     AllCombatants.Add(playerToAdd);
                 }
                 SortCombatantsToLists();
@@ -235,12 +235,13 @@ namespace CyberpunkGameplayAssistant.Models
             if (selectionDialog.ShowDialog() == true)
             {
                 int startingCount = AllCombatants.Count;
-                foreach (NamedRecord selectedRecord in (selectionDialog.DataContext as MultiObjectSelectionViewModel).SelectedRecords)
+                foreach (NamedRecord selectedRecord in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedRecords)
                 {
                     NPC npc = Npcs.First(n => n.Name == selectedRecord.Name);
-                    Combatant npcToAdd = ReferenceData.Combatants.First(c => c.Name == npc.BaseCombatant).DeepClone();
+                    Combatant npcToAdd = AppData.Combatants.First(c => c.Name == npc.BaseCombatant).DeepClone();
                     npcToAdd.DisplayName = npc.Name;
-                    npcToAdd.Type = ReferenceData.NPC;
+                    npcToAdd.Type = AppData.NPC;
+                    npcToAdd.IsAlly = npc.IsAlly;
                     npcToAdd.PortraitFilePath = npc.PortraitFilePath;
                     npcToAdd.InitializeLoadedCombatant();
                     AllCombatants.Add(npcToAdd);
@@ -252,12 +253,12 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand AddBlackIce => new RelayCommand(DoAddBlackIce);
         private void DoAddBlackIce(object param)
         {
-            MultiObjectSelectionDialog selectionDialog = new(ReferenceData.BlackIcePrograms, ReferenceData.MultiModeEnemies);
+            MultiObjectSelectionDialog selectionDialog = new(AppData.BlackIcePrograms, AppData.MultiModeEnemies);
 
             if (selectionDialog.ShowDialog() == true)
             {
                 int startingCount = AllCombatants.Count;
-                foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel).SelectedCombatants)
+                foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedCombatants)
                 {
                     for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
                     {
@@ -277,11 +278,11 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand AddDemons => new RelayCommand(DoAddDemons);
         private void DoAddDemons(object param)
         {
-            MultiObjectSelectionDialog selectionDialog = new(ReferenceData.Demons, ReferenceData.MultiModeEnemies);
+            MultiObjectSelectionDialog selectionDialog = new(AppData.Demons, AppData.MultiModeEnemies);
 
             if (selectionDialog.ShowDialog() == true)
             {
-                foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel).SelectedCombatants)
+                foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedCombatants)
                 {
                     for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
                     {
@@ -300,11 +301,11 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand AddActiveDefenses => new RelayCommand(DoAddActiveDefenses);
         private void DoAddActiveDefenses(object param)
         {
-            MultiObjectSelectionDialog selectionDialog = new(ReferenceData.ActiveDefenses, ReferenceData.MultiModeEnemies);
+            MultiObjectSelectionDialog selectionDialog = new(AppData.ActiveDefenses, AppData.MultiModeEnemies);
 
             if (selectionDialog.ShowDialog() == true)
             {
-                foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel).SelectedCombatants)
+                foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedCombatants)
                 {
                     for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
                     {
@@ -321,11 +322,11 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand AddEmplacedDefenses => new RelayCommand(DoAddEmplacedDefenses);
         private void DoAddEmplacedDefenses(object param)
         {
-            MultiObjectSelectionDialog selectionDialog = new(ReferenceData.EmplacedDefenses, ReferenceData.MultiModeEnemies);
+            MultiObjectSelectionDialog selectionDialog = new(AppData.EmplacedDefenses, AppData.MultiModeEnemies);
 
             if (selectionDialog.ShowDialog() == true)
             {
-                foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel).SelectedCombatants)
+                foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedCombatants)
                 {
                     for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
                     {
@@ -334,7 +335,7 @@ namespace CyberpunkGameplayAssistant.Models
                         if (existingCreatureCount > 25) { break; }
                         newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCreatureCount));
                         newCombatant.Initiative = 60; // Top(er) of the order force
-                        newCombatant.AddWeaponOptionsToWeapons();
+                        newCombatant.ReloadAllWeapons();
                         newCombatant.UpdateWoundState();
                         AllCombatants.Add(newCombatant);
                     }
@@ -347,8 +348,8 @@ namespace CyberpunkGameplayAssistant.Models
         {
             try
             {
-                string timescale = param.ToString().Split(',')[0];
-                int quantity = Convert.ToInt32(param.ToString().Split(',')[1]);
+                string timescale = param.ToString()!.Split(',')[0];
+                int quantity = Convert.ToInt32(param.ToString()!.Split(',')[1]);
                 SetStartDateValues(AdjustDateTime(StartDate, timescale, quantity));
             }
             catch (Exception e)
@@ -361,8 +362,8 @@ namespace CyberpunkGameplayAssistant.Models
         {
             try
             {
-                string timescale = param.ToString().Split(',')[0];
-                int quantity = Convert.ToInt32(param.ToString().Split(',')[1]);
+                string timescale = param.ToString()!.Split(',')[0];
+                int quantity = Convert.ToInt32(param.ToString()!.Split(',')[1]);
                 SetCurrentDateValues(AdjustDateTime(CurrentDate, timescale, quantity));
             }
             catch (Exception e)
@@ -373,20 +374,20 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand RemoveCampaign => new RelayCommand(DoRemoveCampaign);
         private void DoRemoveCampaign(object param)
         {
-            ReferenceData.MainModelRef.CampaignView.Campaigns.Remove(this);
+            AppData.MainModelRef.CampaignView.Campaigns.Remove(this);
         }
         public ICommand RollDice => new RelayCommand(DoRollDice);
         private void DoRollDice(object param)
         {
-            int result = ReferenceData.RNG.Next(1, Convert.ToInt32(param) + 1);
+            int result = AppData.RNG.Next(1, Convert.ToInt32(param) + 1);
             string message = "DM rolls 1d" + param + "\nResult: " + result;
-            HelperMethods.AddToGameplayLog(message, ReferenceData.MessageGmRoll);
+            HelperMethods.AddToGameplayLog(message, AppData.MessageGmRoll);
         }
         public ICommand FlipCoin => new RelayCommand(DoFlipCoin);
         private void DoFlipCoin(object param)
         {
-            int result = ReferenceData.RNG.Next(1, 3);
-            HelperMethods.AddToGameplayLog(string.Format("DM flips a coin.\nResult: {0}.", (result == 1) ? "Heads" : "Tails"), ReferenceData.MessageCoinFllip);
+            int result = AppData.RNG.Next(1, 3);
+            HelperMethods.AddToGameplayLog(string.Format("DM flips a coin.\nResult: {0}.", (result == 1) ? "Heads" : "Tails"), AppData.MessageCoinFllip);
         }
         public ICommand ClearEventHistory => new RelayCommand(DoClearEventHistory);
         private void DoClearEventHistory(object param)
@@ -416,11 +417,11 @@ namespace CyberpunkGameplayAssistant.Models
         private void DoChangeActiveCombatant(object param)
         {
             if (CombatantsByInitiative.Count <= 0) { return; }
-            Combatant activeCombatant = CombatantsByInitiative.FirstOrDefault(c => c.IsActive);
-            Combatant firstCombatant = CombatantsByInitiative.FirstOrDefault(c => c.Type != ReferenceData.ActiveDefense && c.Type != ReferenceData.EmplacedDefense);
+            Combatant activeCombatant = CombatantsByInitiative.FirstOrDefault(c => c.IsActive)!;
+            Combatant firstCombatant = CombatantsByInitiative.FirstOrDefault(c => c.Type != AppData.ActiveDefense && c.Type != AppData.EmplacedDefense)!;
             Combatant lastCombatant = CombatantsByInitiative.Last();
             if (activeCombatant == null) { param = "Reset"; }
-            string action = param.ToString();
+            string action = param.ToString()!;
             switch (action)
             {
                 case "Next":
@@ -430,7 +431,7 @@ namespace CyberpunkGameplayAssistant.Models
                     {
                         if (indexOfNext == -1)
                         {
-                            indexOfNext = (activeCombatant == lastCombatant) ? 0 : CombatantsByInitiative.IndexOf(activeCombatant) + 1;
+                            indexOfNext = (activeCombatant == lastCombatant) ? 0 : CombatantsByInitiative.IndexOf(activeCombatant!) + 1;
                         }
                         if (indexOfNext >= CombatantsByInitiative.Count) { indexOfNext = 0; }
                         if (indexOfNext == 0) { EncounterRound++; }
@@ -449,7 +450,7 @@ namespace CyberpunkGameplayAssistant.Models
                     {
                         if (indexOfPrevious == -1)
                         {
-                            indexOfPrevious = (activeCombatant == firstCombatant) ? CombatantsByInitiative.IndexOf(lastCombatant) : CombatantsByInitiative.IndexOf(activeCombatant) - 1;
+                            indexOfPrevious = (activeCombatant == firstCombatant) ? CombatantsByInitiative.IndexOf(lastCombatant) : CombatantsByInitiative.IndexOf(activeCombatant!) - 1;
                         }
                         if (indexOfPrevious == (CombatantsByInitiative.IndexOf(lastCombatant))) { EncounterRound--; }
                         if (EncounterRound == 0) { EncounterRound = 1; return; }
@@ -465,7 +466,7 @@ namespace CyberpunkGameplayAssistant.Models
                     YesNoDialog question = new("Reset combat to round 1?");
                     question.ShowDialog();
                     if (question.Answer == false) { return; }
-                    Combatant resetCombatant = CombatantsByInitiative.FirstOrDefault(crt => (!crt.IsDead || crt.Type == ReferenceData.Player) && crt.Type != ReferenceData.ActiveDefense && crt.Type != ReferenceData.EmplacedDefense);
+                    Combatant resetCombatant = CombatantsByInitiative.FirstOrDefault(crt => (!crt.IsDead || crt.Type == AppData.Player) && crt.Type != AppData.ActiveDefense && crt.Type != AppData.EmplacedDefense)!;
                     if (resetCombatant == null) { UpdateActiveCombatant(); return; }
                     else { resetCombatant.IsActive = true; }
                     EncounterRound = 1;
@@ -482,13 +483,13 @@ namespace CyberpunkGameplayAssistant.Models
             List<string> initiativeResults = new();
             foreach (Combatant combatant in AllCombatants)
             {
-                if (combatant.Initiative == 0 && combatant.Type != ReferenceData.Player) 
+                if (combatant.Initiative == 0 && combatant.Type != AppData.Player) 
                 { 
                     combatant.Initiative = combatant.GetInitiative(); 
                     initiativeResults.Add($"{combatant.DisplayName} : {combatant.Initiative}");
                 }
             }
-            HelperMethods.AddToGameplayLog($"Rolling Combatant initatives\n{initiativeResults.ToFormattedString()}", ReferenceData.MessageInitiative);
+            HelperMethods.AddToGameplayLog($"Rolling Combatant initatives\n{initiativeResults.ToFormattedString()}", AppData.MessageInitiative);
             SortCombatantsToLists();
         }
         public ICommand SortCombatants => new RelayCommand(DoSortCombatants);
@@ -499,7 +500,7 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand AddPlayer => new RelayCommand(param => DoAddPlayer());
         private void DoAddPlayer()
         {
-            Players.Add(new() { Name = "New Player", Type = ReferenceData.Player, PortraitFilePath = ReferenceData.PortraitDefault });
+            Players.Add(new() { Name = "New Player", Type = AppData.Player, PortraitFilePath = AppData.PortraitDefault });
             ActivePlayer = Players.Last();
         }
         public ICommand SortPlayers => new RelayCommand(param => DoSortPlayers());
@@ -510,7 +511,7 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand AddNpc => new RelayCommand(param => DoAddNpc());
         private void DoAddNpc()
         {
-            Npcs.Add(new() { Name = "New NPC", PortraitFilePath = ReferenceData.PortraitDefault });
+            Npcs.Add(new() { Name = "New NPC", PortraitFilePath = AppData.PortraitDefault });
             ActiveNpc = Npcs.Last();
         }
         public ICommand SortNpcs => new RelayCommand(param => DoSortNpcs());
@@ -521,7 +522,7 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand AddNetArchitecture => new RelayCommand(DoAddNetArchitecture);
         private void DoAddNetArchitecture(object param)
         {
-            NetArchitectures.Add(new("New NET Architecture", ReferenceData.NetArchitectureDifficultyBasic));
+            NetArchitectures.Add(new("New NET Architecture", AppData.NetArchitectureDifficultyBasic));
             ActiveNetArchitecture = NetArchitectures.Last();
         }
         public ICommand SortNetArchitectures => new RelayCommand(DoSortNetArchitectures);
@@ -542,17 +543,17 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 if (combatant.IsDead)
                 {
-                    cash += ReferenceData.RNG.Next(10, 80);
+                    cash += AppData.RNG.Next(10, 80);
                     foreach (Ammo ammo in combatant.AmmoInventory)
                     {
                         ammoLoot.AddPlus(ammo.Type, ammo.Quantity);
                     }
                     foreach (CombatantWeapon weapon in combatant.Weapons)
                     {
-                        if (combatant.Type.IsIn(ReferenceData.EmplacedDefense, ReferenceData.ActiveDefense)) { continue; }
+                        if (combatant.Type.IsIn(AppData.EmplacedDefense, AppData.ActiveDefense)) { continue; }
                         if (weapon.UsesAmmo)
                         {
-                            string ammoType = ReferenceData.WeaponRepository.First(w => w.Type == weapon.Type).AmmoType;
+                            string ammoType = AppData.WeaponRepository.First(w => w.Type == weapon.Type).AmmoType;
                             ammoLoot.AddPlus(ammoType, weapon.CurrentClipQuantity);
                         }
                         weaponLoot.AddPlus($"{weapon.Name} ({weapon.Quality})", 1);
@@ -584,7 +585,7 @@ namespace CyberpunkGameplayAssistant.Models
                 $"**ARMOR**\n{armorLoot.ToFormattedString()}\n" +
                 $"**CYBERWARE**\n{cyberwareLoot.ToFormattedString()}\n";
             if (AreAllEmpty(ammoLoot, weaponLoot, gearLoot, armorLoot, cyberwareLoot)) { HelperMethods.AddToGameplayLog("No loot found."); }
-            else { HelperMethods.AddToGameplayLog(output, ReferenceData.MessageLoot); }
+            else { HelperMethods.AddToGameplayLog(output, AppData.MessageLoot); }
             RemoveTheFallen();
         }
         public ICommand RemoveCombatants => new RelayCommand(DoRemoveCombatants);
@@ -607,7 +608,7 @@ namespace CyberpunkGameplayAssistant.Models
                     if (!HelperMethods.AskYesNoQuestion("Are you sure you want to kill all non-player and non-NPC combatants?")) { return; }
                     foreach (Combatant combatant in AllCombatants)
                     {
-                        if (combatant.Type == ReferenceData.NPC) { continue; }
+                        if (combatant.Type == AppData.NPC) { continue; }
                         combatant.CurrentHitPoints = 0;
                         combatant.IsDead = true;
                     }
@@ -636,8 +637,8 @@ namespace CyberpunkGameplayAssistant.Models
             List<Combatant> combatants = new();
             foreach (Combatant combatant in AllCombatants)
             {
-                if (combatant.Type == ReferenceData.Player) { combatants.Add(combatant); continue; }
-                if (combatant.Type == ReferenceData.BlackIce || combatant.Type == ReferenceData.Demon || combatant.Type == ReferenceData.ActiveDefense || combatant.Type == ReferenceData.EmplacedDefense)
+                if (combatant.Type == AppData.Player) { combatants.Add(combatant); continue; }
+                if (combatant.Type == AppData.BlackIce || combatant.Type == AppData.Demon || combatant.Type == AppData.ActiveDefense || combatant.Type == AppData.EmplacedDefense)
                 {
                     if (combatant.CurrentHitPoints <= 0) { continue; }
                 }
@@ -647,11 +648,11 @@ namespace CyberpunkGameplayAssistant.Models
             AllCombatants = new(combatants);
             SortCombatantsToLists();
         }
-        private bool IsEligibleCombatant(Combatant combatant)
+        private static bool IsEligibleCombatant(Combatant combatant)
         {
-            if (combatant.Type == ReferenceData.ActiveDefense || combatant.Type == ReferenceData.EmplacedDefense) { return false; }
-            if (combatant.Type == ReferenceData.BlackIce && combatant.CurrentHitPoints == 0) { return false; }
-            return !combatant.IsDead || combatant.Type == ReferenceData.Player;
+            if (combatant.Type == AppData.ActiveDefense || combatant.Type == AppData.EmplacedDefense) { return false; }
+            if (combatant.Type.IsIn(AppData.BlackIce, AppData.Demon) && combatant.CurrentHitPoints == 0) { return false; }
+            return !combatant.IsDead || combatant.Type == AppData.Player;
         }
         private void InitializeLists()
         {
@@ -668,10 +669,10 @@ namespace CyberpunkGameplayAssistant.Models
                 ResetCombatantLists();
                 return;
             }
-            CombatantsByInitiative = new(AllCombatants.Where(c => !c.IsDead || c.Type == ReferenceData.Player).OrderByDescending(c => c.Initiative));
-            CombatantsByName = new(AllCombatants.Where(c => !c.IsDead || c.Type == ReferenceData.Player).OrderBy(c => c.Type != ReferenceData.Player).ThenBy(c => c.DisplayName));
-            PlayerCombatants = new(AllCombatants.Where(c => c.Type == ReferenceData.Player).OrderBy(c => c.Name));
-            NpcCombatants = new(AllCombatants.Where(c => c.Type == ReferenceData.NPC).OrderBy(c => c.Name));
+            CombatantsByInitiative = new(AllCombatants.Where(c => !c.IsDead || c.Type == AppData.Player).OrderByDescending(c => c.Initiative));
+            CombatantsByName = new(AllCombatants.Where(c => !c.IsDead || c.Type == AppData.Player).OrderBy(c => c.Type != AppData.Player).ThenBy(c => c.DisplayName));
+            PlayerCombatants = new(AllCombatants.Where(c => c.Type == AppData.Player).OrderBy(c => c.Name));
+            NpcCombatants = new(AllCombatants.Where(c => c.Type == AppData.NPC).OrderBy(c => c.Name));
             DeadCombatants = new(AllCombatants.Where(c => c.IsDead));
         }
         private void ResetCombatantLists()
@@ -683,7 +684,7 @@ namespace CyberpunkGameplayAssistant.Models
             PlayerCombatants = new();
             DeadCombatants = new();
         }
-        private DateTime AdjustDateTime(string currentDateTime, string timescale, int quantity)
+        private static DateTime AdjustDateTime(string currentDateTime, string timescale, int quantity)
         {
             DateTime dateTime = Convert.ToDateTime(currentDateTime);
 
@@ -696,14 +697,14 @@ namespace CyberpunkGameplayAssistant.Models
         private void SetStartDateValues(DateTime dateTime)
         {
             StartDate = dateTime.ToString();
-            FormattedStartDate = dateTime.ToString(ReferenceData.ShortDateFormat);
+            FormattedStartDate = dateTime.ToString(AppData.ShortDateFormat);
             UpdateDayCount();
         }
         private void SetCurrentDateValues(DateTime dateTime)
         {
             CurrentDate = dateTime.ToString();
-            FormattedCurrentDate = dateTime.ToString(ReferenceData.ShortDateFormat);
-            LongFormatCurrentDate = dateTime.ToString(ReferenceData.LongDateFormat);
+            FormattedCurrentDate = dateTime.ToString(AppData.ShortDateFormat);
+            LongFormatCurrentDate = dateTime.ToString(AppData.LongDateFormat);
             TimeDigits = $"{Get12Hour(dateTime.Hour)}:{GetMinute(dateTime.Minute)}";
             TimeIndicator = dateTime.Hour >= 12 ? "PM" : "AM";
             UpdateDayCount();
@@ -712,20 +713,20 @@ namespace CyberpunkGameplayAssistant.Models
         {
             CampaignDayCount = (Convert.ToDateTime(CurrentDate) - Convert.ToDateTime(StartDate)).Days;
         }
-        private string Get12Hour(int hours)
+        private static string Get12Hour(int hours)
         {
             if (hours == 0) { return "12"; }
             if (hours <= 12) { return $"{hours}"; }
             if (hours > 12 && hours < 22) { return $"{hours - 12}"; }
             else { return (hours - 12).ToString(); }
         }
-        private string GetMinute(int minutes)
+        private static string GetMinute(int minutes)
         {
             if (minutes < 10) { return $"0{minutes}"; }
             else { return $"{minutes}"; }
         }
 
-        private bool AreAllEmpty(params Dictionary<string,int>[] collections)
+        private static bool AreAllEmpty(params Dictionary<string,int>[] collections)
         {
             foreach (Dictionary<string,int> collection in collections)
             {

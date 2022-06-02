@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CyberpunkGameplayAssistant.Models
+﻿namespace CyberpunkGameplayAssistant.Models
 {
     public partial class Combatant : BaseModel
     {
-
-
         // Databound Properties
         private string _PlayerName;
         public string PlayerName

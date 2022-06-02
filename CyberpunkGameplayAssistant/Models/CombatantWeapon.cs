@@ -70,14 +70,14 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get
             {
-                return ReferenceData.WeaponRepository.FirstOrDefault(w => w.Type == Type).AmmoType != ReferenceData.AmmoTypeNone;
+                return AppData.WeaponRepository.FirstOrDefault(w => w.Type == Type).AmmoType != AppData.AmmoTypeNone;
             }
         }
         public int MaxClipQuantity
         {
             get
             {
-                RangedWeaponClip clip = ReferenceData.ClipChart.FirstOrDefault(w => w.WeaponType == Type);
+                RangedWeaponClip clip = AppData.ClipChart.FirstOrDefault(w => w.WeaponType == Type);
                 return (clip != null) ? clip.Standard : 0;
             }
         }
@@ -91,33 +91,33 @@ namespace CyberpunkGameplayAssistant.Models
             int attackRoll = HelperMethods.RollD10(true);
             if (DidWeaponMalfunction(attackRoll, combatant.Name)) { return; }
             if (!CheckAndUseAmmo(1)) { return; }
-            int damageDice = ReferenceData.WeaponRepository.GetDamage(Type);
-            int attackBonus = combatant.GetSkillTotal(ReferenceData.WeaponRepository.GetSkill(Type));
+            int damageDice = AppData.WeaponRepository.GetDamage(Type);
+            int attackBonus = combatant.GetSkillTotal(AppData.WeaponRepository.GetSkill(Type));
             int attackPenalty = combatant.GetAttackInjuryPenalty(Type);
             int damage = HelperMethods.RollDamage(damageDice, out bool criticalInjury);
             string output = GenerateWeaponOutput(combatant, attackRoll, attackBonus, attackPenalty, damage, criticalInjury);
-            HelperMethods.AddToGameplayLog(output, ReferenceData.MessageWeaponAttack);
+            HelperMethods.AddToGameplayLog(output, AppData.MessageWeaponAttack);
             HelperMethods.PlayWeaponSound(Type);
         }
         public ICommand RollAutofire => new RelayCommand(DoRollAutofire);
         private void DoRollAutofire(object param)
         {
-            if (!ReferenceData.AutofireTable.ContainsKey(Type)) { RaiseError(ReferenceData.ErrorNotAnAutofireWeapon); return; }
+            if (!AppData.AutofireTable.ContainsKey(Type)) { RaiseError(AppData.ErrorNotAnAutofireWeapon); return; }
             Combatant combatant = (Combatant)param;
             if (WasJamCleared(combatant)) { return; }
             int attackRoll = HelperMethods.RollD10(true);
             if (DidWeaponMalfunction(attackRoll, combatant.Name)) { return; }
             if (!CheckAndUseAmmo(10)) { return; }
-            int attackBonus = combatant.GetSkillTotal(ReferenceData.SkillAutofire);
+            int attackBonus = combatant.GetSkillTotal(AppData.SkillAutofire);
             int attackPenalty = combatant.GetAttackInjuryPenalty(Type);
             int damage = HelperMethods.RollDamage(2, out bool criticalInjury);
             string output = GenerateWeaponOutput(combatant, attackRoll, attackBonus, attackPenalty, damage, criticalInjury);
-            for (int i = 0; i < ReferenceData.AutofireTable[Type]; i++)
+            for (int i = 0; i < AppData.AutofireTable[Type]; i++)
             {
                 output += $"\nDamage x{(i + 1)}: {(damage * (i + 1))}";
                 if (i == 0 && criticalInjury) { output += " CRIT"; }
             }
-            HelperMethods.AddToGameplayLog(output, ReferenceData.MessageWeaponAttack);
+            HelperMethods.AddToGameplayLog(output, AppData.MessageWeaponAttack);
             HelperMethods.PlayAutofireSound();
         }
         public ICommand RollAimedShot => new RelayCommand(DoRollAimedShot);
@@ -128,12 +128,12 @@ namespace CyberpunkGameplayAssistant.Models
             int attackRoll = HelperMethods.RollD10(true);
             if (DidWeaponMalfunction(attackRoll, combatant.Name)) { return; }
             if (!CheckAndUseAmmo(1)) { return; }
-            int damageDice = ReferenceData.WeaponRepository.GetDamage(Type);
-            int attackBonus = combatant.GetSkillTotal(ReferenceData.WeaponRepository.GetSkill(Type));
+            int damageDice = AppData.WeaponRepository.GetDamage(Type);
+            int attackBonus = combatant.GetSkillTotal(AppData.WeaponRepository.GetSkill(Type));
             int attackPenalty = combatant.GetAttackInjuryPenalty(Type) + 8; // pg 170
             int damage = HelperMethods.RollDamage(damageDice, out bool criticalInjury);
             string output = GenerateWeaponOutput(combatant, attackRoll, attackBonus, attackPenalty, damage, criticalInjury);
-            HelperMethods.AddToGameplayLog(output, ReferenceData.MessageWeaponAttack);
+            HelperMethods.AddToGameplayLog(output, AppData.MessageWeaponAttack);
             HelperMethods.PlayWeaponSound(Type);
         }
         public ICommand ReloadWeapon => new RelayCommand(DoReloadWeapon);
@@ -141,7 +141,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             if (!UsesAmmo) { return; }
             Combatant combatant = (Combatant)param;
-            int clipCapacity = ReferenceData.ClipChart.GetStandardClipSize(Type);
+            int clipCapacity = AppData.ClipChart.GetStandardClipSize(Type);
             Ammo ammoTypeNeeded = GetAmmoTypeNeeded(combatant);
             Ammo ammoTypeInUse = GetAmmoTypeInUse(combatant);
             if (ammoTypeNeeded == null) { return; }
@@ -157,25 +157,25 @@ namespace CyberpunkGameplayAssistant.Models
             AmmoType = ammoTypeNeeded.Type;
             AmmoVariant = ammoTypeNeeded.Variant;
             if (ammoTaken == 0) { RaiseError("Not enough ammo to reload"); return; }
-            HelperMethods.AddToGameplayLog($"{combatant.DisplayName}{(ammoNeeded > ammoTaken ? "partially" : "")} reloaded their {Name}.", ReferenceData.MessageReload);
+            HelperMethods.AddToGameplayLog($"{combatant.DisplayName}{(ammoNeeded > ammoTaken ? " partially" : "")} reloaded their {Name}.", AppData.MessageReload);
             HelperMethods.PlayReloadSound();
         }
         public ICommand UseSuppressiveFire => new RelayCommand(DoUseSuppressiveFire);
         private void DoUseSuppressiveFire(object param)
         {
-            if (!ReferenceData.AutofireTable.ContainsKey(Type)) { RaiseError(ReferenceData.ErrorNotAnAutofireWeapon); return; }
+            if (!AppData.AutofireTable.ContainsKey(Type)) { RaiseError(AppData.ErrorNotAnAutofireWeapon); return; }
             Combatant combatant = (Combatant)param;
             if (WasJamCleared(combatant)) { return; }
             int attackRoll = HelperMethods.RollD10(true);
             if (DidWeaponMalfunction(attackRoll, combatant.Name)) { return; }
             if (!CheckAndUseAmmo(10)) { return; }
-            int reflex = combatant.CalculatedStats.GetValue(ReferenceData.StatReflexes);
-            int autofire = combatant.GetSkillTotal(ReferenceData.SkillAutofire);
+            int reflex = combatant.CalculatedStats.GetValue(AppData.StatReflexes);
+            int autofire = combatant.GetSkillTotal(AppData.SkillAutofire);
             int roll = HelperMethods.RollD10(true);
             string output = $"{combatant.DisplayName} uses suppressive fire.\nEveryone on foot within 25m/yds out of cover, and in your line of sight must " +
                 $"roll WILL + Concentration + 1d10 against {(reflex + autofire + roll)}, or use their next Move Action to get into cover.";
-            if (ReferenceData.DebugMode) { output += $"\nDEBUG: REF:{reflex} AUTOFIRE:{autofire} ROLL:{roll}"; }
-            HelperMethods.AddToGameplayLog(output, ReferenceData.MessageWeaponAttack);
+            if (AppData.DebugMode) { output += $"\nDEBUG: REF:{reflex} AUTOFIRE:{autofire} ROLL:{roll}"; }
+            HelperMethods.AddToGameplayLog(output, AppData.MessageWeaponAttack);
             HelperMethods.PlayAutofireSound();
         }
 
@@ -187,13 +187,13 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private Ammo GetAmmoTypeNeeded(Combatant combatant)
         {
-            List<string> acceptableAmmoTypes = ReferenceData.RangedWeaponAmmoCompatibilities.FirstOrDefault(w => w.WeaponType == Type).AmmoTypes;
+            List<string> acceptableAmmoTypes = AppData.RangedWeaponAmmoCompatibilities.FirstOrDefault(w => w.WeaponType == Type).AmmoTypes;
             List<Ammo> matchedAmmoListings = combatant.AmmoInventory.Where(a => acceptableAmmoTypes.Contains(a.Type) && a.Quantity > 0).ToList();
-            if (matchedAmmoListings.Count == 0) { RaiseError(ReferenceData.ErrorNoAcceptableAmmoTypeInInventory); return null; }
+            if (matchedAmmoListings.Count == 0) { RaiseError(AppData.ErrorNoAcceptableAmmoTypeInInventory); return null; }
             if (matchedAmmoListings.Count == 1) { return matchedAmmoListings[0]; }
             else
             {
-                if (!ReferenceData.IsLoaded) { return matchedAmmoListings[0]; }
+                if (!AppData.IsLoaded) { return matchedAmmoListings[0]; }
                 ObjectSelectionDialog objectSelectionDialog = new(matchedAmmoListings.ToNamedRecordList(), "Ammo Types");
                 if (objectSelectionDialog.ShowDialog() == true)
                 {
@@ -222,9 +222,9 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private bool DidWeaponMalfunction(int attackRoll, string combatantName)
         {
-            if (Quality == ReferenceData.WeaponQualityPoor && attackRoll <= 1) 
+            if (Quality == AppData.WeaponQualityPoor && attackRoll <= 1) 
             { 
-                HelperMethods.AddToGameplayLog($"{combatantName}'s {Name} malfunctioned!", ReferenceData.MessageWeaponAttack);
+                HelperMethods.AddToGameplayLog($"{combatantName}'s {Name} malfunctioned!", AppData.MessageWeaponAttack);
                 HelperMethods.PlayMalfunctionSound();
                 IsJammed = true;
                 return true; 
@@ -236,7 +236,7 @@ namespace CyberpunkGameplayAssistant.Models
             int attackResult = attackRoll + attackBonus - combatant.GetAttackInjuryPenalty(Type);
             string output = $"{combatant.DisplayName} attacks with {Name}\nAttack: {attackResult}";
             output += HelperMethods.ProcessAmmoEffect(damage, criticalInjury, AmmoVariant);
-            if (ReferenceData.DebugMode) 
+            if (AppData.DebugMode) 
             { 
                 output += $"\nDEBUG: ROLL:{attackRoll}, SKILL+STAT:{attackBonus}, PENALTY:{attackPenalty}";
                 output += $"\nDEBUG: BASEDMG:{damage} AMMOVAR:{AmmoVariant}";

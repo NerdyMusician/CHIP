@@ -18,22 +18,12 @@ namespace CyberpunkGameplayAssistant.Models
         {
             InitializeLists();
         }
-        /// <summary>
-        /// BLACK ICE PROGRAM
-        /// </summary>
-        /// <param name="name">Name of the program</param>
-        /// <param name="imagePath">Image path for the program</param>
-        public Combatant(string name, string imagePath)
+        public Combatant(string name, string type, string @class, string imagePath, string armor)
         {
             InitializeLists();
+            Type = type;
             Name = name;
-            PortraitFilePath = imagePath;
-            Type = ReferenceData.BlackIce;
-        }
-        public Combatant(string name, string imagePath, string armor)
-        {
-            InitializeLists();
-            Name = name;
+            ComClass = @class;
             PortraitFilePath = imagePath;
             ArmorType = armor;
         }
@@ -44,6 +34,18 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get => _Name;
             set => SetAndNotify(ref _Name, value);
+        }
+        private string _Variant;
+        public string Variant
+        {
+            get => _Variant;
+            set => SetAndNotify(ref _Variant, value);
+        }
+        private string _ComClass;
+        public string ComClass
+        {
+            get => _ComClass;
+            set => SetAndNotify(ref _ComClass, value);
         }
         private string _TrackerIndicator;
         public string TrackerIndicator
@@ -80,6 +82,12 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get => _IsActive;
             set => SetAndNotify(ref _IsActive, value);
+        }
+        private bool _IsAlly;
+        public bool IsAlly
+        {
+            get => _IsAlly;
+            set => SetAndNotify(ref _IsAlly, value);
         }
         private ObservableCollection<Stat> _BaseStats;
         public ObservableCollection<Stat> BaseStats
@@ -323,9 +331,9 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get
             {
-                int move = CalculatedStats.GetValue(ReferenceData.StatMovement);
-                int penalty = 0; //ReferenceData.ArmorTable.GetPenalty(ArmorType); - already taken into account in CalculatedStats
-                if (WoundState == ReferenceData.WoundStateMortallyWounded) { penalty += 6; }
+                int move = CalculatedStats.GetValue(AppData.StatMovement);
+                int penalty = 0;
+                if (WoundState == AppData.WoundStateMortallyWounded) { penalty += 6; }
                 penalty += CriticalInjuries.GetMovePenaltyTotal();
                 move -= penalty;
                 if (move < 1) { move = 1; }
@@ -336,7 +344,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get
             {
-                int death = CalculatedStats.GetValue(ReferenceData.StatBody);
+                int death = CalculatedStats.GetValue(AppData.StatBody);
                 return death;
             }
         }
@@ -354,10 +362,10 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 return new()
                 {
-                    ReferenceData.ShieldTypeNone,
-                    ReferenceData.ShieldTypeBulletproofShield,
-                    ReferenceData.ShieldTypeCorpse,
-                    ReferenceData.ShieldTypeHumanShield
+                    AppData.ShieldTypeNone,
+                    AppData.ShieldTypeBulletproofShield,
+                    AppData.ShieldTypeCorpse,
+                    AppData.ShieldTypeHumanShield
                 };
             }
         }
@@ -377,7 +385,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             int hitPointChange = Convert.ToInt32(param);
             ShieldHp += hitPointChange;
-            if (ShieldHp < 0) { ShieldHp = 0; ShieldType = ReferenceData.ShieldTypeNone; }
+            if (ShieldHp < 0) { ShieldHp = 0; ShieldType = AppData.ShieldTypeNone; }
         }
         public ICommand AdjustStoppingPower => new RelayCommand(DoAdjustStoppingPower);
         private void DoAdjustStoppingPower(object param)
@@ -404,10 +412,15 @@ namespace CyberpunkGameplayAssistant.Models
             IsDead = !IsDead;
             UpdateWoundState();
         }
+        public ICommand ToggleAlly => new RelayCommand(DoToggleAlly);
+        private void DoToggleAlly(object param)
+        {
+            IsAlly = !IsAlly;
+        }
         public ICommand AddCriticalInjury => new RelayCommand(DoAddCriticalInjury);
         private void DoAddCriticalInjury(object param)
         {
-            MultiObjectSelectionDialog selectionDialog = new(ReferenceData.AllCriticalInjuries.ToNamedRecordList(), ReferenceData.MultiModeCriticalInjuries);
+            MultiObjectSelectionDialog selectionDialog = new(AppData.AllCriticalInjuries.ToNamedRecordList(), AppData.MultiModeCriticalInjuries);
 
             if (selectionDialog.ShowDialog() == true)
             {
@@ -426,24 +439,24 @@ namespace CyberpunkGameplayAssistant.Models
         private void DoMakeActive(object param)
         {
             IsActive = true;
-            ReferenceData.MainModelRef.CampaignView.ActiveCampaign.MarkCombatantsInactiveExcept(this);
-            ReferenceData.MainModelRef.CampaignView.ActiveCampaign.UpdateActiveCombatant();
+            AppData.MainModelRef.CampaignView.ActiveCampaign.MarkCombatantsInactiveExcept(this);
+            AppData.MainModelRef.CampaignView.ActiveCampaign.UpdateActiveCombatant();
         }
         public ICommand DeletePlayer => new RelayCommand(DoDeletePlayer);
         private void DoDeletePlayer(object param)
         {
-            ReferenceData.MainModelRef.CampaignView.ActiveCampaign.Players.Remove(this);
+            AppData.MainModelRef.CampaignView.ActiveCampaign.Players.Remove(this);
         }
         public ICommand SelectPortraitImage => new RelayCommand(DoSelectPortraitImage);
         private void DoSelectPortraitImage(object param)
         {
-            PortraitFilePath = HelperMethods.GetFile(ReferenceData.FilterImageFiles, ReferenceData.PlayerImageDirectory);
+            PortraitFilePath = HelperMethods.GetFile(AppData.FilterImageFiles, AppData.PlayerImageDirectory);
         }
         public ICommand RemoveFromFirefight => new RelayCommand(DoRemoveFromFirefight);
         private void DoRemoveFromFirefight(object param)
         {
-            ReferenceData.MainModelRef.CampaignView.ActiveCampaign.AllCombatants.Remove(this);
-            ReferenceData.MainModelRef.CampaignView.ActiveCampaign.SortCombatants.Execute(null);
+            AppData.MainModelRef.CampaignView.ActiveCampaign.AllCombatants.Remove(this);
+            AppData.MainModelRef.CampaignView.ActiveCampaign.SortCombatants.Execute(null);
         }
 
         // Public Methods
@@ -461,13 +474,8 @@ namespace CyberpunkGameplayAssistant.Models
         }
         public void InitializeNewCombatant()
         {
+            SetCalculatedStats();
             SetHitPoints(true);
-            SetStoppingPower(true);
-            ReloadAllWeapons();
-            SetStandardActions();
-        }
-        public void InitializeBackupCombatant()
-        {
             SetStoppingPower(true);
             ReloadAllWeapons();
             SetStandardActions();
@@ -475,43 +483,45 @@ namespace CyberpunkGameplayAssistant.Models
         public void SetStats(int INT, int REF, int DEX, int TECH, int COOL, int WILL, int LUCK, int MOVE, int BODY, int EMP)
         {
             BaseStats = new();
-            BaseStats.Add(new(ReferenceData.StatIntelligence, INT));
-            BaseStats.Add(new(ReferenceData.StatReflexes, REF));
-            BaseStats.Add(new(ReferenceData.StatDexterity, DEX));
-            BaseStats.Add(new(ReferenceData.StatTechnique, TECH));
-            BaseStats.Add(new(ReferenceData.StatCool, COOL));
-            BaseStats.Add(new(ReferenceData.StatWillpower, WILL));
-            BaseStats.Add(new(ReferenceData.StatLuck, LUCK));
-            BaseStats.Add(new(ReferenceData.StatMovement, MOVE));
-            BaseStats.Add(new(ReferenceData.StatBody, BODY));
-            BaseStats.Add(new(ReferenceData.StatEmpathy, EMP));
+            BaseStats.Add(new(AppData.StatIntelligence, INT));
+            BaseStats.Add(new(AppData.StatReflexes, REF));
+            BaseStats.Add(new(AppData.StatDexterity, DEX));
+            BaseStats.Add(new(AppData.StatTechnique, TECH));
+            BaseStats.Add(new(AppData.StatCool, COOL));
+            BaseStats.Add(new(AppData.StatWillpower, WILL));
+            BaseStats.Add(new(AppData.StatLuck, LUCK));
+            BaseStats.Add(new(AppData.StatMovement, MOVE));
+            BaseStats.Add(new(AppData.StatBody, BODY));
+            BaseStats.Add(new(AppData.StatEmpathy, EMP));
+            SetBaseSkills();
+            SetClassSkills();
         }
         public void SetBlackIceStats(string role, int PER, int SPD, int ATK, int DEF, int REZ, string effect)
         {
             PlayerRole = role;
             BaseStats = new();
-            BaseStats.Add(new(ReferenceData.NetPerception, PER));
-            BaseStats.Add(new(ReferenceData.NetSpeed, SPD));
-            BaseStats.Add(new(ReferenceData.NetAttack, ATK));
-            BaseStats.Add(new(ReferenceData.NetDefense, DEF));
+            BaseStats.Add(new(AppData.NetPerception, PER));
+            BaseStats.Add(new(AppData.NetSpeed, SPD));
+            BaseStats.Add(new(AppData.NetAttack, ATK));
+            BaseStats.Add(new(AppData.NetDefense, DEF));
             MaximumHitPoints = REZ;
             CurrentHitPoints = REZ;
             Notes = effect;
         }
         public void SetDemonStats(int REZ, int INT, int netActions, int combatNumber)
         {
-            Type = ReferenceData.Demon;
-            PlayerRole = ReferenceData.Demon;
+            Type = AppData.Demon;
+            PlayerRole = AppData.Demon;
             Notes = netActions.ToString();
             BaseStats = new();
-            BaseStats.Add(new(ReferenceData.SkillInterface, INT));
-            BaseStats.Add(new(ReferenceData.SkillCombatNumber, combatNumber));
+            BaseStats.Add(new(AppData.SkillInterface, INT));
+            BaseStats.Add(new(AppData.SkillCombatNumber, combatNumber));
             MaximumHitPoints = REZ;
             CurrentHitPoints = REZ;
         }
         public void SetActiveDefenseStats(int MOVE, int HP, int DV)
         {
-            Type = ReferenceData.ActiveDefense;
+            Type = AppData.ActiveDefense;
             Notes = MOVE.ToString();
             PlayerRole = DV.ToString();
             MaximumHitPoints = HP;
@@ -519,88 +529,90 @@ namespace CyberpunkGameplayAssistant.Models
         }
         public void SetEmplacedDefenseStats(int combatNumber, int HP, int DV, string note = "")
         {
-            Type = ReferenceData.EmplacedDefense;
+            Type = AppData.EmplacedDefense;
             PlayerRole = DV.ToString();
             Notes = note;
             BaseStats = new();
-            BaseStats.Add(new(ReferenceData.SkillCombatNumber, combatNumber));
+            BaseStats.Add(new(AppData.SkillCombatNumber, combatNumber));
             MaximumHitPoints = HP;
             CurrentHitPoints = HP;
         }
         public void SetCalculatedStats()
         {
             CalculatedStats = new();
-            List<string> statsAffectedByArmorPenalty = new() { ReferenceData.StatReflexes, ReferenceData.StatDexterity, ReferenceData.StatMovement };
+            List<string> statsAffectedByArmorPenalty = new() { AppData.StatReflexes, AppData.StatDexterity, AppData.StatMovement };
             foreach (Stat stat in BaseStats)
             {
                 Stat statToAdd = stat.DeepClone();
-                if (statsAffectedByArmorPenalty.Contains(stat.Name)) { statToAdd.Value -= ReferenceData.ArmorTable.GetPenalty(ArmorType); }
+                if (statsAffectedByArmorPenalty.Contains(stat.Name)) { statToAdd.Value -= AppData.ArmorTable.GetPenalty(ArmorType); }
                 CalculatedStats.Add(statToAdd);
-            }
-        }
-        public void SetBackupStats(int combatNumber, int hp, int moveAndBody)
-        {
-            BaseStats = new();
-            BaseStats.Add(new(ReferenceData.SkillCombatNumber, combatNumber));
-            BaseStats.Add(new(ReferenceData.StatMovement, moveAndBody));
-            BaseStats.Add(new(ReferenceData.StatBody, moveAndBody));
-
-            MaximumHitPoints = hp;
-            CurrentHitPoints = hp;
-
-        }
-        public void SetCombatSkills(params string[] skills)
-        {
-            foreach (string skill in skills)
-            {
-                Skills.Add(new(skill));
             }
         }
 
         public void SetBaseSkills()
         {
             Skills = new();
-            foreach (SkillLinkReference skill in ReferenceData.SkillLinks)
+            foreach (SkillLinkReference skill in AppData.SkillLinks)
             {
-                if (skill.SkillName == ReferenceData.SkillLanguage) { continue; }
-                if (skill.SkillName == ReferenceData.SkillLocalExpert) { continue; }
-                if (skill.SkillName == ReferenceData.SkillScience) { continue; }
-                if (skill.SkillName == ReferenceData.SkillPlayInstrument) { continue; }
+                if (skill.SkillName == AppData.SkillLanguage) { continue; }
+                if (skill.SkillName == AppData.SkillLocalExpert) { continue; }
+                if (skill.SkillName == AppData.SkillScience) { continue; }
+                if (skill.SkillName == AppData.SkillPlayInstrument) { continue; }
                 Skills.Add(new(skill.SkillName));
             }
         }
-        public void AddSkillsByBase(int skillBase, params string[] skillNames)
+        public void SetClassSkills()
         {
-            foreach (string name in skillNames)
+            if (string.IsNullOrEmpty(ComClass)) { HelperMethods.WriteToLogFile($"No ComClass set for {Name}"); return; }
+            if (ComClass == AppData.ComClassCivilian)
             {
-                AddSkillByBase(name, skillBase);
+                // Should civies have extra skills?
+            }
+            if (ComClass.IsIn(AppData.ComClassLightPolice, AppData.ComClassMediumPolice, AppData.ComClassHeavyPolice))
+            {
+                SetSkillLevels(2, AppData.SkillConcealRevealObject, AppData.SkillTracking, AppData.SkillStealth, AppData.SkillCriminology, AppData.SkillBasicTech, AppData.SkillWeaponstech, AppData.SkillLandVehicleTech);
+                SetSkillLevels(3, AppData.SkillAthletics, AppData.SkillResistTortureDrugs, AppData.SkillTactics, AppData.SkillInterrogation, AppData.SkillFirstAid);
+                SetSkillLevels(4, AppData.SkillPerception, AppData.SkillEndurance, AppData.SkillDriveLandVehicle);
+                SetSkillLevels(5, AppData.SkillBrawling, AppData.SkillEvasion);
+                SetSkillLevels(6, AppData.SkillHandgun, AppData.SkillShoulderArms);
+            }
+            if (ComClass.IsIn(AppData.ComClassLightCorpo, AppData.ComClassMediumCorpo, AppData.ComClassHeavyCorpo))
+            {
+                // TODO - Corpo Skills and Ganger Skills
             }
         }
-        public void AddSkillByBase(string name, int skillBase, string variant = "")
+        public void AddWeapons(params string[] types)
         {
-            Skill skill = Skills.FirstOrDefault(s => s.Name == name && s.Variant == variant);
-            if (skill == null)
+            foreach (string type in types)
             {
-                if (name == ReferenceData.SkillInterface) { Skills.Add(new(name, variant, skillBase)); return; }
-                int level = skillBase - CalculatedStats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName == name).StatName);
-                Skills.Add(new(name, variant, level));
-            }
-            else
-            {
-                skill.Level = skillBase - CalculatedStats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName== name).StatName);
+                AddWeapon(type);
             }
         }
         public void AddWeapon(string type, string quality = "", string name = "")
         {
-            if (string.IsNullOrEmpty(quality)) { quality = ReferenceData.WeaponQualityStandard; }
+            if (string.IsNullOrEmpty(quality)) { quality = AppData.WeaponQualityStandard; }
             Weapons.Add(new(type, quality, name));
+        }
+        public void AddBasicAmmoForAllWeapons(int numberOfClips)
+        {
+            foreach (CombatantWeapon weapon in Weapons)
+            {
+                if (!weapon.UsesAmmo) { continue; }
+                Weapon weaponData = AppData.WeaponRepository.FirstOrDefault(w => w.Type == weapon.Type)!;
+                RangedWeaponClip clipData = AppData.ClipChart.FirstOrDefault(c => c.WeaponType == weapon.Type)!;
+                AddAmmo(weaponData.AmmoType, clipData.Standard * numberOfClips);
+            }
         }
         public void AddAmmo(string type, int quantity, string variant = "")
         {
-            if (string.IsNullOrEmpty(variant)) { variant = ReferenceData.AmmoVarBasic; }
+            if (string.IsNullOrEmpty(variant)) { variant = AppData.AmmoVarBasic; }
             AmmoInventory.Add(new(type, quantity, variant));
         }
         public void AddGearSet(params string[] names)
+        {
+            AddGearSet(names.ToList());
+        }
+        public void AddGearSet(List<string> names)
         {
             foreach (string name in names)
             {
@@ -621,17 +633,10 @@ namespace CyberpunkGameplayAssistant.Models
                 AddCyberware(name);
             }
         }
-        public void SetClipQuantities()
-        {
-            foreach (CombatantWeapon weapon in Weapons)
-            {
-                weapon.CurrentClipQuantity = ReferenceData.ClipChart.GetStandardClipSize(weapon.Type);
-            }
-        }
 
         public void AddShield()
         {
-            ShieldType = ReferenceData.ShieldTypeBulletproofShield;
+            ShieldType = AppData.ShieldTypeBulletproofShield;
             ShieldHp = 10;
         }
         
@@ -643,56 +648,55 @@ namespace CyberpunkGameplayAssistant.Models
         
         public int GetSkillTotal(string skill)
         {
-            if (Type == ReferenceData.ActiveDefense) { return GetDemonCombatNumber(); }
-            if (Type == ReferenceData.EmplacedDefense) { return BaseStats.GetValue(ReferenceData.SkillCombatNumber); }
-            if (Type == ReferenceData.LawmanBackup) { return CalculatedStats.GetValue(ReferenceData.SkillCombatNumber); }
+            if (Type == AppData.ActiveDefense) { return GetDemonCombatNumber(); }
+            if (Type == AppData.EmplacedDefense) { return BaseStats.GetValue(AppData.SkillCombatNumber); }
             int skillLevel = Skills.FirstOrDefault(s => s.Name == skill).Level;
-            int statLevel = CalculatedStats.GetValue(ReferenceData.SkillLinks.First(s => s.SkillName == skill).StatName);
+            int statLevel = CalculatedStats.GetValue(AppData.SkillLinks.First(s => s.SkillName == skill).StatName);
             return skillLevel + statLevel;
         }
         public void UpdateGearDescriptions()
         {
             foreach (Gear gear in GearInventory)
             {
-                gear.Description = ReferenceData.MasterGearList[gear.Name];
+                gear.Description = AppData.MasterGearList[gear.Name];
             }
         }
         public void UpdateCyberwareDescriptions()
         {
             foreach (Cyberware cyberware in InstalledCyberware)
             {
-                cyberware.Description = ReferenceData.MasterCyberwareList[cyberware.Name];
+                cyberware.Description = AppData.MasterCyberwareList[cyberware.Name];
             }
         }
         public int GetInitiative()
         {
-            if (Type == ReferenceData.Player) { return Initiative; }
-            int reflex = CalculatedStats.GetValue(ReferenceData.StatReflexes);
-            reflex -= ReferenceData.ArmorTable.GetPenalty(ArmorType);
+            if (Type == AppData.Player) { return Initiative; }
+            int reflex = CalculatedStats.GetValue(AppData.StatReflexes);
+            reflex -= AppData.ArmorTable.GetPenalty(ArmorType);
             return HelperMethods.RollD10() + reflex;
         }
         public void UpdateWoundState()
         {
-            if (Type == ReferenceData.BlackIce || Type == ReferenceData.Demon) { UpdateBlackIceWoundState(); return; }
-            if (Type == ReferenceData.ActiveDefense || Type == ReferenceData.EmplacedDefense) { UpdateDefenseWoundState(); return; }
-            string woundState = ReferenceData.WoundStateUnharmed;
-            if (CurrentHitPoints < MaximumHitPoints) { woundState = ReferenceData.WoundStateLightlyWounded; }
-            if (CurrentHitPoints <= (MaximumHitPoints / 2)) { woundState = ReferenceData.WoundStateSeriouslyWounded; }
-            if (CurrentHitPoints < 1) { woundState = ReferenceData.WoundStateMortallyWounded; }
-            if (IsDead) { woundState = ReferenceData.WoundStateDead; }
+            if (Type == AppData.BlackIce || Type == AppData.Demon) { UpdateBlackIceWoundState(); return; }
+            if (Type == AppData.ActiveDefense || Type == AppData.EmplacedDefense) { UpdateDefenseWoundState(); return; }
+            string woundState = AppData.WoundStateUnharmed;
+            if (CurrentHitPoints < MaximumHitPoints) { woundState = AppData.WoundStateLightlyWounded; }
+            if (CurrentHitPoints <= (MaximumHitPoints / 2)) { woundState = AppData.WoundStateSeriouslyWounded; }
+            if (CurrentHitPoints < 1) { woundState = AppData.WoundStateMortallyWounded; }
+            if (IsDead) { woundState = AppData.WoundStateDead; }
             WoundState = woundState;
             NotifyPropertyChanged(nameof(MoveSpeed));
         }
         public void UpdateBlackIceWoundState()
         {
-            string woundState = ReferenceData.ProgramStateRezzed;
-            if (CurrentHitPoints == 0) { woundState = ReferenceData.ProgramStateDerezzed; }
+            string woundState = AppData.ProgramStateRezzed;
+            if (CurrentHitPoints == 0) { woundState = AppData.ProgramStateDerezzed; }
             WoundState = woundState;
         }
         public void UpdateDefenseWoundState()
         {
-            string woundState = ReferenceData.DefenseStateOperational;
-            if (CurrentHitPoints == 0) { woundState = ReferenceData.DefenseStateDestroyed; IsDead = true; }
+            string woundState = AppData.DefenseStateOperational;
+            if (CurrentHitPoints == 0) { woundState = AppData.DefenseStateDestroyed; IsDead = true; }
             WoundState = woundState;
         }
         public void ReadyUpActiveDefense(int count)
@@ -705,21 +709,21 @@ namespace CyberpunkGameplayAssistant.Models
         public int GetSkillPenalty(string skillName)
         {
             int penalty = GetAllActionInjuryAndWoundStatePenalty();
-            if (skillName == ReferenceData.SkillPerception && CriticalInjuries.Contains(ReferenceData.CriticalInjuryLostEye)) { penalty += 4; }
-            if (skillName == ReferenceData.SkillPerception && CriticalInjuries.Contains(ReferenceData.CriticalInjuryDamagedEye)) { penalty += 2; }
-            if (skillName == ReferenceData.SkillPersuasion && CriticalInjuries.Contains(ReferenceData.CriticalInjuryBrokenJaw)) { penalty += 4; }
-            if (skillName == ReferenceData.SkillBribery && CriticalInjuries.Contains(ReferenceData.CriticalInjuryBrokenJaw)) { penalty += 4; }
-            if (skillName == ReferenceData.SkillConversation && CriticalInjuries.Contains(ReferenceData.CriticalInjuryBrokenJaw)) { penalty += 4; }
-            if (skillName == ReferenceData.SkillPerception && CriticalInjuries.Contains(ReferenceData.CriticalInjuryLostEar)) { penalty += 4; }
+            if (skillName == AppData.SkillPerception && CriticalInjuries.Contains(AppData.CriticalInjuryLostEye)) { penalty += 4; }
+            if (skillName == AppData.SkillPerception && CriticalInjuries.Contains(AppData.CriticalInjuryDamagedEye)) { penalty += 2; }
+            if (skillName == AppData.SkillPersuasion && CriticalInjuries.Contains(AppData.CriticalInjuryBrokenJaw)) { penalty += 4; }
+            if (skillName == AppData.SkillBribery && CriticalInjuries.Contains(AppData.CriticalInjuryBrokenJaw)) { penalty += 4; }
+            if (skillName == AppData.SkillConversation && CriticalInjuries.Contains(AppData.CriticalInjuryBrokenJaw)) { penalty += 4; }
+            if (skillName == AppData.SkillPerception && CriticalInjuries.Contains(AppData.CriticalInjuryLostEar)) { penalty += 4; }
             // TODO - add question for if perception involves sight, smell, or sound
             return penalty;
         }
         public int GetStatPenalty(string statName)
         {
             int penalty = GetAllActionInjuryAndWoundStatePenalty();
-            if (statName == ReferenceData.StatMovement && CriticalInjuries.Contains(ReferenceData.CriticalInjuryCollapsedLung)) { penalty += 2; }
-            if (statName == ReferenceData.StatMovement && CriticalInjuries.Contains(ReferenceData.CriticalInjuryBrokenLeg)) { penalty += 4; }
-            if (statName == ReferenceData.StatMovement && CriticalInjuries.Contains(ReferenceData.CriticalInjuryDismemberedLeg)) { penalty += 6; }
+            if (statName == AppData.StatMovement && CriticalInjuries.Contains(AppData.CriticalInjuryCollapsedLung)) { penalty += 2; }
+            if (statName == AppData.StatMovement && CriticalInjuries.Contains(AppData.CriticalInjuryBrokenLeg)) { penalty += 4; }
+            if (statName == AppData.StatMovement && CriticalInjuries.Contains(AppData.CriticalInjuryDismemberedLeg)) { penalty += 6; }
             return penalty;
         }
         public int GetAttackInjuryPenalty(string weaponType)
@@ -732,40 +736,45 @@ namespace CyberpunkGameplayAssistant.Models
         private int GetMeleeWeaponInjuryPenalty()
         {
             int penalty = 0;
-            if (CriticalInjuries.Contains(ReferenceData.CriticalInjuryTornMuscle)) { penalty += 2; }
+            if (CriticalInjuries.Contains(AppData.CriticalInjuryTornMuscle)) { penalty += 2; }
             return penalty;
         }
         private int GetRangedWeaponInjuryPenalty()
         {
             int penalty = 0;
-            if (CriticalInjuries.Contains(ReferenceData.CriticalInjuryLostEye)) { penalty += 4; }
-            if (CriticalInjuries.Contains(ReferenceData.CriticalInjuryDamagedEye)) { penalty += 2; }
+            if (CriticalInjuries.Contains(AppData.CriticalInjuryLostEye)) { penalty += 4; }
+            if (CriticalInjuries.Contains(AppData.CriticalInjuryDamagedEye)) { penalty += 2; }
             return penalty;
         }
         private int GetAllActionInjuryAndWoundStatePenalty()
         {
             int penalty = 0; 
-            if (CriticalInjuries.Contains(ReferenceData.CriticalInjuryBrainInjury)) { penalty += 2; }
-            if (CriticalInjuries.Contains(ReferenceData.CriticalInjuryConcussion)) { penalty += 2; }
-            if (WoundState == ReferenceData.WoundStateSeriouslyWounded) { penalty += 2; }
-            if (WoundState == ReferenceData.WoundStateMortallyWounded) { penalty += 4; }
+            if (CriticalInjuries.Contains(AppData.CriticalInjuryBrainInjury)) { penalty += 2; }
+            if (CriticalInjuries.Contains(AppData.CriticalInjuryConcussion)) { penalty += 2; }
+            if (WoundState == AppData.WoundStateSeriouslyWounded) { penalty += 2; }
+            if (WoundState == AppData.WoundStateMortallyWounded) { penalty += 4; }
             return penalty;
         }
         public void SetNetActions()
         {
             NetActions.Clear();
-            NetActions.Add(new(ReferenceData.NetActionInterface));
-            NetActions.Add(new(ReferenceData.NetActionJackIn));
-            NetActions.Add(new(ReferenceData.NetActionJackOut));
-            NetActions.Add(new(ReferenceData.NetActionActivateProgram));
-            NetActions.Add(new(ReferenceData.NetActionScanner));
-            NetActions.Add(new(ReferenceData.NetActionBackdoor));
-            NetActions.Add(new(ReferenceData.NetActionCloak));
-            NetActions.Add(new(ReferenceData.NetActionControl));
-            NetActions.Add(new(ReferenceData.NetActionEyeDee));
-            NetActions.Add(new(ReferenceData.NetActionSlide));
-            NetActions.Add(new(ReferenceData.NetActionVirus));
-            NetActions.Add(new(ReferenceData.NetActionZap));
+            NetActions.Add(new(AppData.NetActionInterface));
+            NetActions.Add(new(AppData.NetActionJackIn));
+            NetActions.Add(new(AppData.NetActionJackOut));
+            NetActions.Add(new(AppData.NetActionActivateProgram));
+            NetActions.Add(new(AppData.NetActionScanner));
+            NetActions.Add(new(AppData.NetActionBackdoor));
+            NetActions.Add(new(AppData.NetActionCloak));
+            NetActions.Add(new(AppData.NetActionControl));
+            NetActions.Add(new(AppData.NetActionEyeDee));
+            NetActions.Add(new(AppData.NetActionSlide));
+            NetActions.Add(new(AppData.NetActionVirus));
+            NetActions.Add(new(AppData.NetActionZap));
+        }
+        public void ResetWeaponsAndAmmo()
+        {
+            Weapons.Clear();
+            AmmoInventory.Clear();
         }
 
         // Private Methods
@@ -790,7 +799,6 @@ namespace CyberpunkGameplayAssistant.Models
             StandardActions = new();
             NetActions = new();
             CriticalInjuries = new();
-            WeaponOptions = new();
             CyberdeckPrograms = new();
             ActivePrograms = new();
         }
@@ -805,7 +813,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private void AddCyberdeckProgram(string name)
         {
-            CyberdeckProgram matchedProgram = ReferenceData.CyberdeckPrograms.FirstOrDefault(p => p.Name == name);
+            CyberdeckProgram matchedProgram = AppData.CyberdeckPrograms.FirstOrDefault(p => p.Name == name)!;
             if (matchedProgram == null) { return; }
             CyberdeckPrograms.Add(matchedProgram.DeepClone());
         }
@@ -815,15 +823,15 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private void SetStoppingPower(bool setCurrentToMax)
         {
-            MaximumHeadStoppingPower = ReferenceData.ArmorTable.GetStoppingPower(ArmorType);
-            MaximumBodyStoppingPower = ReferenceData.ArmorTable.GetStoppingPower(ArmorType);
+            MaximumHeadStoppingPower = AppData.ArmorTable.GetStoppingPower(ArmorType);
+            MaximumBodyStoppingPower = AppData.ArmorTable.GetStoppingPower(ArmorType);
             if (setCurrentToMax)
             {
                 CurrentHeadStoppingPower = MaximumHeadStoppingPower;
                 CurrentBodyStoppingPower = MaximumBodyStoppingPower;
             }
         }
-        private void ReloadAllWeapons()
+        public void ReloadAllWeapons()
         {
             foreach (CombatantWeapon weapon in Weapons)
             {
@@ -832,8 +840,8 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private void SetHitPoints(bool setCurrentToMax)
         {
-            int body = CalculatedStats.GetValue(ReferenceData.StatBody);
-            int willpower = CalculatedStats.GetValue(ReferenceData.StatWillpower);
+            int body = CalculatedStats.GetValue(AppData.StatBody);
+            int willpower = CalculatedStats.GetValue(AppData.StatWillpower);
             MaximumHitPoints = 10 + (5 * ((body + willpower) / 2));
             if (setCurrentToMax)
             {
@@ -844,36 +852,36 @@ namespace CyberpunkGameplayAssistant.Models
         {
             foreach (Skill skill in Skills)
             {
-                if (ReferenceData.SkillsToSkipForCombatants.Contains(skill.Name)) { continue; }
-                if (skill.Name == ReferenceData.SkillSurgery) { TechniqueSkills.Add(skill); continue; }
-                if (skill.Name == ReferenceData.SkillMedicalTech) { TechniqueSkills.Add(skill); continue; }
-                switch (ReferenceData.SkillLinks.GetCategory(skill.Name))
+                if (AppData.SkillsToSkipForCombatants.Contains(skill.Name)) { continue; }
+                if (skill.Name == AppData.SkillSurgery) { TechniqueSkills.Add(skill); continue; }
+                if (skill.Name == AppData.SkillMedicalTech) { TechniqueSkills.Add(skill); continue; }
+                switch (AppData.SkillLinks.GetCategory(skill.Name))
                 {
-                    case ReferenceData.SkillCategoryAwareness:
+                    case AppData.SkillCategoryAwareness:
                         AwarenessSkills.Add(skill);
                         break;
-                    case ReferenceData.SkillCategoryBody:
+                    case AppData.SkillCategoryBody:
                         BodySkills.Add(skill);
                         break;
-                    case ReferenceData.SkillCategoryControl:
+                    case AppData.SkillCategoryControl:
                         ControlSkills.Add(skill);
                         break;
-                    case ReferenceData.SkillCategoryPerformance:
+                    case AppData.SkillCategoryPerformance:
                         PerformanceSkills.Add(skill);
                         break;
-                    case ReferenceData.SkillCategoryEducation:
+                    case AppData.SkillCategoryEducation:
                         EducationSkills.Add(skill);
                         break;
-                    case ReferenceData.SkillCategoryFighting:
+                    case AppData.SkillCategoryFighting:
                         FightingSkills.Add(skill);
                         break;
-                    case ReferenceData.SkillCategoryRangedWeapon:
+                    case AppData.SkillCategoryRangedWeapon:
                         RangedWeaponSkills.Add(skill);
                         break;
-                    case ReferenceData.SkillCategorySocial:
+                    case AppData.SkillCategorySocial:
                         SocialSkills.Add(skill);
                         break;
-                    case ReferenceData.SkillCategoryTechnique:
+                    case AppData.SkillCategoryTechnique:
                         TechniqueSkills.Add(skill);
                         break;
                     default: break;
@@ -884,8 +892,8 @@ namespace CyberpunkGameplayAssistant.Models
         {
             foreach (CriticalInjury injury in CriticalInjuries)
             {
-                CriticalInjury bodyInjury = ReferenceData.CriticalInjuriesToBody.FirstOrDefault(i => i.Name == injury.Name)!;
-                CriticalInjury headInjury = ReferenceData.CriticalInjuriesToHead.FirstOrDefault(i => i.Name == injury.Name)!;
+                CriticalInjury bodyInjury = AppData.CriticalInjuriesToBody.FirstOrDefault(i => i.Name == injury.Name)!;
+                CriticalInjury headInjury = AppData.CriticalInjuriesToHead.FirstOrDefault(i => i.Name == injury.Name)!;
                 if (bodyInjury != null) { injury.Description = bodyInjury.Description; }
                 if (headInjury != null) { injury.Description = headInjury.Description; }
             }
@@ -893,22 +901,22 @@ namespace CyberpunkGameplayAssistant.Models
         private void SetStandardActions()
         {
             StandardActions.Clear();
-            StandardActions.Add(new(ReferenceData.ActionBrawl));
-            StandardActions.Add(new(ReferenceData.ActionChoke));
-            StandardActions.Add(new(ReferenceData.ActionDeathSave));
-            StandardActions.Add(new(ReferenceData.ActionEvade));
-            StandardActions.Add(new(ReferenceData.ActionGrab));
-            StandardActions.Add(new(ReferenceData.ActionInitiative));
-            StandardActions.Add(new(ReferenceData.ActionThrowGrapple));
-            StandardActions.Add(new(ReferenceData.ActionThrowObject));
+            StandardActions.Add(new(AppData.ActionBrawl));
+            StandardActions.Add(new(AppData.ActionChoke));
+            StandardActions.Add(new(AppData.ActionDeathSave));
+            StandardActions.Add(new(AppData.ActionEvade));
+            StandardActions.Add(new(AppData.ActionGrab));
+            StandardActions.Add(new(AppData.ActionInitiative));
+            StandardActions.Add(new(AppData.ActionThrowGrapple));
+            StandardActions.Add(new(AppData.ActionThrowObject));
         }
         private int GetDemonCombatNumber()
         {
-            Combatant demon = ReferenceData.MainModelRef.CampaignView.ActiveCampaign.AllCombatants.FirstOrDefault(c => c.Type == ReferenceData.Demon);
-            if (demon == null) { RaiseError(ReferenceData.ErrorNoDemonAvailableForActiveDefense); return 0; }
+            Combatant demon = AppData.MainModelRef.CampaignView.ActiveCampaign.AllCombatants.FirstOrDefault(c => c.Type == AppData.Demon);
+            if (demon == null) { RaiseError(AppData.ErrorNoDemonAvailableForActiveDefense); return 0; }
             else
             {
-                return demon.BaseStats.GetValue(ReferenceData.SkillCombatNumber);
+                return demon.BaseStats.GetValue(AppData.SkillCombatNumber);
             }
         }
 

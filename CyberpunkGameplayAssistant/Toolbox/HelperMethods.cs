@@ -13,19 +13,19 @@ namespace CyberpunkGameplayAssistant.Toolbox
     {
         public static void NotifyUser(string type, string message)
         {
-            ReferenceData.MainModelRef.AddUserAlert(type, message);
+            AppData.MainModelRef.AddUserAlert(type, message);
         }
         public static void WriteToLogFile(string message, bool notifyUser = false)
         {
-            if (notifyUser) { NotifyUser(ReferenceData.AlertError, message); }
-            File.AppendAllText(ReferenceData.File_Log, $"{DateTime.Now}: {message}\n");
+            if (notifyUser) { NotifyUser(AppData.AlertError, message); }
+            File.AppendAllText(AppData.File_Log, $"{DateTime.Now}: {message}\n");
         }
         public static int[] RollDice(int numberOfDice, int sidesOnDice)
         {
             int[] diceResults = new int[numberOfDice];
             for (int i = 0; i < diceResults.Length; i++)
             {
-                diceResults[i] = ReferenceData.RNG.Next(1, sidesOnDice + 1);
+                diceResults[i] = AppData.RNG.Next(1, sidesOnDice + 1);
             }
             return diceResults;
         }
@@ -44,37 +44,37 @@ namespace CyberpunkGameplayAssistant.Toolbox
         }
         public static int RollD10(bool includeCritical = false)
         {
-            int result = ReferenceData.RNG.Next(1, 11);
+            int result = AppData.RNG.Next(1, 11);
             if (includeCritical)
             {
                 if (result == 1)
                 {
-                    result -= ReferenceData.RNG.Next(1, 11);
+                    result -= AppData.RNG.Next(1, 11);
                 }
                 if (result == 10)
                 {
-                    result += ReferenceData.RNG.Next(1, 11);
+                    result += AppData.RNG.Next(1, 11);
                 }
             }
             return result;
         }
         public static int RollD6()
         {
-            return ReferenceData.RNG.Next(1, 7);
+            return AppData.RNG.Next(1, 7);
         }
         public static bool FlipCoin()
         {
-            return ReferenceData.RNG.Next(0,2) == 0 ? true : false;
+            return AppData.RNG.Next(0,2) == 0 ? true : false;
         }
         public static string GetAlphabetLetter(int position)
         {
-            return ReferenceData.Alphabet[position];
+            return AppData.Alphabet[position];
         }
         public static void AddToGameplayLog(string message, string type = "", bool copyToWeb = false)
         {
-            if (!ReferenceData.IsLoaded) { return; }
-            if (ReferenceData.MainModelRef.CampaignView == null) { return; }
-            GameCampaign campaign = ReferenceData.MainModelRef.CampaignView.ActiveCampaign;
+            if (!AppData.IsLoaded) { return; }
+            if (AppData.MainModelRef.CampaignView == null) { return; }
+            GameCampaign campaign = AppData.MainModelRef.CampaignView.ActiveCampaign;
             campaign.EventHistory.Insert(0, new(type, message));
         }
         public static bool AskYesNoQuestion(string question)
@@ -88,7 +88,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         }
         public static string AorAn(string word)
         {
-            return ReferenceData.Vowels.ToList().Contains(word[0].ToString()) ? "an" : "a";
+            return AppData.Vowels.ToList().Contains(word[0].ToString()) ? "an" : "a";
         }
         public static string GetUniqueId()
         {
@@ -117,30 +117,30 @@ namespace CyberpunkGameplayAssistant.Toolbox
         }
         public static void PlayWeaponSound(string weaponType)
         {
-            if (ReferenceData.WeaponSounds.ContainsKey(weaponType))
+            if (AppData.WeaponSounds.ContainsKey(weaponType))
             {
-                ReferenceData.WindowRef.PlaySound(ReferenceData.WeaponSounds[weaponType]);
+                AppData.WindowRef.PlaySound(AppData.WeaponSounds[weaponType]);
             }
         }
         public static void PlayAutofireSound()
         {
-            ReferenceData.WindowRef.PlaySound(ReferenceData.AudioAutofire);
+            AppData.WindowRef.PlaySound(AppData.AudioAutofire);
         }
         public static void PlayReloadSound()
         {
-            ReferenceData.WindowRef.PlaySound(ReferenceData.AudioReload);
+            AppData.WindowRef.PlaySound(AppData.AudioReload);
         }
         public static void PlayMalfunctionSound()
         {
-            ReferenceData.WindowRef.PlaySound(ReferenceData.AudioMalfunction);
+            AppData.WindowRef.PlaySound(AppData.AudioMalfunction);
         }
         public static void PlayExplosionSound()
         {
-            ReferenceData.WindowRef.PlaySound(ReferenceData.AudioExplosion);
+            AppData.WindowRef.PlaySound(AppData.AudioExplosion);
         }
         public static string RollNetFloor(int level, string difficulty)
         {
-            if (level <= 0) { NotifyUser(ReferenceData.AlertError, $"Invalid floor level {level} passed to HelperMethods.RollNetFloor"); return string.Empty; }
+            if (level <= 0) { NotifyUser(AppData.AlertError, $"Invalid floor level {level} passed to HelperMethods.RollNetFloor"); return string.Empty; }
             bool isLobby = (level == 1 || level == 2);
             Dictionary<int, string> lobbyTable = new()
             {
@@ -231,9 +231,9 @@ namespace CyberpunkGameplayAssistant.Toolbox
             int diceResult = isLobby ? RollDice(1, 6).Sum() : RollDice(3, 6).Sum();
             Dictionary<int, string> otherTable = difficulty switch
             {
-                ReferenceData.NetArchitectureDifficultyBasic => basicTable,
-                ReferenceData.NetArchitectureDifficultyStandard => standardTable,
-                ReferenceData.NetArchitectureDifficultyUncommon => uncommonTable,
+                AppData.NetArchitectureDifficultyBasic => basicTable,
+                AppData.NetArchitectureDifficultyStandard => standardTable,
+                AppData.NetArchitectureDifficultyUncommon => uncommonTable,
                 _ => advancedTable
             };
             return (level == 1 || level == 2) ? lobbyTable[diceResult] : otherTable[diceResult];
@@ -242,54 +242,54 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static string ProcessAmmoEffect(int damage, bool isCrit, string variant)
         {
             string output = "";
-            if (variant.IsIn(ReferenceData.AmmoVarBasic, ReferenceData.AmmoVarArmorPiercing, ReferenceData.AmmoVarExpansive,
-                ReferenceData.AmmoVarIncendiary, ReferenceData.AmmoVarRubber))
+            if (variant.IsIn(AppData.AmmoVarBasic, AppData.AmmoVarArmorPiercing, AppData.AmmoVarExpansive,
+                AppData.AmmoVarIncendiary, AppData.AmmoVarRubber))
             {
-                output += $"\nDamage: {damage + (isCrit && variant != ReferenceData.AmmoVarRubber ? 5 : 0)}"; // pg 187 Critical Injury Bonus Damage
-                if (variant != ReferenceData.AmmoVarRubber && isCrit) { output += " CRIT"; }
-                if (variant == ReferenceData.AmmoVarArmorPiercing) { output += " AP"; }
+                output += $"\nDamage: {damage + (isCrit && variant != AppData.AmmoVarRubber ? 5 : 0)}"; // pg 187 Critical Injury Bonus Damage
+                if (variant != AppData.AmmoVarRubber && isCrit) { output += " CRIT"; }
+                if (variant == AppData.AmmoVarArmorPiercing) { output += " AP"; }
             }
-            if (variant == ReferenceData.AmmoVarBiotoxin)
+            if (variant == AppData.AmmoVarBiotoxin)
             {
                 output += $"\nTarget must pass a DV15 Resist Drugs Check or take {HelperMethods.RollDamage(3, out _)} direct damage.";
             }
-            if (variant == ReferenceData.AmmoVarEMP)
+            if (variant == AppData.AmmoVarEMP)
             {
                 output += $"\nTarget must pass a DV15 Cybertech Check, or up to two pieces of their Cyberware or carried electronics become inoperable for 1 minute.";
             }
-            if (variant == ReferenceData.AmmoVarExpansive)
+            if (variant == AppData.AmmoVarExpansive)
             {
                 if (isCrit) { output += "\nIf you cause the Foreign Object injury, roll another injury. This second injury deals no bonus damage."; }
             }
-            if (variant == ReferenceData.AmmoVarFlashbang)
+            if (variant == AppData.AmmoVarFlashbang)
             {
                 output += $"\nTarget must pass a DV15 Resist Torture Check or suffer the Damaged Eye and Damaged Ear injuries for the next minute. This does not cause bonus damage.";
             }
-            if (variant == ReferenceData.AmmoVarIncendiary)
+            if (variant == AppData.AmmoVarIncendiary)
             {
                 output += $"\nIf a target takes damage, they are ignited, and take two direct damage to their HP at the end of their turn until they take an action to put themselves out.";
             }
-            if (variant == ReferenceData.AmmoVarPoison)
+            if (variant == AppData.AmmoVarPoison)
             {
                 output += $"\nTarget must pass a DV13 Resist Drugs Check or take {HelperMethods.RollDamage(3, out _)} direct damage.";
             }
-            if (variant == ReferenceData.AmmoVarRubber)
+            if (variant == AppData.AmmoVarRubber)
             {
                 output += $"\nTargets reduced to 0 HP are instead left at 1 HP.";
             }
-            if (variant == ReferenceData.AmmoVarSleep)
+            if (variant == AppData.AmmoVarSleep)
             {
                 output += $"\nTarget must pass a DV13 Resist Drugs Check or falls Prone and Unconscious for 1 minute until awoken by taking damage or my someone using an Action to touch them.";
             }
-            if (variant == ReferenceData.AmmoVarSmart)
+            if (variant == AppData.AmmoVarSmart)
             {
                 output += $"\nSee Page 346.";
             }
-            if (variant == ReferenceData.AmmoVarSmoke)
+            if (variant == AppData.AmmoVarSmoke)
             {
                 output += $"\nObscures a 5x5 tile area with smoke for 1 minute.";
             }
-            if (variant == ReferenceData.AmmoVarTeargas)
+            if (variant == AppData.AmmoVarTeargas)
             {
                 output += $"\nTargets with meat eyes must pass a DV13 Resist Torture Check or suffer the Damaged Eye injury for the next minute. This does not cause bonus damage.";
             }

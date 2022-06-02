@@ -109,6 +109,19 @@
             <Setter Property="Orientation" Value="Horizontal" />
             <Setter Property="HorizontalAlignment" Value="Right" />
         </Style>
+        <Style TargetType="Border" BasedOn="{StaticResource BRDR_PopupBorder}" x:Key="BRDR_TrackerCard">
+            <Setter Property="Width" Value="586" />
+            <Setter Property="Height" Value="84" />
+            <Setter Property="Margin" Value="0 2 2 2" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsActive}" Value="true">
+                    <Setter Property="BorderBrush" Value="{StaticResource TrackerCardActive}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsActive}" Value="false">
+                    <Setter Property="BorderBrush" Value="{StaticResource TrackerCardInactive}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="F1" Command="{Binding ProcessKeyboardShortcut}" CommandParameter="F1" />
@@ -446,19 +459,7 @@
                                     <Separator Width="8" />
                                     <StackPanel>
                                         <StackPanel.Resources>
-                                            <Style TargetType="Border" BasedOn="{StaticResource BRDR_PopupBorder}" x:Key="BRDR_TrackerCard">
-                                                <Setter Property="Width" Value="586" />
-                                                <Setter Property="Height" Value="84" />
-                                                <Setter Property="Margin" Value="0 2 2 2" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsActive}" Value="true">
-                                                        <Setter Property="BorderBrush" Value="{StaticResource TrackerCardActive}" />
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding IsActive}" Value="false">
-                                                        <Setter Property="BorderBrush" Value="{StaticResource TrackerCardInactive}" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
+                                            
                                             <DataTemplate x:Key="EmptyCard">
                                                 <Border Style="{StaticResource BRDR_TrackerCard}">
                                                     <TextBlock Text="Active Combatant will display here" VerticalAlignment="Center" HorizontalAlignment="Center" />
@@ -466,98 +467,98 @@
                                             </DataTemplate>
                                             <DataTemplate x:Key="ActiveCombatantCard">
                                                 <Border Style="{StaticResource BRDR_TrackerCard}">
-                                                    <StackPanel Margin="2">
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <Image Source="{Binding PortraitFilePath}" Width="64" Height="64" Margin="6 6 4 6">
-                                                                <Image.ContextMenu>
-                                                                    <ContextMenu>
-                                                                        <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
-                                                                        <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
-                                                                        <MenuItem Header="Toggle Loyalty" Command="{Binding ToggleLoyalty}" />
-                                                                        <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
-                                                                    </ContextMenu>
-                                                                </Image.ContextMenu>
-                                                            </Image>
-                                                            <StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <TextBlock Text="{Binding DisplayName, FallbackValue='Security Operative A'}" Width="134" FontSize="14" Margin="3" />
-                                                                    <Image Style="{StaticResource Icon_Info}" Margin="4 0 8 0" />
+                                                    <StackPanel Orientation="Horizontal" Margin="2" VerticalAlignment="Center">
+                                                        <Image Source="{Binding PortraitFilePath}" Width="72" Height="72" Margin="2">
+                                                            <Image.ContextMenu>
+                                                                <ContextMenu>
+                                                                    <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
+                                                                    <MenuItem Header="Toggle Ally" Command="{Binding ToggleAlly}" />
+                                                                    <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
+                                                                    <MenuItem Header="Toggle Loyalty" Command="{Binding ToggleLoyalty}" />
+                                                                    <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
+                                                                </ContextMenu>
+                                                            </Image.ContextMenu>
+                                                        </Image>
+                                                        <Border Background="{Binding IsAlly, Converter={tool:AllyEnemyColor}, FallbackValue=DarkGreen}" CornerRadius="2" BorderBrush="{Binding IsAlly, Converter={tool:AllyEnemyColor}, FallbackValue=DarkGreen}" Width="24" Height="72">
+                                                            <TextBlock Text="{Binding TrackerIndicator, FallbackValue=A}" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="22" FontFamily="Consolas" />
+                                                        </Border>
+                                                        <StackPanel Margin="4 4 0 0">
+                                                            <TextBlock Text="{Binding Name, FallbackValue='Security Guard'}" Width="148" FontSize="16" />
+                                                            <TextBlock Text="{Binding ComClass, FallbackValue=Heavy Ganger}" />
+                                                            <Separator Height="7" />
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <StackPanel>
+                                                                    <cc:MiniToggleButton ImageResource="{StaticResource Icon_Pistol}" IsChecked="{Binding ActiveWeaponMenuOpen}" />
+                                                                    <Popup IsOpen="{Binding ActiveWeaponMenuOpen}">
+                                                                        <uc:WeaponMenu />
+                                                                    </Popup>
                                                                 </StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <StackPanel>
-                                                                        <cc:ImageToggleButton ImageResource="{StaticResource Icon_Pistol}" Text="Weapons" IsChecked="{Binding ActiveWeaponMenuOpen}" />
-                                                                        <Popup IsOpen="{Binding ActiveWeaponMenuOpen}">
-                                                                            <uc:WeaponMenu />
-                                                                        </Popup>
-                                                                    </StackPanel>
-                                                                    <Separator />
-                                                                    <StackPanel>
-                                                                        <cc:MiniToggleButton ImageResource="{StaticResource Icon_Action}" IsChecked="{Binding ActiveActionMenuOpen}" Margin="0 2" />
-                                                                        <Popup IsOpen="{Binding ActiveActionMenuOpen}">
-                                                                            <uc:ActionMenu />
-                                                                        </Popup>
-                                                                    </StackPanel>
+                                                                <Separator />
+                                                                <StackPanel>
+                                                                    <cc:MiniToggleButton ImageResource="{StaticResource Icon_Action}" IsChecked="{Binding ActiveActionMenuOpen}" />
+                                                                    <Popup IsOpen="{Binding ActiveActionMenuOpen}">
+                                                                        <uc:ActionMenu />
+                                                                    </Popup>
                                                                 </StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <StackPanel>
-                                                                        <cc:ImageToggleButton ImageResource="{StaticResource Icon_Hand}" Text="Stats &amp; Skills" IsChecked="{Binding ActiveStatSkillMenuOpen}" />
-                                                                        <Popup IsOpen="{Binding ActiveStatSkillMenuOpen}">
-                                                                            <uc:StatSkillMenu />
-                                                                        </Popup>
-                                                                    </StackPanel>
-                                                                    <Separator />
-                                                                    <StackPanel>
-                                                                        <cc:MiniToggleButton ImageResource="{StaticResource Icon_Bandage}" IsChecked="{Binding ActiveInjuryMenuOpen}" Margin="0 2" />
-                                                                        <Popup IsOpen="{Binding ActiveInjuryMenuOpen}">
-                                                                            <uc:InjuryMenu />
-                                                                        </Popup>
-                                                                    </StackPanel>
+                                                                <Separator />
+                                                                <StackPanel>
+                                                                    <cc:MiniToggleButton ImageResource="{StaticResource Icon_Hand}" IsChecked="{Binding ActiveStatSkillMenuOpen}" />
+                                                                    <Popup IsOpen="{Binding ActiveStatSkillMenuOpen}">
+                                                                        <uc:StatSkillMenu />
+                                                                    </Popup>
+                                                                </StackPanel>
+                                                                <Separator />
+                                                                <StackPanel>
+                                                                    <cc:MiniToggleButton ImageResource="{StaticResource Icon_Bandage}" IsChecked="{Binding ActiveInjuryMenuOpen}" />
+                                                                    <Popup IsOpen="{Binding ActiveInjuryMenuOpen}">
+                                                                        <uc:InjuryMenu />
+                                                                    </Popup>
                                                                 </StackPanel>
                                                             </StackPanel>
-                                                            <Separator />
-                                                            <StackPanel>
-                                                                <StackPanel.Resources>
-                                                                    <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
-                                                                        <Setter Property="Width" Value="auto" />
-                                                                    </Style>
-                                                                </StackPanel.Resources>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Image Style="{StaticResource Icon_Heart}" />
-                                                                    <Separator />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="-5" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="-1" />
-                                                                    <TextBlock Text="{Binding CurrentHitPoints, FallbackValue=20}" Style="{StaticResource MidNum}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="1" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="5" />
-                                                                    <Separator />
-                                                                    <TextBlock Text="{Binding WoundState, FallbackValue=Seriously Wounded}" VerticalAlignment="Center" Width="128" />
-                                                                </StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Image Style="{StaticResource Icon_Construct}" />
-                                                                    <Separator />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Head,-1" />
-                                                                    <TextBlock Text="{Binding CurrentHeadStoppingPower, FallbackValue=10}" Style="{StaticResource MidNum}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Head,1" />
-                                                                    <Separator />
-                                                                    <Image Style="{StaticResource Icon_Rpg_Light_Armor}" />
-                                                                    <Separator />
-                                                                    <TextBlock Text="{Binding ArmorType, FallbackValue=Light Armorjack}" VerticalAlignment="Center" Width="128" />
-                                                                </StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Image Style="{StaticResource Icon_Shield}" />
-                                                                    <Separator />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Body,-1" />
-                                                                    <TextBlock Text="{Binding CurrentBodyStoppingPower, FallbackValue=10}" Style="{StaticResource MidNum}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Body,1" />
-                                                                    <Separator />
-                                                                    <Image Style="{StaticResource Icon_Rpg_Boot}" />
-                                                                    <Separator />
-                                                                    <TextBlock Text="{Binding MoveSpeed}" Width="24" VerticalAlignment="Center" />
-                                                                    <Separator />
-                                                                    <Image Style="{StaticResource Icon_Skull}" />
-                                                                    <Separator />
-                                                                    <TextBlock Text="{Binding DeathSave}" Width="24" VerticalAlignment="Center"  />
-                                                                </StackPanel>
+                                                        </StackPanel>
+                                                        <Separator />
+                                                        <StackPanel>
+                                                            <StackPanel.Resources>
+                                                                <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
+                                                                    <Setter Property="Width" Value="auto" />
+                                                                </Style>
+                                                            </StackPanel.Resources>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Style="{StaticResource Icon_Heart}" />
+                                                                <Separator />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="-5" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="-1" />
+                                                                <TextBlock Text="{Binding CurrentHitPoints, FallbackValue=20}" Style="{StaticResource MidNum}" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="1" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="5" />
+                                                                <Separator />
+                                                                <TextBlock Text="{Binding WoundState, FallbackValue=Seriously Wounded}" VerticalAlignment="Center" Width="128" />
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Style="{StaticResource Icon_Construct}" />
+                                                                <Separator />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Head,-1" />
+                                                                <TextBlock Text="{Binding CurrentHeadStoppingPower, FallbackValue=10}" Style="{StaticResource MidNum}" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Head,1" />
+                                                                <Separator />
+                                                                <Image Style="{StaticResource Icon_Rpg_Light_Armor}" />
+                                                                <Separator />
+                                                                <TextBlock Text="{Binding ArmorType, FallbackValue=Light Armorjack}" VerticalAlignment="Center" Width="128" />
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Style="{StaticResource Icon_Shield}" />
+                                                                <Separator />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Body,-1" />
+                                                                <TextBlock Text="{Binding CurrentBodyStoppingPower, FallbackValue=10}" Style="{StaticResource MidNum}" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Body,1" />
+                                                                <Separator />
+                                                                <Image Style="{StaticResource Icon_Rpg_Boot}" />
+                                                                <Separator />
+                                                                <TextBlock Text="{Binding MoveSpeed}" Width="24" VerticalAlignment="Center" />
+                                                                <Separator />
+                                                                <Image Style="{StaticResource Icon_Rpg_Note}" />
+                                                                <Separator />
+                                                                <TextBox Text="{Binding Notes}" Width="114" />
                                                             </StackPanel>
                                                         </StackPanel>
                                                     </StackPanel>
@@ -565,98 +566,98 @@
                                             </DataTemplate>
                                             <DataTemplate x:Key="StandardCombatantCard">
                                                 <Border Style="{StaticResource BRDR_TrackerCard}">
-                                                    <StackPanel Margin="2">
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <Image Source="{Binding PortraitFilePath}" Width="64" Height="64" Margin="6 6 4 6">
-                                                                <Image.ContextMenu>
-                                                                    <ContextMenu>
-                                                                        <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
-                                                                        <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
-                                                                        <MenuItem Header="Toggle Loyalty" Command="{Binding ToggleLoyalty}" />
-                                                                        <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
-                                                                    </ContextMenu>
-                                                                </Image.ContextMenu>
-                                                            </Image>
-                                                            <StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <TextBlock Text="{Binding DisplayName, FallbackValue='Security Operative A'}" Width="134" FontSize="14" Margin="3" />
-                                                                    <Image Style="{StaticResource Icon_Info}" Margin="4 0 8 0" />
+                                                    <StackPanel Orientation="Horizontal" Margin="2" VerticalAlignment="Center">
+                                                        <Image Source="{Binding PortraitFilePath}" Width="72" Height="72" Margin="2">
+                                                            <Image.ContextMenu>
+                                                                <ContextMenu>
+                                                                    <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
+                                                                    <MenuItem Header="Toggle Ally" Command="{Binding ToggleAlly}" />
+                                                                    <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
+                                                                    <MenuItem Header="Toggle Loyalty" Command="{Binding ToggleLoyalty}" />
+                                                                    <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
+                                                                </ContextMenu>
+                                                            </Image.ContextMenu>
+                                                        </Image>
+                                                        <Border Background="{Binding IsAlly, Converter={tool:AllyEnemyColor}, FallbackValue=DarkGreen}" CornerRadius="2" BorderBrush="{Binding IsAlly, Converter={tool:AllyEnemyColor}, FallbackValue=DarkGreen}" Width="24" Height="72">
+                                                            <TextBlock Text="{Binding TrackerIndicator, FallbackValue=A}" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="22" FontFamily="Consolas" />
+                                                        </Border>
+                                                        <StackPanel Margin="4 4 0 0">
+                                                            <TextBlock Text="{Binding Name, FallbackValue='Security Guard'}" Width="148" FontSize="16" />
+                                                            <TextBlock Text="{Binding ComClass, FallbackValue=Heavy Ganger}" />
+                                                            <Separator Height="7" />
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <StackPanel>
+                                                                    <cc:MiniToggleButton ImageResource="{StaticResource Icon_Pistol}" IsChecked="{Binding WeaponMenuOpen}" />
+                                                                    <Popup IsOpen="{Binding WeaponMenuOpen}">
+                                                                        <uc:WeaponMenu />
+                                                                    </Popup>
                                                                 </StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <StackPanel>
-                                                                        <cc:ImageToggleButton ImageResource="{StaticResource Icon_Pistol}" Text="Weapons" IsChecked="{Binding WeaponMenuOpen}" />
-                                                                        <Popup IsOpen="{Binding WeaponMenuOpen}">
-                                                                            <uc:WeaponMenu />
-                                                                        </Popup>
-                                                                    </StackPanel>
-                                                                    <Separator />
-                                                                    <StackPanel>
-                                                                        <cc:MiniToggleButton ImageResource="{StaticResource Icon_Action}" IsChecked="{Binding ActionMenuOpen}" Margin="0 2" />
-                                                                        <Popup IsOpen="{Binding ActionMenuOpen}">
-                                                                            <uc:ActionMenu />
-                                                                        </Popup>
-                                                                    </StackPanel>
+                                                                <Separator />
+                                                                <StackPanel>
+                                                                    <cc:MiniToggleButton ImageResource="{StaticResource Icon_Action}" IsChecked="{Binding ActionMenuOpen}" />
+                                                                    <Popup IsOpen="{Binding ActionMenuOpen}">
+                                                                        <uc:ActionMenu />
+                                                                    </Popup>
                                                                 </StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <StackPanel>
-                                                                        <cc:ImageToggleButton ImageResource="{StaticResource Icon_Hand}" Text="Stats &amp; Skills" IsChecked="{Binding StatSkillMenuOpen}" />
-                                                                        <Popup IsOpen="{Binding StatSkillMenuOpen}">
-                                                                            <uc:StatSkillMenu />
-                                                                        </Popup>
-                                                                    </StackPanel>
-                                                                    <Separator />
-                                                                    <StackPanel>
-                                                                        <cc:MiniToggleButton ImageResource="{StaticResource Icon_Bandage}" IsChecked="{Binding InjuryMenuOpen}" Margin="0 2" />
-                                                                        <Popup IsOpen="{Binding InjuryMenuOpen}">
-                                                                            <uc:InjuryMenu />
-                                                                        </Popup>
-                                                                    </StackPanel>
+                                                                <Separator />
+                                                                <StackPanel>
+                                                                    <cc:MiniToggleButton ImageResource="{StaticResource Icon_Hand}" IsChecked="{Binding StatSkillMenuOpen}" />
+                                                                    <Popup IsOpen="{Binding StatSkillMenuOpen}">
+                                                                        <uc:StatSkillMenu />
+                                                                    </Popup>
+                                                                </StackPanel>
+                                                                <Separator />
+                                                                <StackPanel>
+                                                                    <cc:MiniToggleButton ImageResource="{StaticResource Icon_Bandage}" IsChecked="{Binding InjuryMenuOpen}" />
+                                                                    <Popup IsOpen="{Binding InjuryMenuOpen}">
+                                                                        <uc:InjuryMenu />
+                                                                    </Popup>
                                                                 </StackPanel>
                                                             </StackPanel>
-                                                            <Separator />
-                                                            <StackPanel>
-                                                                <StackPanel.Resources>
-                                                                    <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
-                                                                        <Setter Property="Width" Value="auto" />
-                                                                    </Style>
-                                                                </StackPanel.Resources>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Image Style="{StaticResource Icon_Heart}" />
-                                                                    <Separator />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="-5" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="-1" />
-                                                                    <TextBlock Text="{Binding CurrentHitPoints, FallbackValue=20}" Style="{StaticResource MidNum}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="1" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="5" />
-                                                                    <Separator />
-                                                                    <TextBlock Text="{Binding WoundState, FallbackValue=Seriously Wounded}" VerticalAlignment="Center" Width="128" />
-                                                                </StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Image Style="{StaticResource Icon_Construct}" />
-                                                                    <Separator />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Head,-1" />
-                                                                    <TextBlock Text="{Binding CurrentHeadStoppingPower, FallbackValue=10}" Style="{StaticResource MidNum}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Head,1" />
-                                                                    <Separator />
-                                                                    <Image Style="{StaticResource Icon_Rpg_Light_Armor}" />
-                                                                    <Separator />
-                                                                    <TextBlock Text="{Binding ArmorType, FallbackValue=Light Armorjack}" VerticalAlignment="Center" Width="128" />
-                                                                </StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Image Style="{StaticResource Icon_Shield}" />
-                                                                    <Separator />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Body,-1" />
-                                                                    <TextBlock Text="{Binding CurrentBodyStoppingPower, FallbackValue=10}" Style="{StaticResource MidNum}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Body,1" />
-                                                                    <Separator />
-                                                                    <Image Style="{StaticResource Icon_Rpg_Boot}" />
-                                                                    <Separator />
-                                                                    <TextBlock Text="{Binding MoveSpeed}" Width="24" VerticalAlignment="Center" />
-                                                                    <Separator />
-                                                                    <Image Style="{StaticResource Icon_Skull}" />
-                                                                    <Separator />
-                                                                    <TextBlock Text="{Binding DeathSave}" Width="24" VerticalAlignment="Center"  />
-                                                                </StackPanel>
+                                                        </StackPanel>
+                                                        <Separator />
+                                                        <StackPanel>
+                                                            <StackPanel.Resources>
+                                                                <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
+                                                                    <Setter Property="Width" Value="auto" />
+                                                                </Style>
+                                                            </StackPanel.Resources>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Style="{StaticResource Icon_Heart}" />
+                                                                <Separator />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="-5" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="-1" />
+                                                                <TextBlock Text="{Binding CurrentHitPoints, FallbackValue=20}" Style="{StaticResource MidNum}" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="1" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="5" />
+                                                                <Separator />
+                                                                <TextBlock Text="{Binding WoundState, FallbackValue=Seriously Wounded}" VerticalAlignment="Center" Width="128" />
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Style="{StaticResource Icon_Construct}" />
+                                                                <Separator />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Head,-1" />
+                                                                <TextBlock Text="{Binding CurrentHeadStoppingPower, FallbackValue=10}" Style="{StaticResource MidNum}" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Head,1" />
+                                                                <Separator />
+                                                                <Image Style="{StaticResource Icon_Rpg_Light_Armor}" />
+                                                                <Separator />
+                                                                <TextBlock Text="{Binding ArmorType, FallbackValue=Light Armorjack}" VerticalAlignment="Center" Width="128" />
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Style="{StaticResource Icon_Shield}" />
+                                                                <Separator />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Body,-1" />
+                                                                <TextBlock Text="{Binding CurrentBodyStoppingPower, FallbackValue=10}" Style="{StaticResource MidNum}" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustStoppingPower}" CommandParameter="Body,1" />
+                                                                <Separator />
+                                                                <Image Style="{StaticResource Icon_Rpg_Boot}" />
+                                                                <Separator />
+                                                                <TextBlock Text="{Binding MoveSpeed}" Width="24" VerticalAlignment="Center" />
+                                                                <Separator />
+                                                                <Image Style="{StaticResource Icon_Rpg_Note}" />
+                                                                <Separator />
+                                                                <TextBox Text="{Binding Notes}" Width="114" />
                                                             </StackPanel>
                                                         </StackPanel>
                                                     </StackPanel>
@@ -1186,6 +1187,10 @@
                                         </StackPanel>
                                         <cc:ImageButton ImageResource="{StaticResource Icon_X}" Text="Delete NPC" Margin="128 2 0 2" Command="{Binding CampaignView.ActiveCampaign.ActiveNpc.RemoveNpcFromCampaign}" />
                                     </StackPanel>
+                                </StackPanel>
+                            </TabItem>
+                            <TabItem Header="DEV">
+                                <StackPanel>
                                 </StackPanel>
                             </TabItem>
                         </TabControl>

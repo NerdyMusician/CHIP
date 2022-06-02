@@ -18,13 +18,13 @@ namespace CyberpunkGameplayAssistant.Windows
     {
         public MainWindow()
         {
-            ReferenceData.WindowRef = this;
-            ReferenceData.PopulateData();
+            AppData.WindowRef = this;
+            AppData.PopulateData();
             InitializeComponent();
             DataContext = new MainViewModel();
             SfxPlayer.Volume = 1;
             SfxPlayer.Play();
-            ReferenceData.IsLoaded = true;
+            AppData.IsLoaded = true;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -140,10 +140,10 @@ namespace CyberpunkGameplayAssistant.Windows
         }
         public void PlaySound(string filepath)
         {
-            if (!ReferenceData.IsLoaded) { return; }
+            if (!AppData.IsLoaded) { return; }
             SfxPlayer.Position = TimeSpan.FromMilliseconds(1);
             SfxPlayer.Source = new Uri(filepath, UriKind.Absolute);
-            SfxPlayer.Volume = ReferenceData.AudioVolume[filepath];
+            SfxPlayer.Volume = AppData.AudioVolume[filepath];
             SfxPlayer.Play();
         }
 
