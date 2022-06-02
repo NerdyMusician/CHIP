@@ -992,123 +992,125 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string CyberwareMultiOpticMount = "MultiOptic Mount";
         public const string CyberwareSensorArray = "Sensor Array";
 
+        // pg 111+ for additional details and restrictions for cyberware
+        // TODO - stat and skill calculations for various Cyberware
         public static readonly Dictionary<string, string> MasterCyberwareList = new()
         {
-            // Fashionware
-            { CyberwareBiomonitor, "Subdermal implant which generates a readout of vitals. Can link to Agent." },
-            { CyberwareChemskin, "Dyes and pigments infused into the skin to permanently change its hue. +2 to Personal Grooming if user also has Techhair." },
-            { CyberwareEmpThreading, "Thin silver lines that run in circuit-like patterns across the body." },
-            { CyberwareLightTattoo, "Subdermal patches store light and project colored tattoos under the skin. +2 to Wardrobe and Style if user has three or more tattoos." },
-            { CyberwareShiftTacts, "Color-changing lenses implanted into the eye." },
-            { CyberwareSkinwatch, "Subdermally implanted LED watch." },
-            { CyberwareTechhair, "Color-light-emitting artificial hair. +2 to Personal Grooming if user also has Chemskin." },
+            // Fashionware - pg111
+            { CyberwareBiomonitor, "Shows a readout of vitals." },
+            { CyberwareChemskin, "+2 to Personal Grooming." },
+            { CyberwareEmpThreading, "Silver circuit patterns across the body." },
+            { CyberwareLightTattoo, "+2 to Wardrobe and Style." },
+            { CyberwareShiftTacts, "Color-changing lenses." },
+            { CyberwareSkinwatch, "LED watch." },
+            { CyberwareTechhair, "+2 to Personal Grooming." },
 
-            // Neuralware
-            { CyberwareNeuralLink, "Wired artificial nervous system. Required to use Neuralware and Subdermal Grip. Has 5 Option Slots." },
-            { CyberwareBraindanceRecorder, "Records user's experiences to memory chip or external device. Requires Neural Link." },
-            { CyberwareChipwareSocket, "A single socket installed in back of the neck. Required to use Chipware. Requires Neural Link." },
-            { CyberwareInterfacePlugs, "Plugs in wrist or head that allow connection to machines. Requires Neural Link." },
-            { CyberwareKerenzikov, "Speedware. User adds +2 to Initiative. Only 1 piece of Speedware can be installed at a time. Requires Neural Link." },
-            { CyberwareSandevistan, "Speedware. When activated as an Action adds +3 to Initiative for one minute. Has 1 hour cool down period. Only 1 piece of Speedware can be installed at a time. Requires Neural Link." },
-            { CyberwareChemicalAnalyzer, "Chipware. Tests substance for precise chemical composition and compares to a database. Requires Chipware Socket." },
-            { CyberwareMemoryChip, "Data storage. User's cyberware can store or access data on it." },
-            { CyberwareOlfactoryBoost, "Chipware. User can use Tracking Skill to track via scent. Requires Chipware Socket." },
-            { CyberwarePainEditor, "Chipware. User ignores penalties due to being Seriously Wounded. Requires Chipware Socket." },
-            { CyberwareSkillChip, "Chipware. User has specific Skill at Level 3 unless Skill is already 3+. Skill Chips for (x2) cost Skills cost more. Requires Chipware Socket." },
-            { CyberwareTactileBoost, "Chipware. User can detect motion within 20m/yd by placing hand on surface. Requires Chipware Socket." },
+            // Neuralware - pg112
+            { CyberwareNeuralLink, "Required to use Neuralware and Subdermal Grip." },
+            { CyberwareBraindanceRecorder, "Records user's experiences." },
+            { CyberwareChipwareSocket, "Required to use Chipware." },
+            { CyberwareInterfacePlugs, "Plugs that allow connection to machines." },
+            { CyberwareKerenzikov, "+2 to Initiative." },
+            { CyberwareSandevistan, "When activated as an Action adds +3 to Initiative for one minute. Has 1 hour cool down period." },
+            { CyberwareChemicalAnalyzer, "Tests substance for precise chemical composition." },
+            { CyberwareMemoryChip, "Store or access data." },
+            { CyberwareOlfactoryBoost, "User can use Tracking Skill to track via scent." },
+            { CyberwarePainEditor, "User ignores penalties due to being Seriously Wounded." },
+            { CyberwareSkillChip, "User has specific Skill at Level 3 unless Skill is already 3+." },
+            { CyberwareTactileBoost, "User can detect motion within 20m/yd." },
 
-            // Cyberoptics
-            { CyberwareCybereye, "Artificial Eye. Each Cybereye has 3 Option Slots. Some options must be paired (purchased twice and installed in two different Cybereyes on a user. HL must be paid for each)." },
-            { CyberwareAntiDazzle, "User immune to effects caused by flashes of light. Requires two Cybereyes and must be paired." },
-            { CyberwareChyron, "Projects subscreen into user's field of vision. Requires a Cybereye." },
-            { CyberwareColorShift, "Unlimited color and pattern changes for the eye. Requires a Cybereye." },
-            { CyberwareDartgun, "Single shot Dartgun Exotic Weapon concealed in eye. Requires a Cybereye and takes 3 Option Slots." },
-            { CyberwareImageEnhance, "Adds +2 to Perception, Lip Reading, and Conceal/Reveal Object. Requires two Cybereyes and must be paired." },
-            { CyberwareLowLightInfraredUv, "User can ignore penalties due to darkness, smoke, fog, etc. Requires two Cybereyes, must be paired, and takes 2 Option Slots per Cybereye." },
-            { CyberwareMicroOptics, "Provides user with 400x magnification. Requires a Cybereye." },
-            { CyberwareMicroVideo, "Camera in eye. Records audio and video to Memory Chip or linked Agent. Requires a Cybereye and takes 2 Option Slots." },
-            { CyberwareRadiationDetector, "Radiation readings within 100m/yds displayed in form of blue glow. Requires a Cybereye." },
-            { CyberwareTargetingScope, "Adds +1 to Check when making Aimed Shot. Requires a Cybereye." },
-            { CyberwareTeleOptics, "Can see detail up to 800m/yd away. +1 to Aimed Shots against target 51m/yds or farther away. Requires a Cybereye." },
-            { CyberwareVirtuality, "Projects cyberspace imagery over user's view of the world. Requires two Cybereyes and must be paired." },
+            // Cyberoptics - pg112-113
+            { CyberwareCybereye, "Artificial Eye." },
+            { CyberwareAntiDazzle, "User immune to effects caused by flashes of light." },
+            { CyberwareChyron, "Projects subscreen into user's field of vision." },
+            { CyberwareColorShift, "Unlimited color and pattern changes for the eye." },
+            { CyberwareDartgun, "Single shot Dartgun Exotic Weapon concealed in eye." },
+            { CyberwareImageEnhance, "Adds +2 to Perception, Lip Reading, and Conceal/Reveal Object." },
+            { CyberwareLowLightInfraredUv, "User can ignore penalties due to darkness, smoke, fog, etc." },
+            { CyberwareMicroOptics, "Provides user with 400x magnification." },
+            { CyberwareMicroVideo, "Camera in eye. Records audio and video to Memory Chip or linked Agent." },
+            { CyberwareRadiationDetector, "Radiation readings within 100m/yds displayed in form of blue glow." },
+            { CyberwareTargetingScope, "Adds +1 to Check when making Aimed Shot." },
+            { CyberwareTeleOptics, "Can see detail up to 800m/yd away. +1 to Aimed Shots against target 51m/yds or farther away." },
+            { CyberwareVirtuality, "Projects cyberspace imagery over user's view of the world." },
 
-            // Cyberaudio
-            { CyberwareCyberaudioSuite, "Has 3 Option Slots. Cannot install more than 1." },
-            { CyberwareAmplifiedHearing, "+2 to Perception for Checks involving hearing. Requires a Cyberaudio Suite." },
-            { CyberwareAudioRecorder, "Records audio to Memory Chip or linked Agent. Requires a Cyberaudio Suite." },
-            { CyberwareBugDetector, "Beeps when within 2m/yds of a listening device. Requires a Cyberaudio Suite." },
-            { CyberwareHomingtracer, "Can follow a linked tracer up to 1 mile away. Requires a Cyberaudio Suite." },
-            { CyberwareInternalAgent, "Fully functional Agent installed internally. Can be linked to a Cybereye with Chyron display. Otherwise, audio only. Requires a Cyberaudio Suite." },
-            { CyberwareLevelDamper, "User immune to effects caused by loud noises. Requires a Cyberaudio Suite." },
-            { CyberwareRadioCommunicator, "User can communicate via radio. 1 mile range. Requires a Cyberaudio Suite." },
-            { CyberwareRadioScannerMusicPlayer, "Can play music from Data Pool or Memory Chip or tune into radio broadcasts within 1 mile. Requires a Cyberaudio Suite." },
-            { CyberwareRadarDetector, "Beeps if active radar beam is within 100m/yd. Requires a Cyberaudio Suite." },
-            { CyberwareScramblerDescrambler, "Allows user to scramble outgoing communications and descramble incoming communications. Requires a Cyberaudio Suite." },
-            { CyberwareVoiceStressAnalyzer, "+2 to Human Perception and Interrogation Checks. Requires a Cyberaudio Suite." },
+            // Cyberaudio - pg113
+            { CyberwareCyberaudioSuite, string.Empty },
+            { CyberwareAmplifiedHearing, "+2 to Perception for Checks involving hearing." },
+            { CyberwareAudioRecorder, "Records audio to Memory Chip or linked Agent." },
+            { CyberwareBugDetector, "Beeps when within 2m/yds of a listening device." },
+            { CyberwareHomingtracer, "Can follow a linked tracer up to 1 mile away." },
+            { CyberwareInternalAgent, "Fully functional Agent installed internally." },
+            { CyberwareLevelDamper, "User immune to effects caused by loud noises." },
+            { CyberwareRadioCommunicator, "User can communicate via radio." },
+            { CyberwareRadioScannerMusicPlayer, "Can play music or tune into radio broadcasts." },
+            { CyberwareRadarDetector, "Beeps if active radar beam is within 100m/yd." },
+            { CyberwareScramblerDescrambler, "Allows user to scramble outgoing communications and descramble incoming communications." },
+            { CyberwareVoiceStressAnalyzer, "+2 to Human Perception and Interrogation Checks." },
 
-            // Internal Cyberware
+            // Internal Cyberware - pg114
             { CyberwareAudioVox, "Voice synthesizer. Adds +2 to Acting and Play Instrument when singing." },
             { CyberwareContraceptiveImplant, "Prevents undesired pregnancy." },
             { CyberwareEnhancedAntibodies, "After stabilization, user heals BODY x 2 for each day spent resting." },
-            { CyberwareCybersnake, "Esophagus mounted Very Heavy Melee Weapon. Can be concealed." },
+            { CyberwareCybersnake, "Esophagus mounted Very Heavy Melee Weapon." },
             { CyberwareGills, "User can breathe underwater." },
-            { CyberwareGraftedMuscleBoneLace, "Increases BODY by 2. The increase changes HP, Wound Threshold, and Death Save. Cannot raise BODY above 10." },
-            { CyberwareIndependentAirSupply, "Provides 30 minutes of oxygen. Takes 1 hour to refill from ambient atmosphere." },
-            { CyberwareMidnightLady, "Be a Venus, be the fire, be desire." },
-            { CyberwareMrStudd, "All night, every night, and they'll never know." },
-            { CyberwareNasalFilters, "User immune to effects of toxic gases, fumes, and similar dangers." },
-            { CyberwareRadarSonarImplant, "Scans terrain within 50m/yds. Cannot scan through cover." },
+            { CyberwareGraftedMuscleBoneLace, "Increases BODY by 2." },
+            { CyberwareIndependentAirSupply, "Provides 30 minutes of oxygen." },
+            { CyberwareMidnightLady, "Super-V" },
+            { CyberwareMrStudd, "Super-D" },
+            { CyberwareNasalFilters, "User immune to effects of toxic gases." },
+            { CyberwareRadarSonarImplant, "Scans terrain within 50m/yds." },
             { CyberwareToxinBinders, "Adds +2 to Resist Torture/Drugs." },
-            { CyberwareVampyres, "Excellent Quality Light Melee Weapon implanted in mouth. Can be concealed. User can add Poison or Biotoxin." },
+            { CyberwareVampyres, "Excellent Quality Light Melee Weapon implanted in mouth." },
 
-            // External Cyberware
+            // External Cyberware - pg114
             { CyberwareHiddenHolster, "Can store weapon capable of concealment inside body." },
-            { CyberwareSkinWeave, "User's body and head armored at SP7. Does not stack with worn Armor. Ablates. Recovers 1 SP per day of rest." },
-            { CyberwareSubdermalArmor, "User's body and head armored at SP11. Does not stack with worn Armor. Ablates. Recovers 1 SP per day of rest." },
-            { CyberwareSubdermalPocket, "2\" x 4\" (5cm x 10cm) storage space just under the skin with RealSkinn™ zipper." },
+            { CyberwareSkinWeave, "User's body and head armored at SP7. Recovers 1 SP per day of rest." },
+            { CyberwareSubdermalArmor, "User's body and head armored at SP11. Recovers 1 SP per day of rest." },
+            { CyberwareSubdermalPocket, "Storage space just under the skin." },
 
-            // Cyberlimbs - Arms
-            { CyberwareCyberarm, "Replacement arm. Has 4 Option Slots. Comes installed with Standard Hand that doesn't cause Humanity Loss or take up an Option Slot." },
+            // Cyberlimbs - Arms - pg115
+            { CyberwareCyberarm, "Replacement arm. Comes installed with Standard Hand." },
             { CyberwareStandardHand, "Standard cybernetic hand. Can be installed in a meat arm." },
-            { CyberwareBigKnucks, "Armored knuckles. Medium Melee Weapon. Can be concealed. Can be installed as only piece of Cyberware in a meat arm." },
-            { CyberwareCyberdeck, "Cyberdeck installed in Cyberarm. Requires a Cyberarm and takes up 3 Option Slots." },
-            { CyberwareGrappleHand, "Fires hand, along with a grapple line up to 30m/yds. Cannot be used as a weapon. Requires a Cyberarm." },
-            { CyberwareMedscanner, "Medscanner installed in Cyberarm. Helps diagnose illness and injury. +2 to First Aid and Paramedic. Requires a Cyberarm and takes 2 Option Slots." },
-            { CyberwarePopupGrenadeLauncher, "A single shot Grenade Launcher installed in a Cyberarm. Weapon can be concealed. Requires a Cyberarm and takes up 2 Option Slots." },
-            { CyberwarePopupMeleeWeapon, "Any Light, Medium, or Heavy Melee Weapon installed in a Cyberarm. Weapon can be concealed even if not normally concealable. Requires a Cyberarm and takes up 2 Option Slots." },
-            { CyberwarePopupShield, "A Bulletproof Shield installed in the Cyberarm. Can be concealed and replaced when at 0 HP. Requires a Cyberarm and takes up 3 Option Slots." },
-            { CyberwarePopupRangedWeapon, "Any One Handed Ranged Weapon installed in a Cyberarm. Weapon can be concealed even if not normally concealable. Requires a Cyberarm and takes up 2 Option Slots." },
+            { CyberwareBigKnucks, "Armored knuckles." },
+            { CyberwareCyberdeck, "Cyberdeck installed in Cyberarm." },
+            { CyberwareGrappleHand, "Fires hand, along with a grapple line up to 30m/yds." },
+            { CyberwareMedscanner, "+2 to First Aid and Paramedic." },
+            { CyberwarePopupGrenadeLauncher, "A single shot Grenade Launcher installed in a Cyberarm." },
+            { CyberwarePopupMeleeWeapon, "Any Light, Medium, or Heavy Melee Weapon installed in a Cyberarm." },
+            { CyberwarePopupShield, "A Bulletproof Shield installed in the Cyberarm." },
+            { CyberwarePopupRangedWeapon, "Any One Handed Ranged Weapon installed in a Cyberarm." },
             { CyberwareQuickChangeMount, "Allows user to remove or install a Cyberarm as an Action." },
-            { CyberwareRippers, "Carbo-glass claws. Medium Melee Weapon. Can be concealed. Can be installed as only piece of Cyberware in a meat arm." },
-            { CyberwareScratchers, "Carbo-glass fingernails. Light Melee Weapon. Can be concealed. Can be installed as only piece of Cyberware in a meat arm." },
-            { CyberwareShoulderCam, "Video camera mounted in shoulder. Can be concealed. Requires a Cyberarm and takes up 2 Option Slots." },
-            { CyberwareSliceAndDice, "Monofilament whip implanted in the thumb. Medium Melee Weapon. Can be concealed. Can be installed as only piece of Cyberware in a meat arm." },
-            { CyberwareSubdermalGrip, "Allows user to use Smartgun without Interface Plug. Can be installed as only piece of Cyberware in a meat arm. Requires Neural Link." },
-            { CyberwareTechscanner, "Techscanner installed in Cyberarm. Helps diagnose broken tech. +2 to multiple TECH-based Skills. Requires a Cyberarm and takes 2 Option Slots." },
-            { CyberwareToolHand, "Fingers contain screwdriver, wrench, small drill, and other tools. Can be installed as only piece of Cyberware in a meat arm." },
-            { CyberwareWolvers, "Long claws extended from the knuckles. Heavy Melee Weapon. Can be concealed. Can be installed as only piece of Cyberware in a meat arm." },
+            { CyberwareRippers, "Carbo-glass claws. Medium Melee Weapon." },
+            { CyberwareScratchers, "Carbo-glass fingernails. Light Melee Weapon." },
+            { CyberwareShoulderCam, "Video camera mounted in shoulder." },
+            { CyberwareSliceAndDice, "Monofilament whip implanted in the thumb. Medium Melee Weapon." },
+            { CyberwareSubdermalGrip, "Allows user to use Smartgun without Interface Plug." },
+            { CyberwareTechscanner, "+2 to multiple TECH-based Skills." },
+            { CyberwareToolHand, "Fingers contain screwdriver, wrench, small drill, and other tools." },
+            { CyberwareWolvers, "Long claws extended from the knuckles. Heavy Melee Weapon." },
 
-            // Cyberlimbs - Legs
-            { CyberwareCyberleg, "Replacement leg. Has 3 Option Slots. Comes installed with Standard Foot that doesn't cause Humanity Loss or take up an Option Slot. Most Cyberleg options must be paired (purchased twice and installed in two different Cyberlegs on a user. HL must be paid for each)." },
-            { CyberwareStandardFoot, "Standard cybernetic foot. Can be installed in a meat leg." },
-            { CyberwareGripFoot, "Traction enhanced. Negates movement penalty when climbing. Requires two Cyberlegs and must be paired." },
-            { CyberwareJumpBooster, "Hydraulics in legs. Negates movement penalty when jumping. Requires two Cyberlegs, takes up 2 Option Slots, and must be paired." },
-            { CyberwareSkateFoot, "Inline skates built into feet. Can be concealed. Increases movement by 6m/yds when using Run Action. Requires two Cyberlegs and must be paired." },
-            { CyberwareTalonFoot, "Blade mounted in foot. Light Melee Weapon. Can be concealed. Can be installed as the only piece of Cyberware in a meat leg." },
-            { CyberwareWebFoot, "Thin webbing between toes. Negates movement penalty when swimming. Requires Two Cyberlegs and must be paired." },
+            // Cyberlimbs - Legs - pg116
+            { CyberwareCyberleg, "Replacement leg. Comes installed with Standard Foot." },
+            { CyberwareStandardFoot, "Standard cybernetic foot." },
+            { CyberwareGripFoot, "Negates movement penalty when climbing." },
+            { CyberwareJumpBooster, "Negates movement penalty when jumping." },
+            { CyberwareSkateFoot, "Increases movement by 6m/yds when using Run Action." },
+            { CyberwareTalonFoot, "Blade mounted in foot. Light Melee Weapon." },
+            { CyberwareWebFoot, "Negates movement penalty when swimming." },
 
-            // Cyberlimbs - Misc
-            { CyberwareHardenedShielding, "Cyberlimb and installed options cannot be rendered inoperable by EMP pulses or Non-Black ICE Program effects. Requires Cyberarm or Cyberleg." },
-            { CyberwarePlasticCovering, "Plastic coating for Cyberlimb. Available in wide variety of colors and patterns. Requires a Cyberarm or Cyberleg but does not take an Option Slot." },
-            { CyberwareRealskinnCovering, "Artificial skin coating for Cyberlimb. Requires a Cyberarm or Cyberleg but does not take an Option Slot." },
-            { CyberwareSuperchromeCovering, "Shiny metallic coating for Cyberlimb. +2 to Wardrobe and Style. Requires a Cyberarm or Cyberleg but does not take an Option Slot." },
+            // Cyberlimbs - Misc - pg116
+            { CyberwareHardenedShielding, "Cyberlimb and installed options cannot be rendered inoperable by EMP pulses or Non-Black ICE Program effects." },
+            { CyberwarePlasticCovering, "Plastic coating for Cyberlimb." },
+            { CyberwareRealskinnCovering, "Artificial skin coating for Cyberlimb." },
+            { CyberwareSuperchromeCovering, "Shiny metallic coating for Cyberlimb. +2 to Wardrobe and Style." },
 
-            // Borgware
+            // Borgware - pg116
             { CyberwareArtificialShoulderMount, "User can mount 2 Cyberarms under first set of arms." },
-            { CyberwareImplantedLinearFrameBeta, "Enhanced skeleton and support structure. Increases BODY to 14. The increase changes HP, Wound Threshold, and Death Save. Requires BODY 8 and 2 Grafted Muscles and Bone Lace." },
-            { CyberwareImplantedLinearFrameSigma, "Enhanced skeleton and support structure. Increases BODY to 12. The increase changes HP, Wound Threshold, and Death Save. Requires BODY 6 and Grafted Muscles and Bone Lace." },
+            { CyberwareImplantedLinearFrameBeta, "Enhanced skeleton and support structure. Increases BODY to 14." },
+            { CyberwareImplantedLinearFrameSigma, "Enhanced skeleton and support structure. Increases BODY to 12." },
             { CyberwareMultiOpticMount, "User can mount up to 5 additional Cybereyes." },
-            { CyberwareSensorArray, "User can install up to 5 additional Cyberaudio Options. Requires Cyberaudio Suite but does not take up Cyberaudio Option Slot." },
+            { CyberwareSensorArray, "User can install up to 5 additional Cyberaudio Options." },
 
         };
 
@@ -1567,16 +1569,21 @@ namespace CyberpunkGameplayAssistant.Toolbox
             melee.AddWeapon(WeaponTypeVeryHeavyMelee, WeaponQualityStandard);
             EmplacedDefenses.Add(melee);
 
-            Combatant turret = new("Automated Turret", EmplacedDefense, EmplacedDefense, PortraitDefault, ArmorTypeNone);
+            Combatant turret = new("Turret", EmplacedDefense, EmplacedDefense, PortraitDefault, ArmorTypeNone);
             turret.SetEmplacedDefenseStats(14, 25, 17);
-            turret.WeaponOptionsAllowed = 1;
-            turret.ManualWeaponOptionSelection = true;
-            turret.AddWeaponOption(WeaponTypeAssaultRifle, WeaponQualityStandard, AmmoTypeRifle, 25);
-            turret.AddWeaponOption(WeaponTypeFlamethrower, WeaponQualityStandard, AmmoTypeShell, 4, AmmoVarIncendiary);
-            turret.AddWeaponOption(WeaponTypeDartgun, WeaponQualityStandard, AmmoTypeDart, 8);
-            turret.AddWeaponOption(WeaponTypeVeryHeavyPistol, WeaponQualityStandard, AmmoTypeVeryHeavyPistol, 8);
-            turret.AddWeaponOption(WeaponTypeHeavySmg, WeaponQualityStandard, AmmoTypeHeavyPistol, 40);
-            EmplacedDefenses.Add(turret);
+
+            Combatant turretAR = turret.DeepClone();
+            turretAR.Variant = "(AR)";
+            turretAR.AddWeapon(WeaponTypeAssaultRifle);
+            turretAR.AddBasicAmmoForAllWeapons(1);
+            EmplacedDefenses.Add(turretAR);
+
+            Combatant turretSMG = turret.DeepClone();
+            turretSMG.Variant = "(SMG)";
+            turretSMG.AddWeapon(WeaponTypeHeavySmg);
+            turretSMG.AddBasicAmmoForAllWeapons(1);
+            EmplacedDefenses.Add(turretSMG);
+
 
         }
 

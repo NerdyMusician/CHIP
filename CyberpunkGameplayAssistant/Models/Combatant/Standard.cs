@@ -332,7 +332,7 @@ namespace CyberpunkGameplayAssistant.Models
             get
             {
                 int move = CalculatedStats.GetValue(AppData.StatMovement);
-                int penalty = 0; //ReferenceData.ArmorTable.GetPenalty(ArmorType); - already taken into account in CalculatedStats
+                int penalty = 0;
                 if (WoundState == AppData.WoundStateMortallyWounded) { penalty += 6; }
                 penalty += CriticalInjuries.GetMovePenaltyTotal();
                 move -= penalty;
@@ -480,12 +480,6 @@ namespace CyberpunkGameplayAssistant.Models
             ReloadAllWeapons();
             SetStandardActions();
         }
-        public void InitializeBackupCombatant()
-        {
-            SetStoppingPower(true);
-            ReloadAllWeapons();
-            SetStandardActions();
-        }
         public void SetStats(int INT, int REF, int DEX, int TECH, int COOL, int WILL, int LUCK, int MOVE, int BODY, int EMP)
         {
             BaseStats = new();
@@ -554,24 +548,6 @@ namespace CyberpunkGameplayAssistant.Models
                 CalculatedStats.Add(statToAdd);
             }
         }
-        public void SetBackupStats(int combatNumber, int hp, int moveAndBody)
-        {
-            BaseStats = new();
-            BaseStats.Add(new(AppData.SkillCombatNumber, combatNumber));
-            BaseStats.Add(new(AppData.StatMovement, moveAndBody));
-            BaseStats.Add(new(AppData.StatBody, moveAndBody));
-
-            MaximumHitPoints = hp;
-            CurrentHitPoints = hp;
-
-        }
-        public void SetCombatSkills(params string[] skills)
-        {
-            foreach (string skill in skills)
-            {
-                Skills.Add(new(skill));
-            }
-        }
 
         public void SetBaseSkills()
         {
@@ -603,27 +579,6 @@ namespace CyberpunkGameplayAssistant.Models
             if (ComClass.IsIn(AppData.ComClassLightCorpo, AppData.ComClassMediumCorpo, AppData.ComClassHeavyCorpo))
             {
                 // TODO - Corpo Skills and Ganger Skills
-            }
-        }
-        public void AddSkillsByBase(int skillBase, params string[] skillNames)
-        {
-            foreach (string name in skillNames)
-            {
-                AddSkillByBase(name, skillBase);
-            }
-        }
-        public void AddSkillByBase(string name, int skillBase, string variant = "")
-        {
-            Skill skill = Skills.FirstOrDefault(s => s.Name == name && s.Variant == variant);
-            if (skill == null)
-            {
-                if (name == AppData.SkillInterface) { Skills.Add(new(name, variant, skillBase)); return; }
-                int level = skillBase - CalculatedStats.GetValue(AppData.SkillLinks.First(s => s.SkillName == name).StatName);
-                Skills.Add(new(name, variant, level));
-            }
-            else
-            {
-                skill.Level = skillBase - CalculatedStats.GetValue(AppData.SkillLinks.First(s => s.SkillName== name).StatName);
             }
         }
         public void AddWeapons(params string[] types)
@@ -676,13 +631,6 @@ namespace CyberpunkGameplayAssistant.Models
             foreach (string name in names)
             {
                 AddCyberware(name);
-            }
-        }
-        public void SetClipQuantities()
-        {
-            foreach (CombatantWeapon weapon in Weapons)
-            {
-                weapon.CurrentClipQuantity = AppData.ClipChart.GetStandardClipSize(weapon.Type);
             }
         }
 
@@ -852,7 +800,6 @@ namespace CyberpunkGameplayAssistant.Models
             StandardActions = new();
             NetActions = new();
             CriticalInjuries = new();
-            WeaponOptions = new();
             CyberdeckPrograms = new();
             ActivePrograms = new();
         }
@@ -867,7 +814,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private void AddCyberdeckProgram(string name)
         {
-            CyberdeckProgram matchedProgram = AppData.CyberdeckPrograms.FirstOrDefault(p => p.Name == name);
+            CyberdeckProgram matchedProgram = AppData.CyberdeckPrograms.FirstOrDefault(p => p.Name == name)!;
             if (matchedProgram == null) { return; }
             CyberdeckPrograms.Add(matchedProgram.DeepClone());
         }
@@ -885,7 +832,7 @@ namespace CyberpunkGameplayAssistant.Models
                 CurrentBodyStoppingPower = MaximumBodyStoppingPower;
             }
         }
-        private void ReloadAllWeapons()
+        public void ReloadAllWeapons()
         {
             foreach (CombatantWeapon weapon in Weapons)
             {
