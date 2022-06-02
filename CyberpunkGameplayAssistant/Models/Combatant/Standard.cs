@@ -650,7 +650,6 @@ namespace CyberpunkGameplayAssistant.Models
         {
             if (Type == AppData.ActiveDefense) { return GetDemonCombatNumber(); }
             if (Type == AppData.EmplacedDefense) { return BaseStats.GetValue(AppData.SkillCombatNumber); }
-            if (Type == AppData.LawmanBackup) { return CalculatedStats.GetValue(AppData.SkillCombatNumber); }
             int skillLevel = Skills.FirstOrDefault(s => s.Name == skill).Level;
             int statLevel = CalculatedStats.GetValue(AppData.SkillLinks.First(s => s.SkillName == skill).StatName);
             return skillLevel + statLevel;

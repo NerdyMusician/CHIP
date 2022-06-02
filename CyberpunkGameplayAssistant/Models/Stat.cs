@@ -1,10 +1,5 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
 using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
@@ -47,9 +42,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get
             {
-                StatLinkReference statLink = AppData.StatLinks.FirstOrDefault(s => s.StatName == Name);
-                if (statLink != null) { return statLink.Abbreviation; }
-                else { return Name; }
+                return AppData.StatAbbreviations[Name];
             }
         }
 

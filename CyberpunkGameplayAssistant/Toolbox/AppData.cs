@@ -52,9 +52,6 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string Demon = "Demon";
         public const string ActiveDefense = "Active Defense";
         public const string EmplacedDefense = "Emplaced Defense";
-        public const string ExecTeamMember = "Exec Team Member";
-        public const string LawmanBackup = "Lawman Backup";
-        public const string TraumaTeam = "Trauma Team";
 
         // Combatant Classifications
         public const string ComClassCivilian = "Civilian";
@@ -200,79 +197,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string NetActionVirus = "Virus";
         public const string NetActionZap = "Zap";
 
-        // Stat Categories
-        public const string StatCategoryMental = "Mental";
-        public const string StatCategoryCombat = "Combat";
-        public const string StatCategoryFortune = "Fortune";
-        public const string StatCategoryPhysical = "Physical";
-
-        // Cultural Regions
-        public const string CulturalRegionNorthAmerican = "North American";
-        public const string CulturalRegionSouthCentralAmerican = "South/Central American";
-        public const string CulturalRegionWesternEuropean = "Western European";
-        public const string CulturalRegionEasternEuropean = "Eastern European";
-        public const string CulturalRegionMiddleEasterNorthAfrican = "Middle Eastern/North African";
-        public const string CulturalRegionSubSaharanAfrican = "Sub-Saharan African";
-        public const string CulturalRegionSouthAsian = "South Asian";
-        public const string CulturalRegionSouthEastAsian = "South East Asian";
-        public const string CulturalRegionEastAsian = "East Asian";
-        public const string CulturalRegionOceaniaPacificIslander = "Oceania/Pacific Islander";
-
         // Languages - pg45
-        public const string LanguageArabic = "Arabic";
-        public const string LanguageBengali = "Bengali";
-        public const string LanguageBerber = "Berber";
-        public const string LanguageBurmese = "Burmese";
-        public const string LanguageCantoneseChinese = "Cantonese Chinese";
-        public const string LanguageChinese = "Chinese";
-        public const string LanguageCree = "Cree";
-        public const string LanguageCreole = "Creole";
-        public const string LanguageDari = "Dari";
-        public const string LanguageEnglish = "English";
-        public const string LanguageFarsi = "Farsi";
-        public const string LanguageFilipino = "Filipino";
-        public const string LanguageFinnish = "Finnish";
-        public const string LanguageFrench = "French";
-        public const string LanguageGerman = "German";
-        public const string LanguageGuarani = "Guarani";
-        public const string LanguageHausa = "Hausa";
-        public const string LanguageHawaiian = "Hawaiian";
-        public const string LanguageHebrew = "Hebrew";
-        public const string LanguageHindi = "Hindi";
-        public const string LanguageIndonesian = "Indonesian";
-        public const string LanguageItalian = "Italian";
-        public const string LanguageJapanese = "Japanese";
-        public const string LanguageKhmer = "Khmer";
-        public const string LanguageKorean = "Korean";
-        public const string LanguageLingala = "Lingala";
-        public const string LanguageMalayan = "Malayan";
-        public const string LanguageMandarinChinese = "Mandarin Chinese";
-        public const string LanguageMaori = "Maori";
-        public const string LanguageMayan = "Mayan";
-        public const string LanguageMongolian = "Mongolian";
-        public const string LanguageNavajo = "Navajo";
-        public const string LanguageNative = "Native";
-        public const string LanguageNepali = "Nepali";
-        public const string LanguageNorwegian = "Norwegian";
-        public const string LanguageOromo = "Oromo";
-        public const string LanguagePamaNyungan = "Pama-Nyungan";
-        public const string LanguagePolish = "Polish";
-        public const string LanguagePortuguese = "Portuguese";
-        public const string LanguageQuechua = "Quechua";
-        public const string LanguageRomanian = "Romanian";
-        public const string LanguageRussian = "Russian";
-        public const string LanguageSinhalese = "Sinhalese";
-        public const string LanguageSpanish = "Spanish";
         public const string LanguageStreetslang = "Streetslang";
-        public const string LanguageSwahili = "Swahili";
-        public const string LanguageTahitian = "Tahitian";
-        public const string LanguageTamil = "Tamil";
-        public const string LanguageTurkish = "Turkish";
-        public const string LanguageTwi = "Twi";
-        public const string LanguageUkranian = "Ukranian";
-        public const string LanguageUrdu = "Urdu";
-        public const string LanguageVietnamese = "Vietnamese";
-        public const string LanguageYoruba = "Yoruba";
 
         // Local Expert Locations
         public const string LocalExpertYourHome = "Your Home";
@@ -420,18 +346,18 @@ namespace CyberpunkGameplayAssistant.Toolbox
         };
 
         // Stat Reference Table
-        public static readonly List<StatLinkReference> StatLinks = new()
+        public static readonly Dictionary<string, string> StatAbbreviations = new()
         {
-            new(StatCategoryMental, StatIntelligence, AbbrIntelligence),
-            new(StatCategoryMental, StatWillpower, AbbrWillpower),
-            new(StatCategoryMental, StatCool, AbbrCool),
-            new(StatCategoryMental, StatEmpathy, AbbrEmpathy),
-            new(StatCategoryCombat, StatTechnique, AbbrTechnique),
-            new(StatCategoryCombat, StatReflexes, AbbrReflexes),
-            new(StatCategoryFortune, StatLuck, AbbrLuck),
-            new(StatCategoryPhysical, StatBody, AbbrBody),
-            new(StatCategoryPhysical, StatDexterity, AbbrDexterity),
-            new(StatCategoryPhysical, StatMovement, AbbrMovement),
+            { StatIntelligence, AbbrIntelligence },
+            { StatWillpower, AbbrWillpower },
+            { StatCool, AbbrCool },
+            { StatEmpathy, AbbrEmpathy },
+            { StatTechnique, AbbrTechnique },
+            { StatReflexes, AbbrReflexes },
+            { StatLuck, AbbrLuck },
+            { StatBody, AbbrBody },
+            { StatDexterity, AbbrDexterity },
+            { StatMovement, AbbrMovement }
         };
 
         // Skill Reference Table
@@ -549,41 +475,6 @@ namespace CyberpunkGameplayAssistant.Toolbox
         };
 
         // Corporation Names pg267
-        public const string CorpoArasaka = "Arasaka";
-        public const string CorpoBiotechnica = "Biotechnica";
-        public const string CorpoBudgetArms = "BudgetArms";
-        public const string CorpoChadranArms = "Chadran Arms";
-        public const string CorpoConstitutionalArms = "Constitutional Arms";
-        public const string CorpoContitentalBrands = "Continental Brands";
-        public const string CorpoDaiLung = "Dai Lung";
-        public const string CorpoDangerGirl = "Danger Girl";
-        public const string CorpoEagletech = "Eagletech";
-        public const string CorpoFederatedArms = "Federated Arms";
-        public const string CorpoGunMart = "GunMart";
-        public const string CorpoIMI = "IMI";
-        public const string CorpoKendachi = "Kendachi";
-        public const string CorpoKiroshi = "Kiroshi";
-        public const string CorpoMagnumOpus = "Magnum Opus";
-        public const string CorpoMalorianArms = "Malorian Arms";
-        public const string CorpoMidnightArms = "Midnight Arms";
-        public const string CorpoMilitech = "Militech";
-        public const string CorpoMustangArms = "Mustang Arms";
-        public const string CorpoNetwork54 = "Network 54";
-        public const string CorpoNomad = "Nomad";
-        public const string CorpoNova = "Nova";
-        public const string CorpoPetrochem = "Petrochem";
-        public const string CorpoPursuitSecurityIncorporated = "Pursuit Security Incorporated";
-        public const string CorpoRavenMicrocyb = "Raven Microcyb";
-        public const string CorpoRocklinAugmentics = "Rocklin Augmentics";
-        public const string CorpoSovOil = "SovOil";
-        public const string CorpoSternmeyer = "Sternmeyer";
-        public const string CorpoStolbovoy = "Stolvoboy";
-        public const string CorpoTowaManufacturing = "Towa Manufacturing";
-        public const string CorpoTraumaTeam = "Trauma Team";
-        public const string CorpoTsunamiArms = "Tsunami Arms";
-        public const string CorpoUrbanTech = "UrbanTech";
-        public const string CorpoZiggurat = "Ziggurat";
-        public const string CorpoZhirafaTechnical = "Zhirafa Technical Manufacturing";
 
         #region WEAPONS
         // Weapon Categories - pg340
@@ -720,46 +611,6 @@ namespace CyberpunkGameplayAssistant.Toolbox
             { WeaponTypeSmg, 3 },
             { WeaponTypeHeavySmg, 3 },
             { WeaponTypeAssaultRifle, 4 }
-        };
-        public static readonly List<NamedWeaponList> NamedWeaponLists = new()
-        {
-            new(WeaponTypeLightMelee, WeaponQualityStandard, "Combat Knife", "Tomahawk"),
-            new(WeaponTypeMediumMelee, WeaponQualityStandard, "Baseball Bat", "Crowbar", "Machete"),
-            new(WeaponTypeHeavyMelee, WeaponQualityStandard, "Lead Pipe", "Sword", "Spiked Bat"),
-            new(WeaponTypeVeryHeavyMelee, WeaponQualityStandard, "Chainsaw", "Sledgehammer", "Helicopter Blade", "Naginata"),
-            new(WeaponTypeMediumPistol, WeaponQualityPoor, $"{CorpoDaiLung} Streetmaster"),
-            new(WeaponTypeMediumPistol, WeaponQualityStandard, $"{CorpoFederatedArms} X-9mm"),
-            new(WeaponTypeMediumPistol, WeaponQualityExcellent, $"{CorpoMilitech} Avenger"),
-            new(WeaponTypeHeavyPistol, WeaponQualityPoor, $"{CorpoDaiLung} Magnum"),
-            new(WeaponTypeHeavyPistol, WeaponQualityStandard, $"{CorpoMustangArms} Mark III"),
-            new(WeaponTypeHeavyPistol, WeaponQualityExcellent, $"{CorpoNova} Cityhunter"),
-            new(WeaponTypeVeryHeavyPistol, WeaponQualityPoor, $"{CorpoFederatedArms} Super Chief"),
-            new(WeaponTypeVeryHeavyPistol, WeaponQualityStandard, $"{CorpoSternmeyer} P-35"),
-            new(WeaponTypeVeryHeavyPistol, WeaponQualityExcellent, $"{CorpoMilitech} Boomer Buster"),
-            new(WeaponTypeBowsAndCrossbows, WeaponQualityPoor, $"{CorpoGunMart} Sherwood", $"{CorpoGunMart} Hunter"),
-            new(WeaponTypeBowsAndCrossbows, WeaponQualityStandard, $"{CorpoEagletech} Tomcat", $"{CorpoEagletech} Striker"),
-            new(WeaponTypeBowsAndCrossbows, WeaponQualityExcellent, $"{CorpoEagletech} Bearcat", $"{CorpoEagletech} Scorpion"),
-            new(WeaponTypeSmg, WeaponQualityPoor, $"{CorpoFederatedArms} Tech-Assault III"),
-            new(WeaponTypeSmg, WeaponQualityStandard, $"{CorpoMilitech} Mini-Gat"),
-            new(WeaponTypeSmg, WeaponQualityExcellent, $"{CorpoArasaka} Minami 10"),
-            new(WeaponTypeHeavySmg, WeaponQualityPoor, $"{CorpoChadranArms} City Reaper"),
-            new(WeaponTypeHeavySmg, WeaponQualityStandard, $"{CorpoSternmeyer} SMG-21"),
-            new(WeaponTypeHeavySmg, WeaponQualityExcellent, $"{CorpoMilitech} Viper"),
-            new(WeaponTypeShotgun, WeaponQualityPoor, $"{CorpoGunMart} Home Defender"),
-            new(WeaponTypeShotgun, WeaponQualityStandard, $"{CorpoArasaka} Rapid Assault"),
-            new(WeaponTypeShotgun, WeaponQualityExcellent, $"{CorpoMilitech} Bulldog"),
-            new(WeaponTypeAssaultRifle, WeaponQualityPoor, $"{CorpoChadranArms} Jungle Reaper"),
-            new(WeaponTypeAssaultRifle, WeaponQualityStandard, $"{CorpoMilitech} Ronin"),
-            new(WeaponTypeAssaultRifle, WeaponQualityExcellent, $"{CorpoMilitech} Dragon"),
-            new(WeaponTypeSniperRifle, WeaponQualityPoor, $"{CorpoGunMart} Snipe-Star"),
-            new(WeaponTypeSniperRifle, WeaponQualityStandard, $"{CorpoNomad} Long Rifle"),
-            new(WeaponTypeSniperRifle, WeaponQualityExcellent, $"{CorpoArasaka} WSSA Sniper System"),
-            new(WeaponTypeGrenadeLauncher, WeaponQualityPoor, $"{CorpoTowaManufacturing} Type-G"),
-            new(WeaponTypeGrenadeLauncher, WeaponQualityStandard, $"{CorpoMilitech} Mini-Grenade"),
-            new(WeaponTypeGrenadeLauncher, WeaponQualityExcellent, $"{CorpoTsunamiArms} Type-18"),
-            new(WeaponTypeRocketLauncher, WeaponQualityPoor, $"{CorpoTowaManufacturing} Type-R"),
-            new(WeaponTypeRocketLauncher, WeaponQualityStandard, $"{CorpoMilitech} Urban"),
-            new(WeaponTypeRocketLauncher, WeaponQualityPoor, $"{CorpoMilitech} Hotshot"),
         };
         #endregion
 
