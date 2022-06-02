@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
+using System.Windows.Media;
 
 namespace CyberpunkGameplayAssistant.Toolbox
 {
@@ -358,9 +359,21 @@ namespace CyberpunkGameplayAssistant.Toolbox
             if (value == null) { return null; }
             return value.ToString() switch
             {
-                AppData.AlertError => System.Windows.Media.Brushes.DarkRed,
-                _ => System.Windows.Media.Brushes.DarkSlateBlue
+                AppData.AlertError => Brushes.DarkRed,
+                _ => Brushes.DarkSlateBlue
             };
+        }
+    }
+    public class AllyEnemyColor : ConverterMarkupExtension<AllyEnemyColor>
+    {
+        public AllyEnemyColor()
+        {
+
+        }
+
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return bool.Parse(value.ToString()!) ? Brushes.DarkGreen : Brushes.DarkRed;
         }
     }
     public class ValidationFontColor : ConverterMarkupExtension<ValidationFontColor>
@@ -372,15 +385,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null) { return null; }
-            if ((bool)value)
-            {
-                return System.Windows.Media.Brushes.White;
-            }
-            else
-            {
-                return System.Windows.Media.Brushes.DimGray;
-            }
+            return bool.Parse(value.ToString()!) ? Brushes.White : Brushes.DimGray;
         }
 
     }

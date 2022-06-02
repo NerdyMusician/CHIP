@@ -6,16 +6,6 @@ namespace CyberpunkGameplayAssistant.Models
 {
     public partial class Combatant : BaseModel
     {
-        // Constructors
-        public Combatant(string name, string type, string portrait, string armor)
-        {
-            InitializeLists();
-            Name = name;
-            Type = type;
-            PortraitFilePath = portrait;
-            ArmorType = armor;
-        }
-
         // Properties
         private bool _UsesLoyalty;
         public bool UsesLoyalty

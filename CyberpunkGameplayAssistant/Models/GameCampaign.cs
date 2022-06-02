@@ -241,6 +241,7 @@ namespace CyberpunkGameplayAssistant.Models
                     Combatant npcToAdd = AppData.Combatants.First(c => c.Name == npc.BaseCombatant).DeepClone();
                     npcToAdd.DisplayName = npc.Name;
                     npcToAdd.Type = AppData.NPC;
+                    npcToAdd.IsAlly = npc.IsAlly;
                     npcToAdd.PortraitFilePath = npc.PortraitFilePath;
                     npcToAdd.InitializeLoadedCombatant();
                     AllCombatants.Add(npcToAdd);
@@ -650,7 +651,7 @@ namespace CyberpunkGameplayAssistant.Models
         private bool IsEligibleCombatant(Combatant combatant)
         {
             if (combatant.Type == AppData.ActiveDefense || combatant.Type == AppData.EmplacedDefense) { return false; }
-            if (combatant.Type == AppData.BlackIce && combatant.CurrentHitPoints == 0) { return false; }
+            if (combatant.Type.IsIn(AppData.BlackIce, AppData.Demon) && combatant.CurrentHitPoints == 0) { return false; }
             return !combatant.IsDead || combatant.Type == AppData.Player;
         }
         private void InitializeLists()

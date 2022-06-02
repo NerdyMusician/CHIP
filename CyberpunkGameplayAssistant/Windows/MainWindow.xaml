@@ -468,46 +468,47 @@
                                                 <Border Style="{StaticResource BRDR_TrackerCard}">
                                                     <StackPanel Margin="2">
                                                         <StackPanel Orientation="Horizontal">
-                                                            <Image Source="{Binding PortraitFilePath}" Width="64" Height="64" Margin="6 6 4 6">
+                                                            <Image Source="{Binding PortraitFilePath}" Width="64" Height="64" Margin="6">
                                                                 <Image.ContextMenu>
                                                                     <ContextMenu>
                                                                         <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
+                                                                        <MenuItem Header="Toggle Ally" Command="{Binding ToggleAlly}" />
                                                                         <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
                                                                         <MenuItem Header="Toggle Loyalty" Command="{Binding ToggleLoyalty}" />
                                                                         <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
                                                                     </ContextMenu>
                                                                 </Image.ContextMenu>
                                                             </Image>
-                                                            <StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <TextBlock Text="{Binding DisplayName, FallbackValue='Security Operative A'}" Width="134" FontSize="14" Margin="3" />
-                                                                    <Image Style="{StaticResource Icon_Info}" Margin="4 0 8 0" />
-                                                                </StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
+                                                            <Border Background="{Binding IsAlly, Converter={tool:AllyEnemyColor}, FallbackValue=DarkGreen}" CornerRadius="2" BorderBrush="Transparent" Width="24" Height="68">
+                                                                <TextBlock Text="{Binding TrackerIndicator, FallbackValue=A}" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="22" FontFamily="Consolas" />
+                                                            </Border>
+                                                            <StackPanel Margin="4">
+                                                                <TextBlock Text="{Binding Name, FallbackValue='Security Guard'}" Width="148" FontSize="16" />
+                                                                <TextBlock Text="{Binding ComClass, FallbackValue=Heavy Ganger}" />
+                                                                <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
                                                                     <StackPanel>
-                                                                        <cc:ImageToggleButton ImageResource="{StaticResource Icon_Pistol}" Text="Weapons" IsChecked="{Binding ActiveWeaponMenuOpen}" />
+                                                                        <cc:MiniToggleButton ImageResource="{StaticResource Icon_Pistol}" IsChecked="{Binding ActiveWeaponMenuOpen}" />
                                                                         <Popup IsOpen="{Binding ActiveWeaponMenuOpen}">
                                                                             <uc:WeaponMenu />
                                                                         </Popup>
                                                                     </StackPanel>
                                                                     <Separator />
                                                                     <StackPanel>
-                                                                        <cc:MiniToggleButton ImageResource="{StaticResource Icon_Action}" IsChecked="{Binding ActiveActionMenuOpen}" Margin="0 2" />
+                                                                        <cc:MiniToggleButton ImageResource="{StaticResource Icon_Action}" IsChecked="{Binding ActiveActionMenuOpen}" />
                                                                         <Popup IsOpen="{Binding ActiveActionMenuOpen}">
                                                                             <uc:ActionMenu />
                                                                         </Popup>
                                                                     </StackPanel>
-                                                                </StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Separator />
                                                                     <StackPanel>
-                                                                        <cc:ImageToggleButton ImageResource="{StaticResource Icon_Hand}" Text="Stats &amp; Skills" IsChecked="{Binding ActiveStatSkillMenuOpen}" />
+                                                                        <cc:MiniToggleButton ImageResource="{StaticResource Icon_Hand}" IsChecked="{Binding ActiveStatSkillMenuOpen}" />
                                                                         <Popup IsOpen="{Binding ActiveStatSkillMenuOpen}">
                                                                             <uc:StatSkillMenu />
                                                                         </Popup>
                                                                     </StackPanel>
                                                                     <Separator />
                                                                     <StackPanel>
-                                                                        <cc:MiniToggleButton ImageResource="{StaticResource Icon_Bandage}" IsChecked="{Binding ActiveInjuryMenuOpen}" Margin="0 2" />
+                                                                        <cc:MiniToggleButton ImageResource="{StaticResource Icon_Bandage}" IsChecked="{Binding ActiveInjuryMenuOpen}" />
                                                                         <Popup IsOpen="{Binding ActiveInjuryMenuOpen}">
                                                                             <uc:InjuryMenu />
                                                                         </Popup>
@@ -567,46 +568,47 @@
                                                 <Border Style="{StaticResource BRDR_TrackerCard}">
                                                     <StackPanel Margin="2">
                                                         <StackPanel Orientation="Horizontal">
-                                                            <Image Source="{Binding PortraitFilePath}" Width="64" Height="64" Margin="6 6 4 6">
+                                                            <Image Source="{Binding PortraitFilePath}" Width="64" Height="64" Margin="6">
                                                                 <Image.ContextMenu>
                                                                     <ContextMenu>
                                                                         <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
+                                                                        <MenuItem Header="Toggle Ally" Command="{Binding ToggleAlly}" />
                                                                         <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
                                                                         <MenuItem Header="Toggle Loyalty" Command="{Binding ToggleLoyalty}" />
                                                                         <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
                                                                     </ContextMenu>
                                                                 </Image.ContextMenu>
                                                             </Image>
-                                                            <StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <TextBlock Text="{Binding DisplayName, FallbackValue='Security Operative A'}" Width="134" FontSize="14" Margin="3" />
-                                                                    <Image Style="{StaticResource Icon_Info}" Margin="4 0 8 0" />
-                                                                </StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
+                                                            <Border Background="{Binding IsAlly, Converter={tool:AllyEnemyColor}, FallbackValue=DarkGreen}" CornerRadius="2" BorderBrush="Transparent" Width="24" Height="68">
+                                                                <TextBlock Text="{Binding TrackerIndicator, FallbackValue=A}" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="22" FontFamily="Consolas" />
+                                                            </Border>
+                                                            <StackPanel Margin="4">
+                                                                <TextBlock Text="{Binding Name, FallbackValue='Security Guard'}" Width="148" FontSize="16" />
+                                                                <TextBlock Text="{Binding ComClass, FallbackValue=Heavy Ganger}" />
+                                                                <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
                                                                     <StackPanel>
-                                                                        <cc:ImageToggleButton ImageResource="{StaticResource Icon_Pistol}" Text="Weapons" IsChecked="{Binding WeaponMenuOpen}" />
+                                                                        <cc:MiniToggleButton ImageResource="{StaticResource Icon_Pistol}" IsChecked="{Binding WeaponMenuOpen}" />
                                                                         <Popup IsOpen="{Binding WeaponMenuOpen}">
                                                                             <uc:WeaponMenu />
                                                                         </Popup>
                                                                     </StackPanel>
                                                                     <Separator />
                                                                     <StackPanel>
-                                                                        <cc:MiniToggleButton ImageResource="{StaticResource Icon_Action}" IsChecked="{Binding ActionMenuOpen}" Margin="0 2" />
+                                                                        <cc:MiniToggleButton ImageResource="{StaticResource Icon_Action}" IsChecked="{Binding ActionMenuOpen}" />
                                                                         <Popup IsOpen="{Binding ActionMenuOpen}">
                                                                             <uc:ActionMenu />
                                                                         </Popup>
                                                                     </StackPanel>
-                                                                </StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Separator />
                                                                     <StackPanel>
-                                                                        <cc:ImageToggleButton ImageResource="{StaticResource Icon_Hand}" Text="Stats &amp; Skills" IsChecked="{Binding StatSkillMenuOpen}" />
+                                                                        <cc:MiniToggleButton ImageResource="{StaticResource Icon_Hand}" IsChecked="{Binding StatSkillMenuOpen}" />
                                                                         <Popup IsOpen="{Binding StatSkillMenuOpen}">
                                                                             <uc:StatSkillMenu />
                                                                         </Popup>
                                                                     </StackPanel>
                                                                     <Separator />
                                                                     <StackPanel>
-                                                                        <cc:MiniToggleButton ImageResource="{StaticResource Icon_Bandage}" IsChecked="{Binding InjuryMenuOpen}" Margin="0 2" />
+                                                                        <cc:MiniToggleButton ImageResource="{StaticResource Icon_Bandage}" IsChecked="{Binding InjuryMenuOpen}" />
                                                                         <Popup IsOpen="{Binding InjuryMenuOpen}">
                                                                             <uc:InjuryMenu />
                                                                         </Popup>
@@ -1186,6 +1188,10 @@
                                         </StackPanel>
                                         <cc:ImageButton ImageResource="{StaticResource Icon_X}" Text="Delete NPC" Margin="128 2 0 2" Command="{Binding CampaignView.ActiveCampaign.ActiveNpc.RemoveNpcFromCampaign}" />
                                     </StackPanel>
+                                </StackPanel>
+                            </TabItem>
+                            <TabItem Header="DEV">
+                                <StackPanel>
                                 </StackPanel>
                             </TabItem>
                         </TabControl>

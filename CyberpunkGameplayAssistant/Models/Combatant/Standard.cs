@@ -27,25 +27,6 @@ namespace CyberpunkGameplayAssistant.Models
             PortraitFilePath = imagePath;
             ArmorType = armor;
         }
-        /// <summary>
-        /// BLACK ICE PROGRAM
-        /// </summary>
-        /// <param name="name">Name of the program</param>
-        /// <param name="imagePath">Image path for the program</param>
-        public Combatant(string name, string imagePath)
-        {
-            InitializeLists();
-            Name = name;
-            PortraitFilePath = imagePath;
-            Type = AppData.BlackIce;
-        }
-        public Combatant(string name, string imagePath, string armor)
-        {
-            InitializeLists();
-            Name = name;
-            PortraitFilePath = imagePath;
-            ArmorType = armor;
-        }
 
         // Databound Properties
         private string _Name;
@@ -101,6 +82,12 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get => _IsActive;
             set => SetAndNotify(ref _IsActive, value);
+        }
+        private bool _IsAlly;
+        public bool IsAlly
+        {
+            get => _IsAlly;
+            set => SetAndNotify(ref _IsAlly, value);
         }
         private ObservableCollection<Stat> _BaseStats;
         public ObservableCollection<Stat> BaseStats
@@ -424,6 +411,11 @@ namespace CyberpunkGameplayAssistant.Models
         {
             IsDead = !IsDead;
             UpdateWoundState();
+        }
+        public ICommand ToggleAlly => new RelayCommand(DoToggleAlly);
+        private void DoToggleAlly(object param)
+        {
+            IsAlly = !IsAlly;
         }
         public ICommand AddCriticalInjury => new RelayCommand(DoAddCriticalInjury);
         private void DoAddCriticalInjury(object param)
