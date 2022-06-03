@@ -185,6 +185,18 @@ namespace CyberpunkGameplayAssistant.Models
             get => _ActiveNetArchitecture;
             set => SetAndNotify(ref _ActiveNetArchitecture, value);
         }
+        private string _ManualCurrentTime;
+        public string ManualCurrentTime
+        {
+            get => _ManualCurrentTime;
+            set => SetAndNotify(ref _ManualCurrentTime, value);
+        }
+        private string _ManualStartTime;
+        public string ManualStartTime
+        {
+            get => _ManualStartTime;
+            set => SetAndNotify(ref _ManualStartTime, value);
+        }
 
         // Commands
         public ICommand AddCombatants => new RelayCommand(DoAddCombatants);
@@ -615,6 +627,20 @@ namespace CyberpunkGameplayAssistant.Models
                     break;
             }
             SortCombatantsToLists();
+        }
+        public ICommand SetStartTime => new RelayCommand(DoSetStartTime);
+        private void DoSetStartTime(object param)
+        {
+            bool isValidDate = DateTime.TryParse(ManualStartTime, out DateTime result);
+            if (!isValidDate) { RaiseError("Invalid entry for DateTime"); return; }
+            SetStartDateValues(result);
+        }
+        public ICommand SetCurrentTime => new RelayCommand(DoSetCurrentTime);
+        private void DoSetCurrentTime(object param)
+        {
+            bool isValidDate = DateTime.TryParse(ManualCurrentTime, out DateTime result);
+            if (!isValidDate) { RaiseError("Invalid entry for DateTime"); return; }
+            SetCurrentDateValues(result);
         }
 
         // Public Methods

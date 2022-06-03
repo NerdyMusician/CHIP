@@ -40,11 +40,16 @@ namespace CyberpunkGameplayAssistant.Models
             set => SetAndNotify(ref _Variant, value);
         }
         private int _Level;
-        
         public int Level
         {
             get => _Level;
             set => SetAndNotify(ref _Level, value);
+        }
+        private int _Base;
+        public int Base
+        {
+            get => _Base;
+            set => SetAndNotify(ref _Base, value);
         }
 
         // Properties

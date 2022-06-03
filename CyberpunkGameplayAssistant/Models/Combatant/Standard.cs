@@ -458,6 +458,21 @@ namespace CyberpunkGameplayAssistant.Models
             AppData.MainModelRef.CampaignView.ActiveCampaign.AllCombatants.Remove(this);
             AppData.MainModelRef.CampaignView.ActiveCampaign.SortCombatants.Execute(null);
         }
+        public ICommand SetImage => new RelayCommand(DoSetImage);
+        private void DoSetImage(object param)
+        {
+            if (param == null) { return; }
+            string paramClass = "Class";
+            string paramCustom = "Custom";
+            if (param.ToString() == paramClass)
+            {
+                SetImageByClass();
+            }
+            if (param.ToString() == paramCustom)
+            {
+                SetCustomImage();
+            }
+        }
 
         // Public Methods
         public void InitializeLoadedCombatant()
@@ -479,6 +494,22 @@ namespace CyberpunkGameplayAssistant.Models
             SetStoppingPower(true);
             ReloadAllWeapons();
             SetStandardActions();
+        }
+        public void InitializeCustomCombatant()
+        {
+            PortraitFilePath = AppData.PortraitDefault;
+            BaseStats = new();
+            BaseStats.Add(new(AppData.StatIntelligence, 0));
+            BaseStats.Add(new(AppData.StatReflexes, 0));
+            BaseStats.Add(new(AppData.StatDexterity, 0));
+            BaseStats.Add(new(AppData.StatTechnique, 0));
+            BaseStats.Add(new(AppData.StatCool, 0));
+            BaseStats.Add(new(AppData.StatWillpower, 0));
+            BaseStats.Add(new(AppData.StatLuck, 0));
+            BaseStats.Add(new(AppData.StatMovement, 0));
+            BaseStats.Add(new(AppData.StatBody, 0));
+            BaseStats.Add(new(AppData.StatEmpathy, 0));
+            SetBaseSkills();
         }
         public void SetStats(int INT, int REF, int DEX, int TECH, int COOL, int WILL, int LUCK, int MOVE, int BODY, int EMP)
         {
@@ -776,6 +807,11 @@ namespace CyberpunkGameplayAssistant.Models
             Weapons.Clear();
             AmmoInventory.Clear();
         }
+        public void UpdateBuilderStats()
+        {
+            SetCalculatedStats();
+            SetHitPoints(true);
+        }
 
         // Private Methods
         private void InitializeLists()
@@ -918,6 +954,18 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 return demon.BaseStats.GetValue(AppData.SkillCombatNumber);
             }
+        }
+        private void SetImageByClass()
+        {
+            PortraitFilePath = ComClass switch
+            {
+                _ => AppData.PortraitDefault
+            };
+        }
+        private void SetCustomImage()
+        {
+            string newFile = HelperMethods.GetFile(AppData.FilterImageFiles, AppData.CombatantImageDirectory);
+            if (!string.IsNullOrEmpty(newFile)) { PortraitFilePath = newFile; }
         }
 
     }

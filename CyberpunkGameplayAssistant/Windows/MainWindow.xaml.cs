@@ -147,7 +147,9 @@ namespace CyberpunkGameplayAssistant.Windows
             SfxPlayer.Play();
         }
 
-
-
+        private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            ClosePopups(this);
+        }
     }
 }

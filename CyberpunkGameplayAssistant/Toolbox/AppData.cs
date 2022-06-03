@@ -43,6 +43,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         // File Locations
         public const string File_Log = "log.txt";
         public static readonly string File_CampaignData = $"{DataDirectory}Campaigns.xml";
+        public static readonly string File_CombatantData = $"{DataDirectory}Combatants.xml";
 
         // Combatant Types
         public const string ComTypeStandard = "Standard";

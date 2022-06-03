@@ -381,6 +381,9 @@
 
 
     <!-- Unsorted -->
+    <Style TargetType="Image" x:Key="Icon_Netrunner" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/netrunner.png" />
+    </Style>
     <Style TargetType="Image" x:Key="Icon_Zap" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/zap.png" />
     </Style>
@@ -512,6 +515,9 @@
     </Style>
     <Style TargetType="Image" x:Key="Icon_MinusThirty" BasedOn="{StaticResource Icon_WideBase}">
         <Setter Property="Source" Value="../Resources/Icons/minus_thirty.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_Set" BasedOn="{StaticResource Icon_WideBase}">
+        <Setter Property="Source" Value="../Resources/Icons/set.png" />
     </Style>
     <Style TargetType="Image" x:Key="Icon_Directions" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/directions.png" />
