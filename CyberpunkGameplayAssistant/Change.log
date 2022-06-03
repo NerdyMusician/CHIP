@@ -1,0 +1,5 @@
+﻿CHIP 1.01.00
+- NEW: Able to manually set start/current campaign datetimes with text field
+- CHANGE: Scrolling combatant lists now closes their open popup menus
+- CHANGE: Generate NET Floor button icon is now a dice
+- CHANGE: Icon added to better indicate what NET floor checkbox is for
