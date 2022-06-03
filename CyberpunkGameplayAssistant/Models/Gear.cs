@@ -1,5 +1,7 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
 using System;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
 {
@@ -42,6 +44,13 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get => _Quantity;
             set => SetAndNotify(ref _Quantity, value);
+        }
+
+        // Commands
+        public ICommand RemoveGear => new RelayCommand(DoRemoveGear);
+        private void DoRemoveGear(object param)
+        {
+            (param as ObservableCollection<Gear>)!.Remove(this);
         }
 
     }

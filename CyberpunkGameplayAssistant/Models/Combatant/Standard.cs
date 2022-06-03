@@ -89,6 +89,12 @@ namespace CyberpunkGameplayAssistant.Models
             get => _IsAlly;
             set => SetAndNotify(ref _IsAlly, value);
         }
+        private bool _CanNetrun;
+        public bool CanNetrun
+        {
+            get => _CanNetrun;
+            set => SetAndNotify(ref _CanNetrun, value);
+        }
         private ObservableCollection<Stat> _BaseStats;
         public ObservableCollection<Stat> BaseStats
         {
@@ -106,6 +112,12 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get => _Skills;
             set => SetAndNotify(ref _Skills, value);
+        }
+        private ObservableCollection<Skill> _SkillBases;
+        public ObservableCollection<Skill> SkillBases
+        {
+            get => _SkillBases;
+            set => SetAndNotify(ref _SkillBases, value);
         }
         private ObservableCollection<Skill> _AwarenessSkills;
         public ObservableCollection<Skill> AwarenessSkills
@@ -473,16 +485,92 @@ namespace CyberpunkGameplayAssistant.Models
                 SetCustomImage();
             }
         }
+        public ICommand AddSkills => new RelayCommand(DoAddSkills);
+        private void DoAddSkills(object param)
+        {
+            MultiObjectSelectionDialog selectionDialog = new(AppData.AllSkills.ToNamedRecordList(), "Skills");
+
+            if (selectionDialog.ShowDialog() == true)
+            {
+                foreach (NamedRecord selectedRecord in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedRecords)
+                {
+                    Skills.Add(new(selectedRecord.Name));
+                }
+            }
+        }
+        public ICommand AddBuilderWeapons => new RelayCommand(DoAddBuilderWeapons);
+        private void DoAddBuilderWeapons(object param)
+        {
+            MultiObjectSelectionDialog selectionDialog = new(AppData.AllWeaponTypes.ToNamedRecordList(), "Skills");
+
+            if (selectionDialog.ShowDialog() == true)
+            {
+                foreach (NamedRecord selectedRecord in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedRecords)
+                {
+                    Weapons.Add(new(selectedRecord.Name, AppData.WeaponQualityStandard));
+                }
+            }
+        }
+        public ICommand AddAmmunition => new RelayCommand(DoAddAmmunition);
+        private void DoAddAmmunition(object param)
+        {
+            AmmoInventory.Add(new());
+        }
+        public ICommand AddPresetAmmunition => new RelayCommand(DoAddPresetAmmunition);
+        private void DoAddPresetAmmunition(object param)
+        {
+            AddBasicAmmoForAllWeapons(3);
+        }
+        public ICommand AddBuilderGear => new RelayCommand(DoAddBuilderGear);
+        private void DoAddBuilderGear(object param)
+        {
+            MultiObjectSelectionDialog selectionDialog = new(AppData.MasterGearList.ToNamedRecordList(), "Gear");
+
+            if (selectionDialog.ShowDialog() == true)
+            {
+                foreach (NamedRecord selectedRecord in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedRecords)
+                {
+                    AddGear(selectedRecord.Name);
+                }
+            }
+        }
+        public ICommand AddBuilderCyberware => new RelayCommand(DoAddBuilderCyberware);
+        private void DoAddBuilderCyberware(object param)
+        {
+            MultiObjectSelectionDialog selectionDialog = new(AppData.MasterCyberwareList.ToNamedRecordList(), "Cyberware");
+
+            if (selectionDialog.ShowDialog() == true)
+            {
+                foreach (NamedRecord selectedRecord in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedRecords)
+                {
+                    AddCyberware(selectedRecord.Name);
+                }
+            }
+        }
+        public ICommand AddBuilderPrograms => new RelayCommand(DoAddBuilderPrograms);
+        private void DoAddBuilderPrograms(object param)
+        {
+            MultiObjectSelectionDialog selectionDialog = new(AppData.CyberdeckPrograms.ToNamedRecordList(), "Programs");
+
+            if (selectionDialog.ShowDialog() == true)
+            {
+                foreach (NamedRecord selectedRecord in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedRecords)
+                {
+                    AddCyberdeckProgram(selectedRecord.Name);
+                }
+            }
+        }
 
         // Public Methods
         public void InitializeLoadedCombatant()
         {
             SetCalculatedStats();
-            SetHitPoints(false);
-            SetStoppingPower(false);
+            SetHitPoints(true);
+            SetStoppingPower(true);
             UpdateWoundState();
             UpdateGearDescriptions();
             UpdateCyberwareDescriptions();
+            AddRemainingSkills();
             OrganizeSkillsToCategories();
             SetStandardActions();
             GetCriticalInjuryDescriptions();
@@ -509,7 +597,6 @@ namespace CyberpunkGameplayAssistant.Models
             BaseStats.Add(new(AppData.StatMovement, 0));
             BaseStats.Add(new(AppData.StatBody, 0));
             BaseStats.Add(new(AppData.StatEmpathy, 0));
-            SetBaseSkills();
         }
         public void SetStats(int INT, int REF, int DEX, int TECH, int COOL, int WILL, int LUCK, int MOVE, int BODY, int EMP)
         {
@@ -637,7 +724,12 @@ namespace CyberpunkGameplayAssistant.Models
         public void AddAmmo(string type, int quantity, string variant = "")
         {
             if (string.IsNullOrEmpty(variant)) { variant = AppData.AmmoVarBasic; }
-            AmmoInventory.Add(new(type, quantity, variant));
+            Ammo existingEntry = AmmoInventory.FirstOrDefault(a => a.Type == type && a.Variant == variant);
+            if (existingEntry != null) { existingEntry.Quantity += quantity; }
+            else
+            {
+                AmmoInventory.Add(new(type, quantity, variant));
+            }
         }
         public void AddGearSet(params string[] names)
         {
@@ -819,6 +911,7 @@ namespace CyberpunkGameplayAssistant.Models
             BaseStats = new();
             CalculatedStats = new();
             Skills = new();
+            SkillBases = new();
             Weapons = new();
             AwarenessSkills = new();
             BodySkills = new();
@@ -966,6 +1059,14 @@ namespace CyberpunkGameplayAssistant.Models
         {
             string newFile = HelperMethods.GetFile(AppData.FilterImageFiles, AppData.CombatantImageDirectory);
             if (!string.IsNullOrEmpty(newFile)) { PortraitFilePath = newFile; }
+        }
+        private void AddRemainingSkills()
+        {
+            foreach (string skill in AppData.AllSkills)
+            {
+                Skill existingSkill = Skills.FirstOrDefault(s => s.Name == skill)!;
+                if (existingSkill == null) { Skills.Add(new(skill)); }
+            }
         }
 
     }

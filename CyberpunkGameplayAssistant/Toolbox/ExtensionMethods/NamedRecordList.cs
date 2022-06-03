@@ -1,14 +1,20 @@
 ﻿using CyberpunkGameplayAssistant.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CyberpunkGameplayAssistant.Toolbox.ExtensionMethods
 {
     public static class NamedRecordList
     {
+        public static List<NamedRecord> ToNamedRecordList(this List<string> items)
+        {
+            List<NamedRecord> records = new();
+            items.Sort();
+            foreach (string item in items)
+            {
+                records.Add(new(item, string.Empty));
+            }
+            return records;
+        }
         public static List<NamedRecord> ToNamedRecordList(this List<CriticalInjury> injuries)
         {
             List<NamedRecord> records = new();
@@ -60,6 +66,15 @@ namespace CyberpunkGameplayAssistant.Toolbox.ExtensionMethods
             foreach (CyberdeckProgram program in programs)
             {
                 records.Add(new(program.Name, program.Effect));
+            }
+            return records;
+        }
+        public static List<NamedRecord> ToNamedRecordList(this Dictionary<string, string> dictionary)
+        {
+            List<NamedRecord> records = new();
+            foreach (KeyValuePair<string, string> kvp in dictionary)
+            {
+                records.Add(new(kvp.Key, kvp.Value));
             }
             return records;
         }

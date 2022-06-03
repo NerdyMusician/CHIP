@@ -1,5 +1,6 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
@@ -72,6 +73,11 @@ namespace CyberpunkGameplayAssistant.Models
         private void DoRemoveActiveProgram(object param)
         {
             (param as Combatant).ActivePrograms.Remove(this);
+        }
+        public ICommand RemoveProgram => new RelayCommand(DoRemoveProgram);
+        private void DoRemoveProgram(object param)
+        {
+            (param as ObservableCollection<CyberdeckProgram>)!.Remove(this);
         }
 
     }

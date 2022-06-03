@@ -381,6 +381,9 @@
 
 
     <!-- Unsorted -->
+    <Style TargetType="Image" x:Key="Icon_NameTag" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/nametag.png" />
+    </Style>
     <Style TargetType="Image" x:Key="Icon_Netrunner" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/netrunner.png" />
     </Style>

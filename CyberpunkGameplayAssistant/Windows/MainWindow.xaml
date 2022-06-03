@@ -1247,61 +1247,42 @@
                             <Run Text="Last Save:" />
                             <Run Text="{Binding CombatantView.LastSave}" />
                         </TextBlock>
-                        <StackPanel Visibility="{Binding CombatantView.ActiveCombatant, Converter={tool:CollapsedIfNull}, UpdateSourceTrigger=PropertyChanged}">
-                            <TextBlock Text="Base Information" />
-                            <Rectangle />
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="{Binding CombatantView.ActiveCombatant.PortraitFilePath}" Width="72" Height="72" Margin="2">
-                                    <Image.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem Header="Set Image Based On Class" Command="{Binding CombatantView.ActiveCombatant.SetImage}" CommandParameter="Class" />
-                                            <MenuItem Header="Set Custom Image" Command="{Binding CombatantView.ActiveCombatant.SetImage}" CommandParameter="Custom" />
-                                        </ContextMenu>
-                                    </Image.ContextMenu>
-                                </Image>
-                                <StackPanel>
-                                    <StackPanel Style="{StaticResource SPNL_FieldRow}">
-                                        <cc:FieldLabel Text="Name" />
-                                        <TextBox Text="{Binding CombatantView.ActiveCombatant.Name}" Width="200" />
-                                    </StackPanel>
-                                    <StackPanel Style="{StaticResource SPNL_FieldRow}">
-                                        <cc:FieldLabel Text="Archetype" />
-                                        <cc:GammaComboBox ItemsSource="{Binding CombatantClasses}" SelectedValue="{Binding CombatantView.ActiveCombatant.ComClass}" />
-                                    </StackPanel>
-                                    <StackPanel Style="{StaticResource SPNL_FieldRow}">
-                                        <cc:FieldLabel Text="Armor" />
-                                        <cc:GammaComboBox ItemsSource="{Binding ArmorTypes}" SelectedValue="{Binding CombatantView.ActiveCombatant.ArmorType}" />
+                        <StackPanel Orientation="Horizontal" Visibility="{Binding CombatantView.ActiveCombatant, Converter={tool:CollapsedIfNull}, UpdateSourceTrigger=PropertyChanged}">
+                            <StackPanel>
+                                <Separator Height="4" />
+                                <TextBlock Text="Base Information" />
+                                <Rectangle />
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding CombatantView.ActiveCombatant.PortraitFilePath}" Width="72" Height="72" Margin="2" VerticalAlignment="Top">
+                                        <Image.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="Set Image Based On Class" Command="{Binding CombatantView.ActiveCombatant.SetImage}" CommandParameter="Class" />
+                                                <MenuItem Header="Set Custom Image" Command="{Binding CombatantView.ActiveCombatant.SetImage}" CommandParameter="Custom" />
+                                            </ContextMenu>
+                                        </Image.ContextMenu>
+                                    </Image>
+                                    <StackPanel>
+                                        <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                            <cc:FieldLabel Text="Name" />
+                                            <TextBox Text="{Binding CombatantView.ActiveCombatant.Name}" Width="200" />
+                                        </StackPanel>
+                                        <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                            <cc:FieldLabel Text="Archetype" />
+                                            <cc:GammaComboBox ItemsSource="{Binding CombatantClasses}" SelectedValue="{Binding CombatantView.ActiveCombatant.ComClass}" />
+                                        </StackPanel>
+                                        <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                            <cc:FieldLabel Text="Armor" />
+                                            <cc:GammaComboBox ItemsSource="{Binding ArmorTypes}" SelectedValue="{Binding CombatantView.ActiveCombatant.ArmorType}" />
+                                        </StackPanel>
+                                        <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                            <cc:FieldLabel Text="Can Netrun" />
+                                            <CheckBox IsChecked="{Binding CombatantView.ActiveCombatant.CanNetrun}" />
+                                        </StackPanel>
                                     </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
-                            <Separator />
-                            <TextBlock Text="Base STATS" />
-                            <Rectangle />
-                            <ItemsControl ItemsSource="{Binding CombatantView.ActiveCombatant.BaseStats}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel HorizontalAlignment="Left" Width="450"></WrapPanel>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Style="{StaticResource SegmentTile}" HorizontalAlignment="Left">
-                                            <StackPanel Orientation="Horizontal" Margin="4 2">
-                                                <TextBlock Text="{Binding StatAbbr, FallbackValue=MOVE}" Width="34" VerticalAlignment="Center" />
-                                                <Separator />
-                                                <TextBox Text="{Binding Value}" Width="32" />
-                                            </StackPanel>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                            <Separator />
-                            <DockPanel>
-                                <TextBlock Text="Skill Bases" VerticalAlignment="Bottom" />
-                                <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" HorizontalAlignment="Right" Command="{Binding AddSkillBases}" />
-                            </DockPanel>
-                            <Rectangle />
-                            <ScrollViewer Height="240">
+                                <Separator />
+                                <TextBlock Text="Base STATS" />
+                                <Rectangle />
                                 <ItemsControl ItemsSource="{Binding CombatantView.ActiveCombatant.BaseStats}">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
@@ -1312,15 +1293,186 @@
                                         <DataTemplate>
                                             <Border Style="{StaticResource SegmentTile}" HorizontalAlignment="Left">
                                                 <StackPanel Orientation="Horizontal" Margin="4 2">
-                                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                                                    <TextBlock Text="{Binding StatAbbr, FallbackValue=MOVE}" Width="34" VerticalAlignment="Center" />
                                                     <Separator />
-                                                    <TextBox Text="{Binding Base}" Width="32" />
+                                                    <TextBox Text="{Binding Value}" Width="32" />
                                                 </StackPanel>
                                             </Border>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
-                            </ScrollViewer>
+                                <Separator />
+                                <DockPanel>
+                                    <TextBlock Text="Skills (by Level)" VerticalAlignment="Bottom" />
+                                    <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" HorizontalAlignment="Right" Command="{Binding CombatantView.ActiveCombatant.AddSkills}" />
+                                </DockPanel>
+                                <Rectangle />
+                                <ScrollViewer Height="240">
+                                    <ItemsControl ItemsSource="{Binding CombatantView.ActiveCombatant.Skills}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel HorizontalAlignment="Left" Width="450"></WrapPanel>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Style="{StaticResource SegmentTile}" HorizontalAlignment="Left">
+                                                    <StackPanel Orientation="Horizontal" Margin="4 2">
+                                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                                                        <Separator />
+                                                        <TextBox Text="{Binding Base}" Width="32" />
+                                                        <Separator />
+                                                        <cc:IconButton ImageResource="{StaticResource Icon_X}" Command="{Binding RemoveSkill}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=ItemsSource}" />
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </StackPanel>
+                            <Separator Width="16" />
+                            <StackPanel>
+                                <DockPanel>
+                                    <TextBlock Text="Weapons" VerticalAlignment="Bottom" />
+                                    <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" HorizontalAlignment="Right" Command="{Binding CombatantView.ActiveCombatant.AddBuilderWeapons}" />
+                                </DockPanel>
+                                <Rectangle />
+                                <ScrollViewer Width="520" MaxHeight="140">
+                                    <ItemsControl ItemsSource="{Binding CombatantView.ActiveCombatant.Weapons}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Style="{StaticResource SegmentTile}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Style="{StaticResource Icon_Reticle}" ToolTip="Weapon Type" />
+                                                        <Separator />
+                                                        <cc:GammaComboBox ItemsSource="{Binding WeaponList}" SelectedValue="{Binding Type}" Width="160" />
+                                                        <Separator />
+                                                        <cc:GammaComboBox ItemsSource="{Binding QualityList}" SelectedValue="{Binding Quality}" Width="120" />
+                                                        <Separator />
+                                                        <Image Style="{StaticResource Icon_NameTag}" ToolTip="Custom Name" />
+                                                        <Separator />
+                                                        <TextBox Text="{Binding Name}" Width="140" />
+                                                        <Separator />
+                                                        <cc:IconButton ImageResource="{StaticResource Icon_X}" Command="{Binding RemoveWeapon}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=ItemsSource}" />
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                                <Separator />
+                                <DockPanel>
+                                    <TextBlock Text="Ammunition" VerticalAlignment="Bottom" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CombatantView.ActiveCombatant.AddAmmunition}" />
+                                        <cc:IconButton ImageResource="{StaticResource Icon_Reload}" Command="{Binding CombatantView.ActiveCombatant.AddPresetAmmunition}" />
+                                    </StackPanel>
+                                </DockPanel>
+                                <Rectangle />
+                                <ScrollViewer Width="520" MaxHeight="120">
+                                    <ItemsControl ItemsSource="{Binding CombatantView.ActiveCombatant.AmmoInventory}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Style="{StaticResource SegmentTile}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Style="{StaticResource Icon_BulletStack}" ToolTip="Weapon Type" />
+                                                        <Separator />
+                                                        <cc:GammaComboBox ItemsSource="{Binding AmmoTypes}" SelectedValue="{Binding Type}" Width="120" />
+                                                        <Separator />
+                                                        <cc:GammaComboBox ItemsSource="{Binding AmmoVariants}" SelectedValue="{Binding Variant}" Width="120" />
+                                                        <Separator />
+                                                        <TextBlock Text="x" />
+                                                        <Separator />
+                                                        <TextBox Text="{Binding Quantity}" Width="48" />
+                                                        <Separator />
+                                                        <cc:IconButton ImageResource="{StaticResource Icon_X}" Command="{Binding RemoveAmmo}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=ItemsSource}" />
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                                <Separator />
+                                <DockPanel>
+                                    <TextBlock Text="Gear" VerticalAlignment="Bottom" />
+                                    <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" HorizontalAlignment="Right" Command="{Binding CombatantView.ActiveCombatant.AddBuilderGear}" />
+                                </DockPanel>
+                                <Rectangle />
+                                <ScrollViewer MaxHeight="120">
+                                    <ItemsControl ItemsSource="{Binding CombatantView.ActiveCombatant.GearInventory}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel HorizontalAlignment="Left" Width="450"></WrapPanel>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Style="{StaticResource SegmentTile}" HorizontalAlignment="Left">
+                                                    <StackPanel Orientation="Horizontal" Margin="4 2">
+                                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                                                        <Separator />
+                                                        <cc:IconButton ImageResource="{StaticResource Icon_X}" Command="{Binding RemoveGear}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=ItemsSource}" />
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                                <Separator />
+                                <DockPanel>
+                                    <TextBlock Text="Cyberware" VerticalAlignment="Bottom" />
+                                    <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" HorizontalAlignment="Right" Command="{Binding CombatantView.ActiveCombatant.AddBuilderCyberware}" />
+                                </DockPanel>
+                                <Rectangle />
+                                <ScrollViewer MaxHeight="120">
+                                    <ItemsControl ItemsSource="{Binding CombatantView.ActiveCombatant.InstalledCyberware}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel HorizontalAlignment="Left" Width="450"></WrapPanel>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Style="{StaticResource SegmentTile}" HorizontalAlignment="Left">
+                                                    <StackPanel Orientation="Horizontal" Margin="4 2">
+                                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                                                        <Separator />
+                                                        <cc:IconButton ImageResource="{StaticResource Icon_X}" Command="{Binding RemoveCyberware}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=ItemsSource}" />
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                                <StackPanel Visibility="{Binding CombatantView.ActiveCombatant.CanNetrun, Converter={tool:CollapsedIfFalse}}">
+                                    <Separator />
+                                    <DockPanel>
+                                        <TextBlock Text="Cyberdeck Programs" VerticalAlignment="Bottom" />
+                                        <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" HorizontalAlignment="Right" Command="{Binding CombatantView.ActiveCombatant.AddBuilderPrograms}" />
+                                    </DockPanel>
+                                    <Rectangle />
+                                    <ScrollViewer MaxHeight="120">
+                                        <ItemsControl ItemsSource="{Binding CombatantView.ActiveCombatant.CyberdeckPrograms}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel HorizontalAlignment="Left" Width="450"></WrapPanel>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border Style="{StaticResource SegmentTile}" HorizontalAlignment="Left">
+                                                        <StackPanel Orientation="Horizontal" Margin="4 2">
+                                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                                                            <Separator />
+                                                            <cc:IconButton ImageResource="{StaticResource Icon_X}" Command="{Binding RemoveProgram}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=ItemsSource}" />
+                                                        </StackPanel>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </StackPanel>
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>

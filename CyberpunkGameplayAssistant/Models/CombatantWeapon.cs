@@ -15,6 +15,11 @@ namespace CyberpunkGameplayAssistant.Models
         {
 
         }
+        public CombatantWeapon(string weaponType, string weaponQuality)
+        {
+            Type = weaponType;
+            Quality = weaponQuality;
+        }
         public CombatantWeapon(string weaponType, string weaponQuality, string weaponName)
         {
             Type = weaponType;
@@ -79,6 +84,20 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 RangedWeaponClip clip = AppData.ClipChart.FirstOrDefault(w => w.WeaponType == Type);
                 return (clip != null) ? clip.Standard : 0;
+            }
+        }
+        public List<string> WeaponList
+        {
+            get
+            {
+                return AppData.AllWeaponTypes.DeepClone();
+            }
+        }
+        public List<string> QualityList
+        {
+            get
+            {
+                return AppData.AllQualities;
             }
         }
 

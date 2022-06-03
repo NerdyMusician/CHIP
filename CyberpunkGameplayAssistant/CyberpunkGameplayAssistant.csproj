@@ -199,6 +199,7 @@
     <None Remove="Resources\Icons\monster.png" />
     <None Remove="Resources\Icons\mountain.png" />
     <None Remove="Resources\Icons\musicnote.png" />
+    <None Remove="Resources\Icons\nametag.png" />
     <None Remove="Resources\Icons\necromancy.png" />
     <None Remove="Resources\Icons\netrunner.png" />
     <None Remove="Resources\Icons\ninja.png" />
@@ -533,6 +534,7 @@
     <Resource Include="Resources\Icons\monster.png" />
     <Resource Include="Resources\Icons\mountain.png" />
     <Resource Include="Resources\Icons\musicnote.png" />
+    <Resource Include="Resources\Icons\nametag.png" />
     <Resource Include="Resources\Icons\necromancy.png" />
     <Resource Include="Resources\Icons\netrunner.png" />
     <Resource Include="Resources\Icons\ninja.png" />

@@ -1,6 +1,7 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
 using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
 using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
@@ -51,6 +52,22 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get => _IsThrowable;
             set => SetAndNotify(ref _IsThrowable, value);
+        }
+
+        // Dropdown Sources
+        public List<string> AmmoTypes
+        {
+            get
+            {
+                return AppData.AllAmmoTypes.DeepClone();
+            }
+        }
+        public List<string> AmmoVariants
+        {
+            get
+            {
+                return AppData.AllAmmoVariants.DeepClone();
+            }
         }
 
         // Commands

@@ -202,7 +202,7 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand AddCombatants => new RelayCommand(DoAddCombatants);
         private void DoAddCombatants(object param)
         {
-            MultiObjectSelectionDialog selectionDialog = new(AppData.Combatants, AppData.MultiModeEnemies);
+            MultiObjectSelectionDialog selectionDialog = new(AppData.MainModelRef.CombatantView.Combatants.ToList(), AppData.MultiModeEnemies);
 
             if (selectionDialog.ShowDialog() == true)
             {
@@ -250,7 +250,7 @@ namespace CyberpunkGameplayAssistant.Models
                 foreach (NamedRecord selectedRecord in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedRecords)
                 {
                     NPC npc = Npcs.First(n => n.Name == selectedRecord.Name);
-                    Combatant npcToAdd = AppData.Combatants.First(c => c.Name == npc.BaseCombatant).DeepClone();
+                    Combatant npcToAdd = AppData.MainModelRef.CombatantView.Combatants.First(c => c.Name == npc.BaseCombatant).DeepClone();
                     npcToAdd.DisplayName = npc.Name;
                     npcToAdd.Type = AppData.NPC;
                     npcToAdd.IsAlly = npc.IsAlly;

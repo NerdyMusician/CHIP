@@ -332,6 +332,21 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string SkillSeaVehicleTech = "Sea Vehicle Tech";
         public const string SkillWeaponstech = "Weaponstech";
 
+        public static List<string> AllSkills = new()
+        {
+            SkillInterface, SkillSurgery, SkillMedicalTech, 
+            SkillConcentration, SkillConcealRevealObject, SkillLipReading, SkillPerception, SkillTracking,
+            SkillAthletics, SkillContortionist, SkillDance, SkillEndurance, SkillResistTortureDrugs, SkillStealth,
+            SkillDriveLandVehicle, SkillPilotAirVehicle, SkillPilotSeaVehicle, SkillRiding,
+            SkillAccounting, SkillAnimalHandling, SkillBureaucracy, SkillBusiness, SkillComposition, SkillCriminology, SkillCryptography, SkillDeduction,
+            SkillEducation, SkillGamble, SkillLanguage, SkillLibrarySearch, SkillLocalExpert, SkillScience, SkillTactics, SkillWildernessSurvival,
+            SkillBrawling, SkillEvasion, SkillMartialArts, SkillMeleeWeapon,
+            SkillActing, SkillPlayInstrument,
+            SkillArchery, SkillAutofire, SkillHandgun, SkillHeavyWeapons, SkillShoulderArms,
+            SkillBribery, SkillConversation, SkillHumanPerception, SkillInterrogation, SkillPersuasion, SkillPersonalGrooming, SkillStreetwise, SkillTrading, SkillWardrobeStyle,
+            SkillAirVehicleTech, SkillBasicTech, SkillCybertech, SkillDemolitions, SkillElectronicsSecurityTech, SkillFirstAid, SkillForgery, SkillLandVehicleTech,
+            SkillPaintDrawSculpt, SkillParamedic, SkillPhotographyFilm, SkillPickLock, SkillPickPocket, SkillSeaVehicleTech, SkillWeaponstech
+        };
         public static List<string> SkillsToSkipForCombatants = new()
         {
             SkillInterface, SkillCombatNumber,
@@ -498,6 +513,15 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static readonly string WeaponTypeFlamethrower = "Flamethrower";
         public static readonly string WeaponTypePopupGrenadeLauncher = "Popup Grenade Launcher";
 
+        public static readonly List<string> AllWeaponTypes = new()
+        {
+            WeaponTypeLightMelee, WeaponTypeMediumMelee, WeaponTypeHeavyMelee, WeaponTypeVeryHeavyMelee,
+            WeaponTypeMediumPistol, WeaponTypeHeavyPistol, WeaponTypeVeryHeavyPistol,
+            WeaponTypeSmg, WeaponTypeHeavySmg,
+            WeaponTypeShotgun, WeaponTypeAssaultRifle, WeaponTypeSniperRifle,
+            WeaponTypeBowsAndCrossbows, WeaponTypeGrenadeLauncher, WeaponTypeRocketLauncher,
+            WeaponTypeDartgun, WeaponTypeFlamethrower, WeaponTypePopupGrenadeLauncher
+        };
         public static Dictionary<string, string> WeaponSounds = new()
         {
             { WeaponTypeLightMelee, AudioMelee },
@@ -532,6 +556,12 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string AmmoTypeGrenade = "Grenade";
         public const string AmmoTypeRocket = "Rocket";
         public const string AmmoTypeDart = "Dart";
+        public static readonly List<string> AllAmmoTypes = new()
+        {
+            AmmoTypeMediumPistol, AmmoTypeHeavyPistol, AmmoTypeVeryHeavyPistol,
+            AmmoTypeShell, AmmoTypeSlug, AmmoTypeRifle,
+            AmmoTypeArrow, AmmoTypeGrenade, AmmoTypeRocket, AmmoTypeDart
+        };
 
         // Ammunition Variants
         public const string AmmoVarBasic = "Basic";
@@ -547,11 +577,25 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string AmmoVarSmart = "Smart";
         public const string AmmoVarSmoke = "Smoke";
         public const string AmmoVarTeargas = "Teargas";
+        public static readonly List<string> AllAmmoVariants = new()
+        {
+            AmmoVarBasic,
+            AmmoVarArmorPiercing, AmmoVarBiotoxin, AmmoVarEMP,
+            AmmoVarExpansive, AmmoVarFlashbang, AmmoVarIncendiary,
+            AmmoVarPoison, AmmoVarRubber, AmmoVarSleep,
+            AmmoVarSmart, AmmoVarSmoke, AmmoVarTeargas
+        };
 
         // Weapon Quality Tier
         public static readonly string WeaponQualityPoor = "Poor";
         public static readonly string WeaponQualityStandard = "Standard";
         public static readonly string WeaponQualityExcellent = "Excellent";
+        public static readonly List<string> AllQualities = new()
+        {
+            WeaponQualityPoor,
+            WeaponQualityStandard,
+            WeaponQualityExcellent
+        };
 
         public static readonly List<RangedWeaponClip> ClipChart = new()
         {
@@ -1090,7 +1134,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         #endregion
 
-        public static List<Combatant> Combatants = new();
+        //public static List<Combatant> Combatants = new();
         public static List<Combatant> BlackIcePrograms = new();
         public static List<Combatant> Demons = new();
         public static List<Combatant> ActiveDefenses = new();
@@ -1129,7 +1173,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             scavenger.AddWeapon(WeaponTypeLightMelee, WeaponQualityStandard, "Knife");
             scavenger.AddAmmo(AmmoTypeHeavyPistol, 8);
             scavenger.InitializeNewCombatant();
-            Combatants.Add(scavenger);
+            //Combatants.Add(scavenger);
 
             // GANGERS
             Combatant thug = new("Thug", ComTypeStandard, ComClassLightGanger, PortraitDefault, ArmorTypeLeather);
@@ -1140,14 +1184,14 @@ namespace CyberpunkGameplayAssistant.Toolbox
             thug.SetSkillLevels(5, SkillEvasion, SkillHandgun, SkillMeleeWeapon);
             thug.AddWeapon(WeaponTypeMediumMelee, WeaponQualityStandard, "Baseball Bat");
             thug.InitializeNewCombatant();
-            Combatants.Add(thug);
+            //Combatants.Add(thug);
 
             Combatant thugPistol = thug.DeepClone();
             thugPistol.Variant = "(Pistol)";
             thugPistol.AddWeapon(WeaponTypeMediumPistol, WeaponQualityPoor);
             thugPistol.AddBasicAmmoForAllWeapons(2);
             thugPistol.InitializeNewCombatant();
-            Combatants.Add(thugPistol);
+            //Combatants.Add(thugPistol);
 
             // CORPOS
             List<string> CorpoBasicGear = new() { GearAgent };
@@ -1159,7 +1203,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             guard.AddAmmo(AmmoTypeMediumPistol, 24);
             guard.AddGearSet(GearDisposableCellPhone);
             guard.InitializeNewCombatant();
-            Combatants.Add(guard);
+            //Combatants.Add(guard);
 
             Combatant guardSmg = guard.DeepClone();
             guardSmg.Variant = "(SMG)";
@@ -1169,7 +1213,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             guardSmg.AddWeapon(WeaponTypeMediumMelee, WeaponQualityStandard, "Baton");
             guardSmg.AddAmmo(AmmoTypeMediumPistol, 60);
             guardSmg.InitializeNewCombatant();
-            Combatants.Add(guardSmg);
+            //Combatants.Add(guardSmg);
 
             Combatant bodyguard = new("Bodyguard", ComTypeStandard, ComClassLightCorpo, PortraitDefault, ArmorTypeLightArmorjack);
             bodyguard.SetStats(4, 8, 5, 3, 7, 8, 0, 6, 6, 3);
@@ -1181,7 +1225,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             bodyguard.AddGearSet(CorpoBasicGear);
             bodyguard.AddCyberwareSet(CyberwareEnhancedAntibodies, CyberwareSubdermalArmor, CyberwareCyberaudioSuite, CyberwareInternalAgent, CyberwareHomingtracer);
             bodyguard.InitializeNewCombatant();
-            Combatants.Add(bodyguard);
+            //Combatants.Add(bodyguard);
 
             Combatant covertOperative = new("Covert Operative", ComTypeStandard, ComClassLightCorpo, PortraitDefault, ArmorTypeLightArmorjack);
             covertOperative.SetStats(6, 7, 5, 5, 7, 6, 0, 3, 7, 4);
@@ -1193,7 +1237,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             covertOperative.AddGearSet(CorpoBasicGear);
             covertOperative.AddCyberwareSet(CyberwareCybereye, CyberwareCybereye, CyberwareLowLightInfraredUv, CyberwareColorShift, CyberwareGrappleHand, CyberwarePopupRangedWeapon, CyberwareRealskinnCovering);
             covertOperative.InitializeNewCombatant();
-            Combatants.Add(covertOperative);
+            //Combatants.Add(covertOperative);
 
             Combatant driver = new("Driver", ComTypeStandard, ComClassLightCorpo, PortraitDefault, ArmorTypeLightArmorjack);
             driver.SetStats(6, 8, 8, 4, 7, 4, 0, 5, 6, 2);
@@ -1205,7 +1249,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             driver.AddGearSet(CorpoBasicGear);
             driver.AddCyberwareSet(CyberwareRadarSonarImplant, CyberwareCyberaudioSuite, CyberwareInternalAgent, CyberwareHomingtracer, CyberwareRadarDetector);
             driver.InitializeNewCombatant();
-            Combatants.Add(driver);
+            //Combatants.Add(driver);
             
             Combatant corpNet = new("Netrunner", ComTypeStandard, ComClassLightCorpo, PortraitDefault, ArmorTypeLightArmorjack);
             corpNet.SetStats(5, 6, 8, 8, 6, 6, 0, 4, 4, 3);
@@ -1218,7 +1262,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             corpNet.SetNetActions();
             corpNet.AddCyberdeckPrograms(ProgramSword, BlackIceKiller, ProgramWorm, ProgramArmor);
             corpNet.InitializeNewCombatant();
-            Combatants.Add(corpNet);
+            //Combatants.Add(corpNet);
 
             Combatant corpTech = new("Technician", ComTypeStandard, ComClassLightCorpo, PortraitDefault, ArmorTypeLightArmorjack);
             corpTech.SetStats(8, 6, 5, 8, 4, 3, 0, 3, 7, 6);
@@ -1230,7 +1274,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             corpTech.AddGearSet(CorpoBasicGear);
             corpTech.AddCyberwareSet(CyberwareToolHand, CyberwareCyberaudioSuite, CyberwareInternalAgent, CyberwareBugDetector, CyberwareAudioRecorder);
             corpTech.InitializeNewCombatant();
-            Combatants.Add(corpTech);
+            //Combatants.Add(corpTech);
 
             // POLICE
             List<string> PoliceBasicGear = new() { GearAgent, GearCarryall, GearFlashlight, GearFoodStick, GearHandcuffs, GearRoadFlare };
@@ -1242,7 +1286,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             security.AddBasicAmmoForAllWeapons(3);
             security.AddGearSet(PoliceBasicGear);
             security.InitializeNewCombatant();
-            Combatants.Add(security);
+            //Combatants.Add(security);
 
             Combatant beatCop = new("Beat Cop", ComTypeStandard, ComClassLightPolice, PortraitDefault, ArmorTypeKevlar);
             beatCop.SetStats(2, 4, 3, 3, 3, 2, 0, 4, 4, 3);
@@ -1250,7 +1294,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             beatCop.AddBasicAmmoForAllWeapons(3);
             beatCop.AddGearSet(PoliceBasicGear);
             beatCop.InitializeNewCombatant();
-            Combatants.Add(beatCop);
+            //Combatants.Add(beatCop);
 
             // MEDIUM POLICE
             Combatant deputy = new("Deputy", ComTypeStandard, ComClassMediumPolice, PortraitDefault, ArmorTypeHeavyArmorjack);
@@ -1261,7 +1305,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             deputy.AddGearSet(PoliceBasicGear);
             deputy.AddGearSet(PoliceExtraGear);
             deputy.InitializeNewCombatant();
-            Combatants.Add(deputy);
+            //Combatants.Add(deputy);
 
             Combatant marshall = new("Marshall", ComTypeStandard, ComClassMediumPolice, PortraitDefault, ArmorTypeFlak);
             marshall.SetStats(4, 8, 6, 5, 5, 10, 0, 6, 6, 5);
@@ -1272,7 +1316,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             marshall.AddGearSet(PoliceBasicGear);
             marshall.AddGearSet(PoliceExtraGear);
             marshall.InitializeNewCombatant();
-            Combatants.Add(marshall);
+            //Combatants.Add(marshall);
 
             // HEAVY POLICE
             Combatant swat = new("SWAT", ComTypeStandard, ComClassHeavyPolice, PortraitDefault, ArmorTypeMetalgear);
@@ -1283,7 +1327,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             swat.AddGearSet(PoliceBasicGear);
             swat.AddGearSet(PoliceExtraGear);
             swat.InitializeNewCombatant();
-            Combatants.Add(swat);
+            //Combatants.Add(swat);
 
             Combatant fed = new("Federal Agent", ComTypeStandard, ComClassHeavyPolice, PortraitDefault, ArmorTypeLightArmorjack);
             fed.SetStats(5, 8, 6, 5, 5, 5, 0, 6, 6, 4);
@@ -1295,7 +1339,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             fed.AddGearSet(PoliceBasicGear);
             fed.AddGearSet(PoliceExtraGear);
             fed.InitializeNewCombatant();
-            Combatants.Add(fed);
+            //Combatants.Add(fed);
 
         }
         private static void PopulateCriticalInjuries()
