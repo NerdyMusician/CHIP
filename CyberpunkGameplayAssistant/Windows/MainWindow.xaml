@@ -1013,27 +1013,27 @@
                                         <ContentControl Content="{Binding CampaignView.ActiveCampaign.ActiveCombatant}" ContentTemplateSelector="{StaticResource ActiveCombatantTemplateSelector}" />
                                         <TabControl BorderThickness="0 2 0 0">
                                             <TabItem Header="By Initiative" Width="108">
-                                                <ScrollViewer Height="412" ScrollChanged="ScrollViewer_ScrollChanged">
+                                                <ScrollViewer Height="412" Tag="CombatantList" ScrollChanged="ScrollViewer_ScrollChanged">
                                                     <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.CombatantsByInitiative}" ItemTemplateSelector="{StaticResource ListCombatantTemplateSelector}" />
                                                 </ScrollViewer>
                                             </TabItem>
                                             <TabItem Header="By Name" Width="108">
-                                                <ScrollViewer Height="412" ScrollChanged="ScrollViewer_ScrollChanged">
+                                                <ScrollViewer Height="412" Tag="CombatantList" ScrollChanged="ScrollViewer_ScrollChanged">
                                                     <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.CombatantsByName}" ItemTemplateSelector="{StaticResource ListCombatantTemplateSelector}" />
                                                 </ScrollViewer>
                                             </TabItem>
                                             <TabItem Header="NPCs" Width="108">
-                                                <ScrollViewer Height="412" ScrollChanged="ScrollViewer_ScrollChanged">
+                                                <ScrollViewer Height="412" Tag="CombatantList" ScrollChanged="ScrollViewer_ScrollChanged">
                                                     <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.NpcCombatants}" ItemTemplateSelector="{StaticResource ListCombatantTemplateSelector}" />
                                                 </ScrollViewer>
                                             </TabItem>
                                             <TabItem Header="Players" Width="108">
-                                                <ScrollViewer Height="412" ScrollChanged="ScrollViewer_ScrollChanged">
+                                                <ScrollViewer Height="412" Tag="CombatantList" ScrollChanged="ScrollViewer_ScrollChanged">
                                                     <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.PlayerCombatants}" ItemTemplateSelector="{StaticResource ListCombatantTemplateSelector}" />
                                                 </ScrollViewer>
                                             </TabItem>
                                             <TabItem Header="Dead" Width="108">
-                                                <ScrollViewer Height="412" ScrollChanged="ScrollViewer_ScrollChanged">
+                                                <ScrollViewer Height="412" Tag="CombatantList" ScrollChanged="ScrollViewer_ScrollChanged">
                                                     <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.DeadCombatants}" ItemTemplateSelector="{StaticResource ListCombatantTemplateSelector}" />
                                                 </ScrollViewer>
                                             </TabItem>
@@ -1295,7 +1295,7 @@
                                                 <StackPanel Orientation="Horizontal" Margin="4 2">
                                                     <TextBlock Text="{Binding StatAbbr, FallbackValue=MOVE}" Width="34" VerticalAlignment="Center" />
                                                     <Separator />
-                                                    <TextBox Text="{Binding Value}" Width="32" />
+                                                    <TextBox Text="{Binding Value}" Width="32" GotKeyboardFocus="HighlightText" />
                                                 </StackPanel>
                                             </Border>
                                         </DataTemplate>

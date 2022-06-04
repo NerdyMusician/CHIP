@@ -11,8 +11,10 @@ namespace CyberpunkGameplayAssistant.Toolbox
     public static class AppData
     {
         // Utility
-        public static bool IsLoaded = false;
         public const bool DebugMode = true;
+        public static bool IsLoaded = false;
+        public static bool SkipAudio = false;
+        public static bool SkipLogging = false;
         public static MainViewModel MainModelRef;
         public static MainWindow WindowRef;
         public static FrameworkElement Framework = new();

@@ -41,6 +41,15 @@ namespace CyberpunkGameplayAssistant.Models
         {
             HelperMethods.NotifyUser(AppData.AlertInfo, message);
         }
-
+        protected static void PauseOutput()
+        {
+            AppData.SkipAudio = true;
+            AppData.SkipLogging = true;
+        }
+        protected static void ResumeOutput()
+        {
+            AppData.SkipAudio = false;
+            AppData.SkipLogging = false;
+        }
     }
 }

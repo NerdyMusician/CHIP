@@ -572,6 +572,7 @@ namespace CyberpunkGameplayAssistant.Models
             UpdateCyberwareDescriptions();
             AddRemainingSkills();
             OrganizeSkillsToCategories();
+            PrepareWeapons();
             SetStandardActions();
             GetCriticalInjuryDescriptions();
         }
@@ -976,6 +977,19 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 CurrentHitPoints = MaximumHitPoints;
             }
+        }
+        private void PrepareWeapons()
+        {
+            PauseOutput();
+            foreach (CombatantWeapon weapon in Weapons)
+            {
+                if (string.IsNullOrEmpty(weapon.Name))
+                {
+                    weapon.Name = weapon.Type;
+                }
+                weapon.ReloadWeapon.Execute(this);
+            }
+            ResumeOutput();
         }
         private void OrganizeSkillsToCategories()
         {

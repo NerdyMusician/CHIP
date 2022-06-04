@@ -150,6 +150,10 @@ namespace CyberpunkGameplayAssistant.ViewModels
             {
                 CampaignView = new();
             }
+            foreach (GameCampaign campaign in CampaignView.Campaigns)
+            {
+                campaign.SortCombatants.Execute(null);
+            }
         }
         private void LoadCombatantsData()
         {

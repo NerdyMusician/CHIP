@@ -3,3 +3,4 @@
 - CHANGE: Scrolling combatant lists now closes their open popup menus
 - CHANGE: Generate NET Floor button icon is now a dice
 - CHANGE: Icon added to better indicate what NET floor checkbox is for
+- BUG: Fixed issue where combatants couldn't be singularly deleted until list had been sorted
