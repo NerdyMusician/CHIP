@@ -3,6 +3,7 @@ using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
 using CyberpunkGameplayAssistant.Windows;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 
@@ -14,6 +15,11 @@ namespace CyberpunkGameplayAssistant.Models
         public CombatantWeapon()
         {
 
+        }
+        public CombatantWeapon(string weaponType, string weaponQuality)
+        {
+            Type = weaponType;
+            Quality = weaponQuality;
         }
         public CombatantWeapon(string weaponType, string weaponQuality, string weaponName)
         {
@@ -79,6 +85,20 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 RangedWeaponClip clip = AppData.ClipChart.FirstOrDefault(w => w.WeaponType == Type);
                 return (clip != null) ? clip.Standard : 0;
+            }
+        }
+        public List<string> WeaponList
+        {
+            get
+            {
+                return AppData.AllWeaponTypes.DeepClone();
+            }
+        }
+        public List<string> QualityList
+        {
+            get
+            {
+                return AppData.AllQualities.DeepClone();
             }
         }
 
@@ -177,6 +197,11 @@ namespace CyberpunkGameplayAssistant.Models
             if (AppData.DebugMode) { output += $"\nDEBUG: REF:{reflex} AUTOFIRE:{autofire} ROLL:{roll}"; }
             HelperMethods.AddToGameplayLog(output, AppData.MessageWeaponAttack);
             HelperMethods.PlayAutofireSound();
+        }
+        public ICommand RemoveWeapon => new RelayCommand(DoRemoveWeapon);
+        private void DoRemoveWeapon(object param)
+        {
+            (param as ObservableCollection<CombatantWeapon>)!.Remove(this);
         }
 
         // Private Methods

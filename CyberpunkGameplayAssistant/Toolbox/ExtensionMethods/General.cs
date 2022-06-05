@@ -159,6 +159,15 @@ namespace CyberpunkGameplayAssistant.Toolbox.ExtensionMethods
         {
             return number + (10 - Convert.ToInt32(number.ToString().Last().ToString()));
         }
+        public static int GetTotal(this ObservableCollection<Stat> stats)
+        {
+            int total = 0;
+            foreach (Stat stat in stats)
+            {
+                total += stat.Value;
+            }
+            return total;
+        }
 
     }
 }

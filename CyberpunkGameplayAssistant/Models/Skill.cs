@@ -1,6 +1,7 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
 using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
@@ -40,11 +41,16 @@ namespace CyberpunkGameplayAssistant.Models
             set => SetAndNotify(ref _Variant, value);
         }
         private int _Level;
-        
         public int Level
         {
             get => _Level;
             set => SetAndNotify(ref _Level, value);
+        }
+        private int _Base;
+        public int Base
+        {
+            get => _Base;
+            set => SetAndNotify(ref _Base, value);
         }
 
         // Properties
@@ -72,6 +78,11 @@ namespace CyberpunkGameplayAssistant.Models
             if (Name == AppData.SkillBrawling) { output += GetBrawlingDamage(combatant); }
             if (AppData.DebugMode) { output += $"\nDEBUG: {result} + {stat} + {Level} - {penalty}"; }
             HelperMethods.AddToGameplayLog(output, AppData.MessageSkillCheck);
+        }
+        public ICommand RemoveSkill => new RelayCommand(DoRemoveSkill);
+        private void DoRemoveSkill(object param)
+        {
+            (param as ObservableCollection<Skill>)!.Remove(this);
         }
 
         // Private Methods

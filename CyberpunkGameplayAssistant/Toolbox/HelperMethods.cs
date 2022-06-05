@@ -73,6 +73,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static void AddToGameplayLog(string message, string type = "", bool copyToWeb = false)
         {
             if (!AppData.IsLoaded) { return; }
+            if (AppData.SkipLogging) { return; }
             if (AppData.MainModelRef.CampaignView == null) { return; }
             GameCampaign campaign = AppData.MainModelRef.CampaignView.ActiveCampaign;
             campaign.EventHistory.Insert(0, new(type, message));

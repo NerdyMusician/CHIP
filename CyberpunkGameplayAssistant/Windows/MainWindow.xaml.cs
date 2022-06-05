@@ -141,13 +141,25 @@ namespace CyberpunkGameplayAssistant.Windows
         public void PlaySound(string filepath)
         {
             if (!AppData.IsLoaded) { return; }
+            if (AppData.SkipAudio) { return; }
             SfxPlayer.Position = TimeSpan.FromMilliseconds(1);
             SfxPlayer.Source = new Uri(filepath, UriKind.Absolute);
             SfxPlayer.Volume = AppData.AudioVolume[filepath];
             SfxPlayer.Play();
         }
 
+        private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (AppData.ScrollHandled) { AppData.ScrollHandled = false; return; }
+            if (e.VerticalChange == 0) { return; }
+            if ((sender as ScrollViewer).Tag.ToString() != "CombatantList") { return; }
+            ClosePopups(this);
+        }
 
-
+        private void HighlightText(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            (sender as TextBox).SelectAll();
+        }
+    
     }
 }

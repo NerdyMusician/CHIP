@@ -6,11 +6,10 @@
              xmlns:local="clr-namespace:CyberpunkGameplayAssistant.UserControls"
         xmlns:cc="clr-namespace:CyberpunkGameplayAssistant.CustomControls"
         xmlns:tool="clr-namespace:CyberpunkGameplayAssistant.Toolbox"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d" d:DesignWidth="800">
     <Border Style="{StaticResource BRDR_PopupBorder}">
-        <ScrollViewer Height="420" Width="560">
-            <StackPanel Margin="4">
+        <ScrollViewer Height="320" Tag="StatSkillMenu" ScrollChanged="ScrollViewer_ScrollChanged">
+            <StackPanel Width="560" Margin="4">
                 <TextBlock Text="Stats" />
                 <StackPanel Orientation="Horizontal" Visibility="{Binding UsesLoyalty, Converter={tool:CollapsedIfFalse}}">
                     <StackPanel.Resources>

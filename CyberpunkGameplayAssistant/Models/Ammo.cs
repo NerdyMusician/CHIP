@@ -1,6 +1,8 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
 using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
@@ -53,6 +55,22 @@ namespace CyberpunkGameplayAssistant.Models
             set => SetAndNotify(ref _IsThrowable, value);
         }
 
+        // Dropdown Sources
+        public List<string> AmmoTypes
+        {
+            get
+            {
+                return AppData.AllAmmoTypes.DeepClone();
+            }
+        }
+        public List<string> AmmoVariants
+        {
+            get
+            {
+                return AppData.AllAmmoVariants.DeepClone();
+            }
+        }
+
         // Commands
         public ICommand RestockAmmo => new RelayCommand(DoRestockAmmo);
         private void DoRestockAmmo(object param)
@@ -77,6 +95,11 @@ namespace CyberpunkGameplayAssistant.Models
             HelperMethods.AddToGameplayLog(output, AppData.MessageWeaponAttack);
             HelperMethods.PlayExplosionSound();
             Quantity--;
+        }
+        public ICommand RemoveAmmo => new RelayCommand(DoRemoveAmmo);
+        private void DoRemoveAmmo(object param)
+        {
+            (param as ObservableCollection<Ammo>)!.Remove(this);
         }
 
         // Private Methods

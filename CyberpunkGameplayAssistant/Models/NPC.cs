@@ -46,12 +46,12 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand SelectBaseCombatant => new RelayCommand(DoSelectBaseCombatant);
         private void DoSelectBaseCombatant(object param)
         {
-            ObjectSelectionDialog itemSelect = new(AppData.Combatants.ToNamedRecordList(), "Select Base Combatant");
+            ObjectSelectionDialog itemSelect = new(AppData.MainModelRef.CombatantView.Combatants.ToList().ToNamedRecordList(), "Select Base Combatant");
             if (itemSelect.ShowDialog() == true)
             {
                 if (itemSelect.SelectedObject == null) { return; }
                 BaseCombatant = (itemSelect.SelectedObject as NamedRecord).Name;
-                PortraitFilePath = AppData.Combatants.First(c => c.Name == BaseCombatant).PortraitFilePath;
+                PortraitFilePath = AppData.MainModelRef.CombatantView.Combatants.First(c => c.Name == BaseCombatant).PortraitFilePath;
             }
 
         }

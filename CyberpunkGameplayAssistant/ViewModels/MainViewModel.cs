@@ -3,8 +3,10 @@ using CyberpunkGameplayAssistant.Toolbox;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Timers;
 using System.Windows.Input;
+using System.Xml.Serialization;
 
 namespace CyberpunkGameplayAssistant.ViewModels
 {
@@ -13,7 +15,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         // Constructors
         public MainViewModel()
         {
-            ApplicationVersion = "CHIP 1.00.00";
+            ApplicationVersion = "CHIP 1.01.00";
             UserAlerts = new();
             HelperMethods.CreateDirectories(AppData.Directories);
             LoadData();
@@ -36,6 +38,12 @@ namespace CyberpunkGameplayAssistant.ViewModels
             get => _CampaignView;
             set => SetAndNotify(ref _CampaignView, value);
         }
+        private CombatantBuilderViewModel _CombatantView;
+        public CombatantBuilderViewModel CombatantView
+        {
+            get => _CombatantView;
+            set => SetAndNotify(ref _CombatantView, value);
+        }
         private Uri _SfxSource;
         public Uri SfxSource
         {
@@ -47,6 +55,38 @@ namespace CyberpunkGameplayAssistant.ViewModels
         {
             get => _UserAlerts;
             set => SetAndNotify(ref _UserAlerts, value);
+        }
+        public List<string> CombatantClasses
+        {
+            get
+            {
+                return new() 
+                { 
+                    AppData.ComClassCivilian,
+                    AppData.ComClassLightGanger, AppData.ComClassMediumGanger, AppData.ComClassHeavyGanger,
+                    AppData.ComClassLightCorpo, AppData.ComClassMediumCorpo, AppData.ComClassHeavyCorpo,
+                    AppData.ComClassLightPolice, AppData.ComClassMediumPolice, AppData.ComClassHeavyPolice
+                };
+            }
+        }
+        public List<string> ArmorTypes
+        {
+            get
+            {
+                return new()
+                {
+                    AppData.ArmorTypeNone,
+                    AppData.ArmorTypeLeather,
+                    AppData.ArmorTypeKevlar,
+                    AppData.ArmorTypeSubdermal,
+                    AppData.ArmorTypeLightArmorjack,
+                    AppData.ArmorTypeMediumArmorjack,
+                    AppData.ArmorTypeHeavyArmorjack,
+                    AppData.ArmorTypeBodyweightSuit,
+                    AppData.ArmorTypeFlak,
+                    AppData.ArmorTypeMetalgear
+                };
+            }
         }
 
         // Private Properties
@@ -94,16 +134,39 @@ namespace CyberpunkGameplayAssistant.ViewModels
         // Private Methods
         private void LoadData()
         {
+            LoadCampaignsData();
+            LoadCombatantsData();
+        }
+        private void LoadCampaignsData()
+        {
             try
             {
-                System.Xml.Serialization.XmlSerializer xmlSerializer = new(typeof(CampaignViewModel));
-                using System.IO.FileStream fs = new(AppData.File_CampaignData, System.IO.FileMode.Open);
+                XmlSerializer xmlSerializer = new(typeof(CampaignViewModel));
+                using FileStream fs = new(AppData.File_CampaignData, FileMode.Open);
                 CampaignView = (CampaignViewModel)xmlSerializer.Deserialize(fs);
                 CampaignView!.ResetActiveItems();
             }
             catch
             {
                 CampaignView = new();
+            }
+            foreach (GameCampaign campaign in CampaignView.Campaigns)
+            {
+                campaign.SortCombatants.Execute(null);
+            }
+        }
+        private void LoadCombatantsData()
+        {
+            try
+            {
+                XmlSerializer xmlSerializer = new(typeof(CombatantBuilderViewModel));
+                using FileStream fs = new(AppData.File_CombatantData, FileMode.Open);
+                CombatantView = (CombatantBuilderViewModel)xmlSerializer.Deserialize(fs);
+                CombatantView!.ResetActiveItems();
+            }
+            catch
+            {
+                CombatantView = new();
             }
         }
         private void UserAlertTimer_Elapsed(object? sender, ElapsedEventArgs e)
