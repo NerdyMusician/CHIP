@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using CyberpunkGameplayAssistant.Toolbox;
+using System.Windows.Controls;
 
 namespace CyberpunkGameplayAssistant.UserControls
 {
@@ -10,6 +11,11 @@ namespace CyberpunkGameplayAssistant.UserControls
         public StatSkillMenu()
         {
             InitializeComponent();
+        }
+
+        private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            AppData.ScrollHandled = true;
         }
     }
 }

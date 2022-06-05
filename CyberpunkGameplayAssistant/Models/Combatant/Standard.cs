@@ -366,6 +366,12 @@ namespace CyberpunkGameplayAssistant.Models
             get => _DeathSavePasses;
             set => SetAndNotify(ref _DeathSavePasses, value);
         }
+        private int _TotalStatPoints;
+        public int TotalStatPoints
+        {
+            get => _TotalStatPoints;
+            set => SetAndNotify(ref _TotalStatPoints, value);
+        }
 
         // Dropdown Sources
         public List<string> ShieldTypes
@@ -560,6 +566,13 @@ namespace CyberpunkGameplayAssistant.Models
                 }
             }
         }
+        public ICommand CalculateDerivedStats => new RelayCommand(DoCalculateDerivedStats);
+        private void DoCalculateDerivedStats(object param)
+        {
+            SetCalculatedStats();
+            SetHitPoints(false);
+            TotalStatPoints = BaseStats.GetTotal();
+        }
 
         // Public Methods
         public void InitializeLoadedCombatant()
@@ -576,14 +589,6 @@ namespace CyberpunkGameplayAssistant.Models
             SetStandardActions();
             GetCriticalInjuryDescriptions();
         }
-        public void InitializeNewCombatant()
-        {
-            SetCalculatedStats();
-            SetHitPoints(true);
-            SetStoppingPower(true);
-            ReloadAllWeapons();
-            SetStandardActions();
-        }
         public void InitializeCustomCombatant()
         {
             PortraitFilePath = AppData.PortraitDefault;
@@ -598,22 +603,6 @@ namespace CyberpunkGameplayAssistant.Models
             BaseStats.Add(new(AppData.StatMovement, 0));
             BaseStats.Add(new(AppData.StatBody, 0));
             BaseStats.Add(new(AppData.StatEmpathy, 0));
-        }
-        public void SetStats(int INT, int REF, int DEX, int TECH, int COOL, int WILL, int LUCK, int MOVE, int BODY, int EMP)
-        {
-            BaseStats = new();
-            BaseStats.Add(new(AppData.StatIntelligence, INT));
-            BaseStats.Add(new(AppData.StatReflexes, REF));
-            BaseStats.Add(new(AppData.StatDexterity, DEX));
-            BaseStats.Add(new(AppData.StatTechnique, TECH));
-            BaseStats.Add(new(AppData.StatCool, COOL));
-            BaseStats.Add(new(AppData.StatWillpower, WILL));
-            BaseStats.Add(new(AppData.StatLuck, LUCK));
-            BaseStats.Add(new(AppData.StatMovement, MOVE));
-            BaseStats.Add(new(AppData.StatBody, BODY));
-            BaseStats.Add(new(AppData.StatEmpathy, EMP));
-            SetBaseSkills();
-            SetClassSkills();
         }
         public void SetBlackIceStats(string role, int PER, int SPD, int ATK, int DEF, int REZ, string effect)
         {
@@ -680,7 +669,7 @@ namespace CyberpunkGameplayAssistant.Models
                 Skills.Add(new(skill.SkillName));
             }
         }
-        public void SetClassSkills()
+        public void SetClassSkills() // TODO - UI replacement for this functionality
         {
             if (string.IsNullOrEmpty(ComClass)) { HelperMethods.WriteToLogFile($"No ComClass set for {Name}"); return; }
             if (ComClass == AppData.ComClassCivilian)

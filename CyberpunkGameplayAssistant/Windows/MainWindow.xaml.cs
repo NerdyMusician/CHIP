@@ -150,6 +150,7 @@ namespace CyberpunkGameplayAssistant.Windows
 
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
+            if (AppData.ScrollHandled) { AppData.ScrollHandled = false; return; }
             if (e.VerticalChange == 0) { return; }
             if ((sender as ScrollViewer).Tag.ToString() != "CombatantList") { return; }
             ClosePopups(this);

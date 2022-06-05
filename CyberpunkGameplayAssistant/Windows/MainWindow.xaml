@@ -476,7 +476,6 @@
                                     <Separator Width="8" />
                                     <StackPanel>
                                         <StackPanel.Resources>
-                                            
                                             <DataTemplate x:Key="EmptyCard">
                                                 <Border Style="{StaticResource BRDR_TrackerCard}">
                                                     <TextBlock Text="Active Combatant will display here" VerticalAlignment="Center" HorizontalAlignment="Center" />
@@ -1281,7 +1280,18 @@
                                     </StackPanel>
                                 </StackPanel>
                                 <Separator />
-                                <TextBlock Text="Base STATS" />
+                                <DockPanel>
+                                    <TextBlock Text="Base STATS" VerticalAlignment="Bottom" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <TextBlock VerticalAlignment="Bottom">
+                                            <Run Text="Points Assigned:" />
+                                            <Run Text="{Binding CombatantView.ActiveCombatant.TotalStatPoints}" />
+                                            <Image Style="{StaticResource Icon_Heart}" />
+                                            <Run Text="{Binding CombatantView.ActiveCombatant.MaximumHitPoints}" />
+                                        </TextBlock>
+                                        <cc:MiniButton ImageResource="{StaticResource Icon_Calculator}" Command="{Binding CombatantView.ActiveCombatant.CalculateDerivedStats}" />
+                                    </StackPanel>
+                                </DockPanel>
                                 <Rectangle />
                                 <ItemsControl ItemsSource="{Binding CombatantView.ActiveCombatant.BaseStats}">
                                     <ItemsControl.ItemsPanel>
@@ -1320,9 +1330,9 @@
                                                     <StackPanel Orientation="Horizontal" Margin="4 2">
                                                         <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
                                                         <Separator />
-                                                        <TextBox Text="{Binding Base}" Width="32" />
+                                                        <TextBox Text="{Binding Level}" Width="32" GotKeyboardFocus="HighlightText" />
                                                         <Separator />
-                                                        <cc:IconButton ImageResource="{StaticResource Icon_X}" Command="{Binding RemoveSkill}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=ItemsSource}" />
+                                                        <cc:IconButton ImageResource="{StaticResource Icon_X}" Command="{Binding RemoveSkill}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=ItemsSource}" IsTabStop="False" />
                                                     </StackPanel>
                                                 </Border>
                                             </DataTemplate>

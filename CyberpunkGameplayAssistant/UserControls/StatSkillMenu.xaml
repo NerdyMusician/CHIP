@@ -6,74 +6,75 @@
              xmlns:local="clr-namespace:CyberpunkGameplayAssistant.UserControls"
         xmlns:cc="clr-namespace:CyberpunkGameplayAssistant.CustomControls"
         xmlns:tool="clr-namespace:CyberpunkGameplayAssistant.Toolbox"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d" d:DesignWidth="800">
     <Border Style="{StaticResource BRDR_PopupBorder}">
-        <StackPanel Width="560" Margin="4">
-            <TextBlock Text="Stats" />
-            <StackPanel Orientation="Horizontal" Visibility="{Binding UsesLoyalty, Converter={tool:CollapsedIfFalse}}">
-                <StackPanel.Resources>
-                    <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
-                        <Setter Property="Width" Value="auto" />
-                    </Style>
-                </StackPanel.Resources>
-                <Image Style="{StaticResource Icon_HeartTag}" />
+        <ScrollViewer Height="320" Tag="StatSkillMenu" ScrollChanged="ScrollViewer_ScrollChanged">
+            <StackPanel Width="560" Margin="4">
+                <TextBlock Text="Stats" />
+                <StackPanel Orientation="Horizontal" Visibility="{Binding UsesLoyalty, Converter={tool:CollapsedIfFalse}}">
+                    <StackPanel.Resources>
+                        <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
+                            <Setter Property="Width" Value="auto" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <Image Style="{StaticResource Icon_HeartTag}" />
+                    <Separator />
+                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustLoyalty}" CommandParameter="-1" />
+                    <Separator />
+                    <TextBlock Text="{Binding Loyalty, FallbackValue=20}" Style="{StaticResource MidNum}" />
+                    <Separator />
+                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustLoyalty}" CommandParameter="1" />
+                    <Separator />
+                    <cc:IconButton ImageResource="{StaticResource Icon_Dice}" Command="{Binding MakeLoyaltySave}" />
+                </StackPanel>
+                <ItemsControl ItemsSource="{Binding CalculatedStats}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel></WrapPanel>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnStat}}" Text="{Binding StatAbbr}" Width="92" Command="{Binding RollStat}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Rectangle />
                 <Separator />
-                <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustLoyalty}" CommandParameter="-1" />
-                <Separator />
-                <TextBlock Text="{Binding Loyalty, FallbackValue=20}" Style="{StaticResource MidNum}" />
-                <Separator />
-                <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustLoyalty}" CommandParameter="1" />
-                <Separator />
-                <cc:IconButton ImageResource="{StaticResource Icon_Dice}" Command="{Binding MakeLoyaltySave}" />
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel.Resources>
+                        <DataTemplate x:Key="SkillButton">
+                            <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnSkill}}" Text="{Binding DisplayName}" Width="180" Command="{Binding RollSkill}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
+                        </DataTemplate>
+                    </StackPanel.Resources>
+                    <StackPanel>
+                        <TextBlock Text="Awareness Skills" />
+                        <ItemsControl ItemsSource="{Binding AwarenessSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                        <Separator />
+                        <TextBlock Text="Body Skills" />
+                        <ItemsControl ItemsSource="{Binding BodySkills}" ItemTemplate="{StaticResource SkillButton}" />
+                        <Separator />
+                        <TextBlock Text="Control Skills" />
+                        <ItemsControl ItemsSource="{Binding ControlSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                    </StackPanel>
+                    <Separator />
+                    <StackPanel>
+                        <TextBlock Text="Education Skills" />
+                        <ItemsControl ItemsSource="{Binding EducationSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                        <Separator />
+                        <TextBlock Text="Fighting Skills" />
+                        <ItemsControl ItemsSource="{Binding FightingSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                        <Separator />
+                        <TextBlock Text="Social Skills" />
+                        <ItemsControl ItemsSource="{Binding SocialSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                    </StackPanel>
+                    <Separator />
+                    <StackPanel>
+                        <TextBlock Text="Technique Skills" />
+                        <ItemsControl ItemsSource="{Binding TechniqueSkills}" ItemTemplate="{StaticResource SkillButton}" />
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
-            <ItemsControl ItemsSource="{Binding CalculatedStats}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel></WrapPanel>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnStat}}" Text="{Binding StatAbbr}" Width="92" Command="{Binding RollStat}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-            <Rectangle />
-            <Separator />
-            <StackPanel Orientation="Horizontal">
-                <StackPanel.Resources>
-                    <DataTemplate x:Key="SkillButton">
-                        <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnSkill}}" Text="{Binding DisplayName}" Width="180" Command="{Binding RollSkill}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
-                    </DataTemplate>
-                </StackPanel.Resources>
-                <StackPanel>
-                    <TextBlock Text="Awareness Skills" />
-                    <ItemsControl ItemsSource="{Binding AwarenessSkills}" ItemTemplate="{StaticResource SkillButton}" />
-                    <Separator />
-                    <TextBlock Text="Body Skills" />
-                    <ItemsControl ItemsSource="{Binding BodySkills}" ItemTemplate="{StaticResource SkillButton}" />
-                    <Separator />
-                    <TextBlock Text="Control Skills" />
-                    <ItemsControl ItemsSource="{Binding ControlSkills}" ItemTemplate="{StaticResource SkillButton}" />
-                </StackPanel>
-                <Separator />
-                <StackPanel>
-                    <TextBlock Text="Education Skills" />
-                    <ItemsControl ItemsSource="{Binding EducationSkills}" ItemTemplate="{StaticResource SkillButton}" />
-                    <Separator />
-                    <TextBlock Text="Fighting Skills" />
-                    <ItemsControl ItemsSource="{Binding FightingSkills}" ItemTemplate="{StaticResource SkillButton}" />
-                    <Separator />
-                    <TextBlock Text="Social Skills" />
-                    <ItemsControl ItemsSource="{Binding SocialSkills}" ItemTemplate="{StaticResource SkillButton}" />
-                </StackPanel>
-                <Separator />
-                <StackPanel>
-                    <TextBlock Text="Technique Skills" />
-                    <ItemsControl ItemsSource="{Binding TechniqueSkills}" ItemTemplate="{StaticResource SkillButton}" />
-                </StackPanel>
-            </StackPanel>
-        </StackPanel>
+        </ScrollViewer>
     </Border>
 </UserControl>

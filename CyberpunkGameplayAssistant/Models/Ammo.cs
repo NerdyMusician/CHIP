@@ -2,6 +2,7 @@
 using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
@@ -94,6 +95,11 @@ namespace CyberpunkGameplayAssistant.Models
             HelperMethods.AddToGameplayLog(output, AppData.MessageWeaponAttack);
             HelperMethods.PlayExplosionSound();
             Quantity--;
+        }
+        public ICommand RemoveAmmo => new RelayCommand(DoRemoveAmmo);
+        private void DoRemoveAmmo(object param)
+        {
+            (param as ObservableCollection<Ammo>)!.Remove(this);
         }
 
         // Private Methods
