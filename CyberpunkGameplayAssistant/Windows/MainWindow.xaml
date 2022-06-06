@@ -190,7 +190,14 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Image Style="{StaticResource Icon_Rpg_Book}" />
                                             <Separator Width="4" Visibility="Hidden" />
-                                            <TextBlock Text="{Binding Name}" Foreground="{StaticResource PrimaryFontColor}" />
+                                            <TextBlock Text="{Binding Name}" Foreground="{StaticResource PrimaryFontColor}" MinWidth="160">
+                                                <TextBlock.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem Header="Duplicate Campaign" Command="{Binding DuplicateCampaign}" />
+                                                        <MenuItem Header="Delete Campaign" Command="{Binding DeleteCampaign}" />
+                                                    </ContextMenu>
+                                                </TextBlock.ContextMenu>
+                                            </TextBlock>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
@@ -209,7 +216,7 @@
                                         <cc:FieldLabel Text="Name" />
                                         <TextBox Text="{Binding CampaignView.ActiveCampaign.Name}" />
                                         <Separator />
-                                        <cc:MiniButton ImageResource="{StaticResource Icon_X}" Command="{Binding CampaignView.ActiveCampaign.RemoveCampaign}" />
+                                        <cc:MiniButton ImageResource="{StaticResource Icon_X}" Command="{Binding CampaignView.ActiveCampaign.DeleteCampaign}" />
                                     </StackPanel>
                                     <StackPanel Style="{StaticResource SPNL_FieldRow}">
                                         <cc:FieldLabel Text="Start Date / Time" />
@@ -1234,7 +1241,14 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Image Style="{Binding ComClass, Converter={tool:ImageBasedOnCombatantType}}" />
                                             <Separator Width="4" Visibility="Hidden" />
-                                            <TextBlock Text="{Binding Name}" Foreground="{StaticResource PrimaryFontColor}" />
+                                            <TextBlock Text="{Binding Name}" Foreground="{StaticResource PrimaryFontColor}" MinWidth="160">
+                                                <TextBlock.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem Header="Duplicate Combatant" Command="{Binding DuplicateCombatant}" />
+                                                        <MenuItem Header="Delete Combatant" Command="{Binding DeleteCombatant}" />
+                                                    </ContextMenu>
+                                                </TextBlock.ContextMenu>
+                                            </TextBlock>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>

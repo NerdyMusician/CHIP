@@ -199,6 +199,23 @@ namespace CyberpunkGameplayAssistant.Models
         }
 
         // Commands
+        public ICommand DuplicateCampaign => new RelayCommand(DoDuplicateCampaign);
+        private void DoDuplicateCampaign(object param)
+        {
+            GameCampaign duplicatedCampaign = this.DeepClone();
+            duplicatedCampaign.Name += " (Copy)";
+            AppData.MainModelRef.CampaignView.Campaigns.Add(duplicatedCampaign);
+            AppData.MainModelRef.CampaignView.ActiveCampaign = duplicatedCampaign;
+            RaiseAlert($"Campaign \"{Name}\" duplicated");
+        }
+        public ICommand DeleteCampaign => new RelayCommand(DoDeleteCampaign);
+        private void DoDeleteCampaign(object param)
+        {
+            if (!HelperMethods.AskYesNoQuestion($"Delete campaign \"{Name}\"?")) { return; }
+            AppData.MainModelRef.CampaignView.Campaigns.Remove(this);
+            AppData.MainModelRef.CampaignView.ActiveCampaign = null;
+            RaiseAlert($"Campaign \"{Name}\" deleted");
+        }
         public ICommand AddCombatants => new RelayCommand(DoAddCombatants);
         private void DoAddCombatants(object param)
         {
@@ -383,11 +400,6 @@ namespace CyberpunkGameplayAssistant.Models
                 RaiseError(e.Message);
             }
         }
-        public ICommand RemoveCampaign => new RelayCommand(DoRemoveCampaign);
-        private void DoRemoveCampaign(object param)
-        {
-            AppData.MainModelRef.CampaignView.Campaigns.Remove(this);
-        }
         public ICommand RollDice => new RelayCommand(DoRollDice);
         private void DoRollDice(object param)
         {
@@ -408,9 +420,7 @@ namespace CyberpunkGameplayAssistant.Models
             switch (param.ToString())
             {
                 case "All":
-                    YesNoDialog question = new("Clear message history?");
-                    question.ShowDialog();
-                    if (question.Answer == false) { return; }
+                    if (HelperMethods.AskYesNoQuestion("Clear message history?") == false) { return; }
                     EventHistory.Clear();
                     break;
                 case "After10":
@@ -475,9 +485,7 @@ namespace CyberpunkGameplayAssistant.Models
                     while (foundPrev == false);
                     break;
                 case "Reset":
-                    YesNoDialog question = new("Reset combat to round 1?");
-                    question.ShowDialog();
-                    if (question.Answer == false) { return; }
+                    if (HelperMethods.AskYesNoQuestion("Reset combat to round 1?") == false) { return; }
                     Combatant resetCombatant = CombatantsByInitiative.FirstOrDefault(crt => (!crt.IsDead || crt.Type == AppData.Player) && crt.Type != AppData.ActiveDefense && crt.Type != AppData.EmplacedDefense)!;
                     if (resetCombatant == null) { UpdateActiveCombatant(); return; }
                     else { resetCombatant.IsActive = true; }

@@ -1,4 +1,10 @@
-﻿CHIP 1.01.00
+﻿CHIP 1.01.01
+- NEW: Able to duplicate and delete campaigns from list via right-click menu
+- NEW: Able to duplicate and delete combatants from list via right-click menu
+- CHANGE: New campaigns come with default name
+- CHANGE: New combatants come with default name
+
+CHIP 1.01.00
 - NEW: Able to manually set start/current campaign datetimes with text field
 - NEW: UI for building custom combatants
 - CHANGE: Scrolling combatant lists now closes their open popup menus

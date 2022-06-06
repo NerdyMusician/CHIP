@@ -678,6 +678,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Change.log">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Campaigns.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

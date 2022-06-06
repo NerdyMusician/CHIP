@@ -42,6 +42,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         private void DoAddCombatant(object param)
         {
             Combatant newCombatant = new();
+            newCombatant.Name = "New Combatant";
             newCombatant.InitializeCustomCombatant();
             Combatants.Add(newCombatant);
             ActiveCombatant = newCombatant;

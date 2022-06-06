@@ -389,6 +389,23 @@ namespace CyberpunkGameplayAssistant.Models
         }
 
         // Commands
+        public ICommand DuplicateCombatant => new RelayCommand(DoDuplicateCombatant);
+        private void DoDuplicateCombatant(object param)
+        {
+            Combatant duplicatedCombatant = this.DeepClone();
+            duplicatedCombatant.Name += " (Copy)";
+            AppData.MainModelRef.CombatantView.Combatants.Add(duplicatedCombatant);
+            AppData.MainModelRef.CombatantView.ActiveCombatant = duplicatedCombatant;
+            RaiseAlert($"Combatant \"{Name}\" duplicated");
+        }
+        public ICommand DeleteCombatant => new RelayCommand(DoDeleteCombatant);
+        private void DoDeleteCombatant(object param)
+        {
+            if (!HelperMethods.AskYesNoQuestion($"Delete Combatant \"{Name}\"?")) { return; }
+            AppData.MainModelRef.CombatantView.Combatants.Remove(this);
+            AppData.MainModelRef.CombatantView.ActiveCombatant = null;
+            RaiseAlert($"Combatant \"{Name}\" deleted");
+        }
         public ICommand AdjustHitPoints => new RelayCommand(DoAdjustHitPoints);
         private void DoAdjustHitPoints(object param)
         {
