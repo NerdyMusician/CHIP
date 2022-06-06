@@ -372,6 +372,24 @@ namespace CyberpunkGameplayAssistant.Models
             get => _TotalStatPoints;
             set => SetAndNotify(ref _TotalStatPoints, value);
         }
+        private int _BypassDv;
+        public int BypassDv
+        {
+            get => _BypassDv;
+            set => SetAndNotify(ref _BypassDv, value);
+        }
+        private bool _ShowWeapons;
+        public bool ShowWeapons
+        {
+            get => _ShowWeapons;
+            set => SetAndNotify(ref _ShowWeapons, value);
+        }
+        private bool _ShowNotes;
+        public bool ShowNotes
+        {
+            get => _ShowNotes;
+            set => SetAndNotify(ref _ShowNotes, value);
+        }
 
         // Dropdown Sources
         public List<string> ShieldTypes
@@ -610,16 +628,37 @@ namespace CyberpunkGameplayAssistant.Models
         {
             PortraitFilePath = AppData.PortraitDefault;
             BaseStats = new();
-            BaseStats.Add(new(AppData.StatIntelligence, 0));
-            BaseStats.Add(new(AppData.StatReflexes, 0));
-            BaseStats.Add(new(AppData.StatDexterity, 0));
-            BaseStats.Add(new(AppData.StatTechnique, 0));
-            BaseStats.Add(new(AppData.StatCool, 0));
-            BaseStats.Add(new(AppData.StatWillpower, 0));
-            BaseStats.Add(new(AppData.StatLuck, 0));
-            BaseStats.Add(new(AppData.StatMovement, 0));
-            BaseStats.Add(new(AppData.StatBody, 0));
-            BaseStats.Add(new(AppData.StatEmpathy, 0));
+            if (Type == AppData.ComTypeStandard)
+            {
+                ShowWeapons = true;
+                BaseStats.Add(new(AppData.StatIntelligence, 0));
+                BaseStats.Add(new(AppData.StatReflexes, 0));
+                BaseStats.Add(new(AppData.StatDexterity, 0));
+                BaseStats.Add(new(AppData.StatTechnique, 0));
+                BaseStats.Add(new(AppData.StatCool, 0));
+                BaseStats.Add(new(AppData.StatWillpower, 0));
+                BaseStats.Add(new(AppData.StatLuck, 0));
+                BaseStats.Add(new(AppData.StatMovement, 0));
+                BaseStats.Add(new(AppData.StatBody, 0));
+                BaseStats.Add(new(AppData.StatEmpathy, 0));
+            }
+            if (Type == AppData.ComTypeEmplacedDefense)
+            {
+                ShowWeapons = true;
+                ShowNotes = true;
+                ComClass = Type;
+                BaseStats.Add(new(AppData.SkillCombatNumber, 0));
+            }
+            if (Type == AppData.ComTypeActiveDefense)
+            {
+                ShowWeapons = true;
+                ShowNotes = true;
+                ComClass = Type;
+            }
+            if (Type == AppData.ComTypeBlackIce)
+            {
+
+            }
         }
         public void SetBlackIceStats(string role, int PER, int SPD, int ATK, int DEF, int REZ, string effect)
         {

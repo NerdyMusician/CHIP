@@ -36,17 +36,29 @@ namespace CyberpunkGameplayAssistant.ViewModels
             get => _LastSave;
             set => SetAndNotify(ref _LastSave, value);
         }
+        private bool _AddCombatantMenuOpen;
+        public bool AddCombatantMenuOpen
+        {
+            get => _AddCombatantMenuOpen;
+            set => SetAndNotify(ref _AddCombatantMenuOpen, value);
+        }
 
         // Commands
         public ICommand AddCombatant => new RelayCommand(DoAddCombatant);
         private void DoAddCombatant(object param)
         {
+            if (!param.ToString().IsIn(AppData.ComTypeStandard, AppData.ComTypeEmplacedDefense, AppData.ComTypeActiveDefense, AppData.ComTypeDemon, AppData.ComTypeBlackIce))
+            {
+                RaiseError($"Invalid parameter \"{param}\" passed to AddCombatant");
+                return;
+            }
             Combatant newCombatant = new();
             newCombatant.Name = "New Combatant";
-            newCombatant.Type = AppData.ComTypeStandard;
+            newCombatant.Type = param.ToString();
             newCombatant.InitializeCustomCombatant();
             Combatants.Add(newCombatant);
             ActiveCombatant = newCombatant;
+            AddCombatantMenuOpen = false;
         }
         public ICommand SortCombatants => new RelayCommand(DoSortCombatants);
         private void DoSortCombatants(object param)

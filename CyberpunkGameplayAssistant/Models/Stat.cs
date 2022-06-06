@@ -42,7 +42,14 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get
             {
-                return AppData.StatAbbreviations[Name];
+                if (AppData.StatAbbreviations.ContainsKey(Name))
+                {
+                    return AppData.StatAbbreviations[Name];
+                }
+                else
+                {
+                    return Name;
+                }
             }
         }
 

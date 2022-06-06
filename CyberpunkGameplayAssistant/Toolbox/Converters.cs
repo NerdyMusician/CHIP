@@ -88,6 +88,15 @@ namespace CyberpunkGameplayAssistant.Toolbox
         }
 
     }
+    public class VisibleIfContains : ConverterMarkupExtension<VisibleIfContains>
+    {
+        public VisibleIfContains() { }
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null) { return Visibility.Collapsed; }
+            return (value.ToString().Contains(parameter.ToString())) ? Visibility.Visible : Visibility.Collapsed;
+        }
+    }
     public class VisibleIfEqual : ConverterMarkupExtension<VisibleIfEqual>
     {
         public VisibleIfEqual()
