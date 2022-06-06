@@ -136,10 +136,10 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             string iconName = value switch
             {
-                AppData.ActiveDefense => "Icon_Turret",
-                AppData.BlackIce => "Icon_Program",
-                AppData.Demon => "Icon_Program",
-                AppData.EmplacedDefense => "Icon_Turret",
+                AppData.ComTypeActiveDefense => "Icon_Turret",
+                AppData.ComTypeBlackIce => "Icon_Program",
+                AppData.ComTypeDemon => "Icon_Program",
+                AppData.ComTypeEmplacedDefense => "Icon_Turret",
                 AppData.ComClassLightCorpo => "Icon_Briefcase",
                 AppData.ComClassMediumCorpo => "Icon_Briefcase",
                 AppData.ComClassHeavyCorpo => "Icon_Briefcase",

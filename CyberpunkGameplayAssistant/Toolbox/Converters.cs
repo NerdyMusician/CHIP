@@ -73,6 +73,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             object parameter,
             CultureInfo culture)
         {
+            if (value == null) { return Visibility.Collapsed; }
             return (value.ToString() == parameter.ToString()) ? Visibility.Visible : Visibility.Collapsed;
         }
 

@@ -635,8 +635,8 @@ namespace CyberpunkGameplayAssistant.Models
         }
         public void SetDemonStats(int REZ, int INT, int netActions, int combatNumber)
         {
-            Type = AppData.Demon;
-            PlayerRole = AppData.Demon;
+            Type = AppData.ComTypeDemon;
+            PlayerRole = AppData.ComTypeDemon;
             Notes = netActions.ToString();
             BaseStats = new();
             BaseStats.Add(new(AppData.SkillInterface, INT));
@@ -646,7 +646,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         public void SetActiveDefenseStats(int MOVE, int HP, int DV)
         {
-            Type = AppData.ActiveDefense;
+            Type = AppData.ComTypeActiveDefense;
             Notes = MOVE.ToString();
             PlayerRole = DV.ToString();
             MaximumHitPoints = HP;
@@ -654,7 +654,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         public void SetEmplacedDefenseStats(int combatNumber, int HP, int DV, string note = "")
         {
-            Type = AppData.EmplacedDefense;
+            Type = AppData.ComTypeEmplacedDefense;
             PlayerRole = DV.ToString();
             Notes = note;
             BaseStats = new();
@@ -778,8 +778,8 @@ namespace CyberpunkGameplayAssistant.Models
         
         public int GetSkillTotal(string skill)
         {
-            if (Type == AppData.ActiveDefense) { return GetDemonCombatNumber(); }
-            if (Type == AppData.EmplacedDefense) { return BaseStats.GetValue(AppData.SkillCombatNumber); }
+            if (Type == AppData.ComTypeActiveDefense) { return GetDemonCombatNumber(); }
+            if (Type == AppData.ComTypeEmplacedDefense) { return BaseStats.GetValue(AppData.SkillCombatNumber); }
             int skillLevel = Skills.FirstOrDefault(s => s.Name == skill).Level;
             int statLevel = CalculatedStats.GetValue(AppData.SkillLinks.First(s => s.SkillName == skill).StatName);
             return skillLevel + statLevel;
@@ -800,15 +800,15 @@ namespace CyberpunkGameplayAssistant.Models
         }
         public int GetInitiative()
         {
-            if (Type == AppData.Player) { return Initiative; }
+            if (Type == AppData.ComTypePlayer) { return Initiative; }
             int reflex = CalculatedStats.GetValue(AppData.StatReflexes);
             reflex -= AppData.ArmorTable.GetPenalty(ArmorType);
             return HelperMethods.RollD10() + reflex;
         }
         public void UpdateWoundState()
         {
-            if (Type == AppData.BlackIce || Type == AppData.Demon) { UpdateBlackIceWoundState(); return; }
-            if (Type == AppData.ActiveDefense || Type == AppData.EmplacedDefense) { UpdateDefenseWoundState(); return; }
+            if (Type == AppData.ComTypeBlackIce || Type == AppData.ComTypeDemon) { UpdateBlackIceWoundState(); return; }
+            if (Type == AppData.ComTypeActiveDefense || Type == AppData.ComTypeEmplacedDefense) { UpdateDefenseWoundState(); return; }
             string woundState = AppData.WoundStateUnharmed;
             if (CurrentHitPoints < MaximumHitPoints) { woundState = AppData.WoundStateLightlyWounded; }
             if (CurrentHitPoints <= (MaximumHitPoints / 2)) { woundState = AppData.WoundStateSeriouslyWounded; }
@@ -1061,7 +1061,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private int GetDemonCombatNumber()
         {
-            Combatant demon = AppData.MainModelRef.CampaignView.ActiveCampaign.AllCombatants.FirstOrDefault(c => c.Type == AppData.Demon);
+            Combatant demon = AppData.MainModelRef.CampaignView.ActiveCampaign.AllCombatants.FirstOrDefault(c => c.Type == AppData.ComTypeDemon);
             if (demon == null) { RaiseError(AppData.ErrorNoDemonAvailableForActiveDefense); return 0; }
             else
             {

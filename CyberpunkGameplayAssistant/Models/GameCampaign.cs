@@ -251,7 +251,7 @@ namespace CyberpunkGameplayAssistant.Models
                 {
                     Combatant playerToAdd = Players.First(c => c.Name == selectedRecord.Name).DeepClone();
                     if (AllCombatants.FirstOrDefault(p => p.Name == playerToAdd.Name) != null) { continue; }
-                    playerToAdd.Type = AppData.Player;
+                    playerToAdd.Type = AppData.ComTypePlayer;
                     AllCombatants.Add(playerToAdd);
                 }
                 SortCombatantsToLists();
@@ -269,7 +269,7 @@ namespace CyberpunkGameplayAssistant.Models
                     NPC npc = Npcs.First(n => n.Name == selectedRecord.Name);
                     Combatant npcToAdd = AppData.MainModelRef.CombatantView.Combatants.First(c => c.Name == npc.BaseCombatant).DeepClone();
                     npcToAdd.DisplayName = npc.Name;
-                    npcToAdd.Type = AppData.NPC;
+                    npcToAdd.Type = AppData.ComTypeNPC;
                     npcToAdd.IsAlly = npc.IsAlly;
                     npcToAdd.PortraitFilePath = npc.PortraitFilePath;
                     npcToAdd.InitializeLoadedCombatant();
@@ -440,7 +440,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             if (CombatantsByInitiative.Count <= 0) { return; }
             Combatant activeCombatant = CombatantsByInitiative.FirstOrDefault(c => c.IsActive)!;
-            Combatant firstCombatant = CombatantsByInitiative.FirstOrDefault(c => c.Type != AppData.ActiveDefense && c.Type != AppData.EmplacedDefense)!;
+            Combatant firstCombatant = CombatantsByInitiative.FirstOrDefault(c => c.Type != AppData.ComTypeActiveDefense && c.Type != AppData.ComTypeEmplacedDefense)!;
             Combatant lastCombatant = CombatantsByInitiative.Last();
             if (activeCombatant == null) { param = "Reset"; }
             string action = param.ToString()!;
@@ -486,7 +486,7 @@ namespace CyberpunkGameplayAssistant.Models
                     break;
                 case "Reset":
                     if (HelperMethods.AskYesNoQuestion("Reset combat to round 1?") == false) { return; }
-                    Combatant resetCombatant = CombatantsByInitiative.FirstOrDefault(crt => (!crt.IsDead || crt.Type == AppData.Player) && crt.Type != AppData.ActiveDefense && crt.Type != AppData.EmplacedDefense)!;
+                    Combatant resetCombatant = CombatantsByInitiative.FirstOrDefault(crt => (!crt.IsDead || crt.Type == AppData.ComTypePlayer) && crt.Type != AppData.ComTypeActiveDefense && crt.Type != AppData.ComTypeEmplacedDefense)!;
                     if (resetCombatant == null) { UpdateActiveCombatant(); return; }
                     else { resetCombatant.IsActive = true; }
                     EncounterRound = 1;
@@ -503,7 +503,7 @@ namespace CyberpunkGameplayAssistant.Models
             List<string> initiativeResults = new();
             foreach (Combatant combatant in AllCombatants)
             {
-                if (combatant.Initiative == 0 && combatant.Type != AppData.Player) 
+                if (combatant.Initiative == 0 && combatant.Type != AppData.ComTypePlayer) 
                 { 
                     combatant.Initiative = combatant.GetInitiative(); 
                     initiativeResults.Add($"{combatant.DisplayName} : {combatant.Initiative}");
@@ -520,7 +520,7 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand AddPlayer => new RelayCommand(param => DoAddPlayer());
         private void DoAddPlayer()
         {
-            Players.Add(new() { Name = "New Player", Type = AppData.Player, PortraitFilePath = AppData.PortraitDefault });
+            Players.Add(new() { Name = "New Player", Type = AppData.ComTypePlayer, PortraitFilePath = AppData.PortraitDefault });
             ActivePlayer = Players.Last();
         }
         public ICommand SortPlayers => new RelayCommand(param => DoSortPlayers());
@@ -570,7 +570,7 @@ namespace CyberpunkGameplayAssistant.Models
                     }
                     foreach (CombatantWeapon weapon in combatant.Weapons)
                     {
-                        if (combatant.Type.IsIn(AppData.EmplacedDefense, AppData.ActiveDefense)) { continue; }
+                        if (combatant.Type.IsIn(AppData.ComTypeEmplacedDefense, AppData.ComTypeActiveDefense)) { continue; }
                         if (weapon.UsesAmmo)
                         {
                             string ammoType = AppData.WeaponRepository.First(w => w.Type == weapon.Type).AmmoType;
@@ -628,7 +628,7 @@ namespace CyberpunkGameplayAssistant.Models
                     if (!HelperMethods.AskYesNoQuestion("Are you sure you want to kill all non-player and non-NPC combatants?")) { return; }
                     foreach (Combatant combatant in AllCombatants)
                     {
-                        if (combatant.Type == AppData.NPC) { continue; }
+                        if (combatant.Type == AppData.ComTypeNPC) { continue; }
                         combatant.CurrentHitPoints = 0;
                         combatant.IsDead = true;
                     }
@@ -671,8 +671,8 @@ namespace CyberpunkGameplayAssistant.Models
             List<Combatant> combatants = new();
             foreach (Combatant combatant in AllCombatants)
             {
-                if (combatant.Type == AppData.Player) { combatants.Add(combatant); continue; }
-                if (combatant.Type == AppData.BlackIce || combatant.Type == AppData.Demon || combatant.Type == AppData.ActiveDefense || combatant.Type == AppData.EmplacedDefense)
+                if (combatant.Type == AppData.ComTypePlayer) { combatants.Add(combatant); continue; }
+                if (combatant.Type == AppData.ComTypeBlackIce || combatant.Type == AppData.ComTypeDemon || combatant.Type == AppData.ComTypeActiveDefense || combatant.Type == AppData.ComTypeEmplacedDefense)
                 {
                     if (combatant.CurrentHitPoints <= 0) { continue; }
                 }
@@ -684,9 +684,9 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private static bool IsEligibleCombatant(Combatant combatant)
         {
-            if (combatant.Type == AppData.ActiveDefense || combatant.Type == AppData.EmplacedDefense) { return false; }
-            if (combatant.Type.IsIn(AppData.BlackIce, AppData.Demon) && combatant.CurrentHitPoints == 0) { return false; }
-            return !combatant.IsDead || combatant.Type == AppData.Player;
+            if (combatant.Type == AppData.ComTypeActiveDefense || combatant.Type == AppData.ComTypeEmplacedDefense) { return false; }
+            if (combatant.Type.IsIn(AppData.ComTypeBlackIce, AppData.ComTypeDemon) && combatant.CurrentHitPoints == 0) { return false; }
+            return !combatant.IsDead || combatant.Type == AppData.ComTypePlayer;
         }
         private void InitializeLists()
         {
@@ -703,10 +703,10 @@ namespace CyberpunkGameplayAssistant.Models
                 ResetCombatantLists();
                 return;
             }
-            CombatantsByInitiative = new(AllCombatants.Where(c => !c.IsDead || c.Type == AppData.Player).OrderByDescending(c => c.Initiative));
-            CombatantsByName = new(AllCombatants.Where(c => !c.IsDead || c.Type == AppData.Player).OrderBy(c => c.Type != AppData.Player).ThenBy(c => c.DisplayName));
-            PlayerCombatants = new(AllCombatants.Where(c => c.Type == AppData.Player).OrderBy(c => c.Name));
-            NpcCombatants = new(AllCombatants.Where(c => c.Type == AppData.NPC).OrderBy(c => c.Name));
+            CombatantsByInitiative = new(AllCombatants.Where(c => !c.IsDead || c.Type == AppData.ComTypePlayer).OrderByDescending(c => c.Initiative));
+            CombatantsByName = new(AllCombatants.Where(c => !c.IsDead || c.Type == AppData.ComTypePlayer).OrderBy(c => c.Type != AppData.ComTypePlayer).ThenBy(c => c.DisplayName));
+            PlayerCombatants = new(AllCombatants.Where(c => c.Type == AppData.ComTypePlayer).OrderBy(c => c.Name));
+            NpcCombatants = new(AllCombatants.Where(c => c.Type == AppData.ComTypeNPC).OrderBy(c => c.Name));
             DeadCombatants = new(AllCombatants.Where(c => c.IsDead));
         }
         private void ResetCombatantLists()

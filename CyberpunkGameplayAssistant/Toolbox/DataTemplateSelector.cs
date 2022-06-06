@@ -21,11 +21,11 @@ namespace CyberpunkGameplayAssistant.Toolbox
             {
                 return ((item as Combatant)!.Type) switch
                 {
-                    AppData.Player => PlayerDataTemplate,
-                    AppData.BlackIce => BlackIceDataTemplate,
-                    AppData.Demon => DemonDataTemplate,
-                    AppData.ActiveDefense => ActiveDefenseDataTemplate,
-                    AppData.EmplacedDefense => EmplacedDefenseDataTemplate,
+                    AppData.ComTypePlayer => PlayerDataTemplate,
+                    AppData.ComTypeBlackIce => BlackIceDataTemplate,
+                    AppData.ComTypeDemon => DemonDataTemplate,
+                    AppData.ComTypeActiveDefense => ActiveDefenseDataTemplate,
+                    AppData.ComTypeEmplacedDefense => EmplacedDefenseDataTemplate,
                     _ => CombatantDataTemplate
                 };
             }

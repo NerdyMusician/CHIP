@@ -1229,7 +1229,20 @@
                         <DockPanel>
                             <Label Content="Combatants" />
                             <StackPanel Style="{StaticResource SPNL_ListButtonPanel}">
-                                <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CombatantView.AddCombatant}" />
+                                <StackPanel>
+                                    <cc:IconToggleButton ImageResource="{StaticResource Icon_Plus_Green}" IsChecked="{Binding CombatantView.AddCombatantMenuOpen}" />
+                                    <Popup IsOpen="{Binding CombatantView.AddCombatantMenuOpen}">
+                                        <Border Style="{StaticResource BRDR_PopupBorder}">
+                                            <StackPanel>
+                                                <cc:ImageButton ImageResource="{StaticResource Icon_Fist}" Text="Add Combatant" Command="{Binding CombatantView.AddCombatant}" CommandParameter="Standard" />
+                                                <cc:ImageButton ImageResource="{StaticResource Icon_Turret}" Text="Add Emplaced Defense" Command="{Binding CombatantView.AddCombatant}" CommandParameter="Emplaced Defense" />
+                                                <cc:ImageButton ImageResource="{StaticResource Icon_Turret}" Text="Add Active Defense" Command="{Binding CombatantView.AddCombatant}" CommandParameter="Active Defense" />
+                                                <cc:ImageButton ImageResource="{StaticResource Icon_Program}" Text="Add Demon" Command="{Binding CombatantView.AddCombatant}" CommandParameter="Demon" />
+                                                <cc:ImageButton ImageResource="{StaticResource Icon_Program}" Text="Add Black ICE" Command="{Binding CombatantView.AddCombatant}" CommandParameter="Black ICE" />
+                                            </StackPanel>
+                                        </Border>
+                                    </Popup>
+                                </StackPanel>
                                 <cc:IconButton ImageResource="{StaticResource Icon_Save}" Command="{Binding CombatantView.SaveCombatants}" />
                                 <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CombatantView.SortCombatants}" />
                             </StackPanel>
@@ -1279,24 +1292,26 @@
                                             <cc:FieldLabel Text="Name" />
                                             <TextBox Text="{Binding CombatantView.ActiveCombatant.Name}" Width="200" />
                                         </StackPanel>
-                                        <StackPanel Style="{StaticResource SPNL_FieldRow}">
-                                            <cc:FieldLabel Text="Archetype" />
-                                            <cc:GammaComboBox ItemsSource="{Binding CombatantClasses}" SelectedValue="{Binding CombatantView.ActiveCombatant.ComClass}" />
-                                        </StackPanel>
-                                        <StackPanel Style="{StaticResource SPNL_FieldRow}">
-                                            <cc:FieldLabel Text="Armor" />
-                                            <cc:GammaComboBox ItemsSource="{Binding ArmorTypes}" SelectedValue="{Binding CombatantView.ActiveCombatant.ArmorType}" />
-                                        </StackPanel>
-                                        <StackPanel Style="{StaticResource SPNL_FieldRow}">
-                                            <cc:FieldLabel Text="Can Netrun" />
-                                            <CheckBox IsChecked="{Binding CombatantView.ActiveCombatant.CanNetrun}" />
+                                        <StackPanel Visibility="{Binding CombatantView.ActiveCombatant.Type, Converter={tool:VisibleIfMatch}, ConverterParameter=Standard}">
+                                            <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                                <cc:FieldLabel Text="Archetype" />
+                                                <cc:GammaComboBox ItemsSource="{Binding CombatantClasses}" SelectedValue="{Binding CombatantView.ActiveCombatant.ComClass}" />
+                                            </StackPanel>
+                                            <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                                <cc:FieldLabel Text="Armor" />
+                                                <cc:GammaComboBox ItemsSource="{Binding ArmorTypes}" SelectedValue="{Binding CombatantView.ActiveCombatant.ArmorType}" />
+                                            </StackPanel>
+                                            <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                                <cc:FieldLabel Text="Can Netrun" />
+                                                <CheckBox IsChecked="{Binding CombatantView.ActiveCombatant.CanNetrun}" />
+                                            </StackPanel>
                                         </StackPanel>
                                     </StackPanel>
                                 </StackPanel>
                                 <Separator />
                                 <DockPanel>
                                     <TextBlock Text="Base STATS" VerticalAlignment="Bottom" />
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding CombatantView.ActiveCombatant.Type, Converter={tool:VisibleIfMatch}, ConverterParameter=Standard}">
                                         <TextBlock VerticalAlignment="Bottom">
                                             <Run Text="Points Assigned:" />
                                             <Run Text="{Binding CombatantView.ActiveCombatant.TotalStatPoints}" />

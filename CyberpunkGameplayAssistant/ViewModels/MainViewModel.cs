@@ -56,6 +56,18 @@ namespace CyberpunkGameplayAssistant.ViewModels
             get => _UserAlerts;
             set => SetAndNotify(ref _UserAlerts, value);
         }
+        public List<string> CombatantTypes
+        {
+            get
+            {
+                return new()
+                {
+                    AppData.ComTypeStandard,
+                    AppData.ComTypeActiveDefense, AppData.ComTypeEmplacedDefense,
+                    AppData.ComTypeBlackIce, AppData.ComTypeDemon
+                };
+            }
+        }
         public List<string> CombatantClasses
         {
             get
