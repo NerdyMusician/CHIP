@@ -346,10 +346,10 @@
                                         <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Combatants" Command="{Binding CampaignView.ActiveCampaign.AddCombatants}" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Players" Command="{Binding CampaignView.ActiveCampaign.AddPlayers}" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add NPCs" Command="{Binding CampaignView.ActiveCampaign.AddNpcs}" />
-                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Black ICE" Command="{Binding CampaignView.ActiveCampaign.AddBlackIce}" />
+                                        <!--<cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Black ICE" Command="{Binding CampaignView.ActiveCampaign.AddBlackIce}" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Demons" Command="{Binding CampaignView.ActiveCampaign.AddDemons}" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Active Def." Command="{Binding CampaignView.ActiveCampaign.AddActiveDefenses}" />
-                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Empl. Def." Command="{Binding CampaignView.ActiveCampaign.AddEmplacedDefenses}" />
+                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Empl. Def." Command="{Binding CampaignView.ActiveCampaign.AddEmplacedDefenses}" />-->
                                         <Separator Height="8" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_Runner}" Text="Roll Initiatives" Command="{Binding CampaignView.ActiveCampaign.RollInitatives}" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_Sort}" Text="Sort Combatants" Command="{Binding CampaignView.ActiveCampaign.SortCombatants}" />
@@ -394,7 +394,6 @@
                                         <StackPanel>
                                             <cc:ImageToggleButton ImageResource="{StaticResource Icon_Time}" Text="Change Time" IsChecked="{Binding CampaignView.ActiveCampaign.ShowCurrentTimeControls, UpdateSourceTrigger=PropertyChanged}" />
                                             <Popup IsOpen="{Binding CampaignView.ActiveCampaign.ShowCurrentTimeControls, UpdateSourceTrigger=PropertyChanged}">
-
                                                 <Border Style="{StaticResource BRDR_PopupBorder}">
                                                     <StackPanel Margin="2">
                                                         <StackPanel.Resources>
@@ -444,6 +443,9 @@
                                                 </Border>
                                             </Popup>
                                         </StackPanel>
+                                        <Separator />
+                                        <TextBlock Text="Quick Notes" />
+                                        <TextBox Text="{Binding CampaignView.ActiveCampaign.QuickNotes}" Width="140" Height="184" AcceptsReturn="True" />
                                     </StackPanel>
                                     <Separator Width="8" />
                                     <StackPanel>
@@ -1311,11 +1313,13 @@
                                                 <CheckBox IsChecked="{Binding CombatantView.ActiveCombatant.CanNetrun}" />
                                             </StackPanel>
                                         </StackPanel>
-                                        <StackPanel Visibility="{Binding CombatantView.ActiveCombatant.Type, Converter={tool:VisibleIfContains}, ConverterParameter=Defense}">
-                                            <StackPanel Style="{StaticResource SPNL_FieldRow}">
-                                                <cc:FieldLabel Text="Hit Points" />
-                                                <TextBox Text="{Binding CombatantView.ActiveCombatant.MaximumHitPoints}" Width="32" />
-                                            </StackPanel>
+                                        <StackPanel Style="{StaticResource SPNL_FieldRow}" Visibility="{Binding CombatantView.ActiveCombatant.ShowHitPoints, Converter={tool:CollapsedIfFalse}}">
+                                            <cc:FieldLabel Text="Hit Points / REZ" />
+                                            <TextBox Text="{Binding CombatantView.ActiveCombatant.MaximumHitPoints}" Width="32" />
+                                        </StackPanel>
+                                        <StackPanel Style="{StaticResource SPNL_FieldRow}" Visibility="{Binding CombatantView.ActiveCombatant.ShowBypassDv, Converter={tool:CollapsedIfFalse}}">
+                                            <cc:FieldLabel Text="Bypass DV" />
+                                            <TextBox Text="{Binding CombatantView.ActiveCombatant.BypassDv}" Width="32" />
                                         </StackPanel>
                                     </StackPanel>
                                 </StackPanel>
@@ -1536,6 +1540,56 @@
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Settings">
+                <StackPanel>
+                    <Label Content="Settings" Margin="4" />
+                    <TabControl TabStripPlacement="Left" BorderThickness="2 2 0 0" Height="720" Width="1280">
+                        <TabControl.Resources>
+                            <Style TargetType="TabItem" BasedOn="{StaticResource BlueHorizontalTab}">
+                                <Setter Property="Width" Value="100" />
+                            </Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                            </Style>
+                            <Style TargetType="TextBlock" x:Key="SettingDescription">
+                                <Setter Property="FontStyle" Value="Italic" />
+                                <Setter Property="FontWeight" Value="Normal" />
+                                <Setter Property="Width" Value="340" />
+                                <Setter Property="TextWrapping" Value="Wrap" />
+                                <Setter Property="Margin" Value="22 0" />
+                            </Style>
+                        </TabControl.Resources>
+                        <TabItem Header="Application">
+                            <StackPanel Margin="4">
+                                <TextBlock Text="Application Settings" />
+                                <Rectangle />
+                                
+                                <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                    <CheckBox IsChecked="{Binding SettingsView.DebugMode}" />
+                                    <TextBlock Text=" Debug Mode" />
+                                </StackPanel>
+                                <TextBlock Style="{StaticResource SettingDescription}" Text="Shows additional output in the gameplay log when taking actions with combatants to help users verify that stats and modifiers are being applied appropriately." />
+                                
+                                
+                                
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem Header="Gameplay">
+                            <StackPanel Margin="4">
+                                <TextBlock Text="Application Settings" />
+                                <Rectangle />
+
+                                <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                    <CheckBox IsChecked="{Binding SettingsView.UseArchetypeGrouping}" />
+                                    <TextBlock Text=" Use Archetype Grouping" />
+                                </StackPanel>
+                                <TextBlock Style="{StaticResource SettingDescription}" Text="Tracker indicators (A, B, C, etc) are incremented based on the archetype of a standard combatant (Light Ganger, Medium Corpo, etc) rather than the name.&#10;Changing this setting will only affect future added combatants in combat, it will not change indicators of already active combatants." />
+
+                            </StackPanel>
+                        </TabItem>
+                    </TabControl>
                 </StackPanel>
             </TabItem>
         </TabControl>

@@ -194,7 +194,7 @@ namespace CyberpunkGameplayAssistant.Models
             int roll = HelperMethods.RollD10(true);
             string output = $"{combatant.DisplayName} uses suppressive fire.\nEveryone on foot within 25m/yds out of cover, and in your line of sight must " +
                 $"roll WILL + Concentration + 1d10 against {(reflex + autofire + roll)}, or use their next Move Action to get into cover.";
-            if (AppData.DebugMode) { output += $"\nDEBUG: REF:{reflex} AUTOFIRE:{autofire} ROLL:{roll}"; }
+            if (AppData.MainModelRef.SettingsView.DebugMode) { output += $"\nDEBUG: REF:{reflex} AUTOFIRE:{autofire} ROLL:{roll}"; }
             HelperMethods.AddToGameplayLog(output, AppData.MessageWeaponAttack);
             HelperMethods.PlayAutofireSound();
         }
@@ -261,7 +261,7 @@ namespace CyberpunkGameplayAssistant.Models
             int attackResult = attackRoll + attackBonus - combatant.GetAttackInjuryPenalty(Type);
             string output = $"{combatant.DisplayName} attacks with {Name}\nAttack: {attackResult}";
             output += HelperMethods.ProcessAmmoEffect(damage, criticalInjury, AmmoVariant);
-            if (AppData.DebugMode) 
+            if (AppData.MainModelRef.SettingsView.DebugMode) 
             { 
                 output += $"\nDEBUG: ROLL:{attackRoll}, SKILL+STAT:{attackBonus}, PENALTY:{attackPenalty}";
                 output += $"\nDEBUG: BASEDMG:{damage} AMMOVAR:{AmmoVariant}";

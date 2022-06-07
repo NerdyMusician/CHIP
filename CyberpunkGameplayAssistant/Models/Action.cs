@@ -208,7 +208,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private static string GetInterfaceDebugText(int roll, int interfaceLevel)
         {
-            return AppData.DebugMode ? $"\nDEBUG: ROLL: {roll} INTERFACE: {interfaceLevel}" : "";
+            return AppData.MainModelRef.SettingsView.DebugMode ? $"\nDEBUG: ROLL: {roll} INTERFACE: {interfaceLevel}" : "";
         }
         #endregion
 

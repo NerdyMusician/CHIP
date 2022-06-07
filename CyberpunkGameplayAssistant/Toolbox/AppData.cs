@@ -1,5 +1,4 @@
 ﻿using CyberpunkGameplayAssistant.Models;
-using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
 using CyberpunkGameplayAssistant.ViewModels;
 using CyberpunkGameplayAssistant.Windows;
 using System;
@@ -47,6 +46,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string File_Log = "log.txt";
         public static readonly string File_CampaignData = $"{DataDirectory}Campaigns.xml";
         public static readonly string File_CombatantData = $"{DataDirectory}Combatants.xml";
+        public static readonly string File_SettingData = $"{DataDirectory}Settings.xml";
 
         // Combatant Types
         public const string ComTypeStandard = "Standard";
@@ -56,6 +56,11 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string ComTypeDemon = "Demon";
         public const string ComTypeActiveDefense = "Active Defense";
         public const string ComTypeEmplacedDefense = "Emplaced Defense";
+
+        // Static Initiatives
+        public const int InitiativeDemon = 70;
+        public const int InitiativeEmplacedDefense = 60;
+        public const int InitiativeBlackIce = 50;
 
         // Combatant Classifications
         public const string ComClassCivilian = "Civilian";
@@ -1167,136 +1172,136 @@ namespace CyberpunkGameplayAssistant.Toolbox
         }
         private static void PopulateBlackIcePrograms()
         {
-            Combatant asp = new("Asp", ComTypeBlackIce, ComTypeBlackIce, PortraitAsp, ArmorTypeNone);
-            asp.SetBlackIceStats(AntiPersonnelBlackIce, 4, 6, 2, 2, 15, "Destroys a single Program installed on the enemy Netrunner's Cyberdeck at random.");
-            BlackIcePrograms.Add(asp);
+            //Combatant asp = new("Asp", ComTypeBlackIce, ComTypeBlackIce, PortraitAsp, ArmorTypeNone);
+            //asp.SetBlackIceStats(AntiPersonnelBlackIce, 4, 6, 2, 2, 15, "Destroys a single Program installed on the enemy Netrunner's Cyberdeck at random.");
+            //BlackIcePrograms.Add(asp);
 
-            Combatant giant = new("Giant", ComTypeBlackIce, ComTypeBlackIce, PortraitGiant, ArmorTypeNone);
-            giant.SetBlackIceStats(AntiPersonnelBlackIce, 2, 2, 8, 4, 25, "Does 3d6 damage direct to an enemy Netrunner's brain. The Netrunner is forcibly and unsafely Jacked Out of their current Netrun. They suffer the effect of all Rezzed enemy Black ICE they've encountered in the Architecture as they leave, not including the Giant.");
-            BlackIcePrograms.Add(giant);
+            //Combatant giant = new("Giant", ComTypeBlackIce, ComTypeBlackIce, PortraitGiant, ArmorTypeNone);
+            //giant.SetBlackIceStats(AntiPersonnelBlackIce, 2, 2, 8, 4, 25, "Does 3d6 damage direct to an enemy Netrunner's brain. The Netrunner is forcibly and unsafely Jacked Out of their current Netrun. They suffer the effect of all Rezzed enemy Black ICE they've encountered in the Architecture as they leave, not including the Giant.");
+            //BlackIcePrograms.Add(giant);
 
-            Combatant hellhound = new("Hellhound", ComTypeBlackIce, ComTypeBlackIce, PortraitHellhound, ArmorTypeNone);
-            hellhound.SetBlackIceStats(AntiPersonnelBlackIce, 6, 6, 6, 2, 20, "Does 2d6 damage direct to the Netrunner's brain. Unless insulated, their Cyberdeck catches fire along with their clothing. Until they spend a Meat Action to put themselves out, they take 2 damage to their HP whenever they end their Turn. Multiple instances of this effect cannot stack.");
-            BlackIcePrograms.Add(hellhound);
+            //Combatant hellhound = new("Hellhound", ComTypeBlackIce, ComTypeBlackIce, PortraitHellhound, ArmorTypeNone);
+            //hellhound.SetBlackIceStats(AntiPersonnelBlackIce, 6, 6, 6, 2, 20, "Does 2d6 damage direct to the Netrunner's brain. Unless insulated, their Cyberdeck catches fire along with their clothing. Until they spend a Meat Action to put themselves out, they take 2 damage to their HP whenever they end their Turn. Multiple instances of this effect cannot stack.");
+            //BlackIcePrograms.Add(hellhound);
 
-            Combatant kraken = new("Kraken", ComTypeBlackIce, ComTypeBlackIce, PortraitKraken, ArmorTypeNone);
-            kraken.SetBlackIceStats(AntiPersonnelBlackIce, 6, 2, 8, 4, 30, "Does 3d6 damage direct to an enemy Netrunner's brain. Until the end of the Netrunner's next Turn, the Netrunner cannot progress deeper into the Architecture or Jack Out safely (The Netrunner can still perform an unsafe Jack Out).");
-            BlackIcePrograms.Add(kraken);
+            //Combatant kraken = new("Kraken", ComTypeBlackIce, ComTypeBlackIce, PortraitKraken, ArmorTypeNone);
+            //kraken.SetBlackIceStats(AntiPersonnelBlackIce, 6, 2, 8, 4, 30, "Does 3d6 damage direct to an enemy Netrunner's brain. Until the end of the Netrunner's next Turn, the Netrunner cannot progress deeper into the Architecture or Jack Out safely (The Netrunner can still perform an unsafe Jack Out).");
+            //BlackIcePrograms.Add(kraken);
 
-            Combatant liche = new("Liche", ComTypeBlackIce, ComTypeBlackIce, PortraitLiche, ArmorTypeNone);
-            liche.SetBlackIceStats(AntiPersonnelBlackIce, 8, 2, 6, 2, 25, "Enemy Netrunner's INT, REF, and DEX are each lowered by 1d6 for the next hour (minimum 1). The effects are largely psychosomatic and leave no permanent effects.");
-            BlackIcePrograms.Add(liche);
+            //Combatant liche = new("Liche", ComTypeBlackIce, ComTypeBlackIce, PortraitLiche, ArmorTypeNone);
+            //liche.SetBlackIceStats(AntiPersonnelBlackIce, 8, 2, 6, 2, 25, "Enemy Netrunner's INT, REF, and DEX are each lowered by 1d6 for the next hour (minimum 1). The effects are largely psychosomatic and leave no permanent effects.");
+            //BlackIcePrograms.Add(liche);
 
-            Combatant raven = new("Raven", ComTypeBlackIce, ComTypeBlackIce, PortraitRaven, ArmorTypeNone);
-            raven.SetBlackIceStats(AntiPersonnelBlackIce, 6, 4, 4, 2, 15, "Derezzes a single Defender Program the enemy Netrunner has Rezzed at random, then deals 1d6 damage direct to the Netrunner's brain.");
-            BlackIcePrograms.Add(raven);
+            //Combatant raven = new("Raven", ComTypeBlackIce, ComTypeBlackIce, PortraitRaven, ArmorTypeNone);
+            //raven.SetBlackIceStats(AntiPersonnelBlackIce, 6, 4, 4, 2, 15, "Derezzes a single Defender Program the enemy Netrunner has Rezzed at random, then deals 1d6 damage direct to the Netrunner's brain.");
+            //BlackIcePrograms.Add(raven);
 
-            Combatant scorpion = new("Scorpion", ComTypeBlackIce, ComTypeBlackIce, PortraitScorpion, ArmorTypeNone);
-            scorpion.SetBlackIceStats(AntiPersonnelBlackIce, 2, 6, 2, 2, 15, "Enemy Netrunner's MOVE is lowered by 1d6 for the next hour (minimum 1). The effects are largely psychosomatic and leave no permanent effects.");
-            BlackIcePrograms.Add(scorpion);
+            //Combatant scorpion = new("Scorpion", ComTypeBlackIce, ComTypeBlackIce, PortraitScorpion, ArmorTypeNone);
+            //scorpion.SetBlackIceStats(AntiPersonnelBlackIce, 2, 6, 2, 2, 15, "Enemy Netrunner's MOVE is lowered by 1d6 for the next hour (minimum 1). The effects are largely psychosomatic and leave no permanent effects.");
+            //BlackIcePrograms.Add(scorpion);
 
-            Combatant skunk = new("Skunk", ComTypeBlackIce, ComTypeBlackIce, PortraitSkunk, ArmorTypeNone);
-            skunk.SetBlackIceStats(AntiPersonnelBlackIce, 2, 4, 4, 2, 10, "Until this Program is Derezzed, an enemy Netrunner hit by this Effect makes all Slide Checks at a -2. Each Skunk Black ICE can only affect a single Netrunner at a time, but the effects of multiple Skunks can stack.");
-            BlackIcePrograms.Add(skunk);
+            //Combatant skunk = new("Skunk", ComTypeBlackIce, ComTypeBlackIce, PortraitSkunk, ArmorTypeNone);
+            //skunk.SetBlackIceStats(AntiPersonnelBlackIce, 2, 4, 4, 2, 10, "Until this Program is Derezzed, an enemy Netrunner hit by this Effect makes all Slide Checks at a -2. Each Skunk Black ICE can only affect a single Netrunner at a time, but the effects of multiple Skunks can stack.");
+            //BlackIcePrograms.Add(skunk);
 
-            Combatant wisp = new("Wisp", ComTypeBlackIce, ComTypeBlackIce, PortraitWisp, ArmorTypeNone);
-            wisp.SetBlackIceStats(AntiPersonnelBlackIce, 4, 4, 4, 2, 15, "Does 1d6 damage direct to the enemy Netrunner's brain and lowers the amount of total NET Actions the Netrunner can accomplish on their next Turn by 1 (minimum 2).");
-            BlackIcePrograms.Add(wisp);
+            //Combatant wisp = new("Wisp", ComTypeBlackIce, ComTypeBlackIce, PortraitWisp, ArmorTypeNone);
+            //wisp.SetBlackIceStats(AntiPersonnelBlackIce, 4, 4, 4, 2, 15, "Does 1d6 damage direct to the enemy Netrunner's brain and lowers the amount of total NET Actions the Netrunner can accomplish on their next Turn by 1 (minimum 2).");
+            //BlackIcePrograms.Add(wisp);
 
-            Combatant dragon = new("Dragon", ComTypeBlackIce, ComTypeBlackIce, PortraitDragon, ArmorTypeNone);
-            dragon.SetBlackIceStats(AntiProgramBlackIce, 6, 4, 6, 6, 30, "Deals 6d6 damage to a Program. If this damage would be enough to Derezz the Program, it is instead Destroyed.");
-            BlackIcePrograms.Add(dragon);
+            //Combatant dragon = new("Dragon", ComTypeBlackIce, ComTypeBlackIce, PortraitDragon, ArmorTypeNone);
+            //dragon.SetBlackIceStats(AntiProgramBlackIce, 6, 4, 6, 6, 30, "Deals 6d6 damage to a Program. If this damage would be enough to Derezz the Program, it is instead Destroyed.");
+            //BlackIcePrograms.Add(dragon);
 
-            Combatant killer = new("Killer", ComTypeBlackIce, ComTypeBlackIce, PortraitKiller, ArmorTypeNone);
-            killer.SetBlackIceStats(AntiProgramBlackIce, 4, 8, 6, 2, 20, "Deals 4d6 damage to a Program. If this damage would be enough to Derezz the Program, it is instead Destroyed.");
-            BlackIcePrograms.Add(killer);
+            //Combatant killer = new("Killer", ComTypeBlackIce, ComTypeBlackIce, PortraitKiller, ArmorTypeNone);
+            //killer.SetBlackIceStats(AntiProgramBlackIce, 4, 8, 6, 2, 20, "Deals 4d6 damage to a Program. If this damage would be enough to Derezz the Program, it is instead Destroyed.");
+            //BlackIcePrograms.Add(killer);
 
-            Combatant sabertooth = new("Sabertooth", ComTypeBlackIce, ComTypeBlackIce, PortraitSabertooth, ArmorTypeNone);
-            sabertooth.SetBlackIceStats(AntiProgramBlackIce, 8, 6, 6, 2, 25, "Deals 6d6 damage to a Program. If this damage would be enough to Derezz the Program, it is instead Destroyed.");
-            BlackIcePrograms.Add(sabertooth);
+            //Combatant sabertooth = new("Sabertooth", ComTypeBlackIce, ComTypeBlackIce, PortraitSabertooth, ArmorTypeNone);
+            //sabertooth.SetBlackIceStats(AntiProgramBlackIce, 8, 6, 6, 2, 25, "Deals 6d6 damage to a Program. If this damage would be enough to Derezz the Program, it is instead Destroyed.");
+            //BlackIcePrograms.Add(sabertooth);
 
         }
         private static void PopulateDemons()
         {
-            Combatant imp = new("Imp", ComTypeDemon, ComTypeDemon, PortraitImp, ArmorTypeNone);
-            imp.SetDemonStats(15, 3, 2, 14);
-            Demons.Add(imp);
+            //Combatant imp = new("Imp", ComTypeDemon, ComTypeDemon, PortraitImp, ArmorTypeNone);
+            //imp.SetDemonStats(15, 3, 2, 14);
+            //Demons.Add(imp);
 
-            Combatant efreet = new("Efreet", ComTypeDemon, ComTypeDemon, PortraitEfreet, ArmorTypeNone);
-            efreet.SetDemonStats(25, 3, 2, 14);
-            Demons.Add(efreet);
+            //Combatant efreet = new("Efreet", ComTypeDemon, ComTypeDemon, PortraitEfreet, ArmorTypeNone);
+            //efreet.SetDemonStats(25, 3, 2, 14);
+            //Demons.Add(efreet);
 
-            Combatant balron = new("Balron", ComTypeDemon, ComTypeDemon, PortraitBalron, ArmorTypeNone);
-            balron.SetDemonStats(30, 7, 4, 14);
-            Demons.Add(balron);
+            //Combatant balron = new("Balron", ComTypeDemon, ComTypeDemon, PortraitBalron, ArmorTypeNone);
+            //balron.SetDemonStats(30, 7, 4, 14);
+            //Demons.Add(balron);
 
         }
         private static void PopulateActiveDefenses()
         {
             // TODO - Defense combatant portraits
-            Combatant airSwarm = new("Air Swarm Drone Cloud", ComTypeActiveDefense, ComTypeActiveDefense, PortraitDefault, ArmorTypeNone);
-            airSwarm.SetActiveDefenseStats(8, 15, 17);
-            airSwarm.AddWeapon(WeaponTypeVeryHeavyMelee, WeaponQualityStandard);
-            ActiveDefenses.Add(airSwarm);
+            //Combatant airSwarm = new("Air Swarm Drone Cloud", ComTypeActiveDefense, ComTypeActiveDefense, PortraitDefault, ArmorTypeNone);
+            //airSwarm.SetActiveDefenseStats(8, 15, 17);
+            //airSwarm.AddWeapon(WeaponTypeVeryHeavyMelee, WeaponQualityStandard);
+            //ActiveDefenses.Add(airSwarm);
 
-            Combatant groundDrone = new("Ground Drone", ComTypeActiveDefense, ComTypeActiveDefense, PortraitDefault, ArmorTypeNone);
-            groundDrone.SetActiveDefenseStats(4, 30, 21);
-            groundDrone.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
-            groundDrone.AddWeapon(WeaponTypeSmg, WeaponQualityStandard);
-            groundDrone.AddAmmo(AmmoTypeVeryHeavyPistol, 8, AmmoVarArmorPiercing);
-            groundDrone.AddAmmo(AmmoTypeMediumPistol, 30);
-            ActiveDefenses.Add(groundDrone);
+            //Combatant groundDrone = new("Ground Drone", ComTypeActiveDefense, ComTypeActiveDefense, PortraitDefault, ArmorTypeNone);
+            //groundDrone.SetActiveDefenseStats(4, 30, 21);
+            //groundDrone.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
+            //groundDrone.AddWeapon(WeaponTypeSmg, WeaponQualityStandard);
+            //groundDrone.AddAmmo(AmmoTypeVeryHeavyPistol, 8, AmmoVarArmorPiercing);
+            //groundDrone.AddAmmo(AmmoTypeMediumPistol, 30);
+            //ActiveDefenses.Add(groundDrone);
 
-            Combatant largeAirDrone = new("Large Air Drone", ComTypeActiveDefense, ComTypeActiveDefense, PortraitDefault, ArmorTypeNone);
-            largeAirDrone.SetActiveDefenseStats(6, 20, 21);
-            largeAirDrone.AddWeapon(WeaponTypeDartgun, WeaponQualityStandard);
-            largeAirDrone.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
-            largeAirDrone.AddAmmo(AmmoTypeDart, 8);
-            largeAirDrone.AddAmmo(AmmoTypeVeryHeavyPistol, 8, AmmoVarArmorPiercing);
-            ActiveDefenses.Add(largeAirDrone);
+            //Combatant largeAirDrone = new("Large Air Drone", ComTypeActiveDefense, ComTypeActiveDefense, PortraitDefault, ArmorTypeNone);
+            //largeAirDrone.SetActiveDefenseStats(6, 20, 21);
+            //largeAirDrone.AddWeapon(WeaponTypeDartgun, WeaponQualityStandard);
+            //largeAirDrone.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
+            //largeAirDrone.AddAmmo(AmmoTypeDart, 8);
+            //largeAirDrone.AddAmmo(AmmoTypeVeryHeavyPistol, 8, AmmoVarArmorPiercing);
+            //ActiveDefenses.Add(largeAirDrone);
 
-            Combatant miniAirDrone = new("Mini Air Drone", ComTypeActiveDefense, ComTypeActiveDefense, PortraitDefault, ArmorTypeNone);
-            miniAirDrone.SetActiveDefenseStats(6, 15, 17);
-            miniAirDrone.AddWeapon(WeaponTypeDartgun, WeaponQualityStandard);
-            miniAirDrone.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
-            miniAirDrone.AddAmmo(AmmoTypeDart, 8);
-            miniAirDrone.AddAmmo(AmmoTypeVeryHeavyPistol, 8, AmmoVarArmorPiercing);
-            ActiveDefenses.Add(miniAirDrone);
+            //Combatant miniAirDrone = new("Mini Air Drone", ComTypeActiveDefense, ComTypeActiveDefense, PortraitDefault, ArmorTypeNone);
+            //miniAirDrone.SetActiveDefenseStats(6, 15, 17);
+            //miniAirDrone.AddWeapon(WeaponTypeDartgun, WeaponQualityStandard);
+            //miniAirDrone.AddWeapon(WeaponTypeVeryHeavyPistol, WeaponQualityStandard);
+            //miniAirDrone.AddAmmo(AmmoTypeDart, 8);
+            //miniAirDrone.AddAmmo(AmmoTypeVeryHeavyPistol, 8, AmmoVarArmorPiercing);
+            //ActiveDefenses.Add(miniAirDrone);
 
-            Combatant spiderDrone = new("Spider Walking Drone", ComTypeActiveDefense, ComTypeActiveDefense, PortraitDefault, ArmorTypeNone);
-            spiderDrone.SetActiveDefenseStats(4, 40, 21);
-            spiderDrone.AddWeapon(WeaponTypeGrenadeLauncher, WeaponQualityStandard);
-            spiderDrone.AddWeapon(WeaponTypeVeryHeavyMelee, WeaponQualityStandard);
-            spiderDrone.AddWeapon(WeaponTypeHeavySmg, WeaponQualityStandard);
-            spiderDrone.AddAmmo(AmmoTypeGrenade, 2, AmmoVarTeargas);
-            spiderDrone.AddAmmo(AmmoTypeHeavyPistol, 40);
+            //Combatant spiderDrone = new("Spider Walking Drone", ComTypeActiveDefense, ComTypeActiveDefense, PortraitDefault, ArmorTypeNone);
+            //spiderDrone.SetActiveDefenseStats(4, 40, 21);
+            //spiderDrone.AddWeapon(WeaponTypeGrenadeLauncher, WeaponQualityStandard);
+            //spiderDrone.AddWeapon(WeaponTypeVeryHeavyMelee, WeaponQualityStandard);
+            //spiderDrone.AddWeapon(WeaponTypeHeavySmg, WeaponQualityStandard);
+            //spiderDrone.AddAmmo(AmmoTypeGrenade, 2, AmmoVarTeargas);
+            //spiderDrone.AddAmmo(AmmoTypeHeavyPistol, 40);
 
         }
         private static void PopulateEmplacedDefenses()
         {
-            Combatant bloodSwarm = new("Automated Blood Swarm", ComTypeEmplacedDefense, ComTypeEmplacedDefense, PortraitDefault, ArmorTypeNone);
-            bloodSwarm.SetEmplacedDefenseStats(0, 1, 21, "Automated weapon disperses a swarm of nanites into the room as a red fog. The nanites, when inhaled, attack their victim from within by binding the hemoglobin in their blood into clots. Anything that filters gas attacks blocks the Automated Blood Swarm.\nEveryone Meat within the Defended Area must succeed at a DV15 Resist Torture/ Drugs Check. Anyone who fails is dealt 3d6 damage directly to their HP. Their armor isn't ablated.");
-            EmplacedDefenses.Add(bloodSwarm);
+            //Combatant bloodSwarm = new("Automated Blood Swarm", ComTypeEmplacedDefense, ComTypeEmplacedDefense, PortraitDefault, ArmorTypeNone);
+            //bloodSwarm.SetEmplacedDefenseStats(0, 1, 21, "Automated weapon disperses a swarm of nanites into the room as a red fog. The nanites, when inhaled, attack their victim from within by binding the hemoglobin in their blood into clots. Anything that filters gas attacks blocks the Automated Blood Swarm.\nEveryone Meat within the Defended Area must succeed at a DV15 Resist Torture/ Drugs Check. Anyone who fails is dealt 3d6 damage directly to their HP. Their armor isn't ablated.");
+            //EmplacedDefenses.Add(bloodSwarm);
 
-            Combatant melee = new("Automated Melee Weapon", ComTypeEmplacedDefense, ComTypeEmplacedDefense, PortraitDefault, ArmorTypeNone);
-            melee.SetEmplacedDefenseStats(14, 25, 17);
-            melee.AddWeapon(WeaponTypeVeryHeavyMelee, WeaponQualityStandard);
-            EmplacedDefenses.Add(melee);
+            //Combatant melee = new("Automated Melee Weapon", ComTypeEmplacedDefense, ComTypeEmplacedDefense, PortraitDefault, ArmorTypeNone);
+            //melee.SetEmplacedDefenseStats(14, 25, 17);
+            //melee.AddWeapon(WeaponTypeVeryHeavyMelee, WeaponQualityStandard);
+            //EmplacedDefenses.Add(melee);
 
-            Combatant turret = new("Turret", ComTypeEmplacedDefense, ComTypeEmplacedDefense, PortraitDefault, ArmorTypeNone);
-            turret.SetEmplacedDefenseStats(14, 25, 17);
+            //Combatant turret = new("Turret", ComTypeEmplacedDefense, ComTypeEmplacedDefense, PortraitDefault, ArmorTypeNone);
+            //turret.SetEmplacedDefenseStats(14, 25, 17);
 
-            Combatant turretAR = turret.DeepClone();
-            turretAR.Variant = "(AR)";
-            turretAR.AddWeapon(WeaponTypeAssaultRifle);
-            turretAR.AddBasicAmmoForAllWeapons(1);
-            EmplacedDefenses.Add(turretAR);
+            //Combatant turretAR = turret.DeepClone();
+            //turretAR.Variant = "(AR)";
+            //turretAR.AddWeapon(WeaponTypeAssaultRifle);
+            //turretAR.AddBasicAmmoForAllWeapons(1);
+            //EmplacedDefenses.Add(turretAR);
 
-            Combatant turretSMG = turret.DeepClone();
-            turretSMG.Variant = "(SMG)";
-            turretSMG.AddWeapon(WeaponTypeHeavySmg);
-            turretSMG.AddBasicAmmoForAllWeapons(1);
-            EmplacedDefenses.Add(turretSMG);
+            //Combatant turretSMG = turret.DeepClone();
+            //turretSMG.Variant = "(SMG)";
+            //turretSMG.AddWeapon(WeaponTypeHeavySmg);
+            //turretSMG.AddBasicAmmoForAllWeapons(1);
+            //EmplacedDefenses.Add(turretSMG);
 
 
         }

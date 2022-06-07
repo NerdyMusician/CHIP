@@ -44,6 +44,12 @@ namespace CyberpunkGameplayAssistant.ViewModels
             get => _CombatantView;
             set => SetAndNotify(ref _CombatantView, value);
         }
+        private SettingsViewModel _SettingsView;
+        public SettingsViewModel SettingsView
+        {
+            get => _SettingsView;
+            set => SetAndNotify(ref _SettingsView, value);
+        }
         private Uri _SfxSource;
         public Uri SfxSource
         {
@@ -148,6 +154,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         {
             LoadCampaignsData();
             LoadCombatantsData();
+            LoadSettingsData();
         }
         private void LoadCampaignsData()
         {
@@ -179,6 +186,19 @@ namespace CyberpunkGameplayAssistant.ViewModels
             catch
             {
                 CombatantView = new();
+            }
+        }
+        private void LoadSettingsData()
+        {
+            try
+            {
+                XmlSerializer xmlSerializer = new(typeof(SettingsViewModel));
+                using FileStream fs = new(AppData.File_SettingData, FileMode.Open);
+                SettingsView = (SettingsViewModel)xmlSerializer.Deserialize(fs);
+            }
+            catch
+            {
+                SettingsView = new();
             }
         }
         private void UserAlertTimer_Elapsed(object? sender, ElapsedEventArgs e)

@@ -44,6 +44,7 @@ namespace CyberpunkGameplayAssistant.Windows
             try
             {
                 if ((DataContext as MainViewModel) == null) { return; } // Startup crash
+                (DataContext as MainViewModel).SettingsView.SaveSettings();
                 Application.Current.Shutdown();
             }
             catch (Exception ex)

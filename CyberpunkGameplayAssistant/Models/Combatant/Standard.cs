@@ -390,6 +390,18 @@ namespace CyberpunkGameplayAssistant.Models
             get => _ShowNotes;
             set => SetAndNotify(ref _ShowNotes, value);
         }
+        private bool _ShowHitPoints;
+        public bool ShowHitPoints
+        {
+            get => _ShowHitPoints;
+            set => SetAndNotify(ref _ShowHitPoints, value);
+        }
+        private bool _ShowBypassDv;
+        public bool ShowBypassDv
+        {
+            get => _ShowBypassDv;
+            set => SetAndNotify(ref _ShowBypassDv, value);
+        }
 
         // Dropdown Sources
         public List<string> ShieldTypes
@@ -612,6 +624,7 @@ namespace CyberpunkGameplayAssistant.Models
         // Public Methods
         public void InitializeLoadedCombatant()
         {
+            SetInitiative();
             SetCalculatedStats();
             SetHitPoints(true);
             SetStoppingPower(true);
@@ -624,12 +637,31 @@ namespace CyberpunkGameplayAssistant.Models
             SetStandardActions();
             GetCriticalInjuryDescriptions();
         }
+        private void SetInitiative()
+        {
+            switch (Type)
+            {
+                case AppData.ComTypeDemon:
+                    Initiative = AppData.InitiativeDemon;
+                    break;
+                case AppData.ComTypeEmplacedDefense:
+                    Initiative = AppData.InitiativeEmplacedDefense;
+                    break;
+                case AppData.ComTypeBlackIce:
+                    Initiative = AppData.InitiativeBlackIce;
+                    break;
+                default:
+                    break;
+            }
+        }
         public void InitializeCustomCombatant()
         {
             PortraitFilePath = AppData.PortraitDefault;
             BaseStats = new();
             if (Type == AppData.ComTypeStandard)
             {
+                Name = "New Combatant";
+                ArmorType = AppData.ArmorTypeNone;
                 ShowWeapons = true;
                 BaseStats.Add(new(AppData.StatIntelligence, 0));
                 BaseStats.Add(new(AppData.StatReflexes, 0));
@@ -644,62 +676,42 @@ namespace CyberpunkGameplayAssistant.Models
             }
             if (Type == AppData.ComTypeEmplacedDefense)
             {
+                Name = "New Emplaced Defense";
+                SetNonStandardFields();
                 ShowWeapons = true;
-                ShowNotes = true;
-                ComClass = Type;
+                ShowBypassDv = true;
                 BaseStats.Add(new(AppData.SkillCombatNumber, 0));
             }
             if (Type == AppData.ComTypeActiveDefense)
             {
+                Name = "New Active Defense";
+                SetNonStandardFields();
                 ShowWeapons = true;
-                ShowNotes = true;
-                ComClass = Type;
+                ShowBypassDv = true;
+                BaseStats.Add(new(AppData.StatMovement, 0));
             }
             if (Type == AppData.ComTypeBlackIce)
             {
-
+                Name = "New Black ICE";
+                SetNonStandardFields();
+                BaseStats.Add(new(AppData.NetPerception, 0));
+                BaseStats.Add(new(AppData.NetSpeed, 0));
+                BaseStats.Add(new(AppData.NetAttack, 0));
+                BaseStats.Add(new(AppData.NetDefense, 0));
+            }
+            if (Type == AppData.ComTypeDemon)
+            {
+                Name = "New Demon";
+                SetNonStandardFields();
+                BaseStats.Add(new(AppData.SkillInterface, 0));
+                BaseStats.Add(new(AppData.SkillCombatNumber, 0));
             }
         }
-        public void SetBlackIceStats(string role, int PER, int SPD, int ATK, int DEF, int REZ, string effect)
+        private void SetNonStandardFields()
         {
-            PlayerRole = role;
-            BaseStats = new();
-            BaseStats.Add(new(AppData.NetPerception, PER));
-            BaseStats.Add(new(AppData.NetSpeed, SPD));
-            BaseStats.Add(new(AppData.NetAttack, ATK));
-            BaseStats.Add(new(AppData.NetDefense, DEF));
-            MaximumHitPoints = REZ;
-            CurrentHitPoints = REZ;
-            Notes = effect;
-        }
-        public void SetDemonStats(int REZ, int INT, int netActions, int combatNumber)
-        {
-            Type = AppData.ComTypeDemon;
-            PlayerRole = AppData.ComTypeDemon;
-            Notes = netActions.ToString();
-            BaseStats = new();
-            BaseStats.Add(new(AppData.SkillInterface, INT));
-            BaseStats.Add(new(AppData.SkillCombatNumber, combatNumber));
-            MaximumHitPoints = REZ;
-            CurrentHitPoints = REZ;
-        }
-        public void SetActiveDefenseStats(int MOVE, int HP, int DV)
-        {
-            Type = AppData.ComTypeActiveDefense;
-            Notes = MOVE.ToString();
-            PlayerRole = DV.ToString();
-            MaximumHitPoints = HP;
-            CurrentHitPoints = HP;
-        }
-        public void SetEmplacedDefenseStats(int combatNumber, int HP, int DV, string note = "")
-        {
-            Type = AppData.ComTypeEmplacedDefense;
-            PlayerRole = DV.ToString();
-            Notes = note;
-            BaseStats = new();
-            BaseStats.Add(new(AppData.SkillCombatNumber, combatNumber));
-            MaximumHitPoints = HP;
-            CurrentHitPoints = HP;
+            ShowHitPoints = true;
+            ShowNotes = true;
+            ComClass = Type;
         }
         public void SetCalculatedStats()
         {

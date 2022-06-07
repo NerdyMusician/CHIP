@@ -76,7 +76,7 @@ namespace CyberpunkGameplayAssistant.Models
             int stat = combatant.CalculatedStats.GetValue(statName);
             output += $"\nResult: {result + stat + Level - penalty}";
             if (Name == AppData.SkillBrawling) { output += GetBrawlingDamage(combatant); }
-            if (AppData.DebugMode) { output += $"\nDEBUG: {result} + {stat} + {Level} - {penalty}"; }
+            if (AppData.MainModelRef.SettingsView.DebugMode) { output += $"\nDEBUG: {result} + {stat} + {Level} - {penalty}"; }
             HelperMethods.AddToGameplayLog(output, AppData.MessageSkillCheck);
         }
         public ICommand RemoveSkill => new RelayCommand(DoRemoveSkill);

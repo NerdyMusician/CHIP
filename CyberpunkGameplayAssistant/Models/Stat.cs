@@ -62,7 +62,7 @@ namespace CyberpunkGameplayAssistant.Models
             int penalty = combatant.GetStatPenalty(Name);
             string output = $"{combatant.DisplayName} made {Name.AOrAn()} roll";
             output += $"\nResult: {diceRoll + Value + penalty}";
-            if (AppData.DebugMode) { output += $"\nDEBUG: ROLL: {diceRoll}, STAT: {Value}, PENALTY: {penalty}"; }
+            if (AppData.MainModelRef.SettingsView.DebugMode) { output += $"\nDEBUG: ROLL: {diceRoll}, STAT: {Value}, PENALTY: {penalty}"; }
             HelperMethods.AddToGameplayLog(output, AppData.MessageBlackIceStat);
         }
 

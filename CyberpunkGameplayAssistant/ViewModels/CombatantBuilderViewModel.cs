@@ -53,7 +53,6 @@ namespace CyberpunkGameplayAssistant.ViewModels
                 return;
             }
             Combatant newCombatant = new();
-            newCombatant.Name = "New Combatant";
             newCombatant.Type = param.ToString();
             newCombatant.InitializeCustomCombatant();
             Combatants.Add(newCombatant);
@@ -63,7 +62,16 @@ namespace CyberpunkGameplayAssistant.ViewModels
         public ICommand SortCombatants => new RelayCommand(DoSortCombatants);
         private void DoSortCombatants(object param)
         {
-            Combatants = new(Combatants.OrderBy(c => c.Name).ThenBy(c => c.Variant));
+            string[] typeSortOrder = {
+                AppData.ComTypeStandard, AppData.ComTypeActiveDefense, AppData.ComTypeEmplacedDefense,
+                AppData.ComTypeDemon, AppData.ComTypeBlackIce };
+            string[] classSortOrder = { 
+                AppData.ComClassLightGanger, AppData.ComClassMediumGanger, AppData.ComClassHeavyGanger,
+                AppData.ComClassLightCorpo, AppData.ComClassMediumCorpo, AppData.ComClassHeavyCorpo,
+                AppData.ComClassLightPolice, AppData.ComClassMediumPolice, AppData.ComClassHeavyPolice,
+                AppData.ComClassCivilian, AppData.ComTypeActiveDefense, AppData.ComTypeEmplacedDefense,
+                AppData.ComTypeDemon, AppData.ComTypeBlackIce };
+            Combatants = new(Combatants.OrderBy(c => Array.IndexOf(typeSortOrder, c.Type)).ThenBy(c => Array.IndexOf(classSortOrder, c.ComClass)).ThenBy(c => c.Name));
         }
         public ICommand SaveCombatants => new RelayCommand(param => DoSaveCombatants());
         public void DoSaveCombatants(bool notifyUser = true)
