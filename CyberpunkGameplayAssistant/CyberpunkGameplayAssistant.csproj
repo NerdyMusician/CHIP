@@ -12,23 +12,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\BlackIce\Asp.png" />
-    <None Remove="Resources\BlackIce\Dragon.png" />
-    <None Remove="Resources\BlackIce\Giant.png" />
-    <None Remove="Resources\BlackIce\Hellhound.png" />
-    <None Remove="Resources\BlackIce\Killer.png" />
-    <None Remove="Resources\BlackIce\Kraken.png" />
-    <None Remove="Resources\BlackIce\Liche.png" />
-    <None Remove="Resources\BlackIce\Raven.png" />
-    <None Remove="Resources\BlackIce\Sabertooth.png" />
-    <None Remove="Resources\BlackIce\Scorpion.png" />
-    <None Remove="Resources\BlackIce\Skunk.png" />
-    <None Remove="Resources\BlackIce\Wisp.png" />
     <None Remove="Resources\Combatants\RED.png" />
     <None Remove="Resources\connected.png" />
-    <None Remove="Resources\Demons\Balron.png" />
-    <None Remove="Resources\Demons\Efreet.png" />
-    <None Remove="Resources\Demons\Imp.png" />
     <None Remove="Resources\disconnected.png" />
     <None Remove="Resources\Icons\aberration.png" />
     <None Remove="Resources\Icons\abjuration.png" />
@@ -347,23 +332,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\BlackIce\Asp.png" />
-    <Resource Include="Resources\BlackIce\Dragon.png" />
-    <Resource Include="Resources\BlackIce\Giant.png" />
-    <Resource Include="Resources\BlackIce\Hellhound.png" />
-    <Resource Include="Resources\BlackIce\Killer.png" />
-    <Resource Include="Resources\BlackIce\Kraken.png" />
-    <Resource Include="Resources\BlackIce\Liche.png" />
-    <Resource Include="Resources\BlackIce\Raven.png" />
-    <Resource Include="Resources\BlackIce\Sabertooth.png" />
-    <Resource Include="Resources\BlackIce\Scorpion.png" />
-    <Resource Include="Resources\BlackIce\Skunk.png" />
-    <Resource Include="Resources\BlackIce\Wisp.png" />
     <Resource Include="Resources\Combatants\RED.png" />
     <Resource Include="Resources\Icons\connected.png" />
-    <Resource Include="Resources\Demons\Balron.png" />
-    <Resource Include="Resources\Demons\Efreet.png" />
-    <Resource Include="Resources\Demons\Imp.png" />
     <Resource Include="Resources\Icons\disconnected.png" />
     <Resource Include="Resources\Icons\aberration.png" />
     <Resource Include="Resources\Icons\abjuration.png" />

@@ -106,6 +106,17 @@ namespace CyberpunkGameplayAssistant.ViewModels
                 };
             }
         }
+        public List<string> BlackIceTypes
+        {
+            get
+            {
+                return new()
+                {
+                    AppData.AntiPersonnelBlackIce,
+                    AppData.AntiProgramBlackIce
+                };
+            }
+        }
 
         // Private Properties
         private Timer UserAlertTimer;

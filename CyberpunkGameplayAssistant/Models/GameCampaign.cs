@@ -245,7 +245,7 @@ namespace CyberpunkGameplayAssistant.Models
                             existingCombatantCount = AllCombatants.Where(c => c.Name == newCombatant.Name).Count();
                         }
                         if (existingCombatantCount > 25) { break; }
-                        newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCombatantCount));
+                        //newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCombatantCount));
                         newCombatant.InitializeLoadedCombatant();
                         AllCombatants.Add(newCombatant);
                     }
@@ -282,7 +282,7 @@ namespace CyberpunkGameplayAssistant.Models
                 {
                     NPC npc = Npcs.First(n => n.Name == selectedRecord.Name);
                     Combatant npcToAdd = AppData.MainModelRef.CombatantView.Combatants.First(c => c.Name == npc.BaseCombatant).DeepClone();
-                    npcToAdd.DisplayName = npc.Name;
+                    npcToAdd.Name = npc.Name;
                     npcToAdd.Type = AppData.ComTypeNPC;
                     npcToAdd.IsAlly = npc.IsAlly;
                     npcToAdd.PortraitFilePath = npc.PortraitFilePath;

@@ -378,6 +378,18 @@ namespace CyberpunkGameplayAssistant.Models
             get => _BypassDv;
             set => SetAndNotify(ref _BypassDv, value);
         }
+        private int _NetActionCount;
+        public int NetActionCount
+        {
+            get => _NetActionCount;
+            set => SetAndNotify(ref _NetActionCount, value);
+        }
+        private string _BlackIceType;
+        public string BlackIceType
+        {
+            get => _BlackIceType;
+            set => SetAndNotify(ref _BlackIceType, value);
+        }
         private bool _ShowWeapons;
         public bool ShowWeapons
         {
@@ -401,6 +413,18 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get => _ShowBypassDv;
             set => SetAndNotify(ref _ShowBypassDv, value);
+        }
+        private bool _ShowNetActionCount;
+        public bool ShowNetActionCount
+        {
+            get => _ShowNetActionCount;
+            set => SetAndNotify(ref _ShowNetActionCount, value);
+        }
+        private bool _ShowBlackIceType;
+        public bool ShowBlackIceType
+        {
+            get => _ShowBlackIceType;
+            set => SetAndNotify(ref _ShowBlackIceType, value);
         }
 
         // Dropdown Sources
@@ -703,6 +727,7 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 Name = "New Demon";
                 SetNonStandardFields();
+                ShowNetActionCount = true;
                 BaseStats.Add(new(AppData.SkillInterface, 0));
                 BaseStats.Add(new(AppData.SkillCombatNumber, 0));
             }
@@ -771,13 +796,16 @@ namespace CyberpunkGameplayAssistant.Models
         }
         public void AddBasicAmmoForAllWeapons(int numberOfClips)
         {
+            bool ammoAdded = false;
             foreach (CombatantWeapon weapon in Weapons)
             {
                 if (!weapon.UsesAmmo) { continue; }
                 Weapon weaponData = AppData.WeaponRepository.FirstOrDefault(w => w.Type == weapon.Type)!;
                 RangedWeaponClip clipData = AppData.ClipChart.FirstOrDefault(c => c.WeaponType == weapon.Type)!;
                 AddAmmo(weaponData.AmmoType, clipData.Standard * numberOfClips);
+                ammoAdded = true;
             }
+            if (ammoAdded) { RaiseAlert("Ammo added to combatant"); } else { RaiseError("No ammo added"); }
         }
         public void AddAmmo(string type, int quantity, string variant = "")
         {
@@ -1027,9 +1055,12 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private void SetHitPoints(bool setCurrentToMax)
         {
-            int body = CalculatedStats.GetValue(AppData.StatBody);
-            int willpower = CalculatedStats.GetValue(AppData.StatWillpower);
-            MaximumHitPoints = 10 + (5 * ((body + willpower) / 2));
+            if (Type == AppData.ComTypeStandard || Type == AppData.ComTypeNPC)
+            {
+                int body = CalculatedStats.GetValue(AppData.StatBody);
+                int willpower = CalculatedStats.GetValue(AppData.StatWillpower);
+                MaximumHitPoints = 10 + (5 * ((body + willpower) / 2));
+            }
             if (setCurrentToMax)
             {
                 CurrentHitPoints = MaximumHitPoints;

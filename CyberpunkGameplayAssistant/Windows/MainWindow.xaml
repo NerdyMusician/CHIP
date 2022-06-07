@@ -188,7 +188,7 @@
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Style="{StaticResource Icon_Rpg_Book}" />
+                                            <Image Style="{StaticResource Icon_Program}" />
                                             <Separator Width="4" Visibility="Hidden" />
                                             <TextBlock Text="{Binding Name}" Foreground="{StaticResource PrimaryFontColor}" MinWidth="160">
                                                 <TextBlock.ContextMenu>
@@ -346,10 +346,6 @@
                                         <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Combatants" Command="{Binding CampaignView.ActiveCampaign.AddCombatants}" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Players" Command="{Binding CampaignView.ActiveCampaign.AddPlayers}" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add NPCs" Command="{Binding CampaignView.ActiveCampaign.AddNpcs}" />
-                                        <!--<cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Black ICE" Command="{Binding CampaignView.ActiveCampaign.AddBlackIce}" />
-                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Demons" Command="{Binding CampaignView.ActiveCampaign.AddDemons}" />
-                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Active Def." Command="{Binding CampaignView.ActiveCampaign.AddActiveDefenses}" />
-                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Empl. Def." Command="{Binding CampaignView.ActiveCampaign.AddEmplacedDefenses}" />-->
                                         <Separator Height="8" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_Runner}" Text="Roll Initiatives" Command="{Binding CampaignView.ActiveCampaign.RollInitatives}" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_Sort}" Text="Sort Combatants" Command="{Binding CampaignView.ActiveCampaign.SortCombatants}" />
@@ -735,7 +731,7 @@
                                                             </Image>
                                                             <StackPanel>
                                                                 <TextBlock Text="{Binding DisplayName, FallbackValue='Security Operative A'}" Width="134" FontSize="14" Margin="3" />
-                                                                <TextBlock Text="{Binding PlayerRole}" Margin="3" />
+                                                                <TextBlock Text="{Binding BlackIceType}" Margin="3" />
                                                                 <StackPanel>
                                                                     <cc:ImageToggleButton ImageResource="{StaticResource Icon_Chip}" Text="Actions" IsChecked="{Binding WeaponMenuOpen}" />
                                                                     <Popup IsOpen="{Binding WeaponMenuOpen}">
@@ -1217,10 +1213,6 @@
                                     </StackPanel>
                                 </StackPanel>
                             </TabItem>
-                            <TabItem Header="DEV">
-                                <StackPanel>
-                                </StackPanel>
-                            </TabItem>
                         </TabControl>
                     </StackPanel>
                 </StackPanel>
@@ -1313,13 +1305,21 @@
                                                 <CheckBox IsChecked="{Binding CombatantView.ActiveCombatant.CanNetrun}" />
                                             </StackPanel>
                                         </StackPanel>
+                                        <StackPanel Style="{StaticResource SPNL_FieldRow}" Visibility="{Binding CombatantView.ActiveCombatant.ShowBlackIceType, Converter={tool:CollapsedIfFalse}}">
+                                            <cc:FieldLabel Text="Black ICE Type" />
+                                            <cc:GammaComboBox ItemsSource="{Binding BlackIceTypes}" SelectedValue="{Binding CombatantView.ActiveCombatant.BlackIceType}" />
+                                        </StackPanel>
                                         <StackPanel Style="{StaticResource SPNL_FieldRow}" Visibility="{Binding CombatantView.ActiveCombatant.ShowHitPoints, Converter={tool:CollapsedIfFalse}}">
                                             <cc:FieldLabel Text="Hit Points / REZ" />
-                                            <TextBox Text="{Binding CombatantView.ActiveCombatant.MaximumHitPoints}" Width="32" />
+                                            <TextBox Text="{Binding CombatantView.ActiveCombatant.MaximumHitPoints}" Width="32" GotKeyboardFocus="HighlightText" />
                                         </StackPanel>
                                         <StackPanel Style="{StaticResource SPNL_FieldRow}" Visibility="{Binding CombatantView.ActiveCombatant.ShowBypassDv, Converter={tool:CollapsedIfFalse}}">
                                             <cc:FieldLabel Text="Bypass DV" />
-                                            <TextBox Text="{Binding CombatantView.ActiveCombatant.BypassDv}" Width="32" />
+                                            <TextBox Text="{Binding CombatantView.ActiveCombatant.BypassDv}" Width="32" GotKeyboardFocus="HighlightText" />
+                                        </StackPanel>
+                                        <StackPanel Style="{StaticResource SPNL_FieldRow}" Visibility="{Binding CombatantView.ActiveCombatant.ShowNetActionCount, Converter={tool:CollapsedIfFalse}}">
+                                            <cc:FieldLabel Text="NET Actions" />
+                                            <TextBox Text="{Binding CombatantView.ActiveCombatant.NetActionCount}" Width="32" GotKeyboardFocus="HighlightText" />
                                         </StackPanel>
                                     </StackPanel>
                                 </StackPanel>
@@ -1388,7 +1388,7 @@
                                 <Separator />
                                 <StackPanel Visibility="{Binding CombatantView.ActiveCombatant.ShowNotes, Converter={tool:CollapsedIfFalse}}">
                                     <cc:FieldLabel Text="Additional Effects" />
-                                    <TextBox Text="{Binding CombatantView.ActiveCombatant.Notes}" Width="466" Height="72" AcceptsReturn="True" />
+                                    <TextBox Text="{Binding CombatantView.ActiveCombatant.Notes}" Width="466" Height="72" AcceptsReturn="True" TextWrapping="Wrap" />
                                 </StackPanel>
                             </StackPanel>
                             <Separator Width="16" />

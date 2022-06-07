@@ -46,7 +46,7 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand SelectBaseCombatant => new RelayCommand(DoSelectBaseCombatant);
         private void DoSelectBaseCombatant(object param)
         {
-            ObjectSelectionDialog itemSelect = new(AppData.MainModelRef.CombatantView.Combatants.ToList().ToNamedRecordList(), "Select Base Combatant");
+            ObjectSelectionDialog itemSelect = new(AppData.MainModelRef.CombatantView.Combatants.Where(c => c.Type == AppData.ComTypeStandard).ToList().ToNamedRecordList(), "Select Base Combatant");
             if (itemSelect.ShowDialog() == true)
             {
                 if (itemSelect.SelectedObject == null) { return; }
