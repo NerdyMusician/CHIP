@@ -659,27 +659,8 @@ namespace CyberpunkGameplayAssistant.Models
             OrganizeSkillsToCategories();
             PrepareWeapons();
             SetStandardActions();
+            if (CanNetrun) { SetNetActions(); }
             GetCriticalInjuryDescriptions();
-        }
-        private void SetInitiative()
-        {
-            switch (Type)
-            {
-                case AppData.ComTypeDemon:
-                    Initiative = AppData.InitiativeDemon;
-                    break;
-                case AppData.ComTypeActiveDefense:
-                    Initiative = AppData.InitativeActiveDefense;
-                    break;
-                case AppData.ComTypeEmplacedDefense:
-                    Initiative = AppData.InitiativeEmplacedDefense;
-                    break;
-                case AppData.ComTypeBlackIce:
-                    Initiative = AppData.InitiativeBlackIce;
-                    break;
-                default:
-                    break;
-            }
         }
         public void InitializeCustomCombatant()
         {
@@ -752,19 +733,6 @@ namespace CyberpunkGameplayAssistant.Models
                 CalculatedStats.Add(statToAdd);
             }
         }
-
-        public void SetBaseSkills()
-        {
-            Skills = new();
-            foreach (SkillLinkReference skill in AppData.SkillLinks)
-            {
-                if (skill.SkillName == AppData.SkillLanguage) { continue; }
-                if (skill.SkillName == AppData.SkillLocalExpert) { continue; }
-                if (skill.SkillName == AppData.SkillScience) { continue; }
-                if (skill.SkillName == AppData.SkillPlayInstrument) { continue; }
-                Skills.Add(new(skill.SkillName));
-            }
-        }
         public void SetClassSkills() // TODO - UI replacement for this functionality
         {
             if (string.IsNullOrEmpty(ComClass)) { HelperMethods.WriteToLogFile($"No ComClass set for {Name}"); return; }
@@ -783,13 +751,6 @@ namespace CyberpunkGameplayAssistant.Models
             if (ComClass.IsIn(AppData.ComClassLightCorpo, AppData.ComClassMediumCorpo, AppData.ComClassHeavyCorpo))
             {
                 // TODO - Corpo Skills and Ganger Skills
-            }
-        }
-        public void AddWeapons(params string[] types)
-        {
-            foreach (string type in types)
-            {
-                AddWeapon(type);
             }
         }
         public void AddWeapon(string type, string quality = "", string name = "")
@@ -820,44 +781,16 @@ namespace CyberpunkGameplayAssistant.Models
                 AmmoInventory.Add(new(type, quantity, variant));
             }
         }
-        public void AddGearSet(params string[] names)
-        {
-            AddGearSet(names.ToList());
-        }
-        public void AddGearSet(List<string> names)
-        {
-            foreach (string name in names)
-            {
-                AddGear(name);
-            }
-        }
-        public void AddCyberdeckPrograms(params string[] names)
-        {
-            foreach (string name in names)
-            {
-                AddCyberdeckProgram(name);
-            }
-        }
-        public void AddCyberwareSet(params string[] names)
-        {
-            foreach (string name in names)
-            {
-                AddCyberware(name);
-            }
-        }
-
         public void AddShield()
         {
             ShieldType = AppData.ShieldTypeBulletproofShield;
             ShieldHp = 10;
-        }
-        
+        } // TODO - UI for shields, perhaps just set based on gear in inventory?
         public void SetDisplayName(string letter = "")
         {
             if (!letter.IsNullOrEmpty()) { TrackerIndicator = letter; }
             DisplayName = $"{Name} {TrackerIndicator}";
         }
-        
         public int GetSkillTotal(string skill)
         {
             if (Type == AppData.ComTypeActiveDefense) { return GetDemonCombatNumber(); }
@@ -910,13 +843,6 @@ namespace CyberpunkGameplayAssistant.Models
             string woundState = AppData.DefenseStateOperational;
             if (CurrentHitPoints == 0) { woundState = AppData.DefenseStateDestroyed; IsDead = true; }
             WoundState = woundState;
-        }
-        public void ReadyUpActiveDefense(int count)
-        {
-            SetDisplayName(HelperMethods.GetAlphabetLetter(count));
-            Initiative = 60; // Top(er) of the order force
-            UpdateWoundState();
-            ReloadAllWeapons();
         }
         public int GetSkillPenalty(string skillName)
         {
@@ -983,16 +909,6 @@ namespace CyberpunkGameplayAssistant.Models
             NetActions.Add(new(AppData.NetActionVirus));
             NetActions.Add(new(AppData.NetActionZap));
         }
-        public void ResetWeaponsAndAmmo()
-        {
-            Weapons.Clear();
-            AmmoInventory.Clear();
-        }
-        public void UpdateBuilderStats()
-        {
-            SetCalculatedStats();
-            SetHitPoints(true);
-        }
 
         // Private Methods
         private void InitializeLists()
@@ -1047,13 +963,6 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 CurrentHeadStoppingPower = MaximumHeadStoppingPower;
                 CurrentBodyStoppingPower = MaximumBodyStoppingPower;
-            }
-        }
-        public void ReloadAllWeapons()
-        {
-            foreach (CombatantWeapon weapon in Weapons)
-            {
-                weapon.DoReloadWeapon(this);
             }
         }
         private void SetHitPoints(bool setCurrentToMax)
@@ -1171,6 +1080,26 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 Skill existingSkill = Skills.FirstOrDefault(s => s.Name == skill)!;
                 if (existingSkill == null) { Skills.Add(new(skill)); }
+            }
+        }
+        private void SetInitiative()
+        {
+            switch (Type)
+            {
+                case AppData.ComTypeDemon:
+                    Initiative = AppData.InitiativeDemon;
+                    break;
+                case AppData.ComTypeActiveDefense:
+                    Initiative = AppData.InitativeActiveDefense;
+                    break;
+                case AppData.ComTypeEmplacedDefense:
+                    Initiative = AppData.InitiativeEmplacedDefense;
+                    break;
+                case AppData.ComTypeBlackIce:
+                    Initiative = AppData.InitiativeBlackIce;
+                    break;
+                default:
+                    break;
             }
         }
 
