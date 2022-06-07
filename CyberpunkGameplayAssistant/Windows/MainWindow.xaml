@@ -686,105 +686,106 @@
                                             </DataTemplate>
                                             <DataTemplate x:Key="StandardPlayerCard">
                                                 <Border Style="{StaticResource BRDR_TrackerCard}">
-                                                    <StackPanel Margin="2">
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <Image Source="{Binding PortraitFilePath}" Width="64" Height="64" Margin="6 6 4 6">
-                                                                <Image.ContextMenu>
-                                                                    <ContextMenu>
-                                                                        <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
-                                                                        <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
-                                                                        <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
-                                                                    </ContextMenu>
-                                                                </Image.ContextMenu>
-                                                            </Image>
-                                                            <StackPanel Margin="3">
-                                                                <TextBlock Text="{Binding Name, FallbackValue='Security Operative A'}" Width="134" FontSize="14" />
-                                                                <TextBlock>
+                                                    <StackPanel Orientation="Horizontal" Margin="2" VerticalAlignment="Center">
+                                                        <Image Source="{Binding PortraitFilePath}" Width="72" Height="72" Margin="2">
+                                                            <Image.ContextMenu>
+                                                                <ContextMenu>
+                                                                    <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
+                                                                    <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
+                                                                    <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
+                                                                </ContextMenu>
+                                                            </Image.ContextMenu>
+                                                        </Image>
+                                                        <Border Background="DarkGreen" CornerRadius="2" BorderBrush="DarkGreen" Width="24" Height="72">
+                                                        </Border>
+                                                        <StackPanel Margin="4 4 0 0">
+                                                            <TextBlock Text="{Binding Name, FallbackValue='Character Name'}" Width="148" FontSize="16" />
+                                                            <TextBlock>
                                                                     <Run Text="{Binding PlayerRole}" />
                                                                     <Run Text="-" />
                                                                     <Run Text="{Binding PlayerName}" />
-                                                                </TextBlock>
+                                                            </TextBlock>
+                                                            <Separator />
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Style="{StaticResource Icon_Runner}" />
                                                                 <Separator />
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Image Style="{StaticResource Icon_Runner}" />
-                                                                    <Separator />
-                                                                    <TextBox Text="{Binding Initiative, UpdateSourceTrigger=PropertyChanged}" Width="32" />
-                                                                </StackPanel>
+                                                                <TextBox Text="{Binding Initiative, UpdateSourceTrigger=PropertyChanged}" Width="32" />
                                                             </StackPanel>
-                                                            <TextBox Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TallPartialBorderTextBox}" Height="74" Width="362" />
                                                         </StackPanel>
+                                                        <TextBox Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TallPartialBorderTextBox}" Height="72" Width="320" />
                                                     </StackPanel>
                                                 </Border>
                                             </DataTemplate>
                                             <DataTemplate x:Key="StandardBlackIceCard">
                                                 <Border Style="{StaticResource BRDR_TrackerCard}">
-                                                    <StackPanel Margin="2">
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <Image Source="{Binding PortraitFilePath}" Width="64" Height="64" Margin="6 6 4 6">
-                                                                <Image.ContextMenu>
-                                                                    <ContextMenu>
-                                                                        <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
-                                                                        <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
-                                                                        <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
-                                                                    </ContextMenu>
-                                                                </Image.ContextMenu>
-                                                            </Image>
+                                                    <StackPanel Orientation="Horizontal" Margin="2" VerticalAlignment="Center">
+                                                        <Image Source="{Binding PortraitFilePath}" Width="72" Height="72" Margin="2">
+                                                            <Image.ContextMenu>
+                                                                <ContextMenu>
+                                                                    <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
+                                                                    <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
+                                                                    <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
+                                                                </ContextMenu>
+                                                            </Image.ContextMenu>
+                                                        </Image>
+                                                        <Border Background="{Binding IsAlly, Converter={tool:AllyEnemyColor}, FallbackValue=DarkRed}" CornerRadius="2" BorderThickness="2" BorderBrush="{Binding IsAlly, Converter={tool:AllyEnemyColor}, FallbackValue=DarkRed}" Width="24" Height="72">
+                                                            <TextBlock Text="{Binding TrackerIndicator, FallbackValue=A}" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="22" FontFamily="Consolas" />
+                                                        </Border>
+                                                        <StackPanel Margin="4 4 0 0">
+                                                            <TextBlock Text="{Binding Name, FallbackValue='Security Operative'}" Width="148" FontSize="16" />
+                                                            <TextBlock Text="{Binding BlackIceType}" Margin="3" />
                                                             <StackPanel>
-                                                                <TextBlock Text="{Binding DisplayName, FallbackValue='Security Operative A'}" Width="134" FontSize="14" Margin="3" />
-                                                                <TextBlock Text="{Binding BlackIceType}" Margin="3" />
-                                                                <StackPanel>
-                                                                    <cc:ImageToggleButton ImageResource="{StaticResource Icon_Chip}" Text="Actions" IsChecked="{Binding WeaponMenuOpen}" />
-                                                                    <Popup IsOpen="{Binding WeaponMenuOpen}">
-                                                                        <Border Style="{StaticResource BRDR_PopupBorder}">
-                                                                            <StackPanel Margin="2">
-                                                                                <ItemsControl ItemsSource="{Binding BaseStats}">
-                                                                                    <ItemsControl.ItemTemplate>
-                                                                                        <DataTemplate>
-                                                                                            <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnStat}}" Text="{Binding Name}" Width="92" Command="{Binding RollStat}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
-                                                                                        </DataTemplate>
-                                                                                    </ItemsControl.ItemTemplate>
-                                                                                </ItemsControl>
-                                                                            </StackPanel>
-                                                                        </Border>
-                                                                    </Popup>
-                                                                </StackPanel>
+                                                                <cc:ImageToggleButton ImageResource="{StaticResource Icon_Chip}" Text="Actions" IsChecked="{Binding WeaponMenuOpen}" />
+                                                                <Popup IsOpen="{Binding WeaponMenuOpen}">
+                                                                    <Border Style="{StaticResource BRDR_PopupBorder}">
+                                                                        <StackPanel Margin="2">
+                                                                            <ItemsControl ItemsSource="{Binding BaseStats}">
+                                                                                <ItemsControl.ItemTemplate>
+                                                                                    <DataTemplate>
+                                                                                        <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnStat}}" Text="{Binding Name}" Width="92" Command="{Binding RollStat}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
+                                                                                    </DataTemplate>
+                                                                                </ItemsControl.ItemTemplate>
+                                                                            </ItemsControl>
+                                                                        </StackPanel>
+                                                                    </Border>
+                                                                </Popup>
                                                             </StackPanel>
-                                                            <Separator />
-                                                            <StackPanel>
-                                                                <StackPanel.Resources>
-                                                                    <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
-                                                                        <Setter Property="Width" Value="auto" />
-                                                                    </Style>
-                                                                    <Style TargetType="TextBlock" x:Key="MidNum">
-                                                                        <Setter Property="Width" Value="37" />
-                                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                                        <Setter Property="TextAlignment" Value="Center" />
-                                                                        <Setter Property="FontSize" Value="20" />
-                                                                        <Setter Property="FontFamily" Value="Century Gothic" />
-                                                                    </Style>
-                                                                </StackPanel.Resources>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Image Style="{StaticResource Icon_Heart}" />
-                                                                    <Separator />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="-5" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="-1" />
-                                                                    <TextBlock Text="{Binding CurrentHitPoints, FallbackValue=20}" Style="{StaticResource MidNum}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="1" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="5" />
-                                                                    <Separator />
-                                                                    <TextBlock Text="{Binding WoundState, FallbackValue=Seriously Wounded}" VerticalAlignment="Center" Width="128" />
-                                                                </StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Image Style="{StaticResource Icon_Chip}" VerticalAlignment="Top" />
-                                                                    <Separator />
-                                                                    <TextBlock Text="{Binding Notes}" TextWrapping="Wrap" Width="340" FontWeight="Normal" FontSize="10">
-                                                                        <TextBlock.ToolTip>
-                                                                            <ToolTip>
-                                                                                <TextBlock Text="{Binding Notes}" TextWrapping="Wrap" Width="420" FontSize="15" />
-                                                                            </ToolTip>
-                                                                        </TextBlock.ToolTip>
+                                                        </StackPanel>
+                                                        <Separator />
+                                                        <StackPanel>
+                                                            <StackPanel.Resources>
+                                                                <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
+                                                                    <Setter Property="Width" Value="auto" />
+                                                                </Style>
+                                                                <Style TargetType="TextBlock" x:Key="MidNum">
+                                                                    <Setter Property="Width" Value="37" />
+                                                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                                                    <Setter Property="TextAlignment" Value="Center" />
+                                                                    <Setter Property="FontSize" Value="20" />
+                                                                    <Setter Property="FontFamily" Value="Century Gothic" />
+                                                                </Style>
+                                                            </StackPanel.Resources>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Style="{StaticResource Icon_Heart}" />
+                                                                <Separator />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="-5" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="-1" />
+                                                                <TextBlock Text="{Binding CurrentHitPoints, FallbackValue=20}" Style="{StaticResource MidNum}" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="1" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="5" />
+                                                                <Separator />
+                                                                <TextBlock Text="{Binding WoundState, FallbackValue=Seriously Wounded}" VerticalAlignment="Center" Width="128" />
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Style="{StaticResource Icon_Chip}" VerticalAlignment="Top" />
+                                                                <Separator />
+                                                                <TextBlock Text="{Binding Notes}" TextWrapping="Wrap" Width="340" FontWeight="Normal" FontSize="10">
+                                                                    <TextBlock.ToolTip>
+                                                                        <ToolTip>
+                                                                            <TextBlock Text="{Binding Notes}" TextWrapping="Wrap" Width="420" FontSize="15" />
+                                                                        </ToolTip>
+                                                                    </TextBlock.ToolTip>
                                                                     </TextBlock>
-                                                                </StackPanel>
                                                             </StackPanel>
                                                         </StackPanel>
                                                     </StackPanel>
@@ -792,66 +793,68 @@
                                             </DataTemplate>
                                             <DataTemplate x:Key="StandardDemonCard">
                                                 <Border Style="{StaticResource BRDR_TrackerCard}">
-                                                    <StackPanel Margin="2">
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <Image Source="{Binding PortraitFilePath}" Width="64" Height="64" Margin="6 6 4 6">
-                                                                <Image.ContextMenu>
-                                                                    <ContextMenu>
-                                                                        <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
-                                                                        <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
-                                                                        <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
-                                                                    </ContextMenu>
-                                                                </Image.ContextMenu>
-                                                            </Image>
+                                                    <StackPanel Orientation="Horizontal" Margin="2" VerticalAlignment="Center">
+                                                        <Image Source="{Binding PortraitFilePath}" Width="72" Height="72" Margin="2">
+                                                            <Image.ContextMenu>
+                                                                <ContextMenu>
+                                                                    <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
+                                                                    <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
+                                                                    <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
+                                                                </ContextMenu>
+                                                            </Image.ContextMenu>
+                                                        </Image>
+
+                                                        <Border Background="{Binding IsAlly, Converter={tool:AllyEnemyColor}, FallbackValue=DarkGreen}" CornerRadius="2" BorderThickness="2" BorderBrush="{Binding IsAlly, Converter={tool:AllyEnemyColor}, FallbackValue=DarkGreen}" Width="24" Height="72">
+                                                            <TextBlock Text="{Binding TrackerIndicator, FallbackValue=A}" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="22" FontFamily="Consolas" />
+                                                        </Border>
+                                                        <StackPanel Margin="4 4 0 0">
+                                                            <TextBlock Text="{Binding Name, FallbackValue='Demon'}" Width="134" FontSize="14" Margin="3" />
+                                                            <TextBlock Text="Demon" Margin="3" />
                                                             <StackPanel>
-                                                                <TextBlock Text="{Binding DisplayName, FallbackValue='Security Operative A'}" Width="134" FontSize="14" Margin="3" />
-                                                                <TextBlock Text="{Binding PlayerRole}" Margin="3" />
-                                                                <StackPanel>
-                                                                    <cc:ImageToggleButton ImageResource="{StaticResource Icon_Chip}" Text="Actions" IsChecked="{Binding WeaponMenuOpen}" />
-                                                                    <Popup IsOpen="{Binding WeaponMenuOpen}">
-                                                                        <Border Style="{StaticResource BRDR_PopupBorder}">
-                                                                            <StackPanel Margin="2">
-                                                                                <TextBlock>
+                                                                <cc:ImageToggleButton ImageResource="{StaticResource Icon_Chip}" Text="Actions" IsChecked="{Binding WeaponMenuOpen}" />
+                                                                <Popup IsOpen="{Binding WeaponMenuOpen}">
+                                                                    <Border Style="{StaticResource BRDR_PopupBorder}">
+                                                                        <StackPanel Margin="2">
+                                                                            <TextBlock>
                                                                                     <Run Text="NET Actions:" />
-                                                                                    <Run Text="{Binding Notes}" />
-                                                                                </TextBlock>
-                                                                                <ItemsControl ItemsSource="{Binding BaseStats}">
-                                                                                    <ItemsControl.ItemTemplate>
-                                                                                        <DataTemplate>
-                                                                                            <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnStat}}" Text="{Binding Name}" Width="92" Command="{Binding RollStat}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
-                                                                                        </DataTemplate>
-                                                                                    </ItemsControl.ItemTemplate>
-                                                                                </ItemsControl>
-                                                                            </StackPanel>
-                                                                        </Border>
-                                                                    </Popup>
-                                                                </StackPanel>
+                                                                                    <Run Text="{Binding NetActionCount}" />
+                                                                            </TextBlock>
+                                                                            <ItemsControl ItemsSource="{Binding BaseStats}">
+                                                                                <ItemsControl.ItemTemplate>
+                                                                                    <DataTemplate>
+                                                                                        <cc:ImageButton ImageResource="{Binding Name, Converter={tool:ImageBasedOnStat}}" Text="{Binding Name}" Width="92" Command="{Binding RollStat}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
+                                                                                    </DataTemplate>
+                                                                                </ItemsControl.ItemTemplate>
+                                                                            </ItemsControl>
+                                                                        </StackPanel>
+                                                                    </Border>
+                                                                </Popup>
                                                             </StackPanel>
-                                                            <Separator />
-                                                            <StackPanel>
-                                                                <StackPanel.Resources>
-                                                                    <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
-                                                                        <Setter Property="Width" Value="auto" />
-                                                                    </Style>
-                                                                    <Style TargetType="TextBlock" x:Key="MidNum">
-                                                                        <Setter Property="Width" Value="37" />
-                                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                                        <Setter Property="TextAlignment" Value="Center" />
-                                                                        <Setter Property="FontSize" Value="20" />
-                                                                        <Setter Property="FontFamily" Value="Century Gothic" />
-                                                                    </Style>
-                                                                </StackPanel.Resources>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Image Style="{StaticResource Icon_Heart}" />
-                                                                    <Separator />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="-5" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="-1" />
-                                                                    <TextBlock Text="{Binding CurrentHitPoints, FallbackValue=20}" Style="{StaticResource MidNum}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="1" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="5" />
-                                                                    <Separator />
-                                                                    <TextBlock Text="{Binding WoundState, FallbackValue=Seriously Wounded}" VerticalAlignment="Center" Width="128" />
-                                                                </StackPanel>
+                                                        </StackPanel>
+                                                        <Separator />
+                                                        <StackPanel>
+                                                            <StackPanel.Resources>
+                                                                <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
+                                                                    <Setter Property="Width" Value="auto" />
+                                                                </Style>
+                                                                <Style TargetType="TextBlock" x:Key="MidNum">
+                                                                    <Setter Property="Width" Value="37" />
+                                                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                                                    <Setter Property="TextAlignment" Value="Center" />
+                                                                    <Setter Property="FontSize" Value="20" />
+                                                                    <Setter Property="FontFamily" Value="Century Gothic" />
+                                                                </Style>
+                                                            </StackPanel.Resources>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Style="{StaticResource Icon_Heart}" />
+                                                                <Separator />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="-5" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="-1" />
+                                                                <TextBlock Text="{Binding CurrentHitPoints, FallbackValue=20}" Style="{StaticResource MidNum}" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="1" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="5" />
+                                                                <Separator />
+                                                                <TextBlock Text="{Binding WoundState, FallbackValue=Seriously Wounded}" VerticalAlignment="Center" Width="128" />
                                                             </StackPanel>
                                                         </StackPanel>
                                                     </StackPanel>
@@ -859,60 +862,63 @@
                                             </DataTemplate>
                                             <DataTemplate x:Key="StandardActiveDefenseCard">
                                                 <Border Style="{StaticResource BRDR_TrackerCard}">
-                                                    <StackPanel Margin="2">
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <Image Source="{Binding PortraitFilePath}" Width="64" Height="64" Margin="6 6 4 6">
-                                                                <Image.ContextMenu>
-                                                                    <ContextMenu>
-                                                                        <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
-                                                                        <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
-                                                                        <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
-                                                                    </ContextMenu>
-                                                                </Image.ContextMenu>
-                                                            </Image>
-                                                            <StackPanel>
-                                                                <TextBlock Text="{Binding DisplayName, FallbackValue='Security Operative A'}" Width="134" FontSize="14" Margin="3" />
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Image Style="{StaticResource Icon_Runner}" />
-                                                                    <Separator />
-                                                                    <TextBlock Text="{Binding Notes}" Width="24" />
-                                                                    <Separator />
-                                                                    <Image Style="{StaticResource Icon_Debuff}" />
-                                                                    <Separator />
-                                                                    <TextBlock Text="{Binding PlayerRole}" Width="24" />
-                                                                </StackPanel>
-                                                                <StackPanel>
-                                                                    <cc:ImageToggleButton ImageResource="{StaticResource Icon_Pistol}" Text="Weapons" IsChecked="{Binding WeaponMenuOpen}" />
-                                                                    <Popup IsOpen="{Binding WeaponMenuOpen}">
-                                                                        <uc:WeaponMenu />
-                                                                    </Popup>
-                                                                </StackPanel>
+                                                    <StackPanel Orientation="Horizontal" Margin="2" VerticalAlignment="Center">
+                                                        <Image Source="{Binding PortraitFilePath}" Width="72" Height="72" Margin="2">
+                                                            <Image.ContextMenu>
+                                                                <ContextMenu>
+                                                                    <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
+                                                                    <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
+                                                                    <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
+                                                                </ContextMenu>
+                                                            </Image.ContextMenu>
+                                                        </Image>
+                                                        <Border Background="{Binding IsAlly, Converter={tool:AllyEnemyColor}, FallbackValue=DarkGreen}" CornerRadius="2" BorderThickness="2" BorderBrush="{Binding IsAlly, Converter={tool:AllyEnemyColor}, FallbackValue=DarkGreen}" Width="24" Height="72">
+                                                            <TextBlock Text="{Binding TrackerIndicator, FallbackValue=A}" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="22" FontFamily="Consolas" />
+                                                        </Border>
+                                                        <StackPanel Margin="4 4 0 0">
+                                                            <TextBlock Text="{Binding Name, FallbackValue='Active Defense'}" Width="148" FontSize="16" />
+                                                            <Separator />
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Style="{StaticResource Icon_Runner}" />
+                                                                <Separator />
+                                                                <TextBlock Text="{Binding MoveSpeed}" Width="24" />
+                                                                <Separator />
+                                                                <Image Style="{StaticResource Icon_Debuff}" />
+                                                                <Separator />
+                                                                <TextBlock Text="{Binding BypassDv}" Width="24" />
                                                             </StackPanel>
                                                             <Separator />
                                                             <StackPanel>
-                                                                <StackPanel.Resources>
-                                                                    <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
-                                                                        <Setter Property="Width" Value="auto" />
-                                                                    </Style>
-                                                                    <Style TargetType="TextBlock" x:Key="MidNum">
-                                                                        <Setter Property="Width" Value="37" />
-                                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                                        <Setter Property="TextAlignment" Value="Center" />
-                                                                        <Setter Property="FontSize" Value="20" />
-                                                                        <Setter Property="FontFamily" Value="Century Gothic" />
-                                                                    </Style>
-                                                                </StackPanel.Resources>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Image Style="{StaticResource Icon_Heart}" />
-                                                                    <Separator />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="-5" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="-1" />
-                                                                    <TextBlock Text="{Binding CurrentHitPoints, FallbackValue=20}" Style="{StaticResource MidNum}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="1" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="5" />
-                                                                    <Separator />
-                                                                    <TextBlock Text="{Binding WoundState, FallbackValue=Seriously Wounded}" VerticalAlignment="Center" Width="128" />
-                                                                </StackPanel>
+                                                                <cc:ImageToggleButton ImageResource="{StaticResource Icon_Pistol}" Text="Weapons" IsChecked="{Binding WeaponMenuOpen}" />
+                                                                <Popup IsOpen="{Binding WeaponMenuOpen}">
+                                                                    <uc:WeaponMenu />
+                                                                </Popup>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <Separator />
+                                                        <StackPanel>
+                                                            <StackPanel.Resources>
+                                                                <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
+                                                                    <Setter Property="Width" Value="auto" />
+                                                                </Style>
+                                                                <Style TargetType="TextBlock" x:Key="MidNum">
+                                                                    <Setter Property="Width" Value="37" />
+                                                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                                                    <Setter Property="TextAlignment" Value="Center" />
+                                                                    <Setter Property="FontSize" Value="20" />
+                                                                    <Setter Property="FontFamily" Value="Century Gothic" />
+                                                                </Style>
+                                                            </StackPanel.Resources>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Style="{StaticResource Icon_Heart}" />
+                                                                <Separator />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="-5" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="-1" />
+                                                                <TextBlock Text="{Binding CurrentHitPoints, FallbackValue=20}" Style="{StaticResource MidNum}" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="1" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="5" />
+                                                                <Separator />
+                                                                <TextBlock Text="{Binding WoundState, FallbackValue=Seriously Wounded}" VerticalAlignment="Center" Width="128" />
                                                             </StackPanel>
                                                         </StackPanel>
                                                     </StackPanel>
@@ -920,67 +926,70 @@
                                             </DataTemplate>
                                             <DataTemplate x:Key="StandardEmplacedDefenseCard">
                                                 <Border Style="{StaticResource BRDR_TrackerCard}">
-                                                    <StackPanel Margin="2">
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <Image Source="{Binding PortraitFilePath}" Width="64" Height="64" Margin="6 6 4 6" VerticalAlignment="Top">
-                                                                <Image.ContextMenu>
-                                                                    <ContextMenu>
-                                                                        <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
-                                                                        <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
-                                                                        <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
-                                                                    </ContextMenu>
-                                                                </Image.ContextMenu>
-                                                            </Image>
-                                                            <StackPanel>
-                                                                <TextBlock Text="{Binding DisplayName, FallbackValue='Security Operative A'}" Width="134" FontSize="14" Margin="3" />
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Image Style="{StaticResource Icon_Debuff}" />
-                                                                    <Separator />
-                                                                    <TextBlock Text="{Binding PlayerRole}" Width="24" />
-                                                                </StackPanel>
-                                                                <StackPanel>
-                                                                    <cc:ImageToggleButton ImageResource="{StaticResource Icon_Pistol}" Text="Weapons" IsChecked="{Binding WeaponMenuOpen}" />
-                                                                    <Popup IsOpen="{Binding WeaponMenuOpen}">
-                                                                        <uc:WeaponMenu />
-                                                                    </Popup>
-                                                                </StackPanel>
+                                                    <StackPanel Orientation="Horizontal" Margin="2" VerticalAlignment="Center">
+                                                        <Image Source="{Binding PortraitFilePath}" Width="72" Height="72" Margin="2">
+                                                            <Image.ContextMenu>
+                                                                <ContextMenu>
+                                                                    <MenuItem Header="Make Active" Command="{Binding MakeActive}" />
+                                                                    <MenuItem Header="Toggle Death" Command="{Binding ToggleDeath}" />
+                                                                    <MenuItem Header="Remove" Command="{Binding RemoveFromFirefight}" />
+                                                                </ContextMenu>
+                                                            </Image.ContextMenu>
+                                                        </Image>
+                                                        <Border Background="{Binding IsAlly, Converter={tool:AllyEnemyColor}, FallbackValue=DarkGreen}" CornerRadius="2" BorderThickness="2" BorderBrush="{Binding IsAlly, Converter={tool:AllyEnemyColor}, FallbackValue=DarkGreen}" Width="24" Height="72">
+                                                            <TextBlock Text="{Binding TrackerIndicator, FallbackValue=A}" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="22" FontFamily="Consolas" />
+                                                        </Border>
+                                                        <StackPanel Margin="4 4 0 0">
+                                                            <TextBlock Text="{Binding Name, FallbackValue='Emplaced Defense'}" Width="148" FontSize="16" />
+                                                            <Separator />
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Style="{StaticResource Icon_Debuff}" />
+                                                                <Separator />
+                                                                <TextBlock Text="{Binding BypassDv}" Width="24" />
                                                             </StackPanel>
                                                             <Separator />
                                                             <StackPanel>
-                                                                <StackPanel.Resources>
-                                                                    <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
-                                                                        <Setter Property="Width" Value="auto" />
-                                                                    </Style>
-                                                                    <Style TargetType="TextBlock" x:Key="MidNum">
-                                                                        <Setter Property="Width" Value="37" />
-                                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                                        <Setter Property="TextAlignment" Value="Center" />
-                                                                        <Setter Property="FontSize" Value="20" />
-                                                                        <Setter Property="FontFamily" Value="Century Gothic" />
-                                                                    </Style>
-                                                                </StackPanel.Resources>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Image Style="{StaticResource Icon_Heart}" />
-                                                                    <Separator />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="-5" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="-1" />
-                                                                    <TextBlock Text="{Binding CurrentHitPoints, FallbackValue=20}" Style="{StaticResource MidNum}" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="1" />
-                                                                    <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="5" />
-                                                                    <Separator />
-                                                                    <TextBlock Text="{Binding WoundState, FallbackValue=Seriously Wounded}" VerticalAlignment="Center" Width="128" />
-                                                                </StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Image Style="{StaticResource Icon_Chip}" VerticalAlignment="Top" />
-                                                                    <Separator />
-                                                                    <TextBlock Text="{Binding Notes}" TextWrapping="Wrap" Width="340" FontWeight="Normal" FontSize="10">
-                                                                        <TextBlock.ToolTip>
-                                                                            <ToolTip>
-                                                                                <TextBlock Text="{Binding Notes}" TextWrapping="Wrap" Width="420" FontSize="15" />
-                                                                            </ToolTip>
-                                                                        </TextBlock.ToolTip>
+                                                                <cc:ImageToggleButton ImageResource="{StaticResource Icon_Pistol}" Text="Weapons" IsChecked="{Binding WeaponMenuOpen}" />
+                                                                <Popup IsOpen="{Binding WeaponMenuOpen}">
+                                                                    <uc:WeaponMenu />
+                                                                </Popup>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <Separator />
+                                                        <StackPanel>
+                                                            <StackPanel.Resources>
+                                                                <Style TargetType="cc:ImageButton" BasedOn="{StaticResource ImageButton}">
+                                                                    <Setter Property="Width" Value="auto" />
+                                                                </Style>
+                                                                <Style TargetType="TextBlock" x:Key="MidNum">
+                                                                    <Setter Property="Width" Value="37" />
+                                                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                                                    <Setter Property="TextAlignment" Value="Center" />
+                                                                    <Setter Property="FontSize" Value="20" />
+                                                                    <Setter Property="FontFamily" Value="Century Gothic" />
+                                                                </Style>
+                                                            </StackPanel.Resources>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Style="{StaticResource Icon_Heart}" />
+                                                                <Separator />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_MinusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="-5" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_MinusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="-1" />
+                                                                <TextBlock Text="{Binding CurrentHitPoints, FallbackValue=20}" Style="{StaticResource MidNum}" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_PlusOne}" Command="{Binding AdjustHitPoints}" CommandParameter="1" />
+                                                                <cc:ImageButton ImageResource="{StaticResource Icon_PlusFive}" Command="{Binding AdjustHitPoints}" CommandParameter="5" />
+                                                                <Separator />
+                                                                <TextBlock Text="{Binding WoundState, FallbackValue=Seriously Wounded}" VerticalAlignment="Center" Width="128" />
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Style="{StaticResource Icon_Chip}" VerticalAlignment="Top" />
+                                                                <Separator />
+                                                                <TextBlock Text="{Binding Notes}" TextWrapping="Wrap" Width="340" FontWeight="Normal" FontSize="10">
+                                                                    <TextBlock.ToolTip>
+                                                                        <ToolTip>
+                                                                            <TextBlock Text="{Binding Notes}" TextWrapping="Wrap" Width="420" FontSize="15" />
+                                                                        </ToolTip>
+                                                                    </TextBlock.ToolTip>
                                                                     </TextBlock>
-                                                                </StackPanel>
                                                             </StackPanel>
                                                         </StackPanel>
                                                     </StackPanel>
