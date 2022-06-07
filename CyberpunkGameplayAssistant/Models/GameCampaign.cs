@@ -236,7 +236,7 @@ namespace CyberpunkGameplayAssistant.Models
                     {
                         Combatant newCombatant = selectedCombatant.DeepClone();
                         int existingCombatantCount = 0;
-                        if (AppData.MainModelRef.SettingsView.UseArchetypeGrouping)
+                        if (AppData.MainModelRef.SettingsView.UseArchetypeGrouping && newCombatant.Type == AppData.ComTypeStandard)
                         {
                             existingCombatantCount = AllCombatants.Where(c => c.ComClass == newCombatant.ComClass).Count();
                         }
