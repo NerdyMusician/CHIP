@@ -283,6 +283,7 @@ namespace CyberpunkGameplayAssistant.Models
                     NPC npc = Npcs.First(n => n.Name == selectedRecord.Name);
                     Combatant npcToAdd = AppData.MainModelRef.CombatantView.Combatants.First(c => c.Name == npc.BaseCombatant).DeepClone();
                     npcToAdd.Name = npc.Name;
+                    npcToAdd.DisplayName = npc.Name;
                     npcToAdd.Type = AppData.ComTypeNPC;
                     npcToAdd.IsAlly = npc.IsAlly;
                     npcToAdd.PortraitFilePath = npc.PortraitFilePath;
@@ -293,99 +294,6 @@ namespace CyberpunkGameplayAssistant.Models
                 RaiseAlert($"{AllCombatants.Count - startingCount} NPC(s) added");
             }
         }
-        //public ICommand AddBlackIce => new RelayCommand(DoAddBlackIce);
-        //private void DoAddBlackIce(object param)
-        //{
-        //    MultiObjectSelectionDialog selectionDialog = new(AppData.BlackIcePrograms, AppData.MultiModeEnemies);
-
-        //    if (selectionDialog.ShowDialog() == true)
-        //    {
-        //        int startingCount = AllCombatants.Count;
-        //        foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedCombatants)
-        //        {
-        //            for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
-        //            {
-        //                Combatant newCombatant = selectedCombatant.DeepClone();
-        //                int existingCreatureCount = AllCombatants.Where(c => c.Name == newCombatant.Name).Count();
-        //                if (existingCreatureCount > 25) { break; }
-        //                newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCreatureCount));
-        //                newCombatant.Initiative = 50; // Top of the order force
-        //                newCombatant.UpdateWoundState();
-        //                AllCombatants.Add(newCombatant);
-        //            }
-        //        }
-        //        SortCombatantsToLists();
-        //        RaiseAlert($"{AllCombatants.Count - startingCount} Black ICE(s) added");
-        //    }
-        //}
-        //public ICommand AddDemons => new RelayCommand(DoAddDemons);
-        //private void DoAddDemons(object param)
-        //{
-        //    MultiObjectSelectionDialog selectionDialog = new(AppData.Demons, AppData.MultiModeEnemies);
-
-        //    if (selectionDialog.ShowDialog() == true)
-        //    {
-        //        foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedCombatants)
-        //        {
-        //            for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
-        //            {
-        //                Combatant newCombatant = selectedCombatant.DeepClone();
-        //                int existingCreatureCount = AllCombatants.Where(c => c.Name == newCombatant.Name).Count();
-        //                if (existingCreatureCount > 25) { break; }
-        //                newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCreatureCount));
-        //                newCombatant.Initiative = 70; // Top(est) of the order force
-        //                newCombatant.UpdateWoundState();
-        //                AllCombatants.Add(newCombatant);
-        //            }
-        //        }
-        //        SortCombatantsToLists();
-        //    }
-        //}
-        //public ICommand AddActiveDefenses => new RelayCommand(DoAddActiveDefenses);
-        //private void DoAddActiveDefenses(object param)
-        //{
-        //    MultiObjectSelectionDialog selectionDialog = new(AppData.ActiveDefenses, AppData.MultiModeEnemies);
-
-        //    if (selectionDialog.ShowDialog() == true)
-        //    {
-        //        foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedCombatants)
-        //        {
-        //            for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
-        //            {
-        //                Combatant newCombatant = selectedCombatant.DeepClone();
-        //                int existingCreatureCount = AllCombatants.Where(c => c.Name == newCombatant.Name).Count();
-        //                if (existingCreatureCount > 25) { break; }
-        //                newCombatant.ReadyUpActiveDefense(existingCreatureCount);
-        //                AllCombatants.Add(newCombatant);
-        //            }
-        //        }
-        //        SortCombatantsToLists();
-        //    }
-        //}
-        //public ICommand AddEmplacedDefenses => new RelayCommand(DoAddEmplacedDefenses);
-        //private void DoAddEmplacedDefenses(object param)
-        //{
-        //    MultiObjectSelectionDialog selectionDialog = new(AppData.EmplacedDefenses, AppData.MultiModeEnemies);
-
-        //    if (selectionDialog.ShowDialog() == true)
-        //    {
-        //        foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedCombatants)
-        //        {
-        //            for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
-        //            {
-        //                Combatant newCombatant = selectedCombatant.DeepClone();
-        //                int existingCreatureCount = AllCombatants.Where(c => c.Name == newCombatant.Name).Count();
-        //                if (existingCreatureCount > 25) { break; }
-        //                newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCreatureCount));
-        //                newCombatant.Initiative = 60; // Top(er) of the order force
-        //                newCombatant.ReloadAllWeapons();
-        //                newCombatant.UpdateWoundState();
-        //                AllCombatants.Add(newCombatant);
-        //            }
-        //        }
-        //        SortCombatantsToLists();
-        //    }
-        //}
         public ICommand ChangeStartTime => new RelayCommand(DoChangeStartTime);
         private void DoChangeStartTime(object param)
         {

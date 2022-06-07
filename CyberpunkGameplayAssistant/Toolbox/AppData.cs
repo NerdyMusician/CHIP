@@ -59,6 +59,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         // Static Initiatives
         public const int InitiativeDemon = 70;
+        public const int InitativeActiveDefense = 65;
         public const int InitiativeEmplacedDefense = 60;
         public const int InitiativeBlackIce = 50;
 

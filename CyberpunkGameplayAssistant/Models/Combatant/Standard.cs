@@ -668,6 +668,9 @@ namespace CyberpunkGameplayAssistant.Models
                 case AppData.ComTypeDemon:
                     Initiative = AppData.InitiativeDemon;
                     break;
+                case AppData.ComTypeActiveDefense:
+                    Initiative = AppData.InitativeActiveDefense;
+                    break;
                 case AppData.ComTypeEmplacedDefense:
                     Initiative = AppData.InitiativeEmplacedDefense;
                     break;
