@@ -143,6 +143,7 @@ namespace CyberpunkGameplayAssistant.Windows
         {
             if (!AppData.IsLoaded) { return; }
             if (AppData.SkipAudio) { return; }
+            if (AppData.MainModelRef.SettingsView.MuteAudio) { return; }
             SfxPlayer.Position = TimeSpan.FromMilliseconds(1);
             SfxPlayer.Source = new Uri(filepath, UriKind.Absolute);
             SfxPlayer.Volume = AppData.AudioVolume[filepath];

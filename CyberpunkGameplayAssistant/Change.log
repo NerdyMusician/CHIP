@@ -8,6 +8,7 @@
 - CHANGE: Removal of Add Demon/Black ICE/Defenses buttons for campaigns, all found under combatants
 - CHANGE: Active Defenses now have static initiative (I misunderstood initial rules)
 - CHANGE: Updated UI for combatant cards
+- CHANGE: Data maintenance methods on startup attempt to correct broken image paths
 
 CHIP 1.01.00
 - NEW: Able to manually set start/current campaign datetimes with text field

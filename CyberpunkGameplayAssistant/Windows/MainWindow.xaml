@@ -1575,7 +1575,8 @@
                                 <Separator />
                                 <StackPanel Style="{StaticResource StandardCombatantSection}">
                                     <DockPanel>
-                                        <TextBlock Text="Skills (by Level)" VerticalAlignment="Bottom" />
+                                        <TextBlock Text="Skills (by Level)" VerticalAlignment="Bottom" Visibility="{Binding SettingsView.SkillsByBase, Converter={tool:CollapsedIfTrue}}" />
+                                        <TextBlock Text="Skills (by Base)" VerticalAlignment="Bottom" Visibility="{Binding SettingsView.SkillsByBase, Converter={tool:CollapsedIfFalse}}" />
                                         <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" HorizontalAlignment="Right" Command="{Binding CombatantView.ActiveCombatant.AddSkills}" />
                                     </DockPanel>
                                     <Rectangle />
@@ -1590,7 +1591,7 @@
                                                 <DataTemplate>
                                                     <Border Style="{StaticResource SegmentTile}" HorizontalAlignment="Left">
                                                         <StackPanel Orientation="Horizontal" Margin="4 2">
-                                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Width="140" />
                                                             <Separator />
                                                             <TextBox Text="{Binding Level}" Width="32" GotKeyboardFocus="HighlightText" />
                                                             <Separator />
@@ -1788,9 +1789,15 @@
                                     <TextBlock Text=" Debug Mode" />
                                 </StackPanel>
                                 <TextBlock Style="{StaticResource SettingDescription}" Text="Shows additional output in the gameplay log when taking actions with combatants to help users verify that stats and modifiers are being applied appropriately." />
-                                
-                                
-                                
+
+                                <Separator />
+
+                                <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                    <CheckBox IsChecked="{Binding SettingsView.MuteAudio}" />
+                                    <TextBlock Text=" Mute Audio" />
+                                </StackPanel>
+                                <TextBlock Style="{StaticResource SettingDescription}" Text="Mutes all sound effects." />
+
                             </StackPanel>
                         </TabItem>
                         <TabItem Header="Gameplay">
@@ -1803,7 +1810,19 @@
                                     <TextBlock Text=" Use Archetype Grouping" />
                                 </StackPanel>
                                 <TextBlock Style="{StaticResource SettingDescription}" Text="Tracker indicators (A, B, C, etc) are incremented based on the archetype of a standard combatant (Light Ganger, Medium Corpo, etc) rather than the name.&#10;Changing this setting will only affect future added combatants in combat, it will not change indicators of already active combatants." />
+                                
+                                <Separator />
 
+                                <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                    <CheckBox IsChecked="{Binding SettingsView.SkillsByBase}" />
+                                    <TextBlock Text=" Add Skills By Base" />
+                                </StackPanel>
+                                <TextBlock Style="{StaticResource SettingDescription}" Text="Standard combatants will have their skills set by Base (STAT + Level) instead of the default of setting the level. Changing this will only affect how the skills are calculated when being added to the initiative tracker, it will not affect set values on existing combatant data." />
+
+                                <Separator />
+                                
+                                
+                                
                             </StackPanel>
                         </TabItem>
                     </TabControl>

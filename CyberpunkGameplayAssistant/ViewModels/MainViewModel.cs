@@ -19,6 +19,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
             UserAlerts = new();
             HelperMethods.CreateDirectories(AppData.Directories);
             LoadData();
+            MaintainData();
             UserAlertTimer = new Timer(TimeSpan.FromSeconds(1).TotalMilliseconds);
             UserAlertTimer.Elapsed += UserAlertTimer_Elapsed;
             UserAlertTimer.Enabled = true;
@@ -210,6 +211,70 @@ namespace CyberpunkGameplayAssistant.ViewModels
             catch
             {
                 SettingsView = new();
+            }
+        }
+        private void MaintainData()
+        {
+            MaintainImagePaths();
+        }
+        private void MaintainImagePaths()
+        {
+            foreach (GameCampaign campaign in CampaignView.Campaigns)
+            {
+                foreach (Combatant combatant in campaign.AllCombatants)
+                {
+                    if (combatant.Type == AppData.ComTypePlayer)
+                    {
+                        if (CheckAndUpdateFilePath(combatant.PortraitFilePath, AppData.PlayerImageDirectory, out string filepath))
+                        {
+                            combatant.PortraitFilePath = filepath;
+                        }
+                        continue;
+                    }
+                    if (combatant.Type == AppData.ComTypeNPC)
+                    {
+                        if (CheckAndUpdateFilePath(combatant.PortraitFilePath, AppData.NpcImageDirectory, out string filepath2))
+                        {
+                            combatant.PortraitFilePath = filepath2;
+                        }
+                        continue;
+                    }
+                    if (CheckAndUpdateFilePath(combatant.PortraitFilePath, AppData.CombatantImageDirectory, out string filepath3))
+                    {
+                        combatant.PortraitFilePath = filepath3;
+                    }
+                }
+                foreach (Combatant player in campaign.Players)
+                {
+                    if (CheckAndUpdateFilePath(player.PortraitFilePath, AppData.PlayerImageDirectory, out string filepath))
+                    {
+                        player.PortraitFilePath = filepath;
+                    }
+                }
+                foreach (NPC npc in campaign.Npcs)
+                {
+                    if (CheckAndUpdateFilePath(npc.PortraitFilePath, AppData.NpcImageDirectory, out string filepath))
+                    {
+                        npc.PortraitFilePath = filepath;
+                    }
+                }
+            }
+            foreach (Combatant combatant in CombatantView.Combatants)
+            {
+                if (CheckAndUpdateFilePath(combatant.PortraitFilePath, AppData.CombatantImageDirectory, out string filepath3))
+                {
+                    combatant.PortraitFilePath = filepath3;
+                }
+            }
+        }
+        private bool CheckAndUpdateFilePath(string originalFilePath, string directory, out string updatedFilePath)
+        {
+            if (File.Exists(originalFilePath)) { updatedFilePath = string.Empty; return false; }
+            else
+            {
+                updatedFilePath = directory += Path.GetFileName(originalFilePath);
+                if (!File.Exists(updatedFilePath)) { updatedFilePath = AppData.PortraitDefault; }
+                return true;
             }
         }
         private void UserAlertTimer_Elapsed(object? sender, ElapsedEventArgs e)

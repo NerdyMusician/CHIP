@@ -655,12 +655,26 @@ namespace CyberpunkGameplayAssistant.Models
             UpdateWoundState();
             UpdateGearDescriptions();
             UpdateCyberwareDescriptions();
+            if (AppData.MainModelRef.SettingsView.SkillsByBase) { RecalculateSkillsByBase(); }
             AddRemainingSkills();
             OrganizeSkillsToCategories();
             PrepareWeapons();
             SetStandardActions();
             if (CanNetrun) { SetNetActions(); }
             GetCriticalInjuryDescriptions();
+        }
+        private void RecalculateSkillsByBase()
+        {
+            List<Skill> skillsByLevel = Skills.DeepClone().ToList();
+            Skills.Clear();
+            foreach (Skill skill in skillsByLevel)
+            {
+                int @base = skill.Level;
+                int stat = CalculatedStats.GetValue(AppData.SkillLinks.GetStat(skill.Name));
+                int level = @base - stat;
+                if (level < 0) { level = 0; }
+                Skills.Add(new() { Name = skill.Name, Level = level });
+            }
         }
         public void InitializeCustomCombatant()
         {
