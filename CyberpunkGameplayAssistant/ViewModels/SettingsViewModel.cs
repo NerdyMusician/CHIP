@@ -1,6 +1,7 @@
 ﻿using CyberpunkGameplayAssistant.Models;
 using CyberpunkGameplayAssistant.Toolbox;
 using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
+using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.ViewModels
 {
@@ -46,6 +47,19 @@ namespace CyberpunkGameplayAssistant.ViewModels
         {
             get => _SkillsByBase;
             set => SetAndNotify(ref _SkillsByBase, value);
+        }
+
+        // Commands
+        public ICommand OverwriteSkillsBy => new RelayCommand(DoOverwriteSkillsBy);
+        private void DoOverwriteSkillsBy(object param)
+        {
+            string setTo = SkillsByBase ? "Skills by Base" : "Skills by Level";
+            if (!HelperMethods.AskYesNoQuestion($"Overwrite all combatants to use {setTo}?")) { return; }
+            foreach (Combatant combatant in AppData.MainModelRef.CombatantView.Combatants)
+            {
+                combatant.SetSkillsByBase = SkillsByBase;
+            }
+            RaiseAlert($"Combatants SkillsBy set to {setTo}");
         }
 
         // Public Methods

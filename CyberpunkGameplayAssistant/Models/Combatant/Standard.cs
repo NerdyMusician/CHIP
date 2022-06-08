@@ -426,6 +426,12 @@ namespace CyberpunkGameplayAssistant.Models
             get => _ShowBlackIceType;
             set => SetAndNotify(ref _ShowBlackIceType, value);
         }
+        private bool _SetSkillsByBase;
+        public bool SetSkillsByBase
+        {
+            get => _SetSkillsByBase;
+            set => SetAndNotify(ref _SetSkillsByBase, value);
+        }
 
         // Dropdown Sources
         public List<string> ShieldTypes
@@ -614,7 +620,7 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand AddBuilderCyberware => new RelayCommand(DoAddBuilderCyberware);
         private void DoAddBuilderCyberware(object param)
         {
-            MultiObjectSelectionDialog selectionDialog = new(AppData.MasterCyberwareList.ToNamedRecordList(), "Cyberware");
+            MultiObjectSelectionDialog selectionDialog = new(AppData.MasterCyberwareList.ToNamedRecordList().OrderBy(c => c.Name).ToList(), "Cyberware");
 
             if (selectionDialog.ShowDialog() == true)
             {
@@ -647,7 +653,12 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand SortSkills => new RelayCommand(DoSortSkills);
         private void DoSortSkills(object param)
         {
-            Skills = (AppData.MainModelRef.SettingsView.SkillsByBase) ? new(Skills.OrderBy(s => s.Name)) : new(Skills.OrderBy(s => s.Level).ThenBy(s => s.Name));
+            Skills = (SetSkillsByBase) ? new(Skills.OrderBy(s => s.Name)) : new(Skills.OrderBy(s => s.Level).ThenBy(s => s.Name));
+        }
+        public ICommand ToggleSetSkillsBy => new RelayCommand(DoToggleSetSkillsBy);
+        private void DoToggleSetSkillsBy(object param)
+        {
+            SetSkillsByBase = !SetSkillsByBase;
         }
 
         // Public Methods
@@ -660,7 +671,7 @@ namespace CyberpunkGameplayAssistant.Models
             UpdateWoundState();
             UpdateGearDescriptions();
             UpdateCyberwareDescriptions();
-            if (AppData.MainModelRef.SettingsView.SkillsByBase) { RecalculateSkillsByBase(); }
+            if (SetSkillsByBase) { RecalculateSkillsByBase(); }
             AddRemainingSkills();
             OrganizeSkillsToCategories();
             PrepareWeapons();
@@ -690,6 +701,7 @@ namespace CyberpunkGameplayAssistant.Models
                 Name = "New Combatant";
                 ArmorType = AppData.ArmorTypeNone;
                 ShowWeapons = true;
+                SetSkillsByBase = AppData.MainModelRef.SettingsView.SkillsByBase;
                 BaseStats.Add(new(AppData.StatIntelligence, 0));
                 BaseStats.Add(new(AppData.StatReflexes, 0));
                 BaseStats.Add(new(AppData.StatDexterity, 0));

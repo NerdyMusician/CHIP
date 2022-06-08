@@ -1510,8 +1510,10 @@
                                 <Separator />
                                 <StackPanel Style="{StaticResource StandardCombatantSection}">
                                     <DockPanel>
-                                        <TextBlock Text="Skills (by Level)" VerticalAlignment="Bottom" Visibility="{Binding SettingsView.SkillsByBase, Converter={tool:CollapsedIfTrue}}" />
-                                        <TextBlock Text="Skills (by Base)" VerticalAlignment="Bottom" Visibility="{Binding SettingsView.SkillsByBase, Converter={tool:CollapsedIfFalse}}" />
+                                        <TextBlock Text="Skills (by Level)" VerticalAlignment="Bottom" Visibility="{Binding CombatantView.ActiveCombatant.SetSkillsByBase, Converter={tool:CollapsedIfTrue}}" />
+                                        <TextBlock Text="Skills (by Base)" VerticalAlignment="Bottom" Visibility="{Binding CombatantView.ActiveCombatant.SetSkillsByBase, Converter={tool:CollapsedIfFalse}}" />
+                                        <Separator />
+                                        <cc:IconButton ImageResource="{StaticResource Icon_Transfer}" Command="{Binding CombatantView.ActiveCombatant.ToggleSetSkillsBy}" />
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                             <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CombatantView.ActiveCombatant.AddSkills}" />
                                             <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CombatantView.ActiveCombatant.SortSkills}" />
@@ -1762,8 +1764,10 @@
                                 <StackPanel Style="{StaticResource SPNL_FieldRow}">
                                     <CheckBox IsChecked="{Binding SettingsView.SkillsByBase}" />
                                     <TextBlock Text=" Add Skills By Base" />
+                                    <Separator />
+                                    <cc:MiniButton ImageResource="{StaticResource Icon_Sync}" Command="{Binding SettingsView.OverwriteSkillsBy}" />
                                 </StackPanel>
-                                <TextBlock Style="{StaticResource SettingDescription}" Text="Standard combatants will have their skills set by Base (STAT + Level) instead of the default of setting the level. Changing this will only affect how the skills are calculated when being added to the initiative tracker, it will not affect set values on existing combatant data." />
+                                <TextBlock Style="{StaticResource SettingDescription}" Text="New standard combatants will have their skills set by Base (STAT + Level) instead of the default of setting the level. Changing this will only affect future added combatants. To set existing combatants to use the current setting, click the sync button above." />
 
                                 <Separator />
                                 
