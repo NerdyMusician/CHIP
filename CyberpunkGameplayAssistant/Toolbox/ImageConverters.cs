@@ -6,10 +6,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
 {
     public class ImageBasedOnMessageType : ConverterMarkupExtension<ImageBasedOnMessageType>
     {
-        public ImageBasedOnMessageType()
-        {
-
-        }
+        public ImageBasedOnMessageType() { }
 
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -24,6 +21,22 @@ namespace CyberpunkGameplayAssistant.Toolbox
                 AppData.MessageStandardAction => "Icon_Action",
                 AppData.MessageStatCheck => "Icon_Hex_A",
                 AppData.MessageWeaponAttack => "Icon_Reticle",
+                _ => "Icon_Rpg_Note"
+            };
+            return AppData.Framework.FindResource(iconName) as Style;
+        }
+    }
+    public class ImageBasedOnNoteType : ConverterMarkupExtension<ImageBasedOnNoteType>
+    {
+        public ImageBasedOnNoteType() { }
+
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string iconName = value switch
+            {
+                AppData.NoteFaction => "Icon_Horde",
+                AppData.NoteLocation => "Icon_Map",
+                AppData.NoteNPC => "Icon_Smile",
                 _ => "Icon_Rpg_Note"
             };
             return AppData.Framework.FindResource(iconName) as Style;

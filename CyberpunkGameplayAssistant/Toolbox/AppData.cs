@@ -88,6 +88,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         // MultiObject Select Modes
         public const string MultiModeEnemies = "Enemies";
         public const string MultiModeCriticalInjuries = "Critical Injuries";
+        public const string MultiModeAssociatedNotes = "Associated Notes";
 
         // Gameplay Message Types
         public const string MessageOther = "Other";
@@ -101,6 +102,12 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string MessageStandardAction = "Standard Action";
         public const string MessageStatCheck = "Stat Check";
         public const string MessageWeaponAttack = "Weapon Attack";
+
+        // Game Note Types
+        public const string NoteFaction = "Faction";
+        public const string NoteLocation = "Location";
+        public const string NoteNPC = "NPC";
+        public const string NoteOther = "Other";
 
         // Price Categories
         public const int PriceCheap = 10;

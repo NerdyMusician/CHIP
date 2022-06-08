@@ -152,6 +152,7 @@
     <None Remove="Resources\Icons\hitdice.png" />
     <None Remove="Resources\Icons\holy.png" />
     <None Remove="Resources\Icons\home.png" />
+    <None Remove="Resources\Icons\horde.png" />
     <None Remove="Resources\Icons\illusion.png" />
     <None Remove="Resources\Icons\key_copper.png" />
     <None Remove="Resources\Icons\key_gold.png" />
@@ -472,6 +473,7 @@
     <Resource Include="Resources\Icons\hitdice.png" />
     <Resource Include="Resources\Icons\holy.png" />
     <Resource Include="Resources\Icons\home.png" />
+    <Resource Include="Resources\Icons\horde.png" />
     <Resource Include="Resources\Icons\illusion.png" />
     <Resource Include="Resources\Icons\key_copper.png" />
     <Resource Include="Resources\Icons\key_gold.png" />

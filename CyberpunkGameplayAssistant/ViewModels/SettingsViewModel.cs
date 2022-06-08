@@ -14,7 +14,6 @@ namespace CyberpunkGameplayAssistant.ViewModels
         }
 
         // Properties
-
         // Application Settings
         private bool _DebugMode;
         public bool DebugMode

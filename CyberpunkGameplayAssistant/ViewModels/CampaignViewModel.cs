@@ -71,6 +71,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
                 gameCampaign.ActiveNpc = null;
                 gameCampaign.ActivePlayer = null;
                 gameCampaign.ActiveNetArchitecture = null;
+                gameCampaign.ActiveNote = null;
                 gameCampaign.UpdateActiveCombatant();
             }
         }

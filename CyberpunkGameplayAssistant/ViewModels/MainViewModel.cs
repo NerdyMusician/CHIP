@@ -137,6 +137,19 @@ namespace CyberpunkGameplayAssistant.ViewModels
                 };
             } 
         }
+        public List<string> NoteTypes
+        {
+            get
+            {
+                return new()
+                {
+                    AppData.NoteFaction,
+                    AppData.NoteLocation,
+                    AppData.NoteNPC,
+                    AppData.NoteOther,
+                };
+            }
+        }
 
         // Commands
         public ICommand ProcessKeyboardShortcut => new RelayCommand(DoProcessKeyboardShortcut);

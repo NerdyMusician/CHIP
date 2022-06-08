@@ -71,6 +71,18 @@ namespace CyberpunkGameplayAssistant.Models
             get => _DeadCombatants;
             set => SetAndNotify(ref _DeadCombatants, value);
         }
+        private ObservableCollection<GameNote> _GameNotes;
+        public ObservableCollection<GameNote> GameNotes
+        {
+            get => _GameNotes;
+            set => SetAndNotify(ref _GameNotes, value);
+        }
+        private GameNote _ActiveNote;
+        public GameNote ActiveNote
+        {
+            get => _ActiveNote;
+            set => SetAndNotify(ref _ActiveNote, value);
+        }
         private string _StartDate;
         public string StartDate
         {
@@ -572,6 +584,33 @@ namespace CyberpunkGameplayAssistant.Models
             if (!isValidDate) { RaiseError("Invalid entry for DateTime"); return; }
             SetCurrentDateValues(result);
         }
+        public ICommand AddNote => new RelayCommand(DoAddNote);
+        private void DoAddNote(object param)
+        {
+            GameNote newNote = new();
+            newNote.SetNewNoteValues();
+            GameNotes.Add(newNote);
+        }
+        public ICommand SortNotes => new RelayCommand(DoSortNotes);
+        private void DoSortNotes(object param)
+        {
+            GameNotes = new(GameNotes.OrderBy(n => n.Type).ThenBy(n => n.Name));
+        }
+        public ICommand SyncNotes => new RelayCommand(DoSyncNotes);
+        private void DoSyncNotes(object param)
+        {
+            foreach (GameNote note in GameNotes)
+            {
+                foreach (GameNote associatedNote in note.AssociatedNotes)
+                {
+                    GameNote matchedNote = GameNotes.First(n => n.Id == associatedNote.Id);
+                    associatedNote.Name = matchedNote.Name;
+                    associatedNote.Type = matchedNote.Type;
+                    associatedNote.Content = matchedNote.Content;
+                }
+            }
+            RaiseAlert("Notes and associations synced");
+        }
 
         // Public Methods
         public void UpdateActiveCombatant()
@@ -617,6 +656,7 @@ namespace CyberpunkGameplayAssistant.Models
             Players = new();
             Npcs = new();
             NetArchitectures = new();
+            GameNotes = new();
         }
         private void SortCombatantsToLists()
         {
