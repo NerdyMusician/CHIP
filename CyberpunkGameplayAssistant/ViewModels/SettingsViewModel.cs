@@ -27,6 +27,12 @@ namespace CyberpunkGameplayAssistant.ViewModels
             get => _MuteAudio;
             set => SetAndNotify(ref _MuteAudio, value);
         }
+        private bool _ExitsaveEnabled;
+        public bool ExitsaveEnabled
+        {
+            get => _ExitsaveEnabled;
+            set => SetAndNotify(ref _ExitsaveEnabled, value);
+        }
 
         // Gameplay Settings
         private bool _UseArchetypeGrouping;

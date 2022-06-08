@@ -45,6 +45,11 @@ namespace CyberpunkGameplayAssistant.Windows
             {
                 if ((DataContext as MainViewModel) == null) { return; } // Startup crash
                 (DataContext as MainViewModel).SettingsView.SaveSettings();
+                if ((DataContext as MainViewModel).SettingsView.ExitsaveEnabled)
+                {
+                    (DataContext as MainViewModel).CampaignView.DoSaveCampaigns(false);
+                    (DataContext as MainViewModel).CombatantView.DoSaveCombatants(false);
+                }
                 Application.Current.Shutdown();
             }
             catch (Exception ex)

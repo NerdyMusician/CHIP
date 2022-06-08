@@ -644,6 +644,11 @@ namespace CyberpunkGameplayAssistant.Models
             SetHitPoints(false);
             TotalStatPoints = BaseStats.GetTotal();
         }
+        public ICommand SortSkills => new RelayCommand(DoSortSkills);
+        private void DoSortSkills(object param)
+        {
+            Skills = (AppData.MainModelRef.SettingsView.SkillsByBase) ? new(Skills.OrderBy(s => s.Name)) : new(Skills.OrderBy(s => s.Level).ThenBy(s => s.Name));
+        }
 
         // Public Methods
         public void InitializeLoadedCombatant()
@@ -716,6 +721,7 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 Name = "New Black ICE";
                 SetNonStandardFields();
+                ShowBlackIceType = true;
                 BaseStats.Add(new(AppData.NetPerception, 0));
                 BaseStats.Add(new(AppData.NetSpeed, 0));
                 BaseStats.Add(new(AppData.NetAttack, 0));

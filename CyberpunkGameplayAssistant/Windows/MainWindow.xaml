@@ -1512,7 +1512,10 @@
                                     <DockPanel>
                                         <TextBlock Text="Skills (by Level)" VerticalAlignment="Bottom" Visibility="{Binding SettingsView.SkillsByBase, Converter={tool:CollapsedIfTrue}}" />
                                         <TextBlock Text="Skills (by Base)" VerticalAlignment="Bottom" Visibility="{Binding SettingsView.SkillsByBase, Converter={tool:CollapsedIfFalse}}" />
-                                        <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" HorizontalAlignment="Right" Command="{Binding CombatantView.ActiveCombatant.AddSkills}" />
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CombatantView.ActiveCombatant.AddSkills}" />
+                                            <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CombatantView.ActiveCombatant.SortSkills}" />
+                                        </StackPanel>
                                     </DockPanel>
                                     <Rectangle />
                                     <ScrollViewer Height="240">
@@ -1732,6 +1735,14 @@
                                     <TextBlock Text=" Mute Audio" />
                                 </StackPanel>
                                 <TextBlock Style="{StaticResource SettingDescription}" Text="Mutes all sound effects." />
+
+                                <Separator />
+
+                                <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                    <CheckBox IsChecked="{Binding SettingsView.ExitsaveEnabled}" />
+                                    <TextBlock Text=" Enable Exitsave" />
+                                </StackPanel>
+                                <TextBlock Style="{StaticResource SettingDescription}" Text="When the application is closed by the user, it saves the Campaigns and Combatants data." />
 
                             </StackPanel>
                         </TabItem>
