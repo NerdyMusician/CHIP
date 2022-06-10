@@ -143,6 +143,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
             {
                 return new()
                 {
+                    AppData.NoteEncounter,
                     AppData.NoteFaction,
                     AppData.NoteLocation,
                     AppData.NoteNPC,

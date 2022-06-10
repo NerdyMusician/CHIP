@@ -34,6 +34,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             string iconName = value switch
             {
+                AppData.NoteEncounter => "Icon_Marker",
                 AppData.NoteFaction => "Icon_Horde",
                 AppData.NoteLocation => "Icon_Map",
                 AppData.NoteNPC => "Icon_Smile",
@@ -159,6 +160,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
                 AppData.ComClassLightPolice => "Icon_Badge",
                 AppData.ComClassMediumPolice => "Icon_Badge",
                 AppData.ComClassHeavyPolice => "Icon_Badge",
+                AppData.ComClassCivilian => "Icon_Person",
                 _ => "Icon_Fist"
             };
             return AppData.Framework.FindResource(iconName) as Style;

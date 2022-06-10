@@ -381,6 +381,12 @@
 
 
     <!-- Unsorted -->
+    <Style TargetType="Image" x:Key="Icon_Person" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/person.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_Marker" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/marker.png" />
+    </Style>
     <Style TargetType="Image" x:Key="Icon_Horde" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/horde.png" />
     </Style>

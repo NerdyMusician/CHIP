@@ -166,6 +166,7 @@
     <None Remove="Resources\Icons\magicitem.png" />
     <None Remove="Resources\Icons\magicweapon.png" />
     <None Remove="Resources\Icons\map.png" />
+    <None Remove="Resources\Icons\marker.png" />
     <None Remove="Resources\Icons\matchround.png" />
     <None Remove="Resources\Icons\medical.png" />
     <None Remove="Resources\Icons\miniature.png" />
@@ -487,6 +488,7 @@
     <Resource Include="Resources\Icons\magicitem.png" />
     <Resource Include="Resources\Icons\magicweapon.png" />
     <Resource Include="Resources\Icons\map.png" />
+    <Resource Include="Resources\Icons\marker.png" />
     <Resource Include="Resources\Icons\matchround.png" />
     <Resource Include="Resources\Icons\medical.png" />
     <Resource Include="Resources\Icons\miniature.png" />
