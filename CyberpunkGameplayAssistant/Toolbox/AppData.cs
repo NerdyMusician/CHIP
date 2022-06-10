@@ -608,7 +608,8 @@ namespace CyberpunkGameplayAssistant.Toolbox
             new(WeaponTypeSniperRifle, 4, 8, 12),
             new(WeaponTypeGrenadeLauncher, 2, 4, 6),
             new(WeaponTypePopupGrenadeLauncher, 1, 1, 1),
-            new(WeaponTypeRocketLauncher, 1, 2, 3)
+            new(WeaponTypeRocketLauncher, 1, 2, 3),
+            new(WeaponTypeBowsAndCrossbows, 1, 1, 1),
         };
         public static readonly List<RangedWeaponAmmoCompatibility> RangedWeaponAmmoCompatibilities = new()
         {
