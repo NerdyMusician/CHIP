@@ -71,6 +71,18 @@ namespace CyberpunkGameplayAssistant.Models
             get => _DeadCombatants;
             set => SetAndNotify(ref _DeadCombatants, value);
         }
+        private ObservableCollection<GameNote> _GameNotes;
+        public ObservableCollection<GameNote> GameNotes
+        {
+            get => _GameNotes;
+            set => SetAndNotify(ref _GameNotes, value);
+        }
+        private GameNote _ActiveNote;
+        public GameNote ActiveNote
+        {
+            get => _ActiveNote;
+            set => SetAndNotify(ref _ActiveNote, value);
+        }
         private string _StartDate;
         public string StartDate
         {
@@ -197,8 +209,31 @@ namespace CyberpunkGameplayAssistant.Models
             get => _ManualStartTime;
             set => SetAndNotify(ref _ManualStartTime, value);
         }
+        private string _QuickNotes;
+        public string QuickNotes
+        {
+            get => _QuickNotes;
+            set => SetAndNotify(ref _QuickNotes, value);
+        }
 
         // Commands
+        public ICommand DuplicateCampaign => new RelayCommand(DoDuplicateCampaign);
+        private void DoDuplicateCampaign(object param)
+        {
+            GameCampaign duplicatedCampaign = this.DeepClone();
+            duplicatedCampaign.Name += " (Copy)";
+            AppData.MainModelRef.CampaignView.Campaigns.Add(duplicatedCampaign);
+            AppData.MainModelRef.CampaignView.ActiveCampaign = duplicatedCampaign;
+            RaiseAlert($"Campaign \"{Name}\" duplicated");
+        }
+        public ICommand DeleteCampaign => new RelayCommand(DoDeleteCampaign);
+        private void DoDeleteCampaign(object param)
+        {
+            if (!HelperMethods.AskYesNoQuestion($"Delete campaign \"{Name}\"?")) { return; }
+            AppData.MainModelRef.CampaignView.Campaigns.Remove(this);
+            AppData.MainModelRef.CampaignView.ActiveCampaign = null;
+            RaiseAlert($"Campaign \"{Name}\" deleted");
+        }
         public ICommand AddCombatants => new RelayCommand(DoAddCombatants);
         private void DoAddCombatants(object param)
         {
@@ -212,9 +247,17 @@ namespace CyberpunkGameplayAssistant.Models
                     for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
                     {
                         Combatant newCombatant = selectedCombatant.DeepClone();
-                        int existingCreatureCount = AllCombatants.Where(c => c.Name == newCombatant.Name).Count();
-                        if (existingCreatureCount > 25) { break; }
-                        newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCreatureCount));
+                        int existingCombatantCount = 0;
+                        if (AppData.MainModelRef.SettingsView.UseArchetypeGrouping && newCombatant.Type == AppData.ComTypeStandard)
+                        {
+                            existingCombatantCount = AllCombatants.Where(c => c.ComClass == newCombatant.ComClass).Count();
+                        }
+                        else
+                        {
+                            existingCombatantCount = AllCombatants.Where(c => c.Name == newCombatant.Name).Count();
+                        }
+                        if (existingCombatantCount > 25) { break; }
+                        newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCombatantCount));
                         newCombatant.InitializeLoadedCombatant();
                         AllCombatants.Add(newCombatant);
                     }
@@ -234,7 +277,7 @@ namespace CyberpunkGameplayAssistant.Models
                 {
                     Combatant playerToAdd = Players.First(c => c.Name == selectedRecord.Name).DeepClone();
                     if (AllCombatants.FirstOrDefault(p => p.Name == playerToAdd.Name) != null) { continue; }
-                    playerToAdd.Type = AppData.Player;
+                    playerToAdd.Type = AppData.ComTypePlayer;
                     AllCombatants.Add(playerToAdd);
                 }
                 SortCombatantsToLists();
@@ -251,8 +294,9 @@ namespace CyberpunkGameplayAssistant.Models
                 {
                     NPC npc = Npcs.First(n => n.Name == selectedRecord.Name);
                     Combatant npcToAdd = AppData.MainModelRef.CombatantView.Combatants.First(c => c.Name == npc.BaseCombatant).DeepClone();
+                    npcToAdd.Name = npc.Name;
                     npcToAdd.DisplayName = npc.Name;
-                    npcToAdd.Type = AppData.NPC;
+                    npcToAdd.Type = AppData.ComTypeNPC;
                     npcToAdd.IsAlly = npc.IsAlly;
                     npcToAdd.PortraitFilePath = npc.PortraitFilePath;
                     npcToAdd.InitializeLoadedCombatant();
@@ -260,99 +304,6 @@ namespace CyberpunkGameplayAssistant.Models
                 }
                 SortCombatantsToLists();
                 RaiseAlert($"{AllCombatants.Count - startingCount} NPC(s) added");
-            }
-        }
-        public ICommand AddBlackIce => new RelayCommand(DoAddBlackIce);
-        private void DoAddBlackIce(object param)
-        {
-            MultiObjectSelectionDialog selectionDialog = new(AppData.BlackIcePrograms, AppData.MultiModeEnemies);
-
-            if (selectionDialog.ShowDialog() == true)
-            {
-                int startingCount = AllCombatants.Count;
-                foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedCombatants)
-                {
-                    for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
-                    {
-                        Combatant newCombatant = selectedCombatant.DeepClone();
-                        int existingCreatureCount = AllCombatants.Where(c => c.Name == newCombatant.Name).Count();
-                        if (existingCreatureCount > 25) { break; }
-                        newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCreatureCount));
-                        newCombatant.Initiative = 50; // Top of the order force
-                        newCombatant.UpdateWoundState();
-                        AllCombatants.Add(newCombatant);
-                    }
-                }
-                SortCombatantsToLists();
-                RaiseAlert($"{AllCombatants.Count - startingCount} Black ICE(s) added");
-            }
-        }
-        public ICommand AddDemons => new RelayCommand(DoAddDemons);
-        private void DoAddDemons(object param)
-        {
-            MultiObjectSelectionDialog selectionDialog = new(AppData.Demons, AppData.MultiModeEnemies);
-
-            if (selectionDialog.ShowDialog() == true)
-            {
-                foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedCombatants)
-                {
-                    for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
-                    {
-                        Combatant newCombatant = selectedCombatant.DeepClone();
-                        int existingCreatureCount = AllCombatants.Where(c => c.Name == newCombatant.Name).Count();
-                        if (existingCreatureCount > 25) { break; }
-                        newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCreatureCount));
-                        newCombatant.Initiative = 70; // Top(est) of the order force
-                        newCombatant.UpdateWoundState();
-                        AllCombatants.Add(newCombatant);
-                    }
-                }
-                SortCombatantsToLists();
-            }
-        }
-        public ICommand AddActiveDefenses => new RelayCommand(DoAddActiveDefenses);
-        private void DoAddActiveDefenses(object param)
-        {
-            MultiObjectSelectionDialog selectionDialog = new(AppData.ActiveDefenses, AppData.MultiModeEnemies);
-
-            if (selectionDialog.ShowDialog() == true)
-            {
-                foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedCombatants)
-                {
-                    for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
-                    {
-                        Combatant newCombatant = selectedCombatant.DeepClone();
-                        int existingCreatureCount = AllCombatants.Where(c => c.Name == newCombatant.Name).Count();
-                        if (existingCreatureCount > 25) { break; }
-                        newCombatant.ReadyUpActiveDefense(existingCreatureCount);
-                        AllCombatants.Add(newCombatant);
-                    }
-                }
-                SortCombatantsToLists();
-            }
-        }
-        public ICommand AddEmplacedDefenses => new RelayCommand(DoAddEmplacedDefenses);
-        private void DoAddEmplacedDefenses(object param)
-        {
-            MultiObjectSelectionDialog selectionDialog = new(AppData.EmplacedDefenses, AppData.MultiModeEnemies);
-
-            if (selectionDialog.ShowDialog() == true)
-            {
-                foreach (Combatant selectedCombatant in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedCombatants)
-                {
-                    for (int i = 0; i < selectedCombatant.QuantityToAdd; i++)
-                    {
-                        Combatant newCombatant = selectedCombatant.DeepClone();
-                        int existingCreatureCount = AllCombatants.Where(c => c.Name == newCombatant.Name).Count();
-                        if (existingCreatureCount > 25) { break; }
-                        newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCreatureCount));
-                        newCombatant.Initiative = 60; // Top(er) of the order force
-                        newCombatant.ReloadAllWeapons();
-                        newCombatant.UpdateWoundState();
-                        AllCombatants.Add(newCombatant);
-                    }
-                }
-                SortCombatantsToLists();
             }
         }
         public ICommand ChangeStartTime => new RelayCommand(DoChangeStartTime);
@@ -383,11 +334,6 @@ namespace CyberpunkGameplayAssistant.Models
                 RaiseError(e.Message);
             }
         }
-        public ICommand RemoveCampaign => new RelayCommand(DoRemoveCampaign);
-        private void DoRemoveCampaign(object param)
-        {
-            AppData.MainModelRef.CampaignView.Campaigns.Remove(this);
-        }
         public ICommand RollDice => new RelayCommand(DoRollDice);
         private void DoRollDice(object param)
         {
@@ -408,9 +354,7 @@ namespace CyberpunkGameplayAssistant.Models
             switch (param.ToString())
             {
                 case "All":
-                    YesNoDialog question = new("Clear message history?");
-                    question.ShowDialog();
-                    if (question.Answer == false) { return; }
+                    if (HelperMethods.AskYesNoQuestion("Clear message history?") == false) { return; }
                     EventHistory.Clear();
                     break;
                 case "After10":
@@ -430,7 +374,7 @@ namespace CyberpunkGameplayAssistant.Models
         {
             if (CombatantsByInitiative.Count <= 0) { return; }
             Combatant activeCombatant = CombatantsByInitiative.FirstOrDefault(c => c.IsActive)!;
-            Combatant firstCombatant = CombatantsByInitiative.FirstOrDefault(c => c.Type != AppData.ActiveDefense && c.Type != AppData.EmplacedDefense)!;
+            Combatant firstCombatant = CombatantsByInitiative.FirstOrDefault(c => c.Type != AppData.ComTypeActiveDefense && c.Type != AppData.ComTypeEmplacedDefense)!;
             Combatant lastCombatant = CombatantsByInitiative.Last();
             if (activeCombatant == null) { param = "Reset"; }
             string action = param.ToString()!;
@@ -475,10 +419,8 @@ namespace CyberpunkGameplayAssistant.Models
                     while (foundPrev == false);
                     break;
                 case "Reset":
-                    YesNoDialog question = new("Reset combat to round 1?");
-                    question.ShowDialog();
-                    if (question.Answer == false) { return; }
-                    Combatant resetCombatant = CombatantsByInitiative.FirstOrDefault(crt => (!crt.IsDead || crt.Type == AppData.Player) && crt.Type != AppData.ActiveDefense && crt.Type != AppData.EmplacedDefense)!;
+                    if (HelperMethods.AskYesNoQuestion("Reset combat to round 1?") == false) { return; }
+                    Combatant resetCombatant = CombatantsByInitiative.FirstOrDefault(crt => (!crt.IsDead || crt.Type == AppData.ComTypePlayer) && crt.Type != AppData.ComTypeActiveDefense && crt.Type != AppData.ComTypeEmplacedDefense)!;
                     if (resetCombatant == null) { UpdateActiveCombatant(); return; }
                     else { resetCombatant.IsActive = true; }
                     EncounterRound = 1;
@@ -495,7 +437,7 @@ namespace CyberpunkGameplayAssistant.Models
             List<string> initiativeResults = new();
             foreach (Combatant combatant in AllCombatants)
             {
-                if (combatant.Initiative == 0 && combatant.Type != AppData.Player) 
+                if (combatant.Initiative == 0 && combatant.Type != AppData.ComTypePlayer) 
                 { 
                     combatant.Initiative = combatant.GetInitiative(); 
                     initiativeResults.Add($"{combatant.DisplayName} : {combatant.Initiative}");
@@ -512,7 +454,7 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand AddPlayer => new RelayCommand(param => DoAddPlayer());
         private void DoAddPlayer()
         {
-            Players.Add(new() { Name = "New Player", Type = AppData.Player, PortraitFilePath = AppData.PortraitDefault });
+            Players.Add(new() { Name = "New Player", Type = AppData.ComTypePlayer, PortraitFilePath = AppData.PortraitDefault });
             ActivePlayer = Players.Last();
         }
         public ICommand SortPlayers => new RelayCommand(param => DoSortPlayers());
@@ -562,7 +504,7 @@ namespace CyberpunkGameplayAssistant.Models
                     }
                     foreach (CombatantWeapon weapon in combatant.Weapons)
                     {
-                        if (combatant.Type.IsIn(AppData.EmplacedDefense, AppData.ActiveDefense)) { continue; }
+                        if (combatant.Type.IsIn(AppData.ComTypeEmplacedDefense, AppData.ComTypeActiveDefense)) { continue; }
                         if (weapon.UsesAmmo)
                         {
                             string ammoType = AppData.WeaponRepository.First(w => w.Type == weapon.Type).AmmoType;
@@ -615,12 +557,13 @@ namespace CyberpunkGameplayAssistant.Models
                     break;
                 case paramDead:
                     RemoveTheFallen();
+                    ShowClearKillControls = false;
                     break;
                 case paramKill:
                     if (!HelperMethods.AskYesNoQuestion("Are you sure you want to kill all non-player and non-NPC combatants?")) { return; }
                     foreach (Combatant combatant in AllCombatants)
                     {
-                        if (combatant.Type == AppData.NPC) { continue; }
+                        if (combatant.Type == AppData.ComTypeNPC) { continue; }
                         combatant.CurrentHitPoints = 0;
                         combatant.IsDead = true;
                     }
@@ -642,6 +585,34 @@ namespace CyberpunkGameplayAssistant.Models
             if (!isValidDate) { RaiseError("Invalid entry for DateTime"); return; }
             SetCurrentDateValues(result);
         }
+        public ICommand AddNote => new RelayCommand(DoAddNote);
+        private void DoAddNote(object param)
+        {
+            GameNote newNote = new();
+            newNote.SetNewNoteValues();
+            GameNotes.Add(newNote);
+            ActiveNote = newNote;
+        }
+        public ICommand SortNotes => new RelayCommand(DoSortNotes);
+        private void DoSortNotes(object param)
+        {
+            GameNotes = new(GameNotes.OrderBy(n => n.Type).ThenBy(n => n.Name));
+        }
+        public ICommand SyncNotes => new RelayCommand(DoSyncNotes);
+        private void DoSyncNotes(object param)
+        {
+            foreach (GameNote note in GameNotes)
+            {
+                foreach (GameNote associatedNote in note.AssociatedNotes)
+                {
+                    GameNote matchedNote = GameNotes.First(n => n.Id == associatedNote.Id);
+                    associatedNote.Name = matchedNote.Name;
+                    associatedNote.Type = matchedNote.Type;
+                    associatedNote.Content = matchedNote.Content;
+                }
+            }
+            RaiseAlert("Notes and associations synced");
+        }
 
         // Public Methods
         public void UpdateActiveCombatant()
@@ -660,11 +631,12 @@ namespace CyberpunkGameplayAssistant.Models
         // Private Methods
         private void RemoveTheFallen()
         {
+            int startCount = AllCombatants.Count;
             List<Combatant> combatants = new();
             foreach (Combatant combatant in AllCombatants)
             {
-                if (combatant.Type == AppData.Player) { combatants.Add(combatant); continue; }
-                if (combatant.Type == AppData.BlackIce || combatant.Type == AppData.Demon || combatant.Type == AppData.ActiveDefense || combatant.Type == AppData.EmplacedDefense)
+                if (combatant.Type == AppData.ComTypePlayer) { combatants.Add(combatant); continue; }
+                if (combatant.Type == AppData.ComTypeBlackIce || combatant.Type == AppData.ComTypeDemon || combatant.Type == AppData.ComTypeActiveDefense || combatant.Type == AppData.ComTypeEmplacedDefense)
                 {
                     if (combatant.CurrentHitPoints <= 0) { continue; }
                 }
@@ -673,12 +645,14 @@ namespace CyberpunkGameplayAssistant.Models
             }
             AllCombatants = new(combatants);
             SortCombatantsToLists();
+            int endCount = AllCombatants.Count;
+            RaiseAlert($"Removed {(startCount - endCount)} combatant(s)");
         }
         private static bool IsEligibleCombatant(Combatant combatant)
         {
-            if (combatant.Type == AppData.ActiveDefense || combatant.Type == AppData.EmplacedDefense) { return false; }
-            if (combatant.Type.IsIn(AppData.BlackIce, AppData.Demon) && combatant.CurrentHitPoints == 0) { return false; }
-            return !combatant.IsDead || combatant.Type == AppData.Player;
+            if (combatant.Type == AppData.ComTypeActiveDefense || combatant.Type == AppData.ComTypeEmplacedDefense) { return false; }
+            if (combatant.Type.IsIn(AppData.ComTypeBlackIce, AppData.ComTypeDemon) && combatant.CurrentHitPoints == 0) { return false; }
+            return !combatant.IsDead || combatant.Type == AppData.ComTypePlayer;
         }
         private void InitializeLists()
         {
@@ -687,6 +661,7 @@ namespace CyberpunkGameplayAssistant.Models
             Players = new();
             Npcs = new();
             NetArchitectures = new();
+            GameNotes = new();
         }
         private void SortCombatantsToLists()
         {
@@ -695,10 +670,10 @@ namespace CyberpunkGameplayAssistant.Models
                 ResetCombatantLists();
                 return;
             }
-            CombatantsByInitiative = new(AllCombatants.Where(c => !c.IsDead || c.Type == AppData.Player).OrderByDescending(c => c.Initiative));
-            CombatantsByName = new(AllCombatants.Where(c => !c.IsDead || c.Type == AppData.Player).OrderBy(c => c.Type != AppData.Player).ThenBy(c => c.DisplayName));
-            PlayerCombatants = new(AllCombatants.Where(c => c.Type == AppData.Player).OrderBy(c => c.Name));
-            NpcCombatants = new(AllCombatants.Where(c => c.Type == AppData.NPC).OrderBy(c => c.Name));
+            CombatantsByInitiative = new(AllCombatants.Where(c => !c.IsDead || c.Type == AppData.ComTypePlayer).OrderByDescending(c => c.Initiative));
+            CombatantsByName = new(AllCombatants.Where(c => !c.IsDead || c.Type == AppData.ComTypePlayer).OrderBy(c => c.Type != AppData.ComTypePlayer).ThenBy(c => c.DisplayName));
+            PlayerCombatants = new(AllCombatants.Where(c => c.Type == AppData.ComTypePlayer).OrderBy(c => c.Name));
+            NpcCombatants = new(AllCombatants.Where(c => c.Type == AppData.ComTypeNPC).OrderBy(c => c.Name));
             DeadCombatants = new(AllCombatants.Where(c => c.IsDead));
         }
         private void ResetCombatantLists()

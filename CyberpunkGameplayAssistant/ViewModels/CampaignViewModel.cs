@@ -41,7 +41,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         public ICommand AddCampaign => new RelayCommand(DoAddCampaign);
         private void DoAddCampaign(object param)
         {
-            Campaigns.Add(new());
+            Campaigns.Add(new() { Name = "New Campaign" });
             ActiveCampaign = Campaigns.Last();
         }
         public ICommand SortCampaigns => new RelayCommand(DoSortCampaigns);
@@ -60,6 +60,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
             }
             RaiseAlert($"{Campaigns.Count} Campaign(s) Saved");
         }
+        
 
         // Public Methods
         public void ResetActiveItems()
@@ -70,6 +71,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
                 gameCampaign.ActiveNpc = null;
                 gameCampaign.ActivePlayer = null;
                 gameCampaign.ActiveNetArchitecture = null;
+                gameCampaign.ActiveNote = null;
                 gameCampaign.UpdateActiveCombatant();
             }
         }

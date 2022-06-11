@@ -6,10 +6,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
 {
     public class ImageBasedOnMessageType : ConverterMarkupExtension<ImageBasedOnMessageType>
     {
-        public ImageBasedOnMessageType()
-        {
-
-        }
+        public ImageBasedOnMessageType() { }
 
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -24,6 +21,24 @@ namespace CyberpunkGameplayAssistant.Toolbox
                 AppData.MessageStandardAction => "Icon_Action",
                 AppData.MessageStatCheck => "Icon_Hex_A",
                 AppData.MessageWeaponAttack => "Icon_Reticle",
+                _ => "Icon_Rpg_Note"
+            };
+            return AppData.Framework.FindResource(iconName) as Style;
+        }
+    }
+    public class ImageBasedOnNoteType : ConverterMarkupExtension<ImageBasedOnNoteType>
+    {
+        public ImageBasedOnNoteType() { }
+
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string iconName = value switch
+            {
+                AppData.NoteCorp => "Icon_Corp",
+                AppData.NoteEncounter => "Icon_Marker",
+                AppData.NoteFaction => "Icon_Horde",
+                AppData.NoteLocation => "Icon_Map",
+                AppData.NoteNPC => "Icon_Smile",
                 _ => "Icon_Rpg_Note"
             };
             return AppData.Framework.FindResource(iconName) as Style;
@@ -136,16 +151,17 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             string iconName = value switch
             {
-                AppData.ActiveDefense => "Icon_Turret",
-                AppData.BlackIce => "Icon_Program",
-                AppData.Demon => "Icon_Program",
-                AppData.EmplacedDefense => "Icon_Turret",
+                AppData.ComTypeActiveDefense => "Icon_Turret",
+                AppData.ComTypeBlackIce => "Icon_Program",
+                AppData.ComTypeDemon => "Icon_Program",
+                AppData.ComTypeEmplacedDefense => "Icon_Turret",
                 AppData.ComClassLightCorpo => "Icon_Briefcase",
                 AppData.ComClassMediumCorpo => "Icon_Briefcase",
                 AppData.ComClassHeavyCorpo => "Icon_Briefcase",
                 AppData.ComClassLightPolice => "Icon_Badge",
                 AppData.ComClassMediumPolice => "Icon_Badge",
                 AppData.ComClassHeavyPolice => "Icon_Badge",
+                AppData.ComClassCivilian => "Icon_Person",
                 _ => "Icon_Fist"
             };
             return AppData.Framework.FindResource(iconName) as Style;

@@ -73,6 +73,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             object parameter,
             CultureInfo culture)
         {
+            if (value == null) { return Visibility.Collapsed; }
             return (value.ToString() == parameter.ToString()) ? Visibility.Visible : Visibility.Collapsed;
         }
 
@@ -86,6 +87,15 @@ namespace CyberpunkGameplayAssistant.Toolbox
             return (visibility != Visibility.Collapsed);
         }
 
+    }
+    public class VisibleIfContains : ConverterMarkupExtension<VisibleIfContains>
+    {
+        public VisibleIfContains() { }
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null) { return Visibility.Collapsed; }
+            return (value.ToString().Contains(parameter.ToString())) ? Visibility.Visible : Visibility.Collapsed;
+        }
     }
     public class VisibleIfEqual : ConverterMarkupExtension<VisibleIfEqual>
     {

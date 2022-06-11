@@ -45,11 +45,37 @@ namespace CyberpunkGameplayAssistant.Windows
                 Source = (DataContext as MultiObjectSelectionViewModel).SelectedRecords
             });
         }
+        public MultiObjectSelectionDialog(List<GameNote> records, string title)
+        {
+            InitializeComponent();
+            WindowTitle.Text = $"{title} Selection";
+            DataContext = new MultiObjectSelectionViewModel(records, title);
+            SourceItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding
+            {
+                Source = (DataContext as MultiObjectSelectionViewModel).FilteredSourceNotes
+            });
+            SelectedItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding
+            {
+                Source = (DataContext as MultiObjectSelectionViewModel).SelectedNotes
+            });
+        }
 
         // Private Methods
         private void AddItem_Clicked(object sender, RoutedEventArgs e)
         {
             Type objectType = (sender as Button).DataContext.GetType();
+            if (objectType == typeof(GameNote))
+            {
+                GameNote note = (sender as Button).DataContext as GameNote;
+                foreach (GameNote selectedNote in (DataContext as MultiObjectSelectionViewModel).SelectedNotes)
+                {
+                    if (note.Name == selectedNote.Name)
+                    {
+                        return;
+                    }
+                }
+                (DataContext as MultiObjectSelectionViewModel).SelectedNotes.Add(note.DeepClone());
+            }
             if (objectType == typeof(NamedRecord))
             {
                 NamedRecord record = (sender as Button).DataContext as NamedRecord;
@@ -81,6 +107,11 @@ namespace CyberpunkGameplayAssistant.Windows
         private void RemoveItem_Clicked(object sender, RoutedEventArgs e)
         {
             Type objectType = (sender as Button).DataContext.GetType();
+            if (objectType == typeof(GameNote))
+            {
+                GameNote note = (sender as Button).DataContext as GameNote;
+                (DataContext as MultiObjectSelectionViewModel).SelectedNotes.Remove(note);
+            }
             if (objectType == typeof(NamedRecord))
             {
                 NamedRecord record = (sender as Button).DataContext as NamedRecord;

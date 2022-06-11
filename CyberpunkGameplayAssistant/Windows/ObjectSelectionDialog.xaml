@@ -29,7 +29,7 @@
                                Width="180" />
                     <TextBlock Text="{Binding Description, Mode=OneWay}" 
                                FontWeight="Normal"
-                               Width="180" TextWrapping="Wrap" />
+                               Width="180" TextWrapping="Wrap" Visibility="{Binding Description, Converter={tool:CollapsedIfNullOrEmpty}}" />
                 </StackPanel>
             </DataTemplate>
             <tool:ObjectTypeTemplateSelector x:Key="TemplateSelector"

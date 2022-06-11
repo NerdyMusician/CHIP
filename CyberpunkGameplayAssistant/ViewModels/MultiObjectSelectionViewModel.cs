@@ -10,19 +10,39 @@ namespace CyberpunkGameplayAssistant.ViewModels
         // Constructors
         public MultiObjectSelectionViewModel(List<Combatant> combatants, string mode)
         {
+            InitializeCollections();
             SourceCombatants = new(combatants);
-            FilteredSourceCombatants = new();
-            SelectedCombatants = new();
             Mode = mode;
             SourceTextSearch = "";
         }
         public MultiObjectSelectionViewModel(List<NamedRecord> records, string mode)
         {
+            InitializeCollections();
             SourceRecords = new(records);
-            FilteredSourceRecords = new();
-            SelectedRecords = new();
             Mode = mode;
             SourceTextSearch = "";
+        }
+        public MultiObjectSelectionViewModel(List<GameNote> records, string mode)
+        {
+            InitializeCollections();
+            SourceNotes = new(records);
+            Mode = mode;
+            SourceTextSearch = "";
+        }
+        private void InitializeCollections()
+        {
+            SourceCombatants = new();
+            FilteredSourceCombatants = new();
+            SelectedCombatants = new();
+
+            SourceRecords = new();
+            FilteredSourceRecords = new();
+            SelectedRecords = new();
+
+            SourceNotes = new();
+            FilteredSourceNotes = new();
+            SelectedNotes = new();
+
         }
 
         // Databound Properties
@@ -33,7 +53,25 @@ namespace CyberpunkGameplayAssistant.ViewModels
             set => SetAndNotify(ref _Mode, value);
         }
 
-        #region NamedRecord
+        private ObservableCollection<GameNote> _SourceNotes;
+        public ObservableCollection<GameNote> SourceNotes
+        {
+            get => _SourceNotes;
+            set => SetAndNotify(ref _SourceNotes, value);
+        }
+        private ObservableCollection<GameNote> _FilteredSourceNotes;
+        public ObservableCollection<GameNote> FilteredSourceNotes
+        {
+            get => _FilteredSourceNotes;
+            set => SetAndNotify(ref _FilteredSourceNotes, value);
+        }
+        private ObservableCollection<GameNote> _SelectedNotes;
+        public ObservableCollection<GameNote> SelectedNotes
+        {
+            get => _SelectedNotes;
+            set => SetAndNotify(ref _SelectedNotes, value);
+        }
+
         private ObservableCollection<NamedRecord> _SourceRecords;
         public ObservableCollection<NamedRecord> SourceRecords
         {
@@ -52,9 +90,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
             get => _SelectedRecords;
             set => SetAndNotify(ref _SelectedRecords, value);
         }
-        #endregion
 
-        #region Combatants
         private ObservableCollection<Combatant> _SourceCombatants;
         public ObservableCollection<Combatant> SourceCombatants
         {
@@ -73,7 +109,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
             get => _SelectedCombatants;
             set => SetAndNotify(ref _SelectedCombatants, value);
         }
-        #endregion
+
 
         #region SourceTextSearch
         private string _SourceTextSearch;
@@ -118,6 +154,15 @@ namespace CyberpunkGameplayAssistant.ViewModels
                     }
                     Count_SourceFiltered = FilteredSourceCombatants.Count;
                     Count_SourceAll = SourceCombatants.Count;
+                    break;
+                case AppData.MultiModeAssociatedNotes:
+                    FilteredSourceNotes.Clear();
+                    foreach (GameNote note in SourceNotes)
+                    {
+                        if (note.Name.ToUpper().Contains(SourceTextSearch.ToUpper())) { FilteredSourceNotes.Add(note); }
+                    }
+                    Count_SourceFiltered = FilteredSourceNotes.Count;
+                    Count_SourceAll = SourceNotes.Count;
                     break;
                 default:
                     FilteredSourceRecords.Clear();

@@ -12,23 +12,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\BlackIce\Asp.png" />
-    <None Remove="Resources\BlackIce\Dragon.png" />
-    <None Remove="Resources\BlackIce\Giant.png" />
-    <None Remove="Resources\BlackIce\Hellhound.png" />
-    <None Remove="Resources\BlackIce\Killer.png" />
-    <None Remove="Resources\BlackIce\Kraken.png" />
-    <None Remove="Resources\BlackIce\Liche.png" />
-    <None Remove="Resources\BlackIce\Raven.png" />
-    <None Remove="Resources\BlackIce\Sabertooth.png" />
-    <None Remove="Resources\BlackIce\Scorpion.png" />
-    <None Remove="Resources\BlackIce\Skunk.png" />
-    <None Remove="Resources\BlackIce\Wisp.png" />
     <None Remove="Resources\Combatants\RED.png" />
     <None Remove="Resources\connected.png" />
-    <None Remove="Resources\Demons\Balron.png" />
-    <None Remove="Resources\Demons\Efreet.png" />
-    <None Remove="Resources\Demons\Imp.png" />
     <None Remove="Resources\disconnected.png" />
     <None Remove="Resources\Icons\aberration.png" />
     <None Remove="Resources\Icons\abjuration.png" />
@@ -80,6 +65,7 @@
     <None Remove="Resources\Icons\conjuration.png" />
     <None Remove="Resources\Icons\construct.png" />
     <None Remove="Resources\Icons\coppercoin.png" />
+    <None Remove="Resources\Icons\corp.png" />
     <None Remove="Resources\Icons\crate.png" />
     <None Remove="Resources\Icons\creaturepack.png" />
     <None Remove="Resources\Icons\creature_add.png" />
@@ -167,6 +153,7 @@
     <None Remove="Resources\Icons\hitdice.png" />
     <None Remove="Resources\Icons\holy.png" />
     <None Remove="Resources\Icons\home.png" />
+    <None Remove="Resources\Icons\horde.png" />
     <None Remove="Resources\Icons\illusion.png" />
     <None Remove="Resources\Icons\key_copper.png" />
     <None Remove="Resources\Icons\key_gold.png" />
@@ -180,6 +167,7 @@
     <None Remove="Resources\Icons\magicitem.png" />
     <None Remove="Resources\Icons\magicweapon.png" />
     <None Remove="Resources\Icons\map.png" />
+    <None Remove="Resources\Icons\marker.png" />
     <None Remove="Resources\Icons\matchround.png" />
     <None Remove="Resources\Icons\medical.png" />
     <None Remove="Resources\Icons\miniature.png" />
@@ -347,23 +335,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\BlackIce\Asp.png" />
-    <Resource Include="Resources\BlackIce\Dragon.png" />
-    <Resource Include="Resources\BlackIce\Giant.png" />
-    <Resource Include="Resources\BlackIce\Hellhound.png" />
-    <Resource Include="Resources\BlackIce\Killer.png" />
-    <Resource Include="Resources\BlackIce\Kraken.png" />
-    <Resource Include="Resources\BlackIce\Liche.png" />
-    <Resource Include="Resources\BlackIce\Raven.png" />
-    <Resource Include="Resources\BlackIce\Sabertooth.png" />
-    <Resource Include="Resources\BlackIce\Scorpion.png" />
-    <Resource Include="Resources\BlackIce\Skunk.png" />
-    <Resource Include="Resources\BlackIce\Wisp.png" />
     <Resource Include="Resources\Combatants\RED.png" />
     <Resource Include="Resources\Icons\connected.png" />
-    <Resource Include="Resources\Demons\Balron.png" />
-    <Resource Include="Resources\Demons\Efreet.png" />
-    <Resource Include="Resources\Demons\Imp.png" />
+    <Resource Include="Resources\Icons\corp.png" />
     <Resource Include="Resources\Icons\disconnected.png" />
     <Resource Include="Resources\Icons\aberration.png" />
     <Resource Include="Resources\Icons\abjuration.png" />
@@ -502,6 +476,7 @@
     <Resource Include="Resources\Icons\hitdice.png" />
     <Resource Include="Resources\Icons\holy.png" />
     <Resource Include="Resources\Icons\home.png" />
+    <Resource Include="Resources\Icons\horde.png" />
     <Resource Include="Resources\Icons\illusion.png" />
     <Resource Include="Resources\Icons\key_copper.png" />
     <Resource Include="Resources\Icons\key_gold.png" />
@@ -515,6 +490,7 @@
     <Resource Include="Resources\Icons\magicitem.png" />
     <Resource Include="Resources\Icons\magicweapon.png" />
     <Resource Include="Resources\Icons\map.png" />
+    <Resource Include="Resources\Icons\marker.png" />
     <Resource Include="Resources\Icons\matchround.png" />
     <Resource Include="Resources\Icons\medical.png" />
     <Resource Include="Resources\Icons\miniature.png" />
@@ -678,10 +654,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Change.log">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Campaigns.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Data\Combatants.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Settings.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Audio\Autofire.mp3">

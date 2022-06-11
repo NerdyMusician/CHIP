@@ -44,6 +44,12 @@ namespace CyberpunkGameplayAssistant.Windows
             try
             {
                 if ((DataContext as MainViewModel) == null) { return; } // Startup crash
+                (DataContext as MainViewModel).SettingsView.SaveSettings();
+                if ((DataContext as MainViewModel).SettingsView.ExitsaveEnabled)
+                {
+                    (DataContext as MainViewModel).CampaignView.DoSaveCampaigns(false);
+                    (DataContext as MainViewModel).CombatantView.DoSaveCombatants(false);
+                }
                 Application.Current.Shutdown();
             }
             catch (Exception ex)
@@ -81,6 +87,13 @@ namespace CyberpunkGameplayAssistant.Windows
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             TitleBar.Width = this.ActualWidth;
+
+            double newHeight = this.ActualHeight - 308;
+            SCVR_Initiative.Height = newHeight;
+            SCVR_Name.Height = newHeight;
+            SCVR_NPC.Height = newHeight;
+            SCVR_Player.Height = newHeight;
+            SCVR_Dead.Height = newHeight;
         }
 
         private void CopyTextblockText(object sender, RoutedEventArgs e)
@@ -142,6 +155,7 @@ namespace CyberpunkGameplayAssistant.Windows
         {
             if (!AppData.IsLoaded) { return; }
             if (AppData.SkipAudio) { return; }
+            if (AppData.MainModelRef.SettingsView.MuteAudio) { return; }
             SfxPlayer.Position = TimeSpan.FromMilliseconds(1);
             SfxPlayer.Source = new Uri(filepath, UriKind.Absolute);
             SfxPlayer.Volume = AppData.AudioVolume[filepath];
