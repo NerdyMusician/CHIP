@@ -381,6 +381,9 @@
 
 
     <!-- Unsorted -->
+    <Style TargetType="Image" x:Key="Icon_Corp" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/corp.png" />
+    </Style>
     <Style TargetType="Image" x:Key="Icon_Person" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/person.png" />
     </Style>

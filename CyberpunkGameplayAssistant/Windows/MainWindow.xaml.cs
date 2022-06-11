@@ -87,6 +87,13 @@ namespace CyberpunkGameplayAssistant.Windows
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             TitleBar.Width = this.ActualWidth;
+
+            double newHeight = this.ActualHeight - 308;
+            SCVR_Initiative.Height = newHeight;
+            SCVR_Name.Height = newHeight;
+            SCVR_NPC.Height = newHeight;
+            SCVR_Player.Height = newHeight;
+            SCVR_Dead.Height = newHeight;
         }
 
         private void CopyTextblockText(object sender, RoutedEventArgs e)

@@ -557,6 +557,7 @@ namespace CyberpunkGameplayAssistant.Models
                     break;
                 case paramDead:
                     RemoveTheFallen();
+                    ShowClearKillControls = false;
                     break;
                 case paramKill:
                     if (!HelperMethods.AskYesNoQuestion("Are you sure you want to kill all non-player and non-NPC combatants?")) { return; }
@@ -590,6 +591,7 @@ namespace CyberpunkGameplayAssistant.Models
             GameNote newNote = new();
             newNote.SetNewNoteValues();
             GameNotes.Add(newNote);
+            ActiveNote = newNote;
         }
         public ICommand SortNotes => new RelayCommand(DoSortNotes);
         private void DoSortNotes(object param)
@@ -629,6 +631,7 @@ namespace CyberpunkGameplayAssistant.Models
         // Private Methods
         private void RemoveTheFallen()
         {
+            int startCount = AllCombatants.Count;
             List<Combatant> combatants = new();
             foreach (Combatant combatant in AllCombatants)
             {
@@ -642,6 +645,8 @@ namespace CyberpunkGameplayAssistant.Models
             }
             AllCombatants = new(combatants);
             SortCombatantsToLists();
+            int endCount = AllCombatants.Count;
+            RaiseAlert($"Removed {(startCount - endCount)} combatant(s)");
         }
         private static bool IsEligibleCombatant(Combatant combatant)
         {

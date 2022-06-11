@@ -648,7 +648,7 @@
                                                             <StackPanel Orientation="Horizontal">
                                                                 <Image Style="{StaticResource Icon_Chip}" VerticalAlignment="Top" />
                                                                 <Separator />
-                                                                <TextBlock Text="{Binding Notes}" TextWrapping="Wrap" Width="340" FontWeight="Normal" FontSize="10">
+                                                                <TextBlock Text="{Binding Notes}" TextWrapping="Wrap" Width="300" FontWeight="Normal" FontSize="10">
                                                                     <TextBlock.ToolTip>
                                                                         <ToolTip>
                                                                             <TextBlock Text="{Binding Notes}" TextWrapping="Wrap" Width="420" FontSize="15" />
@@ -923,7 +923,7 @@
                                                             <StackPanel Orientation="Horizontal">
                                                                 <Image Style="{StaticResource Icon_Chip}" VerticalAlignment="Top" />
                                                                 <Separator />
-                                                                <TextBlock Text="{Binding Notes}" TextWrapping="Wrap" Width="340" FontWeight="Normal" FontSize="10">
+                                                                <TextBlock Text="{Binding Notes}" TextWrapping="Wrap" Width="300" FontWeight="Normal" FontSize="10">
                                                                     <TextBlock.ToolTip>
                                                                         <ToolTip>
                                                                             <TextBlock Text="{Binding Notes}" TextWrapping="Wrap" Width="420" FontSize="15" />
@@ -1169,27 +1169,27 @@
                                         <ContentControl Content="{Binding CampaignView.ActiveCampaign.ActiveCombatant}" ContentTemplateSelector="{StaticResource ActiveCombatantTemplateSelector}" />
                                         <TabControl BorderThickness="0 2 0 0">
                                             <TabItem Header="By Initiative" Width="108">
-                                                <ScrollViewer Height="412" Tag="CombatantList" ScrollChanged="ScrollViewer_ScrollChanged">
+                                                <ScrollViewer x:Name="SCVR_Initiative" Height="412" Tag="CombatantList" ScrollChanged="ScrollViewer_ScrollChanged">
                                                     <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.CombatantsByInitiative}" ItemTemplateSelector="{StaticResource ListCombatantTemplateSelector}" />
                                                 </ScrollViewer>
                                             </TabItem>
                                             <TabItem Header="By Name" Width="108">
-                                                <ScrollViewer Height="412" Tag="CombatantList" ScrollChanged="ScrollViewer_ScrollChanged">
+                                                <ScrollViewer x:Name="SCVR_Name" Height="412" Tag="CombatantList" ScrollChanged="ScrollViewer_ScrollChanged">
                                                     <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.CombatantsByName}" ItemTemplateSelector="{StaticResource ListCombatantTemplateSelector}" />
                                                 </ScrollViewer>
                                             </TabItem>
                                             <TabItem Header="NPCs" Width="108">
-                                                <ScrollViewer Height="412" Tag="CombatantList" ScrollChanged="ScrollViewer_ScrollChanged">
+                                                <ScrollViewer x:Name="SCVR_NPC" Height="412" Tag="CombatantList" ScrollChanged="ScrollViewer_ScrollChanged">
                                                     <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.NpcCombatants}" ItemTemplateSelector="{StaticResource ListCombatantTemplateSelector}" />
                                                 </ScrollViewer>
                                             </TabItem>
                                             <TabItem Header="Players" Width="108">
-                                                <ScrollViewer Height="412" Tag="CombatantList" ScrollChanged="ScrollViewer_ScrollChanged">
+                                                <ScrollViewer x:Name="SCVR_Player" Height="412" Tag="CombatantList" ScrollChanged="ScrollViewer_ScrollChanged">
                                                     <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.PlayerCombatants}" ItemTemplateSelector="{StaticResource ListCombatantTemplateSelector}" />
                                                 </ScrollViewer>
                                             </TabItem>
                                             <TabItem Header="Dead" Width="108">
-                                                <ScrollViewer Height="412" Tag="CombatantList" ScrollChanged="ScrollViewer_ScrollChanged">
+                                                <ScrollViewer x:Name="SCVR_Dead" Height="412" Tag="CombatantList" ScrollChanged="ScrollViewer_ScrollChanged">
                                                     <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.DeadCombatants}" ItemTemplateSelector="{StaticResource ListCombatantTemplateSelector}" />
                                                 </ScrollViewer>
                                             </TabItem>
@@ -1321,7 +1321,7 @@
                                         </DockPanel>
                                         <Border Style="{StaticResource ListBorder}">
                                             <ScrollViewer Height="234">
-                                                <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.ActiveNote.AssociatedNotes}">
+                                                <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.ActiveNote.AssociatedNotes}" Width="410">
                                                     <ItemsControl.ItemsPanel>
                                                         <ItemsPanelTemplate>
                                                             <WrapPanel></WrapPanel>

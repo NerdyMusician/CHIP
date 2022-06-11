@@ -65,6 +65,7 @@
     <None Remove="Resources\Icons\conjuration.png" />
     <None Remove="Resources\Icons\construct.png" />
     <None Remove="Resources\Icons\coppercoin.png" />
+    <None Remove="Resources\Icons\corp.png" />
     <None Remove="Resources\Icons\crate.png" />
     <None Remove="Resources\Icons\creaturepack.png" />
     <None Remove="Resources\Icons\creature_add.png" />
@@ -336,6 +337,7 @@
   <ItemGroup>
     <Resource Include="Resources\Combatants\RED.png" />
     <Resource Include="Resources\Icons\connected.png" />
+    <Resource Include="Resources\Icons\corp.png" />
     <Resource Include="Resources\Icons\disconnected.png" />
     <Resource Include="Resources\Icons\aberration.png" />
     <Resource Include="Resources\Icons\abjuration.png" />

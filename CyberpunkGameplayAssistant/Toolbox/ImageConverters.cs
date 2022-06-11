@@ -34,6 +34,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             string iconName = value switch
             {
+                AppData.NoteCorp => "Icon_Corp",
                 AppData.NoteEncounter => "Icon_Marker",
                 AppData.NoteFaction => "Icon_Horde",
                 AppData.NoteLocation => "Icon_Map",
