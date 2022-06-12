@@ -178,7 +178,7 @@
                         <DockPanel>
                             <Label Content="Campaigns" />
                             <StackPanel Style="{StaticResource SPNL_ListButtonPanel}">
-                                <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CampaignView.AddCampaign}" />
+                                <cc:IconButton ImageResource="{StaticResource Icon_Add}" Command="{Binding CampaignView.AddCampaign}" />
                                 <cc:IconButton ImageResource="{StaticResource Icon_Save}" Command="{Binding CampaignView.SaveCampaigns}" />
                                 <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CampaignView.SortCampaigns}" />
                             </StackPanel>
@@ -1204,7 +1204,7 @@
                                         <DockPanel>
                                             <Label Content="NET Architectures" />
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CampaignView.ActiveCampaign.AddNetArchitecture}" ToolTip="Add New NET Architecture" />
+                                                <cc:IconButton ImageResource="{StaticResource Icon_Add}" Command="{Binding CampaignView.ActiveCampaign.AddNetArchitecture}" ToolTip="Add New NET Architecture" />
                                                 <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CampaignView.ActiveCampaign.SortNetArchitectures}" ToolTip="Sort NET Architecture List" />
                                             </StackPanel>
                                         </DockPanel>
@@ -1236,7 +1236,7 @@
                                         <DockPanel>
                                             <cc:FieldLabel Text="NET Architecture Floors" Width="256" VerticalAlignment="Bottom" Margin="4 2" />
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <cc:MiniButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CampaignView.ActiveCampaign.ActiveNetArchitecture.AddFloor}" CommandParameter="Blank" />
+                                                <cc:MiniButton ImageResource="{StaticResource Icon_Add}" Command="{Binding CampaignView.ActiveCampaign.ActiveNetArchitecture.AddFloor}" CommandParameter="Blank" />
                                                 <cc:MiniButton ImageResource="{StaticResource Icon_Dice}" Command="{Binding CampaignView.ActiveCampaign.ActiveNetArchitecture.AddFloor}" CommandParameter="Generated" />
                                             </StackPanel>
                                         </DockPanel>
@@ -1274,7 +1274,7 @@
                                         <DockPanel>
                                             <Label Content="Notes" />
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CampaignView.ActiveCampaign.AddNote}" />
+                                                <cc:IconButton ImageResource="{StaticResource Icon_Add}" Command="{Binding CampaignView.ActiveCampaign.AddNote}" />
                                                 <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CampaignView.ActiveCampaign.SortNotes}" />
                                                 <cc:IconButton ImageResource="{StaticResource Icon_Sync}" Command="{Binding CampaignView.ActiveCampaign.SyncNotes}" />
                                             </StackPanel>
@@ -1314,7 +1314,7 @@
                                         <DockPanel Margin="4 8 0 0">
                                             <TextBlock Text="Associated Notes" VerticalAlignment="Bottom" />
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CampaignView.ActiveCampaign.ActiveNote.AddNewAssociatedNote}" />
+                                                <cc:IconButton ImageResource="{StaticResource Icon_Add}" Command="{Binding CampaignView.ActiveCampaign.ActiveNote.AddNewAssociatedNote}" />
                                                 <cc:IconButton ImageResource="{StaticResource Icon_Link}" Command="{Binding CampaignView.ActiveCampaign.ActiveNote.AddAssociations}" />
                                                 <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CampaignView.ActiveCampaign.ActiveNote.SortNotes}" />
                                             </StackPanel>
@@ -1358,7 +1358,7 @@
                                         <DockPanel>
                                             <Label Content="Players" />
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CampaignView.ActiveCampaign.AddPlayer}" ToolTip="Add New Player" />
+                                                <cc:IconButton ImageResource="{StaticResource Icon_Add}" Command="{Binding CampaignView.ActiveCampaign.AddPlayer}" ToolTip="Add New Player" />
                                                 <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CampaignView.ActiveCampaign.SortPlayers}" ToolTip="Sort Player List" />
                                             </StackPanel>
                                         </DockPanel>
@@ -1406,7 +1406,7 @@
                                         <DockPanel>
                                             <Label Content="NPCs" />
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CampaignView.ActiveCampaign.AddNpc}" />
+                                                <cc:IconButton ImageResource="{StaticResource Icon_Add}" Command="{Binding CampaignView.ActiveCampaign.AddNpc}" />
                                                 <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CampaignView.ActiveCampaign.SortNpcs}" />
                                             </StackPanel>
                                         </DockPanel>
@@ -1459,7 +1459,7 @@
                             <Label Content="Combatants" />
                             <StackPanel Style="{StaticResource SPNL_ListButtonPanel}">
                                 <StackPanel>
-                                    <cc:IconToggleButton ImageResource="{StaticResource Icon_Plus_Green}" IsChecked="{Binding CombatantView.AddCombatantMenuOpen}" />
+                                    <cc:IconToggleButton ImageResource="{StaticResource Icon_Add}" IsChecked="{Binding CombatantView.AddCombatantMenuOpen}" />
                                     <Popup IsOpen="{Binding CombatantView.AddCombatantMenuOpen}">
                                         <Border Style="{StaticResource BRDR_PopupBorder}">
                                             <StackPanel>
@@ -1598,7 +1598,7 @@
                                         <Separator />
                                         <cc:IconButton ImageResource="{StaticResource Icon_Transfer}" Command="{Binding CombatantView.ActiveCombatant.ToggleSetSkillsBy}" />
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CombatantView.ActiveCombatant.AddSkills}" />
+                                            <cc:IconButton ImageResource="{StaticResource Icon_Add}" Command="{Binding CombatantView.ActiveCombatant.AddSkills}" />
                                             <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CombatantView.ActiveCombatant.SortSkills}" />
                                         </StackPanel>
                                     </DockPanel>
@@ -1637,7 +1637,7 @@
                                 <StackPanel Visibility="{Binding CombatantView.ActiveCombatant.ShowWeapons, Converter={tool:CollapsedIfFalse}}">
                                     <DockPanel>
                                         <TextBlock Text="Weapons" VerticalAlignment="Bottom" />
-                                        <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" HorizontalAlignment="Right" Command="{Binding CombatantView.ActiveCombatant.AddBuilderWeapons}" />
+                                        <cc:IconButton ImageResource="{StaticResource Icon_Add}" HorizontalAlignment="Right" Command="{Binding CombatantView.ActiveCombatant.AddBuilderWeapons}" />
                                     </DockPanel>
                                     <Rectangle />
                                     <ScrollViewer Width="520" MaxHeight="140">
@@ -1667,7 +1667,7 @@
                                     <DockPanel>
                                         <TextBlock Text="Ammunition" VerticalAlignment="Bottom" />
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding CombatantView.ActiveCombatant.AddAmmunition}" />
+                                            <cc:IconButton ImageResource="{StaticResource Icon_Add}" Command="{Binding CombatantView.ActiveCombatant.AddAmmunition}" />
                                             <cc:IconButton ImageResource="{StaticResource Icon_Reload}" Command="{Binding CombatantView.ActiveCombatant.AddPresetAmmunition}" />
                                         </StackPanel>
                                     </DockPanel>
@@ -1700,7 +1700,7 @@
                                 <StackPanel Style="{StaticResource StandardCombatantSection}">
                                     <DockPanel>
                                         <TextBlock Text="Gear" VerticalAlignment="Bottom" />
-                                        <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" HorizontalAlignment="Right" Command="{Binding CombatantView.ActiveCombatant.AddBuilderGear}" />
+                                        <cc:IconButton ImageResource="{StaticResource Icon_Add}" HorizontalAlignment="Right" Command="{Binding CombatantView.ActiveCombatant.AddBuilderGear}" />
                                     </DockPanel>
                                     <Rectangle />
                                     <ScrollViewer MaxHeight="120">
@@ -1726,7 +1726,7 @@
                                     <Separator />
                                     <DockPanel>
                                         <TextBlock Text="Cyberware" VerticalAlignment="Bottom" />
-                                        <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" HorizontalAlignment="Right" Command="{Binding CombatantView.ActiveCombatant.AddBuilderCyberware}" />
+                                        <cc:IconButton ImageResource="{StaticResource Icon_Add}" HorizontalAlignment="Right" Command="{Binding CombatantView.ActiveCombatant.AddBuilderCyberware}" />
                                     </DockPanel>
                                     <Rectangle />
                                     <ScrollViewer MaxHeight="120">
@@ -1753,7 +1753,7 @@
                                         <Separator />
                                         <DockPanel>
                                             <TextBlock Text="Cyberdeck Programs" VerticalAlignment="Bottom" />
-                                            <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" HorizontalAlignment="Right" Command="{Binding CombatantView.ActiveCombatant.AddBuilderPrograms}" />
+                                            <cc:IconButton ImageResource="{StaticResource Icon_Add}" HorizontalAlignment="Right" Command="{Binding CombatantView.ActiveCombatant.AddBuilderPrograms}" />
                                         </DockPanel>
                                         <Rectangle />
                                         <ScrollViewer MaxHeight="120">
@@ -1783,8 +1783,98 @@
                     </StackPanel>
                 </StackPanel>
             </TabItem>
+            <TabItem Header="Encounters">
+                <StackPanel Style="{StaticResource SPNL_SectionWrapper}" Orientation="Horizontal">
+                    <StackPanel>
+                        <DockPanel>
+                            <Label Content="Encounters" />
+                            <StackPanel Style="{StaticResource SPNL_ListButtonPanel}">
+                                <cc:IconButton ImageResource="{StaticResource Icon_Add}" Command="{Binding EncounterView.AddEncounter}" />
+                                <cc:IconButton ImageResource="{StaticResource Icon_Save}" Command="{Binding EncounterView.SaveEncounters}" />
+                                <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding EncounterView.SortEncounters}" />
+                            </StackPanel>
+                        </DockPanel>
+                        <Border Style="{StaticResource ListBorder}">
+                            <ListView Style="{StaticResource PrimaryTabList}" ItemsSource="{Binding EncounterView.Encounters, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding EncounterView.ActiveEncounter, UpdateSourceTrigger=PropertyChanged}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Style="{Binding ThreatLevel, Converter={tool:ImageBasedOnThreatLevel}}" />
+                                            <Separator Width="4" Visibility="Hidden" />
+                                            <TextBlock Text="{Binding Name}" Foreground="{StaticResource PrimaryFontColor}" MinWidth="160">
+                                                <TextBlock.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem Header="Duplicate Encounter" Command="{Binding DuplicateEncounter}" />
+                                                        <MenuItem Header="Delete Encounter" Command="{Binding DeleteEncounter}" />
+                                                    </ContextMenu>
+                                                </TextBlock.ContextMenu>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel Margin="16 0 0 0">
+                        <TextBlock Margin="0 4">
+                            <Run Text="Last Save:" />
+                            <Run Text="{Binding EncounterView.LastSave}" />
+                        </TextBlock>
+                        <StackPanel Visibility="{Binding EncounterView.ActiveEncouter, Converter={tool:CollapsedIfNull}, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBlock Text="Base Information" />
+                            <Rectangle />
+                            <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                <cc:FieldLabel Text="Name" />
+                                <TextBox Text="{Binding EncounterView.ActiveEncounter.Name}" Width="200" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                <cc:FieldLabel Text="Type" />
+                                <cc:GammaComboBox ItemsSource="{Binding EncounterTypes}" SelectedValue="{Binding EncounterView.ActiveEncounter.Type}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                <cc:FieldLabel Text="Threat Level" />
+                                <cc:GammaComboBox ItemsSource="{Binding ThreatLevels}" SelectedValue="{Binding EncounterView.ActiveEncounter.ThreatLevel}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                <cc:FieldLabel Text="Description" />
+                                <TextBox Text="{Binding EncounterView.ActiveEncounter.Description}" Width="320" Height="120" AcceptsReturn="True" TextWrapping="Wrap" />
+                            </StackPanel>
+                            <Separator />
+                            <DockPanel>
+                                <TextBlock Text="Combatants" VerticalAlignment="Bottom" />
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <cc:IconButton ImageResource="{StaticResource Icon_Add}" Command="{Binding EncounterView.ActiveEncounter.AddCombatants}" />
+                                </StackPanel>
+                            </DockPanel>
+                            <Border Style="{StaticResource ListBorder}">
+                                <ScrollViewer Height="256">
+                                    <ItemsControl ItemsSource="{Binding EncounterView.ActiveEncounter.Combatants}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Style="{StaticResource SegmentTile}" HorizontalAlignment="Left">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Style="{StaticResource Icon_Person}" />
+                                                        <Separator />
+                                                        <TextBlock Text="{Binding Name}" Width="280" />
+                                                        <Separator />
+                                                        <TextBox Text="{Binding RatioA}" Width="32" />
+                                                        <TextBlock Text=":" FontSize="18" Width="12" TextAlignment="Center" />
+                                                        <TextBox Text="{Binding RatioA}" Width="32" />
+                                                        <Separator />
+                                                        <cc:IconButton ImageResource="{StaticResource Icon_X}" Command="{Binding RemoveCombatant}" />
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
             <TabItem Header="Settings">
-                <StackPanel>
+                <StackPanel Style="{StaticResource SPNL_SectionWrapper}">
                     <Label Content="Settings" Margin="4" />
                     <TabControl TabStripPlacement="Left" BorderThickness="2 2 0 0" Height="720" Width="1280">
                         <TabControl.Resources>

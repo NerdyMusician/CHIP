@@ -46,6 +46,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string File_Log = "log.txt";
         public static readonly string File_CampaignData = $"{DataDirectory}Campaigns.xml";
         public static readonly string File_CombatantData = $"{DataDirectory}Combatants.xml";
+        public static readonly string File_EncounterData = $"{DataDirectory}Encounters.xml";
         public static readonly string File_SettingData = $"{DataDirectory}Settings.xml";
 
         // Combatant Types
@@ -130,6 +131,18 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string ErrorNoDemonAvailableForActiveDefense = "No Demon available to run this Active Defense.";
         public const string ErrorNotAnAutofireWeapon = "This weapon does not have Autofire";
         public const string ErrorNotEnoughWeaponOptions = "Not enough weapon options for this combatant to fulfill the number of options allowed";
+
+        // Encounter Types
+        public const string EnTypeCorp = "Corporate";
+        public const string EnTypeGang = "Gang";
+        public const string EnTypeLaw = "Law";
+        public const string EnTypeOther = "Other";
+
+        // Encounter Threat Levels
+        public const string EnThreatLow = "Low";
+        public const string EnThreatMedium = "Medium";
+        public const string EnThreatHigh = "High";
+        public const string EnThreatLethal = "Lethal";
 
         // Image Locations - Combatants
         private const string ImageBase = "/Resources/Combatants/";

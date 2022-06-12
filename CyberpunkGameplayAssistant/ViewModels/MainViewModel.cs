@@ -15,7 +15,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         // Constructors
         public MainViewModel()
         {
-            ApplicationVersion = "CHIP 1.02.00";
+            ApplicationVersion = "CHIP Next";
             UserAlerts = new();
             HelperMethods.CreateDirectories(AppData.Directories);
             LoadData();
@@ -44,6 +44,12 @@ namespace CyberpunkGameplayAssistant.ViewModels
         {
             get => _CombatantView;
             set => SetAndNotify(ref _CombatantView, value);
+        }
+        private EncounterBuilder _EncounterView;
+        public EncounterBuilder EncounterView
+        {
+            get => _EncounterView;
+            set => SetAndNotify(ref _EncounterView, value);
         }
         private SettingsViewModel _SettingsView;
         public SettingsViewModel SettingsView
@@ -118,6 +124,32 @@ namespace CyberpunkGameplayAssistant.ViewModels
                 };
             }
         }
+        public List<string> EncounterTypes
+        {
+            get
+            {
+                return new()
+                {
+                    AppData.EnTypeCorp,
+                    AppData.EnTypeGang,
+                    AppData.EnTypeLaw,
+                    AppData.EnTypeOther
+                };
+            }
+        }
+        public List<string> ThreatLevels
+        {
+            get
+            {
+                return new()
+                {
+                    AppData.EnThreatLow,
+                    AppData.EnThreatMedium,
+                    AppData.EnThreatHigh,
+                    AppData.EnThreatLethal
+                };
+            }
+        }
 
         // Private Properties
         private Timer UserAlertTimer;
@@ -181,6 +213,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         {
             LoadCampaignsData();
             LoadCombatantsData();
+            LoadEncountersData();
             LoadSettingsData();
         }
         private void LoadCampaignsData()
@@ -213,6 +246,20 @@ namespace CyberpunkGameplayAssistant.ViewModels
             catch
             {
                 CombatantView = new();
+            }
+        }
+        private void LoadEncountersData()
+        {
+            try
+            {
+                XmlSerializer xmlSerializer = new(typeof(EncounterBuilder));
+                using FileStream fs = new(AppData.File_EncounterData, FileMode.Open);
+                EncounterView = (EncounterBuilder)xmlSerializer.Deserialize(fs);
+                EncounterView!.ResetActiveItems();
+            }
+            catch
+            {
+                EncounterView = new();
             }
         }
         private void LoadSettingsData()

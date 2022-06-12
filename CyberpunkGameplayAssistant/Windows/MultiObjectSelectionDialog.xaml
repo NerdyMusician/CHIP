@@ -22,7 +22,7 @@
         <DataTemplate x:Key="SourceDefaultTemplate">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Name, Mode=OneWay}" Foreground="{StaticResource PrimaryFontColor}" FontWeight="Bold" Width="180" />
-                <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Click="AddItem_Clicked" />
+                <cc:IconButton ImageResource="{StaticResource Icon_Add}" Click="AddItem_Clicked" />
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="SourceCombatantTemplate">
@@ -34,7 +34,7 @@
                         <Run Text="{Binding Name, Mode=OneWay}" />
                         <Run Text="{Binding Variant, Mode=OneWay}" />
                     </TextBlock>
-                    <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Click="AddItem_Clicked" />
+                    <cc:IconButton ImageResource="{StaticResource Icon_Add}" Click="AddItem_Clicked" />
                 </StackPanel>
             </StackPanel>
         </DataTemplate>

@@ -299,6 +299,10 @@
     <None Remove="Resources\Icons\tag_s.png" />
     <None Remove="Resources\Icons\tag_v.png" />
     <None Remove="Resources\Icons\tag_x.png" />
+    <None Remove="Resources\Icons\threathigh.png" />
+    <None Remove="Resources\Icons\threatlethal.png" />
+    <None Remove="Resources\Icons\threatlow.png" />
+    <None Remove="Resources\Icons\threatmedium.png" />
     <None Remove="Resources\Icons\throw.png" />
     <None Remove="Resources\Icons\time.png" />
     <None Remove="Resources\Icons\trajectory.png" />
@@ -622,6 +626,10 @@
     <Resource Include="Resources\Icons\tag_s.png" />
     <Resource Include="Resources\Icons\tag_v.png" />
     <Resource Include="Resources\Icons\tag_x.png" />
+    <Resource Include="Resources\Icons\threathigh.png" />
+    <Resource Include="Resources\Icons\threatlethal.png" />
+    <Resource Include="Resources\Icons\threatlow.png" />
+    <Resource Include="Resources\Icons\threatmedium.png" />
     <Resource Include="Resources\Icons\throw.png" />
     <Resource Include="Resources\Icons\time.png" />
     <Resource Include="Resources\Icons\trajectory.png" />

@@ -67,7 +67,7 @@
     <Style TargetType="Image" x:Key="Icon_Info" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/dm_info.png" />
     </Style>
-    <Style TargetType="Image" x:Key="Icon_Plus_Green" BasedOn="{StaticResource Icon_Base}">
+    <Style TargetType="Image" x:Key="Icon_Add" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/dm_add.png" />
     </Style>
     <Style TargetType="Image" x:Key="Icon_PaintBrush" BasedOn="{StaticResource Icon_Base}">
@@ -381,6 +381,18 @@
 
 
     <!-- Unsorted -->
+    <Style TargetType="Image" x:Key="Icon_ThreatLow" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/threatlow.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_ThreatMedium" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/threatmedium.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_ThreatHigh" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/threathigh.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_ThreatLethal" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/threatlethal.png" />
+    </Style>
     <Style TargetType="Image" x:Key="Icon_Corp" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/corp.png" />
     </Style>

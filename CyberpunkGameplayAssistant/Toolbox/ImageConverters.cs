@@ -143,10 +143,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
     }
     public class ImageBasedOnCombatantType : ConverterMarkupExtension<ImageBasedOnCombatantType>
     {
-        public ImageBasedOnCombatantType()
-        {
-
-        }
+        public ImageBasedOnCombatantType() { }
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string iconName = value switch
@@ -163,6 +160,21 @@ namespace CyberpunkGameplayAssistant.Toolbox
                 AppData.ComClassHeavyPolice => "Icon_Badge",
                 AppData.ComClassCivilian => "Icon_Person",
                 _ => "Icon_Fist"
+            };
+            return AppData.Framework.FindResource(iconName) as Style;
+        }
+    }
+    public class ImageBasedOnThreatLevel : ConverterMarkupExtension<ImageBasedOnThreatLevel>
+    {
+        public ImageBasedOnThreatLevel() { }
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string iconName = value switch
+            {
+                AppData.EnThreatLethal => "Icon_ThreatLethal",
+                AppData.EnThreatHigh => "Icon_ThreatHigh",
+                AppData.EnThreatMedium => "Icon_ThreatMedium",
+                _ => "Icon_ThreatLow"
             };
             return AppData.Framework.FindResource(iconName) as Style;
         }
