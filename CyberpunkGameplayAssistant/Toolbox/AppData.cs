@@ -29,6 +29,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         // File Format Filters
         public const string FilterImageFiles = "Image Files |*.png;*.jpg;*.gif;*.bmp";
+        public const string FilterXmlFiles = "XML Files |*.xml;";
 
         // Directories
         public static readonly string CurrentDirectory = $"{Environment.CurrentDirectory}/";
@@ -90,6 +91,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string MultiModeEnemies = "Enemies";
         public const string MultiModeCriticalInjuries = "Critical Injuries";
         public const string MultiModeAssociatedNotes = "Associated Notes";
+        public const string MultiModeEncounterCombatants = "Encounter Combatants";
 
         // Gameplay Message Types
         public const string MessageOther = "Other";

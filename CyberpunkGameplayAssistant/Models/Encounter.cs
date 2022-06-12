@@ -1,6 +1,9 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
 using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
+using CyberpunkGameplayAssistant.ViewModels;
+using CyberpunkGameplayAssistant.Windows;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Models
@@ -62,6 +65,26 @@ namespace CyberpunkGameplayAssistant.Models
             AppData.MainModelRef.EncounterView.Encounters.Remove(this);
             AppData.MainModelRef.EncounterView.ActiveEncounter = null;
             RaiseAlert($"Encounter \"{Name}\" deleted");
+        }
+        public ICommand AddCombatants => new RelayCommand(DoAddCombatants);
+        private void DoAddCombatants(object param)
+        {
+            MultiObjectSelectionDialog selectionDialog = new(AppData.MainModelRef.CombatantView.Combatants.ToList().ToNamedRecordList(), AppData.MultiModeEncounterCombatants);
+
+            if (selectionDialog.ShowDialog() == true)
+            {
+                int startCount = Combatants.Count;
+                foreach (NamedRecord selectedRecord in (selectionDialog.DataContext as MultiObjectSelectionViewModel)!.SelectedRecords)
+                {
+                    EncounterCombatant combatant = new();
+                    combatant.Name = selectedRecord.Name;
+                    combatant.RatioA = 1;
+                    combatant.RatioB = 1;
+                    Combatants.Add(combatant);
+                }
+                int endCount = Combatants.Count;
+                RaiseAlert($"{(endCount - startCount)} combatant(s) added to encounter");
+            }
         }
 
     }

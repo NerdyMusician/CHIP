@@ -1473,6 +1473,7 @@
                                     </Popup>
                                 </StackPanel>
                                 <cc:IconButton ImageResource="{StaticResource Icon_Save}" Command="{Binding CombatantView.SaveCombatants}" />
+                                <cc:IconButton ImageResource="{StaticResource Icon_Import}" Command="{Binding ImportCombatants}" />
                                 <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CombatantView.SortCombatants}" />
                             </StackPanel>
                         </DockPanel>
@@ -1820,7 +1821,7 @@
                             <Run Text="Last Save:" />
                             <Run Text="{Binding EncounterView.LastSave}" />
                         </TextBlock>
-                        <StackPanel Visibility="{Binding EncounterView.ActiveEncouter, Converter={tool:CollapsedIfNull}, UpdateSourceTrigger=PropertyChanged}">
+                        <StackPanel Visibility="{Binding EncounterView.ActiveEncounter, Converter={tool:CollapsedIfNull}, UpdateSourceTrigger=PropertyChanged}">
                             <TextBlock Text="Base Information" />
                             <Rectangle />
                             <StackPanel Style="{StaticResource SPNL_FieldRow}">

@@ -95,7 +95,16 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             return Guid.NewGuid().ToString().Replace("-","");
         }
-        public static string GetFile(string fileTypeFilter, string saveDirectory)
+        public static string GetFile(string fileTypeFilter)
+        {
+            OpenFileDialog openFileDialog = new() { Filter = fileTypeFilter };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                return openFileDialog.FileName;
+            }
+            return string.Empty;
+        }
+        public static string CopyFile(string fileTypeFilter, string saveDirectory)
         {
             OpenFileDialog openFileDialog = new() { Filter = fileTypeFilter };
             if (openFileDialog.ShowDialog() == true)

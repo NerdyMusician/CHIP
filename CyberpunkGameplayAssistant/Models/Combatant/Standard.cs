@@ -545,7 +545,7 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand SelectPortraitImage => new RelayCommand(DoSelectPortraitImage);
         private void DoSelectPortraitImage(object param)
         {
-            PortraitFilePath = HelperMethods.GetFile(AppData.FilterImageFiles, AppData.PlayerImageDirectory);
+            PortraitFilePath = HelperMethods.CopyFile(AppData.FilterImageFiles, AppData.PlayerImageDirectory);
         }
         public ICommand RemoveFromFirefight => new RelayCommand(DoRemoveFromFirefight);
         private void DoRemoveFromFirefight(object param)
@@ -1103,7 +1103,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private void SetCustomImage()
         {
-            string newFile = HelperMethods.GetFile(AppData.FilterImageFiles, AppData.CombatantImageDirectory);
+            string newFile = HelperMethods.CopyFile(AppData.FilterImageFiles, AppData.CombatantImageDirectory);
             if (!string.IsNullOrEmpty(newFile)) { PortraitFilePath = newFile; }
         }
         private void AddRemainingSkills()

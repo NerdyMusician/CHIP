@@ -201,6 +201,23 @@ namespace CyberpunkGameplayAssistant.ViewModels
                     break;
             }
         }
+        public ICommand ImportCombatants => new RelayCommand(DoImportCombatants);
+        private void DoImportCombatants(object param)
+        {
+            string file = HelperMethods.GetFile(AppData.FilterXmlFiles);
+            try
+            {
+                XmlSerializer xmlSerializer = new(typeof(CombatantBuilderViewModel));
+                using FileStream fs = new(AppData.File_CombatantData, FileMode.Open);
+                CombatantBuilderViewModel importedData = (CombatantBuilderViewModel)xmlSerializer.Deserialize(fs);
+                List<Combatant> combatantsToAdd = new();
+                List<CombatantComparer> combatantsToCompare = new();
+            }
+            catch
+            {
+                RaiseError("Invalid XML file, no combatant data detected");
+            }
+        }
 
         // Public Methods
         public void AddUserAlert(string type, string message)
