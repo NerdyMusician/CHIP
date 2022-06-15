@@ -9,7 +9,7 @@ namespace CyberpunkGameplayAssistant.Windows
 {
     public partial class ImportSelector : Window
     {
-        public ImportSelector(string mode, List<CombatantComparer> combatants)
+        public ImportSelector(string mode, List<Comparer> combatants)
         {
             InitializeComponent();
             Title = mode;

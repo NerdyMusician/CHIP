@@ -11,7 +11,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
     public class ImporterViewModel : BaseModel
     {
         // Constructors
-        public ImporterViewModel(string mode, List<CombatantComparer> combatants)
+        public ImporterViewModel(string mode, List<Comparer> combatants)
         {
             InitializeCollections();
             Mode = mode;
@@ -29,8 +29,8 @@ namespace CyberpunkGameplayAssistant.ViewModels
             get => _Mode;
             set => SetAndNotify(ref _Mode, value);
         }
-        private ObservableCollection<CombatantComparer> _ComparedCombatants;
-        public ObservableCollection<CombatantComparer> ComparedCombatants
+        private ObservableCollection<Comparer> _ComparedCombatants;
+        public ObservableCollection<Comparer> ComparedCombatants
         {
             get => _ComparedCombatants;
             set => SetAndNotify(ref _ComparedCombatants, value);

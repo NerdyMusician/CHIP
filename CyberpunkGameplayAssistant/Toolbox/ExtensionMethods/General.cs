@@ -168,23 +168,9 @@ namespace CyberpunkGameplayAssistant.Toolbox.ExtensionMethods
             }
             return total;
         }
-        public static List<CombatantComparer> SetInfoDumps(this List<CombatantComparer> combatants)
+        public static NamedRecord AsNamedRecord(this Combatant combatant)
         {
-            foreach (CombatantComparer combatantComparer in combatants)
-            {
-                combatantComparer.CombatantA.SetInfoDump();
-                combatantComparer.CombatantB.SetInfoDump();
-            }
-            return combatants;
-        }
-        public static List<CombatantComparer> ClearInfoDumps(this List<CombatantComparer> combatants)
-        {
-            foreach (CombatantComparer combatantComparer in combatants)
-            {
-                combatantComparer.CombatantA.ClearInfoDump();
-                combatantComparer.CombatantB.ClearInfoDump();
-            }
-            return combatants;
+            return new(combatant.Name, combatant.GetInfoDump());
         }
 
     }

@@ -432,12 +432,6 @@ namespace CyberpunkGameplayAssistant.Models
             get => _SetSkillsByBase;
             set => SetAndNotify(ref _SetSkillsByBase, value);
         }
-        private string _InfoDump;
-        public string InfoDump
-        {
-            get => _InfoDump;
-            set => SetAndNotify(ref _InfoDump, value);
-        }
 
         // Dropdown Sources
         public List<string> ShieldTypes
@@ -909,7 +903,7 @@ namespace CyberpunkGameplayAssistant.Models
             else { penalty += GetRangedWeaponInjuryPenalty(); }
             return penalty;
         }
-        public void SetInfoDump()
+        public string GetInfoDump()
         {
             string info = $"{Name}, {ComClass}";
             info += "\nSTATS: ";
@@ -937,11 +931,7 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 info += $"{cyberware.Name}, ";
             }
-            InfoDump = info;
-        }
-        public void ClearInfoDump()
-        {
-            InfoDump = string.Empty;
+            return info;
         }
         private int GetMeleeWeaponInjuryPenalty()
         {

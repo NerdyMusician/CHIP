@@ -210,7 +210,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
             string file = HelperMethods.GetFile(AppData.FilterXmlFiles);
             CombatantBuilderViewModel importedData = new();
             List<Combatant> combatantsToAdd = new();
-            List<CombatantComparer> combatantsToCompare = new();
+            List<Comparer> combatantsToCompare = new();
             try
             {
                 XmlSerializer xmlSerializer = new(typeof(CombatantBuilderViewModel));
@@ -226,23 +226,26 @@ namespace CyberpunkGameplayAssistant.ViewModels
                 if (!CombatantExistsInCurrentData(combatant)) { combatantsToAdd.Add(combatant.DeepClone()); }
                 else
                 {
-                    combatantsToCompare.Add(new(CombatantView.Combatants.FirstOrDefault(c => c.Name == combatant.Name).DeepClone(), combatant.DeepClone()));
+                    combatantsToCompare.Add(new(CombatantView.Combatants.FirstOrDefault(c => c.Name == combatant.Name).AsNamedRecord(), combatant.AsNamedRecord()));
                 }
             }
-            combatantsToCompare.SetInfoDumps();
             if (combatantsToCompare.Count > 0)
             {
                 ImportSelector importer = new(AppData.ImporterModeCombatants, combatantsToCompare);
                 if (importer.ShowDialog() == true)
                 {
-                    foreach (CombatantComparer comparer in (importer.DataContext as ImporterViewModel).ComparedCombatants)
+                    foreach (Comparer comparer in (importer.DataContext as ImporterViewModel).ComparedCombatants)
                     {
-                        if (comparer.CombatantASelected) { continue; } // since that data already exists
-                        if (comparer.CombatantBSelected) { comparer.CombatantB.Name += " (new)"; combatantsToAdd.Add(comparer.CombatantB); }
+                        if (comparer.RecordASelected) { continue; } // since that data already exists
+                        if (comparer.RecordBSelected) 
+                        {
+                            Combatant combatant = importedData.Combatants.FirstOrDefault(c => c.Name == comparer.RecordB.Name).DeepClone();
+                            combatant.Name += " (new)";
+                            combatantsToAdd.Add(combatant);
+                        }
                     }
                 }
             }
-            combatantsToCompare.ClearInfoDumps();
             foreach (Combatant combatantToAdd in combatantsToAdd)
             {
                 CombatantView.Combatants.Add(combatantToAdd);

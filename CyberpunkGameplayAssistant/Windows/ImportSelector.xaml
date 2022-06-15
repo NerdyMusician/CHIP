@@ -24,31 +24,6 @@
             <Setter Property="Height" Value="4" />
             <Setter Property="Width" Value="4" />
         </Style>
-        <DataTemplate x:Key="DefaultTemplate"></DataTemplate>
-        <DataTemplate x:Key="CombatantTemplate">
-            <Border Style="{StaticResource SegmentTile}">
-                <StackPanel Orientation="Horizontal">
-                    <CheckBox IsChecked="{Binding CombatantASelected}" Command="{Binding ToggleSelectedCombatant}" CommandParameter="A" VerticalAlignment="Top" Margin="4" />
-                    <StackPanel Margin="4 0">
-                        <cc:ImageToggleButton Text="{Binding CombatantA.Name}" IsChecked="{Binding CombatantInfoDisplayed}" Width="280" />
-                        <StackPanel Visibility="{Binding CombatantInfoDisplayed, Converter={tool:CollapsedIfFalse}}">
-                            <TextBlock Text="{Binding CombatantA.InfoDump}" Width="260" Margin="4" TextWrapping="Wrap" Foreground="{StaticResource PrimaryFontColor}" />
-                        </StackPanel>
-                    </StackPanel>
-                    <Separator Width="32" />
-                    <CheckBox IsChecked="{Binding CombatantBSelected}" Command="{Binding ToggleSelectedCombatant}" CommandParameter="B" VerticalAlignment="Top" Margin="4" />
-                    <StackPanel Margin="4 0">
-                        <cc:ImageToggleButton Text="{Binding CombatantB.Name}" IsChecked="{Binding CombatantInfoDisplayed}" Width="280" />
-                        <StackPanel Visibility="{Binding CombatantInfoDisplayed, Converter={tool:CollapsedIfFalse}}">
-                            <TextBlock Text="{Binding CombatantB.InfoDump}" Width="260" Margin="4" TextWrapping="Wrap" Foreground="{StaticResource PrimaryFontColor}" />
-                        </StackPanel>
-                    </StackPanel>
-                </StackPanel>
-            </Border>
-        </DataTemplate>
-        <tool:ObjectTypeTemplateSelector x:Key="ComparerTemplateSelector"
-                                         DefaultDataTemplate="{StaticResource DefaultTemplate}"
-                                         CombatantComparerTemplate="{StaticResource CombatantTemplate}" />
     </Window.Resources>
     <StackPanel Margin="8 4">
         <TextBlock x:Name="TBLK_Title" Style="{StaticResource Header}" Text="Import Selector" />
@@ -66,7 +41,31 @@
         </Grid>
         <Border Style="{StaticResource ListBorder}">
             <ScrollViewer Height="320">
-                <ItemsControl x:Name="ItemsToCompare" ItemTemplateSelector="{StaticResource ComparerTemplateSelector}" />
+                <ItemsControl x:Name="ItemsToCompare">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource SegmentTile}">
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox IsChecked="{Binding RecordASelected}" Command="{Binding ToggleSelectedRecord}" CommandParameter="A" VerticalAlignment="Top" Margin="4" />
+                                    <StackPanel Margin="4 0">
+                                        <cc:ImageToggleButton Text="{Binding RecordA.Name}" IsChecked="{Binding DescriptionDisplayed}" Width="280" />
+                                        <StackPanel Visibility="{Binding DescriptionDisplayed, Converter={tool:CollapsedIfFalse}}">
+                                            <TextBlock Text="{Binding RecordA.Description}" Width="260" Margin="4" TextWrapping="Wrap" Foreground="{StaticResource PrimaryFontColor}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <Separator Width="32" />
+                                    <CheckBox IsChecked="{Binding RecordBSelected}" Command="{Binding ToggleSelectedRecord}" CommandParameter="B" VerticalAlignment="Top" Margin="4" />
+                                    <StackPanel Margin="4 0">
+                                        <cc:ImageToggleButton Text="{Binding RecordB.Name}" IsChecked="{Binding DescriptionDisplayed}" Width="280" />
+                                        <StackPanel Visibility="{Binding DescriptionDisplayed, Converter={tool:CollapsedIfFalse}}">
+                                            <TextBlock Text="{Binding RecordB.Description}" Width="260" Margin="4" TextWrapping="Wrap" Foreground="{StaticResource PrimaryFontColor}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </ScrollViewer>
         </Border>
         <DockPanel Margin="0 2">
