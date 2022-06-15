@@ -15,5 +15,12 @@
         <Setter Property="FontSize" Value="20" />
         <Setter Property="FontFamily" Value="Century Gothic" />
     </Style>
+    <Style TargetType="TextBlock" x:Key="Header">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryFontColor}" />
+        <Setter Property="Margin" Value="0 4 0 0" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
 
 </ResourceDictionary>

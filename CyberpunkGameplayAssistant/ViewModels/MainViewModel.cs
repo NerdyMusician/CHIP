@@ -1,9 +1,12 @@
 ﻿using CyberpunkGameplayAssistant.Models;
 using CyberpunkGameplayAssistant.Toolbox;
+using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
+using CyberpunkGameplayAssistant.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Timers;
 using System.Windows.Input;
 using System.Xml.Serialization;
@@ -205,18 +208,48 @@ namespace CyberpunkGameplayAssistant.ViewModels
         private void DoImportCombatants(object param)
         {
             string file = HelperMethods.GetFile(AppData.FilterXmlFiles);
+            CombatantBuilderViewModel importedData = new();
+            List<Combatant> combatantsToAdd = new();
+            List<CombatantComparer> combatantsToCompare = new();
             try
             {
                 XmlSerializer xmlSerializer = new(typeof(CombatantBuilderViewModel));
-                using FileStream fs = new(AppData.File_CombatantData, FileMode.Open);
-                CombatantBuilderViewModel importedData = (CombatantBuilderViewModel)xmlSerializer.Deserialize(fs);
-                List<Combatant> combatantsToAdd = new();
-                List<CombatantComparer> combatantsToCompare = new();
+                using FileStream fs = new(file, FileMode.Open);
+                importedData = (CombatantBuilderViewModel)xmlSerializer.Deserialize(fs)!;
             }
             catch
             {
                 RaiseError("Invalid XML file, no combatant data detected");
             }
+            foreach (Combatant combatant in importedData.Combatants)
+            {
+                if (!CombatantExistsInCurrentData(combatant)) { combatantsToAdd.Add(combatant.DeepClone()); }
+                else
+                {
+                    combatantsToCompare.Add(new(CombatantView.Combatants.FirstOrDefault(c => c.Name == combatant.Name).DeepClone(), combatant.DeepClone()));
+                }
+            }
+            combatantsToCompare.SetInfoDumps();
+            if (combatantsToCompare.Count > 0)
+            {
+                ImportSelector importer = new(AppData.ImporterModeCombatants, combatantsToCompare);
+                if (importer.ShowDialog() == true)
+                {
+                    foreach (CombatantComparer comparer in (importer.DataContext as ImporterViewModel).ComparedCombatants)
+                    {
+                        if (comparer.CombatantASelected) { continue; } // since that data already exists
+                        if (comparer.CombatantBSelected) { comparer.CombatantB.Name += " (new)"; combatantsToAdd.Add(comparer.CombatantB); }
+                    }
+                }
+            }
+            combatantsToCompare.ClearInfoDumps();
+            foreach (Combatant combatantToAdd in combatantsToAdd)
+            {
+                CombatantView.Combatants.Add(combatantToAdd);
+            }
+            CombatantView.SortCombatants.Execute(null);
+            RaiseAlert($"{combatantsToAdd.Count} combatant(s) imported");
+
         }
 
         // Public Methods
@@ -368,7 +401,10 @@ namespace CyberpunkGameplayAssistant.ViewModels
             }
             UserAlerts = new(keptAlerts);
         }
-
+        private bool CombatantExistsInCurrentData(Combatant combatant)
+        {
+            return (CombatantView.Combatants.FirstOrDefault(c => c.Name == combatant.Name) != null);
+        }
 
     }
 }

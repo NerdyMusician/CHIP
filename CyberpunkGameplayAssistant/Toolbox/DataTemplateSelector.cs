@@ -37,12 +37,11 @@ namespace CyberpunkGameplayAssistant.Toolbox
     {
         public DataTemplate DefaultDataTemplate { get; set; }
         public DataTemplate CombatantTemplate { get; set; }
+        public DataTemplate CombatantComparerTemplate { get; set; }
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            if (item.GetType() == typeof(Combatant)) 
-            {
-                return CombatantTemplate;
-            }
+            if (item.GetType() == typeof(Combatant)) { return CombatantTemplate; }
+            if (item.GetType() == typeof(CombatantComparer)) { return CombatantComparerTemplate; }
             return DefaultDataTemplate;
 
         }

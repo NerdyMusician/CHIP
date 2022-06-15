@@ -93,6 +93,9 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string MultiModeAssociatedNotes = "Associated Notes";
         public const string MultiModeEncounterCombatants = "Encounter Combatants";
 
+        // Importer Mode
+        public const string ImporterModeCombatants = "Import Combatants";
+
         // Gameplay Message Types
         public const string MessageOther = "Other";
         public const string MessageBlackIceStat = "Black Ice";

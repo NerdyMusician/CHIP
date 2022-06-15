@@ -432,6 +432,12 @@ namespace CyberpunkGameplayAssistant.Models
             get => _SetSkillsByBase;
             set => SetAndNotify(ref _SetSkillsByBase, value);
         }
+        private string _InfoDump;
+        public string InfoDump
+        {
+            get => _InfoDump;
+            set => SetAndNotify(ref _InfoDump, value);
+        }
 
         // Dropdown Sources
         public List<string> ShieldTypes
@@ -902,6 +908,40 @@ namespace CyberpunkGameplayAssistant.Models
             if (weaponType.Contains("Melee")) { penalty += GetMeleeWeaponInjuryPenalty(); }
             else { penalty += GetRangedWeaponInjuryPenalty(); }
             return penalty;
+        }
+        public void SetInfoDump()
+        {
+            string info = $"{Name}, {ComClass}";
+            info += "\nSTATS: ";
+            foreach (Stat stat in BaseStats)
+            {
+                info += $"{stat.StatAbbr} {stat.Value}, ";
+            }
+            info += "\nSKILLS: ";
+            foreach (Skill skill in Skills)
+            {
+                info += $"{skill.Name} {skill.Level}, ";
+            }
+            info += "\nWEAPONS: ";
+            foreach (CombatantWeapon weapon in Weapons)
+            {
+                info += $"{weapon.Type}, ";
+            }
+            info += "\nGEAR: ";
+            foreach (Gear gear in GearInventory)
+            {
+                info += $"{gear.Name}, ";
+            }
+            info += "\nCYBERWARE: ";
+            foreach (Cyberware cyberware in InstalledCyberware)
+            {
+                info += $"{cyberware.Name}, ";
+            }
+            InfoDump = info;
+        }
+        public void ClearInfoDump()
+        {
+            InfoDump = string.Empty;
         }
         private int GetMeleeWeaponInjuryPenalty()
         {
