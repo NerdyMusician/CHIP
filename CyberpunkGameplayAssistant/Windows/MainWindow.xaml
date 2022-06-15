@@ -180,6 +180,7 @@
                             <StackPanel Style="{StaticResource SPNL_ListButtonPanel}">
                                 <cc:IconButton ImageResource="{StaticResource Icon_Add}" Command="{Binding CampaignView.AddCampaign}" />
                                 <cc:IconButton ImageResource="{StaticResource Icon_Save}" Command="{Binding CampaignView.SaveCampaigns}" />
+                                <cc:IconButton ImageResource="{StaticResource Icon_Import}" Command="{Binding ImportCampaigns}" />
                                 <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding CampaignView.SortCampaigns}" />
                             </StackPanel>
                         </DockPanel>
@@ -346,6 +347,7 @@
                                         <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Combatants" Command="{Binding CampaignView.ActiveCampaign.AddCombatants}" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Players" Command="{Binding CampaignView.ActiveCampaign.AddPlayers}" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add NPCs" Command="{Binding CampaignView.ActiveCampaign.AddNpcs}" />
+                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Encounter" Command="{Binding CampaignView.ActiveCampaign.AddEncounter}" />
                                         <Separator Height="8" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_Runner}" Text="Roll Initiatives" Command="{Binding CampaignView.ActiveCampaign.RollInitatives}" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_Sort}" Text="Sort Combatants" Command="{Binding CampaignView.ActiveCampaign.SortCombatants}" />
@@ -441,7 +443,7 @@
                                         </StackPanel>
                                         <Separator />
                                         <TextBlock Text="Quick Notes" />
-                                        <TextBox Text="{Binding CampaignView.ActiveCampaign.QuickNotes}" Width="140" Height="184" AcceptsReturn="True" />
+                                        <TextBox Text="{Binding CampaignView.ActiveCampaign.QuickNotes}" Width="140" Height="160" AcceptsReturn="True" />
                                     </StackPanel>
                                     <Separator Width="8" />
                                     <StackPanel>
@@ -1860,7 +1862,7 @@
                                                         <Separator />
                                                         <TextBox Text="{Binding RatioA}" Width="32" />
                                                         <TextBlock Text=":" FontSize="18" Width="12" TextAlignment="Center" />
-                                                        <TextBox Text="{Binding RatioA}" Width="32" />
+                                                        <TextBox Text="{Binding RatioB}" Width="32" />
                                                         <Separator />
                                                         <cc:IconButton ImageResource="{StaticResource Icon_X}" Command="{Binding RemoveCombatant}" />
                                                     </StackPanel>

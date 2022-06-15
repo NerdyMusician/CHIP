@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace CyberpunkGameplayAssistant.Windows
 {
@@ -16,8 +17,15 @@ namespace CyberpunkGameplayAssistant.Windows
             DataContext = new ImporterViewModel(mode, combatants);
             ItemsToCompare.SetBinding(ItemsControl.ItemsSourceProperty, new Binding
             {
-                Source = (DataContext as ImporterViewModel).ComparedCombatants
+                Source = (DataContext as ImporterViewModel).ComparedItems
             });
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left && e.ButtonState == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
         }
         private void Submit_Clicked(object sender, RoutedEventArgs e)
         {

@@ -11,15 +11,15 @@ namespace CyberpunkGameplayAssistant.ViewModels
     public class ImporterViewModel : BaseModel
     {
         // Constructors
-        public ImporterViewModel(string mode, List<Comparer> combatants)
+        public ImporterViewModel(string mode, List<Comparer> comparedItems)
         {
             InitializeCollections();
             Mode = mode;
-            ComparedCombatants = new(combatants);
+            ComparedItems = new(comparedItems);
         }
         private void InitializeCollections()
         {
-            ComparedCombatants = new();
+            ComparedItems = new();
         }
 
         // Properties
@@ -29,11 +29,11 @@ namespace CyberpunkGameplayAssistant.ViewModels
             get => _Mode;
             set => SetAndNotify(ref _Mode, value);
         }
-        private ObservableCollection<Comparer> _ComparedCombatants;
-        public ObservableCollection<Comparer> ComparedCombatants
+        private ObservableCollection<Comparer> _ComparedItems;
+        public ObservableCollection<Comparer> ComparedItems
         {
-            get => _ComparedCombatants;
-            set => SetAndNotify(ref _ComparedCombatants, value);
+            get => _ComparedItems;
+            set => SetAndNotify(ref _ComparedItems, value);
         }
 
     }

@@ -234,7 +234,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
                 ImportSelector importer = new(AppData.ImporterModeCombatants, combatantsToCompare);
                 if (importer.ShowDialog() == true)
                 {
-                    foreach (Comparer comparer in (importer.DataContext as ImporterViewModel).ComparedCombatants)
+                    foreach (Comparer comparer in (importer.DataContext as ImporterViewModel).ComparedItems)
                     {
                         if (comparer.RecordASelected) { continue; } // since that data already exists
                         if (comparer.RecordBSelected) 
@@ -253,6 +253,55 @@ namespace CyberpunkGameplayAssistant.ViewModels
             CombatantView.SortCombatants.Execute(null);
             RaiseAlert($"{combatantsToAdd.Count} combatant(s) imported");
 
+        }
+        public ICommand ImportCampaigns => new RelayCommand(DoImportCampaigns);
+        private void DoImportCampaigns(object param)
+        {
+            string file = HelperMethods.GetFile(AppData.FilterXmlFiles);
+            CampaignViewModel importedData = new();
+            List<GameCampaign> campaignsToAdd = new();
+            List<Comparer> campaignsToCompare = new();
+            try
+            {
+                XmlSerializer xmlSerializer = new(typeof(CampaignViewModel));
+                using FileStream fs = new(file, FileMode.Open);
+                importedData = (CampaignViewModel)xmlSerializer.Deserialize(fs)!;
+            }
+            catch
+            {
+                RaiseError("Invalid XML file, no campaign data detected");
+            }
+            foreach (GameCampaign campaign in importedData.Campaigns)
+            {
+                if (!CampaignExistsInCurrentData(campaign)) { campaignsToAdd.Add(campaign.DeepClone()); }
+                else
+                {
+                    campaignsToCompare.Add(new(CampaignView.Campaigns.FirstOrDefault(c => c.Name == campaign.Name).AsNamedRecord(), campaign.AsNamedRecord()));
+                }
+            }
+            if (campaignsToCompare.Count > 0)
+            {
+                ImportSelector importer = new(AppData.ImporterModeCampaigns, campaignsToCompare);
+                if (importer.ShowDialog() == true)
+                {
+                    foreach (Comparer comparer in (importer.DataContext as ImporterViewModel).ComparedItems)
+                    {
+                        if (comparer.RecordASelected) { continue; } // since that data already exists
+                        if (comparer.RecordBSelected)
+                        {
+                            GameCampaign campaign = importedData.Campaigns.FirstOrDefault(c => c.Name == comparer.RecordB.Name).DeepClone();
+                            campaign.Name += " (new)";
+                            campaignsToAdd.Add(campaign);
+                        }
+                    }
+                }
+            }
+            foreach (GameCampaign campaignToAdd in campaignsToAdd)
+            {
+                CampaignView.Campaigns.Add(campaignToAdd);
+            }
+            CampaignView.SortCampaigns.Execute(null);
+            RaiseAlert($"{campaignsToAdd.Count} campaign(s) imported");
         }
 
         // Public Methods
@@ -407,6 +456,10 @@ namespace CyberpunkGameplayAssistant.ViewModels
         private bool CombatantExistsInCurrentData(Combatant combatant)
         {
             return (CombatantView.Combatants.FirstOrDefault(c => c.Name == combatant.Name) != null);
+        }
+        private bool CampaignExistsInCurrentData(GameCampaign campaign)
+        {
+            return (CampaignView.Campaigns.FirstOrDefault(c => c.Name == campaign.Name) != null);
         }
 
     }

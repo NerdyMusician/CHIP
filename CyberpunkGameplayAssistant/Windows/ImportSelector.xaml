@@ -9,6 +9,7 @@
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         WindowStyle="None" Background="{StaticResource PrimaryBackground}" AllowsTransparency="True"
         BorderBrush="{StaticResource WindowBorder}" BorderThickness="2"
+        MouseDown="Window_MouseDown"
         Height="420" Width="720">
     <Window.Resources>
         <Style TargetType="TextBlock">

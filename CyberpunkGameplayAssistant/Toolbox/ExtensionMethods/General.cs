@@ -172,6 +172,10 @@ namespace CyberpunkGameplayAssistant.Toolbox.ExtensionMethods
         {
             return new(combatant.Name, combatant.GetInfoDump());
         }
+        public static NamedRecord AsNamedRecord(this GameCampaign campaign)
+        {
+            return new(campaign.Name, campaign.GetInfoDump());
+        }
 
     }
 }

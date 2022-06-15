@@ -94,6 +94,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string MultiModeEncounterCombatants = "Encounter Combatants";
 
         // Importer Mode
+        public const string ImporterModeCampaigns = "Import Campaigns";
         public const string ImporterModeCombatants = "Import Combatants";
 
         // Gameplay Message Types
