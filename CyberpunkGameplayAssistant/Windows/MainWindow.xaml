@@ -1247,19 +1247,31 @@
                                                 <ItemsControl ItemsSource="{Binding CampaignView.ActiveCampaign.ActiveNetArchitecture.Floors}">
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate>
-                                                            <Border Style="{StaticResource SegmentTile}">
+                                                            <Border Style="{StaticResource SegmentTile}" HorizontalAlignment="Left">
                                                                 <StackPanel Orientation="Horizontal" Margin="2">
                                                                     <StackPanel>
                                                                         <TextBlock Text="{Binding Level, FallbackValue=12}" Width="24" Height="24" TextAlignment="Center" FontSize="20" FontFamily="Consolas" />
-                                                                        <StackPanel Orientation="Horizontal">
+                                                                    </StackPanel>
+                                                                    <Separator />
+                                                                    <StackPanel>
+                                                                        <TextBox Text="{Binding Description}" Width="308"  />
+                                                                        <StackPanel Orientation="Horizontal" Margin="2">
                                                                             <Image Style="{StaticResource Icon_Netrunner}" />
                                                                             <CheckBox IsChecked="{Binding HasNetrunner}" Command="{Binding ToggleHasNetrunner}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}, Path=ItemsSource}" />
+                                                                            <Separator Width="16" />
+                                                                            <Image Style="{StaticResource Icon_NetrunnerWhite}" />
+                                                                            <CheckBox IsChecked="{Binding HasNetrunnerB}" Command="{Binding ToggleHasNetrunnerB}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}, Path=ItemsSource}" />
+                                                                            <Separator Width="16" />
+                                                                            <Image Style="{StaticResource Icon_NetrunnerRed}" />
+                                                                            <CheckBox IsChecked="{Binding HasNetrunnerC}" Command="{Binding ToggleHasNetrunnerC}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}, Path=ItemsSource}" />
+                                                                            <Separator Width="16" />
+                                                                            <Image Style="{StaticResource Icon_NetrunnerGreen}" />
+                                                                            <CheckBox IsChecked="{Binding HasNetrunnerD}" Command="{Binding ToggleHasNetrunnerD}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}, Path=ItemsSource}" />
+                                                                            <Separator Width="16" />
                                                                         </StackPanel>
                                                                     </StackPanel>
                                                                     <Separator />
-                                                                    <TextBox Text="{Binding Description}" Width="284" Height="48" AcceptsReturn="True" />
-                                                                    <Separator />
-                                                                    <cc:MiniButton ImageResource="{StaticResource Icon_X}" Command="{Binding RemoveFloor}" />
+                                                                    <cc:IconButton ImageResource="{StaticResource Icon_X}" Command="{Binding RemoveFloor}" VerticalAlignment="Top" />
                                                                 </StackPanel>
                                                             </Border>
                                                         </DataTemplate>

@@ -190,6 +190,9 @@
     <None Remove="Resources\Icons\nametag.png" />
     <None Remove="Resources\Icons\necromancy.png" />
     <None Remove="Resources\Icons\netrunner.png" />
+    <None Remove="Resources\Icons\netrunnergreen.png" />
+    <None Remove="Resources\Icons\netrunnerred.png" />
+    <None Remove="Resources\Icons\netrunnerwhite.png" />
     <None Remove="Resources\Icons\ninja.png" />
     <None Remove="Resources\Icons\orb.png" />
     <None Remove="Resources\Icons\orb_gray.png" />
@@ -517,6 +520,9 @@
     <Resource Include="Resources\Icons\nametag.png" />
     <Resource Include="Resources\Icons\necromancy.png" />
     <Resource Include="Resources\Icons\netrunner.png" />
+    <Resource Include="Resources\Icons\netrunnergreen.png" />
+    <Resource Include="Resources\Icons\netrunnerred.png" />
+    <Resource Include="Resources\Icons\netrunnerwhite.png" />
     <Resource Include="Resources\Icons\ninja.png" />
     <Resource Include="Resources\Icons\orb.png" />
     <Resource Include="Resources\Icons\orb_gray.png" />

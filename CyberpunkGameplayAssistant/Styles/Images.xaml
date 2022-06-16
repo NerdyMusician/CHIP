@@ -411,6 +411,15 @@
     <Style TargetType="Image" x:Key="Icon_Netrunner" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/netrunner.png" />
     </Style>
+    <Style TargetType="Image" x:Key="Icon_NetrunnerWhite" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/netrunnerwhite.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_NetrunnerRed" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/netrunnerred.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_NetrunnerGreen" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/netrunnergreen.png" />
+    </Style>
     <Style TargetType="Image" x:Key="Icon_Zap" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/zap.png" />
     </Style>
