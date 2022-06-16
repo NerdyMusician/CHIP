@@ -473,6 +473,20 @@ namespace CyberpunkGameplayAssistant.ViewModels
             foreach (GameCampaign campaignToAdd in campaignsToAdd)
             {
                 CampaignView.Campaigns.Add(campaignToAdd);
+                foreach (NPC npc in campaignToAdd.Npcs)
+                {
+                    if (File.Exists(npc.PortraitFilePath))
+                    {
+                        File.Copy(npc.PortraitFilePath, $"{AppData.NpcImageDirectory}{Path.GetFileName(npc.PortraitFilePath)}", false);
+                    }
+                }
+                foreach (Combatant player in campaignToAdd.Players)
+                {
+                    if (File.Exists(player.PortraitFilePath))
+                    {
+                        File.Copy(player.PortraitFilePath, $"{AppData.PlayerImageDirectory}{Path.GetFileName(player.PortraitFilePath)}", false);
+                    }
+                }
             }
             CampaignView.SortCampaigns.Execute(null);
             RaiseAlert($"{campaignsToAdd.Count} campaign(s) imported");
@@ -521,6 +535,10 @@ namespace CyberpunkGameplayAssistant.ViewModels
             foreach (Combatant combatantToAdd in combatantsToAdd)
             {
                 CombatantView.Combatants.Add(combatantToAdd);
+                if (File.Exists(combatantToAdd.PortraitFilePath))
+                {
+                    File.Copy(combatantToAdd.PortraitFilePath, $"{AppData.CombatantImageDirectory}{Path.GetFileName(combatantToAdd.PortraitFilePath)}", false);
+                }
             }
             CombatantView.SortCombatants.Execute(null);
             RaiseAlert($"{combatantsToAdd.Count} combatant(s) imported");

@@ -1257,7 +1257,7 @@
                                                                         <TextBox Text="{Binding Description}" Width="308"  />
                                                                         <StackPanel Orientation="Horizontal" Margin="2">
                                                                             <Image Style="{StaticResource Icon_Netrunner}" />
-                                                                            <CheckBox IsChecked="{Binding HasNetrunner}" Command="{Binding ToggleHasNetrunner}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}, Path=ItemsSource}" />
+                                                                            <CheckBox IsChecked="{Binding HasNetrunner}" Command="{Binding ToggleHasNetrunnerA}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}, Path=ItemsSource}" />
                                                                             <Separator Width="16" />
                                                                             <Image Style="{StaticResource Icon_NetrunnerWhite}" />
                                                                             <CheckBox IsChecked="{Binding HasNetrunnerB}" Command="{Binding ToggleHasNetrunnerB}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}, Path=ItemsSource}" />
@@ -1871,7 +1871,7 @@
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Style="{StaticResource Icon_Person}" />
                                                         <Separator />
-                                                        <TextBlock Text="{Binding Name}" Width="280" />
+                                                        <TextBlock Text="{Binding Name}" Width="280" VerticalAlignment="Center" />
                                                         <Separator />
                                                         <TextBox Text="{Binding RatioA}" Width="32" />
                                                         <TextBlock Text=":" FontSize="18" Width="12" TextAlignment="Center" />
