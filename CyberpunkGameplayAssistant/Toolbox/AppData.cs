@@ -45,10 +45,14 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         // File Locations
         public const string File_Log = "log.txt";
-        public static readonly string File_CampaignData = $"{DataDirectory}Campaigns.xml";
-        public static readonly string File_CombatantData = $"{DataDirectory}Combatants.xml";
-        public static readonly string File_EncounterData = $"{DataDirectory}Encounters.xml";
-        public static readonly string File_SettingData = $"{DataDirectory}Settings.xml";
+        public const string File_Campaigns = "Campaigns.xml";
+        public const string File_Combatants = "Combatants.xml";
+        public const string File_Encounters = "Encounters.xml";
+        public const string File_Settings = "Settings.xml";
+        public static readonly string FilePath_Campaigns = $"{DataDirectory}{File_Campaigns}";
+        public static readonly string FilePath_Combatants = $"{DataDirectory}{File_Combatants}";
+        public static readonly string FilePath_Encounters = $"{DataDirectory}{File_Encounters}";
+        public static readonly string FilePath_Settings = $"{DataDirectory}{File_Settings}";
 
         // Combatant Types
         public const string ComTypeStandard = "Standard";
@@ -96,6 +100,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         // Importer Mode
         public const string ImporterModeCampaigns = "Import Campaigns";
         public const string ImporterModeCombatants = "Import Combatants";
+        public const string ImporterModeEncounters = "Import Encounters";
 
         // Gameplay Message Types
         public const string MessageOther = "Other";

@@ -20,6 +20,10 @@ namespace CyberpunkGameplayAssistant.Toolbox
             if (notifyUser) { NotifyUser(AppData.AlertError, message); }
             File.AppendAllText(AppData.File_Log, $"{DateTime.Now}: {message}\n");
         }
+        public static void WriteToLogFile(List<string> messages)
+        {
+            File.WriteAllLines(AppData.File_Log, messages);
+        }
         public static int[] RollDice(int numberOfDice, int sidesOnDice)
         {
             int[] diceResults = new int[numberOfDice];

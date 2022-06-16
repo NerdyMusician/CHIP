@@ -87,5 +87,16 @@ namespace CyberpunkGameplayAssistant.Models
             }
         }
 
+        // Public Methods
+        public string GetInfoDump()
+        {
+            string info = $"TYPE: {Type}\nTHREATLEVEL: {ThreatLevel}\nCOMBATANTS: ";
+            foreach (EncounterCombatant combatant in Combatants)
+            {
+                info += $"{combatant.Name}[{combatant.RatioA}:{combatant.RatioB}], ";
+            }
+            return info;
+        }
+
     }
 }

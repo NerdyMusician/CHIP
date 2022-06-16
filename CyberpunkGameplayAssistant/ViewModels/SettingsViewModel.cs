@@ -65,7 +65,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         public void SaveSettings()
         {
             System.Xml.Serialization.XmlSerializer serializer = new(typeof(SettingsViewModel));
-            using (System.IO.StreamWriter writer = new(AppData.File_SettingData))
+            using (System.IO.StreamWriter writer = new(AppData.FilePath_Settings))
             {
                 serializer.Serialize(writer, this.DeepClone());
             }

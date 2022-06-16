@@ -1794,6 +1794,7 @@
                             <StackPanel Style="{StaticResource SPNL_ListButtonPanel}">
                                 <cc:IconButton ImageResource="{StaticResource Icon_Add}" Command="{Binding EncounterView.AddEncounter}" />
                                 <cc:IconButton ImageResource="{StaticResource Icon_Save}" Command="{Binding EncounterView.SaveEncounters}" />
+                                <cc:IconButton ImageResource="{StaticResource Icon_Import}" Command="{Binding ImportEncounters}" />
                                 <cc:IconButton ImageResource="{StaticResource Icon_Sort}" Command="{Binding EncounterView.SortEncounters}" />
                             </StackPanel>
                         </DockPanel>
@@ -1949,6 +1950,21 @@
                                 
                                 
                                 
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem Header="Data">
+                            <StackPanel Margin="4">
+                                <TextBlock Text="Data Settings" />
+                                <Rectangle />
+
+                                <cc:ImageButton ImageResource="{StaticResource Icon_Import}" Text="Import Full Data" Command="{Binding ImportFullData}" />
+                                <TextBlock Style="{StaticResource SettingDescription}" Margin="2" Text="Select a directory containing another copy of the CHIP application to import all data into this copy." />
+
+                                <Separator Height="8" />
+
+                                <cc:ImageButton ImageResource="{StaticResource Icon_Medical}" Text="Data Checkup" Command="{Binding PerformDataCheckup}" />
+                                <TextBlock Style="{StaticResource SettingDescription}" Margin="2" Text="Perform a checkup of the data and display any mismatches such as encounters with combatants that don't exist." />
+
                             </StackPanel>
                         </TabItem>
                     </TabControl>
