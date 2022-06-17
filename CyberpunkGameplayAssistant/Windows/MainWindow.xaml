@@ -1935,6 +1935,15 @@
                                 </StackPanel>
                                 <TextBlock Style="{StaticResource SettingDescription}" Text="When the application is closed by the user, it saves the Campaigns and Combatants data." />
 
+                                <Separator />
+
+                                <StackPanel Style="{StaticResource SPNL_FieldRow}">
+                                    <CheckBox IsChecked="{Binding SettingsView.CreateBackupOnStartup}" />
+                                    <TextBlock Text=" Create Backup on Startup" />
+                                </StackPanel>
+                                <TextBlock Style="{StaticResource SettingDescription}" Text="When the application starts, a backup of the loaded data will be made to a folder by the date / time." />
+
+                                
                             </StackPanel>
                         </TabItem>
                         <TabItem Header="Gameplay">

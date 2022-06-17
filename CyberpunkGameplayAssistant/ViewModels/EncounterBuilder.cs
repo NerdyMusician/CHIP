@@ -57,12 +57,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         public void DoSaveEncounters(bool notifyUser = true)
         {
             LastSave = DateTime.Now.ToString();
-            System.Xml.Serialization.XmlSerializer serializer = new(typeof(EncounterBuilder));
-            using (System.IO.StreamWriter writer = new(AppData.FilePath_Encounters))
-            {
-                serializer.Serialize(writer, this.DeepClone());
-            }
-            RaiseAlert($"{Encounters.Count} Encounter(s) Saved");
+            SaveEncountersToFile(AppData.FilePath_Encounters, true);
         }
         public ICommand DuplicateEncounter => new RelayCommand(DoDuplicateEncounter);
         private void DoDuplicateEncounter(object param)
@@ -74,6 +69,15 @@ namespace CyberpunkGameplayAssistant.ViewModels
         public void ResetActiveItems()
         {
             ActiveEncounter = null;
+        }
+        public void SaveEncountersToFile(string filepath, bool notifyUser)
+        {
+            System.Xml.Serialization.XmlSerializer serializer = new(typeof(EncounterBuilder));
+            using (System.IO.StreamWriter writer = new(filepath))
+            {
+                serializer.Serialize(writer, this.DeepClone());
+            }
+            if (notifyUser) { RaiseAlert($"{Encounters.Count} Encounter(s) Saved"); }
         }
 
 

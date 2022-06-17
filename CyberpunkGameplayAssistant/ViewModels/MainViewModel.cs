@@ -289,10 +289,10 @@ namespace CyberpunkGameplayAssistant.ViewModels
         // Private Methods
         private void LoadData()
         {
+            LoadSettingsData();
             LoadCampaignsData();
             LoadCombatantsData();
             LoadEncountersData();
-            LoadSettingsData();
         }
         private void LoadCampaignsData()
         {
@@ -311,6 +311,10 @@ namespace CyberpunkGameplayAssistant.ViewModels
             {
                 campaign.SortCombatants.Execute(null);
             }
+            if (SettingsView.CreateBackupOnStartup)
+            {
+                CampaignView.SaveCampaignsToFile($"{AppData.BackupDirectory}{AppData.File_Campaigns}", false);
+            }
         }
         private void LoadCombatantsData()
         {
@@ -324,6 +328,10 @@ namespace CyberpunkGameplayAssistant.ViewModels
             catch
             {
                 CombatantView = new();
+            }
+            if (SettingsView.CreateBackupOnStartup)
+            {
+                CombatantView.SaveCombatantsToFile($"{AppData.BackupDirectory}{AppData.File_Combatants}", false);
             }
         }
         private void LoadEncountersData()
@@ -339,6 +347,10 @@ namespace CyberpunkGameplayAssistant.ViewModels
             {
                 EncounterView = new();
             }
+            if (SettingsView.CreateBackupOnStartup)
+            {
+                EncounterView.SaveEncountersToFile($"{AppData.BackupDirectory}{AppData.File_Encounters}", false);
+            }
         }
         private void LoadSettingsData()
         {
@@ -351,7 +363,9 @@ namespace CyberpunkGameplayAssistant.ViewModels
             catch
             {
                 SettingsView = new();
+                SettingsView.SetDefaultSettings();
             }
+            if (SettingsView.CreateBackupOnStartup) { Directory.CreateDirectory(AppData.BackupDirectory); }
         }
         private void MaintainData()
         {
@@ -431,6 +445,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         }
         private void ImportData_Campaigns(string filepath)
         {
+            if (string.IsNullOrEmpty(filepath)) { return; }
             CampaignViewModel importedData = new();
             List<GameCampaign> campaignsToAdd = new();
             List<Comparer> campaignsToCompare = new();
@@ -477,14 +492,14 @@ namespace CyberpunkGameplayAssistant.ViewModels
                 {
                     if (File.Exists(npc.PortraitFilePath))
                     {
-                        File.Copy(npc.PortraitFilePath, $"{AppData.NpcImageDirectory}{Path.GetFileName(npc.PortraitFilePath)}", false);
+                        File.Copy(npc.PortraitFilePath, $"{AppData.NpcImageDirectory}{Path.GetFileName(npc.PortraitFilePath)}", true);
                     }
                 }
                 foreach (Combatant player in campaignToAdd.Players)
                 {
                     if (File.Exists(player.PortraitFilePath))
                     {
-                        File.Copy(player.PortraitFilePath, $"{AppData.PlayerImageDirectory}{Path.GetFileName(player.PortraitFilePath)}", false);
+                        File.Copy(player.PortraitFilePath, $"{AppData.PlayerImageDirectory}{Path.GetFileName(player.PortraitFilePath)}", true);
                     }
                 }
             }
@@ -493,6 +508,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         }
         private void ImportData_Combatants(string filepath)
         {
+            if (string.IsNullOrEmpty(filepath)) { return; }
             CombatantBuilderViewModel importedData = new();
             List<Combatant> combatantsToAdd = new();
             List<Comparer> combatantsToCompare = new();
@@ -537,7 +553,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
                 CombatantView.Combatants.Add(combatantToAdd);
                 if (File.Exists(combatantToAdd.PortraitFilePath))
                 {
-                    File.Copy(combatantToAdd.PortraitFilePath, $"{AppData.CombatantImageDirectory}{Path.GetFileName(combatantToAdd.PortraitFilePath)}", false);
+                    File.Copy(combatantToAdd.PortraitFilePath, $"{AppData.CombatantImageDirectory}{Path.GetFileName(combatantToAdd.PortraitFilePath)}", true);
                 }
             }
             CombatantView.SortCombatants.Execute(null);
@@ -545,6 +561,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         }
         private void ImportData_Encounters(string filepath)
         {
+            if (string.IsNullOrEmpty(filepath)) { return; }
             EncounterBuilder importedData = new();
             List<Encounter> encountersToAdd = new();
             List<Comparer> encountersToCompare = new();
@@ -593,6 +610,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         }
         private void ImportData_Settings(string filepath)
         {
+            if (string.IsNullOrEmpty(filepath)) { return; }
             SettingsViewModel importedData = new();
             try
             {

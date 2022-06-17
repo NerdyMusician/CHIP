@@ -33,6 +33,12 @@ namespace CyberpunkGameplayAssistant.ViewModels
             get => _ExitsaveEnabled;
             set => SetAndNotify(ref _ExitsaveEnabled, value);
         }
+        private bool _CreateBackupOnStartup;
+        public bool CreateBackupOnStartup
+        {
+            get => _CreateBackupOnStartup;
+            set => SetAndNotify(ref _CreateBackupOnStartup, value);
+        }
 
         // Gameplay Settings
         private bool _UseArchetypeGrouping;
@@ -69,6 +75,19 @@ namespace CyberpunkGameplayAssistant.ViewModels
             {
                 serializer.Serialize(writer, this.DeepClone());
             }
+        }
+        public void SetDefaultSettings()
+        {
+            // Application Settings
+            DebugMode = false;
+            MuteAudio = false;
+            ExitsaveEnabled = true;
+            CreateBackupOnStartup = true;
+
+            // Gameplay Settings
+            UseArchetypeGrouping = false;
+            SkillsByBase = false;
+
         }
 
     }

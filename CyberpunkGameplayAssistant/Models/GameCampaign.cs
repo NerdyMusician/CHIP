@@ -361,6 +361,7 @@ namespace CyberpunkGameplayAssistant.Models
                     }
                 }
                 RaiseAlert($"{combatantsAdded} combatant(s) added from Encounter {encounterToAdd.Name}");
+                HelperMethods.AddToGameplayLog(encounterToAdd.Description);
                 SortCombatantsToLists();
             }
         }

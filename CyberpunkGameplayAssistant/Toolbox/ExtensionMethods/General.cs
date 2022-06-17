@@ -180,6 +180,10 @@ namespace CyberpunkGameplayAssistant.Toolbox.ExtensionMethods
         {
             return new(encounter.Name, encounter.GetInfoDump());
         }
+        public static string ToDecString(this DateTime d)
+        {
+            return $"{d.Year}.{d.Month}.{d.Day}.{d.Hour}.{d.Minute}.{d.Second}";
+        }
 
     }
 }

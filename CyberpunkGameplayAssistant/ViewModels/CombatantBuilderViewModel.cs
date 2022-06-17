@@ -77,18 +77,22 @@ namespace CyberpunkGameplayAssistant.ViewModels
         public void DoSaveCombatants(bool notifyUser = true)
         {
             LastSave = DateTime.Now.ToString();
-            System.Xml.Serialization.XmlSerializer serializer = new(typeof(CombatantBuilderViewModel));
-            using (System.IO.StreamWriter writer = new(AppData.FilePath_Combatants))
-            {
-                serializer.Serialize(writer, this.DeepClone());
-            }
-            RaiseAlert($"{Combatants.Count} Combatants(s) Saved");
+            SaveCombatantsToFile(AppData.FilePath_Combatants, true);
         }
 
         // Public Methods
         public void ResetActiveItems()
         {
             ActiveCombatant = null;
+        }
+        public void SaveCombatantsToFile(string filepath, bool notifyUser)
+        {
+            System.Xml.Serialization.XmlSerializer serializer = new(typeof(CombatantBuilderViewModel));
+            using (System.IO.StreamWriter writer = new(filepath))
+            {
+                serializer.Serialize(writer, this.DeepClone());
+            }
+            if (notifyUser) { RaiseAlert($"{Combatants.Count} Combatants(s) Saved"); }
         }
 
     }

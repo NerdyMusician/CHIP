@@ -1,4 +1,5 @@
 ﻿using CyberpunkGameplayAssistant.Models;
+using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
 using CyberpunkGameplayAssistant.ViewModels;
 using CyberpunkGameplayAssistant.Windows;
 using System;
@@ -33,6 +34,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         // Directories
         public static readonly string CurrentDirectory = $"{Environment.CurrentDirectory}/";
+        public static readonly string BackupDirectory = $"{CurrentDirectory}Backup/{DateTime.Now.ToDecString()}/";
         public static readonly string DataDirectory = $"{CurrentDirectory}Data/";
         public static readonly string ResourcesDirectory = $"{CurrentDirectory}Resources/";
         public static readonly string CombatantImageDirectory = $"{ResourcesDirectory}Combatants/";
@@ -41,7 +43,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static readonly string PlayerImageDirectory = $"{DataDirectory}PlayerImages/";
         public static readonly string[] Directories = new string[] { 
             DataDirectory, ResourcesDirectory, CombatantImageDirectory, 
-            ProgramImageDirectory, NpcImageDirectory, PlayerImageDirectory };
+            ProgramImageDirectory, NpcImageDirectory, PlayerImageDirectory};
 
         // File Locations
         public const string File_Log = "log.txt";

@@ -1,18 +1,8 @@
 ﻿using CyberpunkGameplayAssistant.Toolbox;
 using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace CyberpunkGameplayAssistant.Windows
 {
@@ -24,9 +14,11 @@ namespace CyberpunkGameplayAssistant.Windows
             List<string> encounterTypes = AppData.MainModelRef.EncounterTypes.DeepClone();
             encounterTypes.Insert(0, "Any");
             GCBX_EncounterTypes.ItemsSource = encounterTypes;
+            GCBX_EncounterTypes.Text = "Any";
             List<string> threatLevels = AppData.MainModelRef.ThreatLevels.DeepClone();
             threatLevels.Insert(0, "Any");
             GCBX_ThreatLevels.ItemsSource = threatLevels;
+            GCBX_ThreatLevels.Text = "Any";
         }
         public string EncounterType
         {
