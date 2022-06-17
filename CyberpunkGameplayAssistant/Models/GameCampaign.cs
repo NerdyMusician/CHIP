@@ -306,6 +306,65 @@ namespace CyberpunkGameplayAssistant.Models
                 RaiseAlert($"{AllCombatants.Count - startingCount} NPC(s) added");
             }
         }
+        public ICommand AddEncounter => new RelayCommand(DoAddEncounter);
+        private void DoAddEncounter(object param)
+        {
+            EncounterRoller encounterRoller = new();
+            if (encounterRoller.ShowDialog() == true)
+            {
+                bool invalidEncountersExist = false;
+                List<Encounter> encountersToRollFrom = new();
+                foreach (Encounter encounter in AppData.MainModelRef.EncounterView.Encounters)
+                {
+                    if (encounter.Type == encounterRoller.EncounterType || encounterRoller.EncounterType == "Any")
+                    {
+                        if (encounter.ThreatLevel == encounterRoller.ThreatLevel || encounterRoller.ThreatLevel == "Any")
+                        {
+                            bool isValidEncounter = true;
+                            foreach (EncounterCombatant combatant in encounter.Combatants)
+                            {
+                                if (!isValidEncounter) { continue; }
+                                if (AppData.MainModelRef.CombatantView.Combatants.FirstOrDefault(c => c.Name == combatant.Name) == null) { isValidEncounter = false; }
+                            }
+                            if (isValidEncounter) { encountersToRollFrom.Add(encounter); }
+                            else { invalidEncountersExist = true; }
+                        }
+                    }
+                }
+                if (encountersToRollFrom.Count == 0) { RaiseError("No encounters match given criteria"); return; }
+                int result = AppData.RNG.Next(0, encountersToRollFrom.Count);
+                Encounter encounterToAdd = encountersToRollFrom[result];
+                int playerCount = AllCombatants.Where(c => c.Type == AppData.ComTypePlayer).Count();
+                if (playerCount == 0) { RaiseError("No players in campaign"); return; }
+                int combatantsAdded = 0;
+                foreach (EncounterCombatant combatant in encounterToAdd.Combatants)
+                {
+                    int quantityToAdd = (int)((double)combatant.RatioA / (double)combatant.RatioB * (double)playerCount);
+                    if (quantityToAdd == 0) { quantityToAdd = 1; }
+                    for (int i = 0; i < quantityToAdd; i++)
+                    {
+                        Combatant newCombatant = AppData.MainModelRef.CombatantView.Combatants.FirstOrDefault(c => c.Name == combatant.Name).DeepClone();
+                        int existingCombatantCount = 0;
+                        if (AppData.MainModelRef.SettingsView.UseArchetypeGrouping && newCombatant.Type == AppData.ComTypeStandard)
+                        {
+                            existingCombatantCount = AllCombatants.Where(c => c.ComClass == newCombatant.ComClass).Count();
+                        }
+                        else
+                        {
+                            existingCombatantCount = AllCombatants.Where(c => c.Name == newCombatant.Name).Count();
+                        }
+                        if (existingCombatantCount > 25) { break; }
+                        newCombatant.SetDisplayName(HelperMethods.GetAlphabetLetter(existingCombatantCount));
+                        newCombatant.InitializeLoadedCombatant();
+                        AllCombatants.Add(newCombatant);
+                        combatantsAdded++;
+                    }
+                }
+                RaiseAlert($"{combatantsAdded} combatant(s) added from Encounter {encounterToAdd.Name}");
+                HelperMethods.AddToGameplayLog(encounterToAdd.Description);
+                SortCombatantsToLists();
+            }
+        }
         public ICommand ChangeStartTime => new RelayCommand(DoChangeStartTime);
         private void DoChangeStartTime(object param)
         {
@@ -626,6 +685,21 @@ namespace CyberpunkGameplayAssistant.Models
                 if (combatant != activeCombatant) { combatant.IsActive = false; }
             }
             SortCombatantsToLists();
+        }
+        public string GetInfoDump()
+        {
+            string info = $"START:{StartDate}, CURRENT:{CurrentDate}";
+            info += "\nPLAYERS:";
+            foreach (Combatant player in Players)
+            {
+                info += $"{player.Name}, ";
+            }
+            info += "\nNPCS:";
+            foreach (NPC npc in Npcs)
+            {
+                info += $"{npc.Name}, ";
+            }
+            return info;
         }
 
         // Private Methods

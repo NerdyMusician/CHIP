@@ -20,6 +20,10 @@ namespace CyberpunkGameplayAssistant.Toolbox
             if (notifyUser) { NotifyUser(AppData.AlertError, message); }
             File.AppendAllText(AppData.File_Log, $"{DateTime.Now}: {message}\n");
         }
+        public static void WriteToLogFile(List<string> messages)
+        {
+            File.WriteAllLines(AppData.File_Log, messages);
+        }
         public static int[] RollDice(int numberOfDice, int sidesOnDice)
         {
             int[] diceResults = new int[numberOfDice];
@@ -95,7 +99,16 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             return Guid.NewGuid().ToString().Replace("-","");
         }
-        public static string GetFile(string fileTypeFilter, string saveDirectory)
+        public static string GetFile(string fileTypeFilter)
+        {
+            OpenFileDialog openFileDialog = new() { Filter = fileTypeFilter };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                return openFileDialog.FileName;
+            }
+            return string.Empty;
+        }
+        public static string CopyFile(string fileTypeFilter, string saveDirectory)
         {
             OpenFileDialog openFileDialog = new() { Filter = fileTypeFilter };
             if (openFileDialog.ShowDialog() == true)

@@ -53,14 +53,8 @@ namespace CyberpunkGameplayAssistant.ViewModels
         public void DoSaveCampaigns(bool notifyUser = true)
         {
             LastSave = DateTime.Now.ToString();
-            System.Xml.Serialization.XmlSerializer serializer = new(typeof(CampaignViewModel));
-            using (System.IO.StreamWriter writer = new(AppData.File_CampaignData))
-            {
-                serializer.Serialize(writer, this.DeepClone());
-            }
-            RaiseAlert($"{Campaigns.Count} Campaign(s) Saved");
+            SaveCampaignsToFile(AppData.FilePath_Campaigns, true);
         }
-        
 
         // Public Methods
         public void ResetActiveItems()
@@ -74,6 +68,15 @@ namespace CyberpunkGameplayAssistant.ViewModels
                 gameCampaign.ActiveNote = null;
                 gameCampaign.UpdateActiveCombatant();
             }
+        }
+        public void SaveCampaignsToFile(string filepath, bool notifyUser)
+        {
+            System.Xml.Serialization.XmlSerializer serializer = new(typeof(CampaignViewModel));
+            using (System.IO.StreamWriter writer = new(filepath))
+            {
+                serializer.Serialize(writer, this.DeepClone());
+            }
+            if (notifyUser) { RaiseAlert($"{Campaigns.Count} Campaign(s) Saved"); }
         }
         
 

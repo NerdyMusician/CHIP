@@ -1,4 +1,5 @@
 ﻿using CyberpunkGameplayAssistant.Models;
+using CyberpunkGameplayAssistant.Toolbox.ExtensionMethods;
 using CyberpunkGameplayAssistant.ViewModels;
 using CyberpunkGameplayAssistant.Windows;
 using System;
@@ -29,9 +30,11 @@ namespace CyberpunkGameplayAssistant.Toolbox
 
         // File Format Filters
         public const string FilterImageFiles = "Image Files |*.png;*.jpg;*.gif;*.bmp";
+        public const string FilterXmlFiles = "XML Files |*.xml;";
 
         // Directories
         public static readonly string CurrentDirectory = $"{Environment.CurrentDirectory}/";
+        public static readonly string BackupDirectory = $"{CurrentDirectory}Backup/{DateTime.Now.ToDecString()}/";
         public static readonly string DataDirectory = $"{CurrentDirectory}Data/";
         public static readonly string ResourcesDirectory = $"{CurrentDirectory}Resources/";
         public static readonly string CombatantImageDirectory = $"{ResourcesDirectory}Combatants/";
@@ -40,13 +43,18 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public static readonly string PlayerImageDirectory = $"{DataDirectory}PlayerImages/";
         public static readonly string[] Directories = new string[] { 
             DataDirectory, ResourcesDirectory, CombatantImageDirectory, 
-            ProgramImageDirectory, NpcImageDirectory, PlayerImageDirectory };
+            ProgramImageDirectory, NpcImageDirectory, PlayerImageDirectory};
 
         // File Locations
         public const string File_Log = "log.txt";
-        public static readonly string File_CampaignData = $"{DataDirectory}Campaigns.xml";
-        public static readonly string File_CombatantData = $"{DataDirectory}Combatants.xml";
-        public static readonly string File_SettingData = $"{DataDirectory}Settings.xml";
+        public const string File_Campaigns = "Campaigns.xml";
+        public const string File_Combatants = "Combatants.xml";
+        public const string File_Encounters = "Encounters.xml";
+        public const string File_Settings = "Settings.xml";
+        public static readonly string FilePath_Campaigns = $"{DataDirectory}{File_Campaigns}";
+        public static readonly string FilePath_Combatants = $"{DataDirectory}{File_Combatants}";
+        public static readonly string FilePath_Encounters = $"{DataDirectory}{File_Encounters}";
+        public static readonly string FilePath_Settings = $"{DataDirectory}{File_Settings}";
 
         // Combatant Types
         public const string ComTypeStandard = "Standard";
@@ -89,6 +97,12 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string MultiModeEnemies = "Enemies";
         public const string MultiModeCriticalInjuries = "Critical Injuries";
         public const string MultiModeAssociatedNotes = "Associated Notes";
+        public const string MultiModeEncounterCombatants = "Encounter Combatants";
+
+        // Importer Mode
+        public const string ImporterModeCampaigns = "Import Campaigns";
+        public const string ImporterModeCombatants = "Import Combatants";
+        public const string ImporterModeEncounters = "Import Encounters";
 
         // Gameplay Message Types
         public const string MessageOther = "Other";
@@ -130,6 +144,18 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string ErrorNoDemonAvailableForActiveDefense = "No Demon available to run this Active Defense.";
         public const string ErrorNotAnAutofireWeapon = "This weapon does not have Autofire";
         public const string ErrorNotEnoughWeaponOptions = "Not enough weapon options for this combatant to fulfill the number of options allowed";
+
+        // Encounter Types
+        public const string EnTypeCorp = "Corporate";
+        public const string EnTypeGang = "Gang";
+        public const string EnTypeLaw = "Law";
+        public const string EnTypeOther = "Other";
+
+        // Encounter Threat Levels
+        public const string EnThreatLow = "Low";
+        public const string EnThreatMedium = "Medium";
+        public const string EnThreatHigh = "High";
+        public const string EnThreatLethal = "Lethal";
 
         // Image Locations - Combatants
         private const string ImageBase = "/Resources/Combatants/";

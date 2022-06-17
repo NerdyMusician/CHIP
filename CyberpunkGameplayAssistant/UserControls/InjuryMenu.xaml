@@ -12,7 +12,7 @@
         <StackPanel Margin="4">
             <DockPanel>
                 <TextBlock Text="Critical Injuries" />
-                <cc:IconButton ImageResource="{StaticResource Icon_Plus_Green}" Command="{Binding AddCriticalInjury}" HorizontalAlignment="Right" />
+                <cc:IconButton ImageResource="{StaticResource Icon_Add}" Command="{Binding AddCriticalInjury}" HorizontalAlignment="Right" />
             </DockPanel>
             <Border Style="{StaticResource ListBorder}">
                 <ItemsControl ItemsSource="{Binding CriticalInjuries}">

@@ -190,6 +190,9 @@
     <None Remove="Resources\Icons\nametag.png" />
     <None Remove="Resources\Icons\necromancy.png" />
     <None Remove="Resources\Icons\netrunner.png" />
+    <None Remove="Resources\Icons\netrunnergreen.png" />
+    <None Remove="Resources\Icons\netrunnerred.png" />
+    <None Remove="Resources\Icons\netrunnerwhite.png" />
     <None Remove="Resources\Icons\ninja.png" />
     <None Remove="Resources\Icons\orb.png" />
     <None Remove="Resources\Icons\orb_gray.png" />
@@ -299,6 +302,10 @@
     <None Remove="Resources\Icons\tag_s.png" />
     <None Remove="Resources\Icons\tag_v.png" />
     <None Remove="Resources\Icons\tag_x.png" />
+    <None Remove="Resources\Icons\threathigh.png" />
+    <None Remove="Resources\Icons\threatlethal.png" />
+    <None Remove="Resources\Icons\threatlow.png" />
+    <None Remove="Resources\Icons\threatmedium.png" />
     <None Remove="Resources\Icons\throw.png" />
     <None Remove="Resources\Icons\time.png" />
     <None Remove="Resources\Icons\trajectory.png" />
@@ -513,6 +520,9 @@
     <Resource Include="Resources\Icons\nametag.png" />
     <Resource Include="Resources\Icons\necromancy.png" />
     <Resource Include="Resources\Icons\netrunner.png" />
+    <Resource Include="Resources\Icons\netrunnergreen.png" />
+    <Resource Include="Resources\Icons\netrunnerred.png" />
+    <Resource Include="Resources\Icons\netrunnerwhite.png" />
     <Resource Include="Resources\Icons\ninja.png" />
     <Resource Include="Resources\Icons\orb.png" />
     <Resource Include="Resources\Icons\orb_gray.png" />
@@ -622,6 +632,10 @@
     <Resource Include="Resources\Icons\tag_s.png" />
     <Resource Include="Resources\Icons\tag_v.png" />
     <Resource Include="Resources\Icons\tag_x.png" />
+    <Resource Include="Resources\Icons\threathigh.png" />
+    <Resource Include="Resources\Icons\threatlethal.png" />
+    <Resource Include="Resources\Icons\threatlow.png" />
+    <Resource Include="Resources\Icons\threatmedium.png" />
     <Resource Include="Resources\Icons\throw.png" />
     <Resource Include="Resources\Icons\time.png" />
     <Resource Include="Resources\Icons\trajectory.png" />
@@ -654,13 +668,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Change.log">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="Data\Campaigns.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Data\Combatants.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Encounters.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Data\Settings.xml">

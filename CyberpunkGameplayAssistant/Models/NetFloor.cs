@@ -44,6 +44,24 @@ namespace CyberpunkGameplayAssistant.Models
             get => _HasNetrunner;
             set => SetAndNotify(ref _HasNetrunner, value);
         }
+        private bool _HasNetrunnerB;
+        public bool HasNetrunnerB
+        {
+            get => _HasNetrunnerB;
+            set => SetAndNotify(ref _HasNetrunnerB, value);
+        }
+        private bool _HasNetrunnerC;
+        public bool HasNetrunnerC
+        {
+            get => _HasNetrunnerC;
+            set => SetAndNotify(ref _HasNetrunnerC, value);
+        }
+        private bool _HasNetrunnerD;
+        public bool HasNetrunnerD
+        {
+            get => _HasNetrunnerD;
+            set => SetAndNotify(ref _HasNetrunnerD, value);
+        }
 
         // Commands
         public ICommand RemoveFloor => new RelayCommand(DoRemoveFloor);
@@ -52,14 +70,44 @@ namespace CyberpunkGameplayAssistant.Models
             AppData.MainModelRef.CampaignView.ActiveCampaign.ActiveNetArchitecture.Floors.Remove(this);
             AppData.MainModelRef.CampaignView.ActiveCampaign.ActiveNetArchitecture.RenumberFloors();
         }
-        public ICommand ToggleHasNetrunner => new RelayCommand(DoToggleHasNetrunner);
-        private void DoToggleHasNetrunner(object param)
+        public ICommand ToggleHasNetrunnerA => new RelayCommand(DoToggleHasNetrunnerA);
+        private void DoToggleHasNetrunnerA(object param)
         {
             if (!HasNetrunner) { return; }
             ObservableCollection<NetFloor> netFloors = (param as ObservableCollection<NetFloor>)!;
             foreach (NetFloor net in netFloors)
             {
                 if (net != this) { net.HasNetrunner = false; }
+            }
+        }
+        public ICommand ToggleHasNetrunnerB => new RelayCommand(DoToggleHasNetrunnerB);
+        private void DoToggleHasNetrunnerB(object param)
+        {
+            if (!HasNetrunnerB) { return; }
+            ObservableCollection<NetFloor> netFloors = (param as ObservableCollection<NetFloor>)!;
+            foreach (NetFloor net in netFloors)
+            {
+                if (net != this) { net.HasNetrunnerB = false; }
+            }
+        }
+        public ICommand ToggleHasNetrunnerC => new RelayCommand(DoToggleHasNetrunnerC);
+        private void DoToggleHasNetrunnerC(object param)
+        {
+            if (!HasNetrunnerC) { return; }
+            ObservableCollection<NetFloor> netFloors = (param as ObservableCollection<NetFloor>)!;
+            foreach (NetFloor net in netFloors)
+            {
+                if (net != this) { net.HasNetrunnerC = false; }
+            }
+        }
+        public ICommand ToggleHasNetrunnerD => new RelayCommand(DoToggleHasNetrunnerD);
+        private void DoToggleHasNetrunnerD(object param)
+        {
+            if (!HasNetrunnerD) { return; }
+            ObservableCollection<NetFloor> netFloors = (param as ObservableCollection<NetFloor>)!;
+            foreach (NetFloor net in netFloors)
+            {
+                if (net != this) { net.HasNetrunnerD = false; }
             }
         }
 

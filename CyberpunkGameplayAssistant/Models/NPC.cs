@@ -58,7 +58,7 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand SelectPortraitImage => new RelayCommand(DoSelectPortraitImage);
         private void DoSelectPortraitImage(object param)
         {
-            string newFile = HelperMethods.GetFile(AppData.FilterImageFiles, AppData.NpcImageDirectory);
+            string newFile = HelperMethods.CopyFile(AppData.FilterImageFiles, AppData.NpcImageDirectory);
             if (!string.IsNullOrEmpty(newFile)) { PortraitFilePath = newFile; }
         }
         public ICommand RemoveNpcFromCampaign => new RelayCommand(param => DoRemoveNpcFromCampaign());

@@ -168,6 +168,22 @@ namespace CyberpunkGameplayAssistant.Toolbox.ExtensionMethods
             }
             return total;
         }
+        public static NamedRecord AsNamedRecord(this Combatant combatant)
+        {
+            return new(combatant.Name, combatant.GetInfoDump());
+        }
+        public static NamedRecord AsNamedRecord(this GameCampaign campaign)
+        {
+            return new(campaign.Name, campaign.GetInfoDump());
+        }
+        public static NamedRecord AsNamedRecord(this Encounter encounter)
+        {
+            return new(encounter.Name, encounter.GetInfoDump());
+        }
+        public static string ToDecString(this DateTime d)
+        {
+            return $"{d.Year}.{d.Month}.{d.Day}.{d.Hour}.{d.Minute}.{d.Second}";
+        }
 
     }
 }

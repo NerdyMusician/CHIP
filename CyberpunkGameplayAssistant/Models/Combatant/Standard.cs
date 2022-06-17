@@ -545,7 +545,7 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand SelectPortraitImage => new RelayCommand(DoSelectPortraitImage);
         private void DoSelectPortraitImage(object param)
         {
-            PortraitFilePath = HelperMethods.GetFile(AppData.FilterImageFiles, AppData.PlayerImageDirectory);
+            PortraitFilePath = HelperMethods.CopyFile(AppData.FilterImageFiles, AppData.PlayerImageDirectory);
         }
         public ICommand RemoveFromFirefight => new RelayCommand(DoRemoveFromFirefight);
         private void DoRemoveFromFirefight(object param)
@@ -903,6 +903,36 @@ namespace CyberpunkGameplayAssistant.Models
             else { penalty += GetRangedWeaponInjuryPenalty(); }
             return penalty;
         }
+        public string GetInfoDump()
+        {
+            string info = $"{Name}, {ComClass}";
+            info += "\nSTATS: ";
+            foreach (Stat stat in BaseStats)
+            {
+                info += $"{stat.StatAbbr} {stat.Value}, ";
+            }
+            info += "\nSKILLS: ";
+            foreach (Skill skill in Skills)
+            {
+                info += $"{skill.Name} {skill.Level}, ";
+            }
+            info += "\nWEAPONS: ";
+            foreach (CombatantWeapon weapon in Weapons)
+            {
+                info += $"{weapon.Type}, ";
+            }
+            info += "\nGEAR: ";
+            foreach (Gear gear in GearInventory)
+            {
+                info += $"{gear.Name}, ";
+            }
+            info += "\nCYBERWARE: ";
+            foreach (Cyberware cyberware in InstalledCyberware)
+            {
+                info += $"{cyberware.Name}, ";
+            }
+            return info;
+        }
         private int GetMeleeWeaponInjuryPenalty()
         {
             int penalty = 0;
@@ -1103,7 +1133,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private void SetCustomImage()
         {
-            string newFile = HelperMethods.GetFile(AppData.FilterImageFiles, AppData.CombatantImageDirectory);
+            string newFile = HelperMethods.CopyFile(AppData.FilterImageFiles, AppData.CombatantImageDirectory);
             if (!string.IsNullOrEmpty(newFile)) { PortraitFilePath = newFile; }
         }
         private void AddRemainingSkills()

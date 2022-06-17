@@ -11,9 +11,6 @@ using System.Windows.Media;
 
 namespace CyberpunkGameplayAssistant.Windows
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -49,6 +46,7 @@ namespace CyberpunkGameplayAssistant.Windows
                 {
                     (DataContext as MainViewModel).CampaignView.DoSaveCampaigns(false);
                     (DataContext as MainViewModel).CombatantView.DoSaveCombatants(false);
+                    (DataContext as MainViewModel).EncounterView.DoSaveEncounters(false);
                 }
                 Application.Current.Shutdown();
             }
