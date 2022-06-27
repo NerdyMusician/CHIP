@@ -257,7 +257,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             string output = "";
             if (variant.IsIn(AppData.AmmoVarBasic, AppData.AmmoVarArmorPiercing, AppData.AmmoVarExpansive,
-                AppData.AmmoVarIncendiary, AppData.AmmoVarRubber))
+                AppData.AmmoVarIncendiary, AppData.AmmoVarRubber) || variant == null)
             {
                 output += $"\nDamage: {damage + (isCrit && variant != AppData.AmmoVarRubber ? 5 : 0)}"; // pg 187 Critical Injury Bonus Damage
                 if (variant != AppData.AmmoVarRubber && isCrit) { output += " CRIT"; }
