@@ -67,6 +67,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
                 gameCampaign.ActiveNetArchitecture = null;
                 gameCampaign.ActiveNote = null;
                 gameCampaign.UpdateActiveCombatant();
+                gameCampaign.NoteSearch = string.Empty;
             }
         }
         public void SaveCampaignsToFile(string filepath, bool notifyUser)

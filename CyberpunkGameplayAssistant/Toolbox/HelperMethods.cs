@@ -257,7 +257,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             string output = "";
             if (variant.IsIn(AppData.AmmoVarBasic, AppData.AmmoVarArmorPiercing, AppData.AmmoVarExpansive,
-                AppData.AmmoVarIncendiary, AppData.AmmoVarRubber))
+                AppData.AmmoVarIncendiary, AppData.AmmoVarRubber) || variant == null)
             {
                 output += $"\nDamage: {damage + (isCrit && variant != AppData.AmmoVarRubber ? 5 : 0)}"; // pg 187 Critical Injury Bonus Damage
                 if (variant != AppData.AmmoVarRubber && isCrit) { output += " CRIT"; }
@@ -265,7 +265,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             }
             if (variant == AppData.AmmoVarBiotoxin)
             {
-                output += $"\nTarget must pass a DV15 Resist Drugs Check or take {HelperMethods.RollDamage(3, out _)} direct damage.";
+                output += $"\nTarget must pass a DV15 Resist Drugs Check or take {RollDamage(3, out _)} direct damage.";
             }
             if (variant == AppData.AmmoVarEMP)
             {

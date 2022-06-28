@@ -1293,9 +1293,16 @@
                                                 <cc:IconButton ImageResource="{StaticResource Icon_Sync}" Command="{Binding CampaignView.ActiveCampaign.SyncNotes}" />
                                             </StackPanel>
                                         </DockPanel>
+                                        <DockPanel HorizontalAlignment="Left" Margin="0 0 0 2">
+                                            <Image Style="{StaticResource Icon_Search}" />
+                                            <Separator />
+                                            <TextBox Text="{Binding CampaignView.ActiveCampaign.NoteSearch}" Width="168" />
+                                            <Separator />
+                                            <cc:MiniButton ImageResource="{StaticResource Icon_Eraser}" Command="{Binding CampaignView.ActiveCampaign.ClearSearch}" />
+                                        </DockPanel>
                                         <ListView Style="{StaticResource BorderedListView}"
                                                   Width="216" Height="562"
-                                                  ItemsSource="{Binding CampaignView.ActiveCampaign.GameNotes}"
+                                                  ItemsSource="{Binding CampaignView.ActiveCampaign.FilteredGameNotes}"
                                                   SelectedItem="{Binding CampaignView.ActiveCampaign.ActiveNote}">
                                             <ListView.ItemTemplate>
                                                 <DataTemplate>
@@ -1579,8 +1586,7 @@
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding CombatantView.ActiveCombatant.Type, Converter={tool:VisibleIfMatch}, ConverterParameter=Standard}">
                                         <TextBlock VerticalAlignment="Bottom">
                                             <Run Text="Points Assigned:" />
-                                            <Run Text="{Binding CombatantView.ActiveCombatant.TotalStatPoints}" />
-                                            <Image Style="{StaticResource Icon_Heart}" />
+                                            <Run Text="{Binding CombatantView.ActiveCombatant.TotalStatPoints}" /><Run Text=", Max HP:" />
                                             <Run Text="{Binding CombatantView.ActiveCombatant.MaximumHitPoints}" />
                                         </TextBlock>
                                         <cc:MiniButton ImageResource="{StaticResource Icon_Calculator}" Command="{Binding CombatantView.ActiveCombatant.CalculateDerivedStats}" />
