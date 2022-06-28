@@ -71,6 +71,12 @@ namespace CyberpunkGameplayAssistant.Models
             get => _DeadCombatants;
             set => SetAndNotify(ref _DeadCombatants, value);
         }
+        private ObservableCollection<GameNote> _FilteredGameNotes;
+        public ObservableCollection<GameNote> FilteredGameNotes
+        {
+            get => _FilteredGameNotes;
+            set => SetAndNotify(ref _FilteredGameNotes, value);
+        }
         private ObservableCollection<GameNote> _GameNotes;
         public ObservableCollection<GameNote> GameNotes
         {
@@ -82,6 +88,17 @@ namespace CyberpunkGameplayAssistant.Models
         {
             get => _ActiveNote;
             set => SetAndNotify(ref _ActiveNote, value);
+        }
+        private string _NoteSearch;
+        public string NoteSearch
+        {
+            get => _NoteSearch;
+            set
+            {
+                _NoteSearch = value;
+                NotifyPropertyChanged();
+                UpdateFilteredNotes();
+            }
         }
         private string _StartDate;
         public string StartDate
@@ -672,6 +689,11 @@ namespace CyberpunkGameplayAssistant.Models
             }
             RaiseAlert("Notes and associations synced");
         }
+        public ICommand ClearSearch => new RelayCommand(DoClearSearch);
+        private void DoClearSearch(object param)
+        {
+            NoteSearch = string.Empty;
+        }
 
         // Public Methods
         public void UpdateActiveCombatant()
@@ -736,6 +758,7 @@ namespace CyberpunkGameplayAssistant.Models
             Npcs = new();
             NetArchitectures = new();
             GameNotes = new();
+            FilteredGameNotes = new();
         }
         private void SortCombatantsToLists()
         {
@@ -808,6 +831,16 @@ namespace CyberpunkGameplayAssistant.Models
                 if (collection.Count > 0) { return false; }
             }
             return true;
+        }
+        private void UpdateFilteredNotes()
+        {
+            FilteredGameNotes.Clear();
+            foreach (GameNote note in GameNotes)
+            {
+                if (string.IsNullOrEmpty(NoteSearch)) { FilteredGameNotes.Add(note); continue; }
+                if (note.Name.ToUpper().Contains(NoteSearch.ToUpper())) { FilteredGameNotes.Add(note); continue; }
+                if (note.Content.ToUpper().Contains(NoteSearch.ToUpper())) { FilteredGameNotes.Add(note); continue; }
+            }
         }
 
     }

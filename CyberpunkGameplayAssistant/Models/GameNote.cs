@@ -15,6 +15,8 @@ namespace CyberpunkGameplayAssistant.Models
         public GameNote()
         {
             AssociatedNotes = new();
+            Name = string.Empty;
+            Content = string.Empty;
         }
 
         // Properties

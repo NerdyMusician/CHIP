@@ -265,7 +265,7 @@ namespace CyberpunkGameplayAssistant.Toolbox
             }
             if (variant == AppData.AmmoVarBiotoxin)
             {
-                output += $"\nTarget must pass a DV15 Resist Drugs Check or take {HelperMethods.RollDamage(3, out _)} direct damage.";
+                output += $"\nTarget must pass a DV15 Resist Drugs Check or take {RollDamage(3, out _)} direct damage.";
             }
             if (variant == AppData.AmmoVarEMP)
             {
