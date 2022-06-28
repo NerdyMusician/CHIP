@@ -159,10 +159,14 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand ReloadWeapon => new RelayCommand(DoReloadWeapon);
         public void DoReloadWeapon(object param)
         {
-            if (!UsesAmmo) { return; }
             Combatant combatant = (Combatant)param;
+            DoReloadWeapon(combatant, true);
+        }
+        public void DoReloadWeapon(Combatant combatant, bool promptForAmmoType)
+        {
+            if (!UsesAmmo) { return; }
             int clipCapacity = AppData.ClipChart.GetStandardClipSize(Type);
-            Ammo ammoTypeNeeded = GetAmmoTypeNeeded(combatant);
+            Ammo ammoTypeNeeded = GetAmmoTypeNeeded(combatant, promptForAmmoType);
             Ammo ammoTypeInUse = GetAmmoTypeInUse(combatant);
             if (ammoTypeNeeded == null) { return; }
             bool isSameAmmo = AreSameAmmo(ammoTypeNeeded, ammoTypeInUse);
@@ -210,16 +214,16 @@ namespace CyberpunkGameplayAssistant.Models
             if (ammoTypeInUse == null) { return false; } // unloaded gun
             return ammoTypeNeeded.Type == ammoTypeInUse.Type && ammoTypeNeeded.Variant == ammoTypeInUse.Variant;
         }
-        private Ammo GetAmmoTypeNeeded(Combatant combatant)
+        private Ammo GetAmmoTypeNeeded(Combatant combatant, bool promptForAmmoType)
         {
-            List<string> acceptableAmmoTypes = AppData.RangedWeaponAmmoCompatibilities.FirstOrDefault(w => w.WeaponType == Type).AmmoTypes;
+            List<string> acceptableAmmoTypes = AppData.RangedWeaponAmmoCompatibilities.FirstOrDefault(w => w.WeaponType == Type)!.AmmoTypes;
             List<Ammo> matchedAmmoListings = combatant.AmmoInventory.Where(a => acceptableAmmoTypes.Contains(a.Type) && a.Quantity > 0).ToList();
             if (matchedAmmoListings.Count == 0) { RaiseError(AppData.ErrorNoAcceptableAmmoTypeInInventory); return null; }
             if (matchedAmmoListings.Count == 1) { return matchedAmmoListings[0]; }
             else
             {
-                if (!AppData.IsLoaded) { return matchedAmmoListings[0]; }
-                ObjectSelectionDialog objectSelectionDialog = new(matchedAmmoListings.ToNamedRecordList(), "Ammo Types");
+                if (!AppData.IsLoaded || !promptForAmmoType) { return matchedAmmoListings[0]; }
+                ObjectSelectionDialog objectSelectionDialog = new(matchedAmmoListings.ToNamedRecordList(), $"Ammo for {combatant.DisplayName}'s {Name}");
                 if (objectSelectionDialog.ShowDialog() == true)
                 {
                     NamedRecord selectedRecord = objectSelectionDialog.SelectedObject as NamedRecord;

@@ -1049,7 +1049,7 @@ namespace CyberpunkGameplayAssistant.Models
                 {
                     weapon.Name = weapon.Type;
                 }
-                weapon.ReloadWeapon.Execute(this);
+                weapon.DoReloadWeapon(this, false);
             }
             ResumeOutput();
         }
