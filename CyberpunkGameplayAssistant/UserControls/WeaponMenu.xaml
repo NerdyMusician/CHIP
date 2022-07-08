@@ -50,6 +50,7 @@
                             </cc:ImageButton>
                             <StackPanel Orientation="Horizontal" Visibility="{Binding UsesAmmo, Converter={tool:CollapsedIfFalse}}">
                                 <cc:MiniButton ImageResource="{StaticResource Icon_Reload}" Command="{Binding ReloadWeapon}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext}" />
+                                <Image Style="{StaticResource Icon_Warning}" Margin="4 0" Visibility="{Binding IsJammed, Converter={tool:CollapsedIfFalse}}" ToolTip="Jammed!" />
                                 <Image Style="{StaticResource Icon_BulletStack}" Margin="4 0" />
                                 <TextBlock VerticalAlignment="Center" Width="72" FontFamily="Century Gothic" FontSize="15" FontWeight="Normal">
                                                                                                         <Run Text="x" />
