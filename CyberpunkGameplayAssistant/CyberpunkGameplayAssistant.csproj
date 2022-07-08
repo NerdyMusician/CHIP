@@ -284,6 +284,8 @@
     <None Remove="Resources\Icons\smile.png" />
     <None Remove="Resources\Icons\spear.png" />
     <None Remove="Resources\Icons\spell.png" />
+    <None Remove="Resources\Icons\star.png" />
+    <None Remove="Resources\Icons\star_hollow.png" />
     <None Remove="Resources\Icons\step.png" />
     <None Remove="Resources\Icons\stop.png" />
     <None Remove="Resources\Icons\suite.png" />
@@ -614,6 +616,8 @@
     <Resource Include="Resources\Icons\smile.png" />
     <Resource Include="Resources\Icons\spear.png" />
     <Resource Include="Resources\Icons\spell.png" />
+    <Resource Include="Resources\Icons\star.png" />
+    <Resource Include="Resources\Icons\star_hollow.png" />
     <Resource Include="Resources\Icons\step.png" />
     <Resource Include="Resources\Icons\stop.png" />
     <Resource Include="Resources\Icons\suite.png" />

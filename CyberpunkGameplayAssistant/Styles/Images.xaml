@@ -381,6 +381,12 @@
 
 
     <!-- Unsorted -->
+    <Style TargetType="Image" x:Key="Icon_Star" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/star.png" />
+    </Style>
+    <Style TargetType="Image" x:Key="Icon_HollowStar" BasedOn="{StaticResource Icon_Base}">
+        <Setter Property="Source" Value="../Resources/Icons/star_hollow.png" />
+    </Style>
     <Style TargetType="Image" x:Key="Icon_ThreatLow" BasedOn="{StaticResource Icon_Base}">
         <Setter Property="Source" Value="../Resources/Icons/threatlow.png" />
     </Style>

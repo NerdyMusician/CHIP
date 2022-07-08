@@ -672,7 +672,8 @@ namespace CyberpunkGameplayAssistant.Models
         public ICommand SortNotes => new RelayCommand(DoSortNotes);
         private void DoSortNotes(object param)
         {
-            GameNotes = new(GameNotes.OrderBy(n => n.Type).ThenBy(n => n.Name));
+            GameNotes = new(GameNotes.OrderByDescending(n => n.IsFavorite).ThenBy(n => n.Type).ThenBy(n => n.Name));
+            UpdateFilteredNotes();
         }
         public ICommand SyncNotes => new RelayCommand(DoSyncNotes);
         private void DoSyncNotes(object param)
@@ -834,6 +835,7 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private void UpdateFilteredNotes()
         {
+            string activeNoteId = (ActiveNote != null) ? ActiveNote.Id : string.Empty;
             FilteredGameNotes.Clear();
             foreach (GameNote note in GameNotes)
             {
@@ -841,6 +843,7 @@ namespace CyberpunkGameplayAssistant.Models
                 if (note.Name.ToUpper().Contains(NoteSearch.ToUpper())) { FilteredGameNotes.Add(note); continue; }
                 if (note.Content.ToUpper().Contains(NoteSearch.ToUpper())) { FilteredGameNotes.Add(note); continue; }
             }
+            ActiveNote = FilteredGameNotes.FirstOrDefault(n => n.Id == activeNoteId)!;
         }
 
     }

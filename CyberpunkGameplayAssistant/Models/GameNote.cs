@@ -50,6 +50,12 @@ namespace CyberpunkGameplayAssistant.Models
             get => _AssociatedNotes;
             set => SetAndNotify(ref _AssociatedNotes, value);
         }
+        private bool _IsFavorite;
+        public bool IsFavorite
+        {
+            get => _IsFavorite;
+            set => SetAndNotify(ref _IsFavorite, value);
+        }
 
         // Commands
         public ICommand AddNewAssociatedNote => new RelayCommand(DoAddNewAssociatedNote);
@@ -123,6 +129,11 @@ namespace CyberpunkGameplayAssistant.Models
         private void DoSortNotes(object param)
         {
             AssociatedNotes = new(AssociatedNotes.OrderBy(n => n.Type).ThenBy(n => n.Name));
+        }
+        public ICommand ToggleFavorite => new RelayCommand(DoToggleFavorite);
+        private void DoToggleFavorite(object param)
+        {
+            IsFavorite = !IsFavorite;
         }
 
         // Public Methods

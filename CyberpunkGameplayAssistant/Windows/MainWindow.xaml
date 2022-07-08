@@ -1307,6 +1307,7 @@
                                             <ListView.ItemTemplate>
                                                 <DataTemplate>
                                                     <StackPanel Orientation="Horizontal">
+                                                        <Image Style="{StaticResource Icon_Star}" Visibility="{Binding IsFavorite, Converter={tool:HiddenIfFalse}}" />
                                                         <Image Style="{Binding Type, Converter={tool:ImageBasedOnNoteType}}" />
                                                         <Separator />
                                                         <TextBlock Text="{Binding Name}" MinWidth="160" Foreground="{StaticResource PrimaryFontColor}" />
@@ -1326,6 +1327,9 @@
                                         <StackPanel Style="{StaticResource SPNL_FieldRow}">
                                             <cc:FieldLabel Text="Type" />
                                             <cc:GammaComboBox ItemsSource="{Binding NoteTypes}" SelectedValue="{Binding CampaignView.ActiveCampaign.ActiveNote.Type, UpdateSourceTrigger=PropertyChanged}" />
+                                            <Separator />
+                                            <cc:MiniButton ImageResource="{StaticResource Icon_Star}" Command="{Binding CampaignView.ActiveCampaign.ActiveNote.ToggleFavorite}" Visibility="{Binding CampaignView.ActiveCampaign.ActiveNote.IsFavorite, Converter={tool:CollapsedIfFalse}}" />
+                                            <cc:MiniButton ImageResource="{StaticResource Icon_HollowStar}" Command="{Binding CampaignView.ActiveCampaign.ActiveNote.ToggleFavorite}" Visibility="{Binding CampaignView.ActiveCampaign.ActiveNote.IsFavorite, Converter={tool:CollapsedIfTrue}}" />
                                         </StackPanel>
                                         <StackPanel Style="{StaticResource SPNL_FieldRow}" Orientation="Vertical">
                                             <cc:FieldLabel Text="Content" />
