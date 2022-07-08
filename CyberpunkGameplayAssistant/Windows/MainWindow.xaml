@@ -172,7 +172,7 @@
             </StackPanel>
         </DockPanel>
         <TabControl BorderThickness="0 2 0 0">
-            <TabItem Header="Campaigns">
+            <TabItem Header="Campaigns" IsSelected="{Binding ViewingCampaigns}">
                 <StackPanel Style="{StaticResource SPNL_SectionWrapper}" Orientation="Horizontal">
                     <StackPanel>
                         <DockPanel>
@@ -1478,7 +1478,7 @@
                     </StackPanel>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Combatants">
+            <TabItem Header="Combatants" IsSelected="{Binding ViewingCombatants}">
                 <StackPanel Style="{StaticResource SPNL_SectionWrapper}" Orientation="Horizontal">
                     <StackPanel>
                         <DockPanel>
@@ -1809,7 +1809,7 @@
                     </StackPanel>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Encounters">
+            <TabItem Header="Encounters" IsSelected="{Binding ViewingEncounters}">
                 <StackPanel Style="{StaticResource SPNL_SectionWrapper}" Orientation="Horizontal">
                     <StackPanel>
                         <DockPanel>
@@ -1900,7 +1900,7 @@
                     </StackPanel>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Settings">
+            <TabItem Header="Settings" IsSelected="{Binding ViewingSettings}">
                 <StackPanel Style="{StaticResource SPNL_SectionWrapper}">
                     <Label Content="Settings" Margin="4" />
                     <TabControl TabStripPlacement="Left" BorderThickness="2 2 0 0" Height="720" Width="1280">

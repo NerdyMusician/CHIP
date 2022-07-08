@@ -37,6 +37,32 @@ namespace CyberpunkGameplayAssistant.ViewModels
             get => _ApplicationVersion;
             set => SetAndNotify(ref _ApplicationVersion, value);
         }
+
+        private bool _ViewingCampaigns;
+        public bool ViewingCampaigns
+        {
+            get => _ViewingCampaigns;
+            set => SetAndNotify(ref _ViewingCampaigns, value);
+        }
+        private bool _ViewingCombatants;
+        public bool ViewingCombatants
+        {
+            get => _ViewingCombatants;
+            set => SetAndNotify(ref _ViewingCombatants, value);
+        }
+        private bool _ViewingEncounters;
+        public bool ViewingEncounters
+        {
+            get => _ViewingEncounters;
+            set => SetAndNotify(ref _ViewingEncounters, value);
+        }
+        private bool _ViewingSettings;
+        public bool ViewingSettings
+        {
+            get => _ViewingSettings;
+            set => SetAndNotify(ref _ViewingSettings, value);
+        }
+
         private CampaignViewModel _CampaignView;
         public CampaignViewModel CampaignView
         {
@@ -195,11 +221,27 @@ namespace CyberpunkGameplayAssistant.ViewModels
         {
             switch (key.ToString())
             {
+                case "F1":
+                    ViewingCampaigns = true;
+                    break;
+                case "F2":
+                    ViewingCombatants = true;
+                    break;
+                case "F3":
+                    ViewingEncounters = true;
+                    break;
+                case "F4":
+                    ViewingSettings = true;
+                    break;
                 case "CtrlS":
-                    CampaignView.SaveCampaigns.Execute(null);
+                    if (ViewingCampaigns) { CampaignView.SaveCampaigns.Execute(null); }
+                    if (ViewingCombatants) { CombatantView.SaveCombatants.Execute(null); }
+                    if (ViewingEncounters) { EncounterView.SaveEncounters.Execute(null); }
                     break;
                 case "CtrlN":
-                    CampaignView.AddCampaign.Execute(null);
+                    if (ViewingCampaigns) { CampaignView.AddCampaign.Execute(null); }
+                    if (ViewingCombatants) { CombatantView.AddCombatant.Execute(AppData.ComTypeStandard); }
+                    if (ViewingEncounters) { EncounterView.AddEncounter.Execute(null); }
                     break;
                 default:
                     break;
