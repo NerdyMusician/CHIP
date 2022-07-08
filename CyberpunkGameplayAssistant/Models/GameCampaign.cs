@@ -622,6 +622,7 @@ namespace CyberpunkGameplayAssistant.Models
         private void DoRemoveCombatants(object param)
         {
             const string paramAll = "All";
+            const string paramEnemies = "Enemies";
             const string paramDead = "Dead";
             const string paramKill = "Kill";
             if (param == null) { return; }
@@ -630,6 +631,10 @@ namespace CyberpunkGameplayAssistant.Models
                 case paramAll:
                     if (HelperMethods.AskYesNoQuestion("Are you sure you want to removal all combatants?") == false) { return; }
                     ResetCombatantLists();
+                    break;
+                case paramEnemies:
+                    if (HelperMethods.AskYesNoQuestion("Remove all non-ally and non-player combatants?") == false) { return; }
+                    RemoveEnemies();
                     break;
                 case paramDead:
                     RemoveTheFallen();
@@ -739,6 +744,20 @@ namespace CyberpunkGameplayAssistant.Models
                 }
                 if (combatant.IsDead) { continue; }
                 combatants.Add(combatant);
+            }
+            AllCombatants = new(combatants);
+            SortCombatantsToLists();
+            int endCount = AllCombatants.Count;
+            RaiseAlert($"Removed {(startCount - endCount)} combatant(s)");
+        }
+        private void RemoveEnemies()
+        {
+            int startCount = AllCombatants.Count;
+            List<Combatant> combatants = new();
+            foreach (Combatant combatant in AllCombatants)
+            {
+                if (combatant.Type == AppData.ComTypePlayer) { combatants.Add(combatant); continue; }
+                if (combatant.IsAlly) { combatants.Add(combatant); continue; }
             }
             AllCombatants = new(combatants);
             SortCombatantsToLists();
