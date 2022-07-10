@@ -791,7 +791,7 @@ namespace CyberpunkGameplayAssistant.Models
             CombatantsByName = new(AllCombatants.Where(c => !c.IsDead || c.Type == AppData.ComTypePlayer).OrderBy(c => c.Type != AppData.ComTypePlayer).ThenBy(c => c.DisplayName));
             PlayerCombatants = new(AllCombatants.Where(c => c.Type == AppData.ComTypePlayer).OrderBy(c => c.Name));
             NpcCombatants = new(AllCombatants.Where(c => c.Type == AppData.ComTypeNPC).OrderBy(c => c.Name));
-            DeadCombatants = new(AllCombatants.Where(c => c.IsDead));
+            DeadCombatants = new(AllCombatants.Where(c => c.IsDead && c.Type != AppData.ComTypePlayer));
         }
         private void ResetCombatantLists()
         {
