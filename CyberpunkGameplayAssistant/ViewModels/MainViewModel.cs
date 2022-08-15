@@ -307,13 +307,13 @@ namespace CyberpunkGameplayAssistant.ViewModels
         private void DoImportCombatants(object param)
         {
             string filepath = HelperMethods.GetFile(AppData.FilterXmlFiles);
-            ImportData_Campaigns(filepath);
+            ImportData_Combatants(filepath);
         }
         public ICommand ImportCampaigns => new RelayCommand(DoImportCampaigns);
         private void DoImportCampaigns(object param)
         {
             string filepath = HelperMethods.GetFile(AppData.FilterXmlFiles);
-            ImportData_Combatants(filepath);
+            ImportData_Campaigns(filepath);
         }
         public ICommand ImportEncounters => new RelayCommand(DoImportEncounters);
         private void DoImportEncounters(object param)
