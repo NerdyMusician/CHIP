@@ -34,11 +34,15 @@ namespace CyberpunkGameplayAssistant.Toolbox
         {
             string iconName = value switch
             {
+                AppData.NoteBuilding => "Icon_Home",
                 AppData.NoteCorp => "Icon_Corp",
+                AppData.NoteDistrict => "Icon_Hex",
                 AppData.NoteEncounter => "Icon_Marker",
                 AppData.NoteFaction => "Icon_Horde",
                 AppData.NoteLocation => "Icon_Map",
+                AppData.NoteMission => "Icon_Reticle",
                 AppData.NoteNPC => "Icon_Smile",
+                AppData.NoteShop => "Icon_Coins",
                 _ => "Icon_Rpg_Note"
             };
             return AppData.Framework.FindResource(iconName) as Style;

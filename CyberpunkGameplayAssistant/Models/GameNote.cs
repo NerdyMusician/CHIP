@@ -111,6 +111,8 @@ namespace CyberpunkGameplayAssistant.Models
                 {
                     note.AssociatedNotes = new(note.AssociatedNotes.Where(n => n.Id != id));
                 }
+                AppData.MainModelRef.CampaignView.ActiveCampaign.ActiveNote = null;
+                AppData.MainModelRef.CampaignView.ActiveCampaign.UpdateFilteredNotes();
             }
             if (param.ToString() == "Note")
             {

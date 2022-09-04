@@ -118,12 +118,16 @@ namespace CyberpunkGameplayAssistant.Toolbox
         public const string MessageWeaponAttack = "Weapon Attack";
 
         // Game Note Types
+        public const string NoteBuilding = "Building";
         public const string NoteCorp = "Corp";
+        public const string NoteDistrict = "District";
         public const string NoteEncounter = "Encounter";
         public const string NoteFaction = "Faction";
         public const string NoteLocation = "Location";
+        public const string NoteMission = "Mission";
         public const string NoteNPC = "NPC";
         public const string NoteOther = "Other";
+        public const string NoteShop = "Shop";
 
         // Price Categories
         public const int PriceCheap = 10;

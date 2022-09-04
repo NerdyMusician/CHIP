@@ -673,6 +673,7 @@ namespace CyberpunkGameplayAssistant.Models
             newNote.SetNewNoteValues();
             GameNotes.Add(newNote);
             ActiveNote = newNote;
+            UpdateFilteredNotes();
         }
         public ICommand SortNotes => new RelayCommand(DoSortNotes);
         private void DoSortNotes(object param)
@@ -728,6 +729,19 @@ namespace CyberpunkGameplayAssistant.Models
                 info += $"{npc.Name}, ";
             }
             return info;
+        }
+        public void UpdateFilteredNotes()
+        {
+            string activeNoteId = (ActiveNote != null) ? ActiveNote.Id : string.Empty;
+            FilteredGameNotes.Clear();
+            foreach (GameNote note in GameNotes)
+            {
+                if (note == ActiveNote) { FilteredGameNotes.Add(note); continue; }
+                if (string.IsNullOrEmpty(NoteSearch)) { FilteredGameNotes.Add(note); continue; }
+                if (note.Name.ToUpper().Contains(NoteSearch.ToUpper())) { FilteredGameNotes.Add(note); continue; }
+                if (note.Content.ToUpper().Contains(NoteSearch.ToUpper())) { FilteredGameNotes.Add(note); continue; }
+            }
+            ActiveNote = FilteredGameNotes.FirstOrDefault(n => n.Id == activeNoteId)!;
         }
 
         // Private Methods
@@ -852,18 +866,7 @@ namespace CyberpunkGameplayAssistant.Models
             }
             return true;
         }
-        private void UpdateFilteredNotes()
-        {
-            string activeNoteId = (ActiveNote != null) ? ActiveNote.Id : string.Empty;
-            FilteredGameNotes.Clear();
-            foreach (GameNote note in GameNotes)
-            {
-                if (string.IsNullOrEmpty(NoteSearch)) { FilteredGameNotes.Add(note); continue; }
-                if (note.Name.ToUpper().Contains(NoteSearch.ToUpper())) { FilteredGameNotes.Add(note); continue; }
-                if (note.Content.ToUpper().Contains(NoteSearch.ToUpper())) { FilteredGameNotes.Add(note); continue; }
-            }
-            ActiveNote = FilteredGameNotes.FirstOrDefault(n => n.Id == activeNoteId)!;
-        }
+        
 
     }
 }

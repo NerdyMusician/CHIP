@@ -19,7 +19,7 @@ namespace CyberpunkGameplayAssistant.ViewModels
         // Constructors
         public MainViewModel()
         {
-            ApplicationVersion = "CHIP 1.04.00 beta";
+            ApplicationVersion = "CHIP 1.04.00 beta 2022.09.03";
             UserAlerts = new();
             HelperMethods.CreateDirectories(AppData.Directories);
             LoadData();
@@ -205,12 +205,16 @@ namespace CyberpunkGameplayAssistant.ViewModels
             {
                 return new()
                 {
+                    AppData.NoteBuilding,
                     AppData.NoteCorp,
+                    AppData.NoteDistrict,
                     AppData.NoteEncounter,
                     AppData.NoteFaction,
                     AppData.NoteLocation,
+                    AppData.NoteMission,
                     AppData.NoteNPC,
                     AppData.NoteOther,
+                    AppData.NoteShop,
                 };
             }
         }
