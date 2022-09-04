@@ -114,7 +114,7 @@ namespace CyberpunkGameplayAssistant.Models
             int damageDice = AppData.WeaponRepository.GetDamage(Type);
             int attackBonus = combatant.GetSkillTotal(AppData.WeaponRepository.GetSkill(Type));
             int attackPenalty = combatant.GetAttackInjuryPenalty(Type);
-            int damage = HelperMethods.RollDamage(damageDice, out bool criticalInjury);
+            int[] damage = HelperMethods.RollDamage(damageDice, out bool criticalInjury);
             string output = GenerateWeaponOutput(combatant, attackRoll, attackBonus, attackPenalty, damage, criticalInjury);
             HelperMethods.AddToGameplayLog(output, AppData.MessageWeaponAttack);
             HelperMethods.PlayWeaponSound(Type);
@@ -130,11 +130,11 @@ namespace CyberpunkGameplayAssistant.Models
             if (!CheckAndUseAmmo(10)) { return; }
             int attackBonus = combatant.GetSkillTotal(AppData.SkillAutofire);
             int attackPenalty = combatant.GetAttackInjuryPenalty(Type);
-            int damage = HelperMethods.RollDamage(2, out bool criticalInjury);
+            int[] damage = HelperMethods.RollDamage(2, out bool criticalInjury);
             string output = GenerateWeaponOutput(combatant, attackRoll, attackBonus, attackPenalty, damage, criticalInjury);
             for (int i = 0; i < AppData.AutofireTable[Type]; i++)
             {
-                output += $"\nDamage x{(i + 1)}: {(damage * (i + 1))}";
+                output += $"\nDamage x{(i + 1)}: {(damage.Sum() * (i + 1))}";
                 if (i == 0 && criticalInjury) { output += " CRIT"; }
             }
             HelperMethods.AddToGameplayLog(output, AppData.MessageWeaponAttack);
@@ -151,7 +151,7 @@ namespace CyberpunkGameplayAssistant.Models
             int damageDice = AppData.WeaponRepository.GetDamage(Type);
             int attackBonus = combatant.GetSkillTotal(AppData.WeaponRepository.GetSkill(Type));
             int attackPenalty = combatant.GetAttackInjuryPenalty(Type) + 8; // pg 170
-            int damage = HelperMethods.RollDamage(damageDice, out bool criticalInjury);
+            int[] damage = HelperMethods.RollDamage(damageDice, out bool criticalInjury);
             string output = GenerateWeaponOutput(combatant, attackRoll, attackBonus, attackPenalty, damage, criticalInjury);
             HelperMethods.AddToGameplayLog(output, AppData.MessageWeaponAttack);
             HelperMethods.PlayWeaponSound(Type);
@@ -260,7 +260,7 @@ namespace CyberpunkGameplayAssistant.Models
             }
             return false;
         }
-        private string GenerateWeaponOutput(Combatant combatant, int attackRoll, int attackBonus, int attackPenalty, int damage, bool criticalInjury)
+        private string GenerateWeaponOutput(Combatant combatant, int attackRoll, int attackBonus, int attackPenalty, int[] damage, bool criticalInjury)
         {
             int attackResult = attackRoll + attackBonus - combatant.GetAttackInjuryPenalty(Type);
             string output = $"{combatant.DisplayName} attacks with {Name}\nAttack: {attackResult}";
@@ -268,7 +268,13 @@ namespace CyberpunkGameplayAssistant.Models
             if (AppData.MainModelRef.SettingsView.DebugMode) 
             { 
                 output += $"\nDEBUG: ROLL:{attackRoll}, SKILL+STAT:{attackBonus}, PENALTY:{attackPenalty}";
-                output += $"\nDEBUG: BASEDMG:{damage} AMMOVAR:{AmmoVariant}";
+                output += $"\nDEBUG: BASEDMG: [";
+                for (int i = 0; i < damage.Length; i++)
+                {
+                    if (i > 0) { output += " + "; }
+                    output += damage[i];
+                }
+                output += $"] AMMOVAR:{AmmoVariant}";
             }
             return output;
         }

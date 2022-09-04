@@ -39,12 +39,12 @@ namespace CyberpunkGameplayAssistant.Toolbox
                 combatant.Skills.GetLevel(skill) +
                 combatant.CalculatedStats.GetValue(stat);
         }
-        public static int RollDamage(int numberOfDice, out bool criticalInjury)
+        public static int[] RollDamage(int numberOfDice, out bool criticalInjury)
         {
             criticalInjury = false;
             int[] result = RollDice(numberOfDice, 6);
             if (result.InstancesOf(6) >= 2) { criticalInjury = true; }
-            return result.GetTotal();
+            return result;
         }
         public static int RollD10(bool includeCritical = false)
         {
@@ -253,13 +253,13 @@ namespace CyberpunkGameplayAssistant.Toolbox
             return (level == 1 || level == 2) ? lobbyTable[diceResult] : otherTable[diceResult];
 
         }
-        public static string ProcessAmmoEffect(int damage, bool isCrit, string variant)
+        public static string ProcessAmmoEffect(int[] damage, bool isCrit, string variant)
         {
             string output = "";
             if (variant.IsIn(AppData.AmmoVarBasic, AppData.AmmoVarArmorPiercing, AppData.AmmoVarExpansive,
                 AppData.AmmoVarIncendiary, AppData.AmmoVarRubber) || variant == null)
             {
-                output += $"\nDamage: {damage + (isCrit && variant != AppData.AmmoVarRubber ? 5 : 0)}"; // pg 187 Critical Injury Bonus Damage
+                output += $"\nDamage: {damage.Sum() + (isCrit && variant != AppData.AmmoVarRubber ? 5 : 0)}"; // pg 187 Critical Injury Bonus Damage
                 if (variant != AppData.AmmoVarRubber && isCrit) { output += " CRIT"; }
                 if (variant == AppData.AmmoVarArmorPiercing) { output += " AP"; }
             }

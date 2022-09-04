@@ -88,7 +88,7 @@ namespace CyberpunkGameplayAssistant.Models
             int roll = HelperMethods.RollD10(true);
             int dex = combatant.CalculatedStats.GetValue(AppData.StatDexterity);
             int athletics = combatant.Skills.GetLevel(AppData.SkillAthletics);
-            int damage = HelperMethods.RollDamage(6, out bool crit);
+            int[] damage = HelperMethods.RollDamage(6, out bool crit);
             string output = $"{combatant.DisplayName} threw a grenade up to 25m/yds\nResult: {(roll + dex + athletics)}";
             if (AppData.MainModelRef.SettingsView.DebugMode) { output += $"\nDEBUG: ROLL:{roll} DEX:{dex} ATHL:{athletics}"; }
             output += HelperMethods.ProcessAmmoEffect(damage, crit, Variant);

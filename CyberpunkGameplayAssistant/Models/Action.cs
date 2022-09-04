@@ -100,7 +100,7 @@ namespace CyberpunkGameplayAssistant.Models
             {
                 body = (body > 5) ? body : 5;
             }
-            int damage = body switch
+            int damageDice = body switch
             {
                 <= 4 => 1,
                 5 => 2,
@@ -111,8 +111,9 @@ namespace CyberpunkGameplayAssistant.Models
                 10 => 3,
                 _ => 4,
             };
-            damage = HelperMethods.RollDamage(damage, out bool criticalInjury);
-            return $"{combatant.DisplayName} is brawling\nAttack: {attack}\nDamage: {damage} {(criticalInjury ? "CRIT" : "")}";
+            int[] damage = new int[]{ damageDice };
+            damage = HelperMethods.RollDamage(damageDice, out bool criticalInjury);
+            return $"{combatant.DisplayName} is brawling\nAttack: {attack}\nDamage: {damage.Sum()} {(criticalInjury ? "CRIT" : "")}";
         }
         private static string PerformActionChoke(Combatant combatant)
         {
