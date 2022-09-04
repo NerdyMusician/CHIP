@@ -69,6 +69,7 @@ namespace CyberpunkGameplayAssistant.Models
             GameNote copyOfThis = this.DeepClone();
             copyOfThis.AssociatedNotes.Clear();
             newNote.AssociatedNotes.Add(copyOfThis);
+            AppData.MainModelRef.CampaignView.ActiveCampaign.UpdateFilteredNotes();
         }
         public ICommand AddAssociations => new RelayCommand(DoAddAssociations);
         private void DoAddAssociations(object param)
