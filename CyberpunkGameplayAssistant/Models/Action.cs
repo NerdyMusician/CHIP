@@ -121,13 +121,18 @@ namespace CyberpunkGameplayAssistant.Models
         }
         private static string PerformActionDeathSave(Combatant combatant)
         {
-            int result = HelperMethods.RollD10();
-            result += combatant.DeathSavePasses;
-            result += combatant.CriticalInjuries.GetDeathPenaltyTotal();
-            bool success = result < combatant.DeathSave;
+            if (combatant.IsDead) { return $"{combatant.Name} is already dead."; }
+            int roll = HelperMethods.RollD10();
+            int penalty = 0;
+            penalty += combatant.DeathSavePasses;
+            penalty += combatant.CriticalInjuries.GetDeathPenaltyTotal();
+            int total = roll + penalty;
+            bool success = total < combatant.DeathSave;
             if (!success) { combatant.IsDead = true; combatant.UpdateWoundState(); }
             if (success) { combatant.DeathSavePasses++; }
-            return $"{combatant.DisplayName} made a death save\nResult: {(success ? "Success" : "Fail")}";
+            string output = $"{combatant.DisplayName} made a death save\nResult: {(success ? "Success" : "Fail")}";
+            if (AppData.MainModelRef.SettingsView.DebugMode) { output += $"\nSAVE:{combatant.DeathSave} ROLL:{roll} PENALTY:{penalty}"; }
+            return output; 
         }
         private static string PerformActionEvade(Combatant combatant)
         {
