@@ -345,10 +345,20 @@
                                         <Separator Height="0" />
                                         <TextBlock Text="Tools" />
                                         <Rectangle />
-                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Combatants" Command="{Binding CampaignView.ActiveCampaign.AddCombatants}" />
-                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Players" Command="{Binding CampaignView.ActiveCampaign.AddPlayers}" />
-                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add NPCs" Command="{Binding CampaignView.ActiveCampaign.AddNpcs}" />
-                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Encounter" Command="{Binding CampaignView.ActiveCampaign.AddEncounter}" />
+                                        <StackPanel>
+                                            <cc:ImageToggleButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add..." IsChecked="{Binding CampaignView.ActiveCampaign.ShowAddControls}" Margin="2" />
+                                            <Popup IsOpen="{Binding CampaignView.ActiveCampaign.ShowAddControls}">
+                                                <Border Style="{StaticResource BRDR_PopupBorder}">
+                                                    <StackPanel Margin="2">
+                                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Combatants" Command="{Binding CampaignView.ActiveCampaign.AddCombatants}" />
+                                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Players" Command="{Binding CampaignView.ActiveCampaign.AddPlayers}" />
+                                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add NPCs" Command="{Binding CampaignView.ActiveCampaign.AddNpcs}" />
+                                                        <cc:ImageButton ImageResource="{StaticResource Icon_AddPerson}" Text="Add Encounter" Command="{Binding CampaignView.ActiveCampaign.AddEncounter}" />
+                                                    </StackPanel>
+                                                </Border>
+                                            </Popup>
+                                        </StackPanel>
+                                       
                                         <Separator Height="8" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_Runner}" Text="Roll Initiatives" Command="{Binding CampaignView.ActiveCampaign.RollInitatives}" />
                                         <cc:ImageButton ImageResource="{StaticResource Icon_Sort}" Text="Sort Combatants" Command="{Binding CampaignView.ActiveCampaign.SortCombatants}" />
@@ -445,7 +455,7 @@
                                         </StackPanel>
                                         <Separator />
                                         <TextBlock Text="Quick Notes" />
-                                        <TextBox Text="{Binding CampaignView.ActiveCampaign.QuickNotes}" Width="140" Height="160" AcceptsReturn="True" />
+                                        <TextBox Text="{Binding CampaignView.ActiveCampaign.QuickNotes}" Width="140" Height="234" AcceptsReturn="True" TextWrapping="Wrap" />
                                     </StackPanel>
                                     <Separator Width="8" />
                                     <StackPanel>

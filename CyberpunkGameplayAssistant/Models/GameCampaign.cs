@@ -118,6 +118,12 @@ namespace CyberpunkGameplayAssistant.Models
             get => _ShowStartTimeControls;
             set => SetAndNotify(ref _ShowStartTimeControls, value);
         }
+        private bool _ShowAddControls;
+        public bool ShowAddControls
+        {
+            get => _ShowAddControls;
+            set => SetAndNotify(ref _ShowAddControls, value);
+        }
         private string _CurrentDate;
         public string CurrentDate
         {
